@@ -13,6 +13,7 @@ import {
 } from "@/util/validation";
 
 const JoinForm = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -113,6 +114,7 @@ const JoinForm = () => {
         .post("http://localhost:5000/auth/signup", data) // 서버 URL
         .then((response) => {
           console.log("회원가입 성공:", response.data);
+          router.push("/");
         })
         .catch((error) => {
           console.error("회원가입 실패:", error);
@@ -166,7 +168,7 @@ const JoinForm = () => {
             <div className="join-errormessage">{passwordCheckError}</div>
           </div>
           <div className="join-div">
-            <label htmlFor="name">이sss름</label>
+            <label htmlFor="name">이름</label>
             <Input
               type="text"
               id="name"
