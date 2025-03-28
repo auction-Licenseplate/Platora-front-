@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { MainStyled } from "./styled";
+import { MyPageStyled } from "./styled";
 const Main = () => {
   const router = useRouter();
   // const id:number = 2 변수 선언 예시
   return (
-    <MainStyled className={clsx("main-wrap")}>
+    <MyPageStyled className={clsx("main-wrap")}>
       <div className="main-container">
         <div
           onClick={() => {
@@ -21,15 +21,8 @@ const Main = () => {
         >
           join
         </div>
-        <div
-          onClick={() => {
-            router.push("/myPage");
-          }}
-        >
-          myPage
-        </div>
       </div>
-    </MainStyled>
+    </MyPageStyled>
   );
 };
 
