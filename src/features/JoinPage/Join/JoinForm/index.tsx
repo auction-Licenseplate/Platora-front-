@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
 // 유효성 검사 함수들
 const validateEmail = (email: string) => {
   const regex = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -28,8 +27,6 @@ const validateName = (name: string) => {
 };
 
 const JoinForm = () => {
-  const router = useRouter();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -130,7 +127,6 @@ const JoinForm = () => {
         .post("http://localhost:5000/auth/signup", data) // 서버 URL
         .then((response) => {
           console.log("회원가입 성공:", response.data);
-          router.push("/");
         })
         .catch((error) => {
           console.error("회원가입 실패:", error);
