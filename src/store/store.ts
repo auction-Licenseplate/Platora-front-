@@ -1,7 +1,7 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import counteSlice from "./counteSlice";
+import counteSlice from "./userSlice";
 // Redux Store 생성
 const store = configureStore({
   reducer: {

@@ -7,7 +7,14 @@ const Main = () => {
   return (
     <MainStyled className={clsx("main-wrap")}>
       <div className="main-container">
-        <div> login</div>
+        <div
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
+          {" "}
+          login
+        </div>
         <div
           onClick={() => {
             router.push("/join");
