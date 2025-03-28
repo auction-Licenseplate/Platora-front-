@@ -12,7 +12,6 @@ const Main = () => {
             router.push("/login");
           }}
         >
-          {" "}
           login
         </div>
         <div

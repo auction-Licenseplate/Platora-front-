@@ -124,7 +124,7 @@ const JoinForm = () => {
         phone: values.phone,
       };
       axios
-        .post("http://localhost:5000/signup", data) // 서버 URL
+        .post("http://localhost:5000/auth/signup", data) // 서버 URL
         .then((response) => {
           console.log("회원가입 성공:", response.data);
         })
