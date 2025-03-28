@@ -7,7 +7,7 @@ const Join = () => {
 
   return (
     <JoinStyled>
-      <h2>회원가입</h2>
+      <div className="join-text">회원가입</div>
       {agree === false ? (
         <JoinAgree agree={agree} setAgree={setAgree} />
       ) : (

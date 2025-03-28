@@ -135,83 +135,87 @@ const JoinForm = () => {
   });
   return (
     <JoinFormStyled className={clsx("joinFrom-wrap")}>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="join-div">
-          <label htmlFor="email">이메일</label>
-          <Input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => {
-              handleEmailChange(e);
-              formik.handleChange(e);
-            }}
-            placeholder="abc123@xxx.com"
-          />
-          <div className="join-errormessage">{emailError}</div>
+      <form className="joinForm-container" onSubmit={formik.handleSubmit}>
+        <div className="joinform-divcontainer">
+          <div className="join-div">
+            <label htmlFor="email">이메일</label>
+            <Input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => {
+                handleEmailChange(e);
+                formik.handleChange(e);
+              }}
+              placeholder="abc123@xxx.com"
+            />
+            <div className="join-errormessage">{emailError}</div>
+          </div>
+          <div className="join-div">
+            <label htmlFor="password">비밀번호</label>
+            <Input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => {
+                handlePasswordChange(e);
+                formik.handleChange(e);
+              }}
+              placeholder="비밀번호를 입력해주세요"
+            />
+            <div className="join-errormessage">{passwordError}</div>
+          </div>
+          <div className="join-div">
+            <label htmlFor="passwordCheck">비밀번호 확인</label>
+            <Input
+              type="password"
+              id="passwordCheck"
+              value={passwordCheck}
+              onChange={(e) => {
+                formik.handleChange(e);
+                handlePasswordCheckChange(e);
+              }}
+              placeholder="비밀번호 확인"
+            />
+            <div className="join-errormessage">{passwordCheckError}</div>
+          </div>
+          <div className="join-div">
+            <label htmlFor="name">이름</label>
+            <Input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => {
+                formik.handleChange(e);
+                handleNameChange(e);
+              }}
+              placeholder="이름을 입력해주세요"
+            />
+            <div className="join-errormessage">{nameError}</div>
+          </div>
+          <div className="join-div">
+            <label htmlFor="phone">전화번호</label>
+            <Input
+              type="text"
+              id="phone"
+              value={phone}
+              onChange={(e) => {
+                formik.handleChange(e);
+                handlePhoneChange(e);
+              }}
+              placeholder="010-0000-0000"
+            />
+            <div className="join-errormessage">{phoneError}</div>
+          </div>
+          <div className="joinForm-btnDiv">
+            <Button
+              htmlType="submit"
+              disabled={!isFormValid} // 각 입력의 유효성 상태에 기반하여 버튼을 활성화/비활성화
+            >
+              가입하기
+            </Button>
+          </div>
         </div>
-        <div className="join-div">
-          <label htmlFor="password">비밀번호</label>
-          <Input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => {
-              handlePasswordChange(e);
-              formik.handleChange(e);
-            }}
-            placeholder="비밀번호를 입력해주세요"
-          />
-          <div className="join-errormessage">{passwordError}</div>
-        </div>
-        <div className="join-div">
-          <label htmlFor="passwordCheck">비밀번호 확인</label>
-          <Input
-            type="password"
-            id="passwordCheck"
-            value={passwordCheck}
-            onChange={(e) => {
-              formik.handleChange(e);
-              handlePasswordCheckChange(e);
-            }}
-            placeholder="비밀번호 확인"
-          />
-          <div className="join-errormessage">{passwordCheckError}</div>
-        </div>
-        <div className="join-div">
-          <label htmlFor="name">이름</label>
-          <Input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => {
-              formik.handleChange(e);
-              handleNameChange(e);
-            }}
-            placeholder="이름을 입력해주세요"
-          />
-          <div className="join-errormessage">{nameError}</div>
-        </div>
-        <div className="join-div">
-          <label htmlFor="phone">전화번호</label>
-          <Input
-            type="text"
-            id="phone"
-            value={phone}
-            onChange={(e) => {
-              formik.handleChange(e);
-              handlePhoneChange(e);
-            }}
-            placeholder="010-0000-0000"
-          />
-          <div className="join-errormessage">{phoneError}</div>
-        </div>
-        <Button
-          htmlType="submit"
-          disabled={!isFormValid} // 각 입력의 유효성 상태에 기반하여 버튼을 활성화/비활성화
-        >
-          가입하기
-        </Button>
       </form>
     </JoinFormStyled>
   );
