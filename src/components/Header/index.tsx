@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { HeaderStyled } from "./styled";
+import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
 
 // 로고 이미지
@@ -12,8 +12,6 @@ import closeIcon from "@/assets/images/closeIcon.png";
 
 const Main = () => {
   const router = useRouter();
-
-  // 토글 열기
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
   const handleToggleClick = () => {
@@ -21,59 +19,66 @@ const Main = () => {
   };
 
   return (
-    <HeaderStyled className={clsx("main-wrap")}>
-      <div
-        className="toggleInfo"
-        style={{ display: isToggleOpen ? "block" : "none" }}
-      >
-        <div className="imageContainer">
-          <Image
-            src={toggleLogo}
-            alt="platora logo image"
-            width={200}
-            height={40}
-          />
-          <Image
-            src={closeIcon}
-            alt="close icon"
-            onClick={handleToggleClick}
-            width={40}
-            height={40}
-            style={{ cursor: "pointer" }}
-          />
+    <>
+      {isToggleOpen && <Overlay onClick={handleToggleClick} />}
+
+      <HeaderStyled className={clsx("main-wrap")}>
+        <div className={`toggleInfo ${isToggleOpen ? "open" : ""}`}>
+          <div className="imageContainer">
+            <div className="toggleLogoImg">
+              <Image
+                src={toggleLogo}
+                alt="platora logo image"
+                layout="responsive"
+              />
+            </div>
+            <Image
+              src={closeIcon}
+              alt="close icon"
+              onClick={handleToggleClick}
+              width={40}
+              height={40}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+
+          <hr />
+
+          <div className="categoryContainer">
+            <h2> Grade 1</h2>
+          </div>
         </div>
 
-        <div className="categoryContainer"></div>
-      </div>
+        {/* 네비게이션 바 */}
+        <div className="main-container">
+          <div className="toggleBtn" onClick={handleToggleClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
 
-      {/* 네비게이션 바 */}
-      <div className="main-container">
-        <div className="toggleBtn" onClick={handleToggleClick}>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+          <div
+            className="logoImg"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            <Image src={logo} alt="platora logo image" layout="responsive" />
+          </div>
 
-        <div
-          className="logoImg"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          <Image src={logo} alt="platora logo image" width={280} height={50} />
+          <div
+            className="signUp"
+            onClick={() => {
+              router.push("/login");
+            }}
+          >
+            <div className="userIcon">
+              <Image src={userIcon} alt="user icon" layout="responsive" />
+            </div>
+          </div>
         </div>
-
-        {/* 로그인 상태 유무 체크 */}
-        <div
-          className="signUp"
-          onClick={() => {
-            router.push("/join");
-          }}
-        >
-          <Image src={userIcon} alt="user icon" width={50} height={35} />
-        </div>
-      </div>
-    </HeaderStyled>
+      </HeaderStyled>
+    </>
   );
 };
 

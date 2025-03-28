@@ -1,25 +1,20 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { MyPageStyled } from "./styled";
+import StickyMenu from "@/components/StickyMenu";
+import MyAccount from "@/features/MyPageManeger/MyAccount";
+
 const Main = () => {
   const router = useRouter();
-  // const id:number = 2 변수 선언 예시
+
   return (
     <MyPageStyled className={clsx("main-wrap")}>
       <div className="main-container">
-        <div
-          onClick={() => {
-            router.push("/login");
-          }}
-        >
-          login
+        <div className="leftContainer">
+          <StickyMenu pageInfo={"myPage"} />
         </div>
-        <div
-          onClick={() => {
-            router.push("/join");
-          }}
-        >
-          join
+        <div className="mainContent">
+          <MyAccount />
         </div>
       </div>
     </MyPageStyled>

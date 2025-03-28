@@ -6,15 +6,30 @@ export const HeaderStyled = styled.div`
     background-color: #262626;
     position: relative;
 
-    // 토글 내용
+    /* 토글 내용 */
     .toggleInfo {
-      position: absolute;
+      position: fixed;
       top: 0;
-      width: 500px;
+      left: 0;
+      width: 100%;
+      max-width: 500px;
       height: 100vh;
+      padding: 10px;
       background-color: #262626;
       z-index: 1001;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
       clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+
+      /* 토글 슬라이드 */
+      &.open {
+        transform: translateX(0);
+      }
+    }
+
+    hr {
+      margin: 10px;
+      width: 95%;
     }
 
     .imageContainer {
@@ -25,7 +40,14 @@ export const HeaderStyled = styled.div`
       justify-content: space-between;
     }
 
-    // 네비게이션 바
+    .toggleLogoImg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 40px;
+    }
+
     .main-container {
       display: flex;
       align-items: center;
@@ -33,7 +55,6 @@ export const HeaderStyled = styled.div`
       padding: 10px 30px;
     }
 
-    // 토글 버튼
     .toggleBtn {
       width: 30px;
       height: 20px;
@@ -52,6 +73,15 @@ export const HeaderStyled = styled.div`
       transition: 0.3s;
     }
 
+    /* 토글 안 카테고리 */
+    .categoryContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      color: white;
+    }
+
     /* 글리치 효과 */
     .toggleBtn div::before,
     .toggleBtn div::after {
@@ -68,12 +98,12 @@ export const HeaderStyled = styled.div`
 
     .toggleBtn div::before {
       transform: translateX(-2px);
-      background-color: cyan; /* 글리치 색상 */
+      background-color: cyan;
     }
 
     .toggleBtn div::after {
       transform: translateX(2px);
-      background-color: red; /* 글리치 색상 */
+      background-color: red;
     }
 
     /* 호버 시 글리치 효과 강조 */
@@ -85,10 +115,70 @@ export const HeaderStyled = styled.div`
       transform: translateX(5px);
     }
 
-    // 로고 이미지, 유저 아이콘
     .signUp,
     .logoImg {
       cursor: pointer;
     }
+
+    .logoImg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 250px;
+      height: 50px;
+    }
+
+    .userIcon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 35px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .logoImg {
+        width: 150px;
+        height: 30px;
+      }
+
+      .userIcon {
+        width: 35px;
+        height: 15px;
+      }
+
+      .toggleInfo {
+        max-width: 300px;
+      }
+
+      .toggleLogoImg {
+        width: 150px;
+        height: 20px;
+      }
+    }
+
+    @media screen and (max-width: 560px) {
+      .toggleInfo {
+        max-width: 230px;
+      }
+
+      .toggleLogoImg {
+        width: 120px;
+        height: 15px;
+      }
+    }
   }
+`;
+
+/* 오버레이 */
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
 `;
