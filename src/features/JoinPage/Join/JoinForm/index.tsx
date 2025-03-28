@@ -4,27 +4,13 @@ import clsx from "clsx";
 import { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-// 유효성 검사 함수들
-const validateEmail = (email: string) => {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,4}$/;
-  return regex.test(email);
-};
-
-const validatePassword = (password: string) => {
-  const isLengthValid = password.length >= 10;
-  const hasLowerCase = /[a-z]/.test(password);
-  const hasNumber = /[0-9]/.test(password);
-  const hasSpecialChar = /[^a-zA-Z0-9]/.test(password); // 특수문자 확인
-  return isLengthValid && hasLowerCase && hasNumber && hasSpecialChar;
-};
-
-const validatePhone = (phone: string) => {
-  return phone.length === 13; // 전화번호 길이 체크 (xxx-xxxx-xxxx 형태)
-};
-
-const validateName = (name: string) => {
-  return name.length > 1;
-};
+import { Router, useRouter } from "next/router";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validatePhone,
+} from "@/util/validation";
 
 const JoinForm = () => {
   const [email, setEmail] = useState("");
@@ -180,7 +166,7 @@ const JoinForm = () => {
             <div className="join-errormessage">{passwordCheckError}</div>
           </div>
           <div className="join-div">
-            <label htmlFor="name">이름</label>
+            <label htmlFor="name">이sss름</label>
             <Input
               type="text"
               id="name"

@@ -6,7 +6,7 @@ export const FooterStyled = styled.div`
     bottom: 0;
     display: flex;
     width: 100%;
-    height: 300px;
+    height: auto;
     padding: 30px 15px;
     background-color: #262626;
 
@@ -21,6 +21,25 @@ export const FooterStyled = styled.div`
         flex-direction: column;
         margin-top: 35px;
         gap: 10px;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 20px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .social-icons {
+        margin-top: 30px;
+        align-items: center;
       }
     }
   }

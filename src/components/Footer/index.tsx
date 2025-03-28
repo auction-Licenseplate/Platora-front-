@@ -5,6 +5,9 @@ import Image from "next/image";
 
 // 이미지
 import logo from "@/assets/images/Logo_plotora(white).png";
+import facebook from "@/assets/images/facebookIcon.png";
+import twitter from "@/assets/images/twitterIcon.png";
+import instagram from "@/assets/images/instagramIcon.png";
 
 const Main = () => {
   const router = useRouter();
@@ -22,20 +25,37 @@ const Main = () => {
             <p> © 2025 (주) platora. All Rights Reserved. </p>
           </div>
         </div>
-
         <div className="social-icons">
-          <a href="https://www.facebook.com/platora" target="_blank">
-            <img src="path_to_facebook_icon.png" alt="Facebook" />
-          </a>
-          <a href="https://twitter.com/platora" target="_blank">
-            <img src="path_to_twitter_icon.png" alt="Twitter" />
-          </a>
-          <a href="https://www.instagram.com/platora" target="_blank">
-            <img src="path_to_instagram_icon.png" alt="Instagram" />
-          </a>
-          <a href="https://www.linkedin.com/company/platora" target="_blank">
-            <img src="path_to_linkedin_icon.png" alt="LinkedIn" />
-          </a>
+          <Image
+            src={facebook}
+            alt="Facebook"
+            onClick={() => {
+              router.push("https://www.facebook.com/?locale=ko_KR");
+            }}
+            width={30}
+            height={30}
+            style={{ cursor: "pointer" }}
+          />
+          <Image
+            src={twitter}
+            alt="Twitter"
+            onClick={() => {
+              router.push("https://x.com/?lang=ko");
+            }}
+            width={30}
+            height={30}
+            style={{ cursor: "pointer" }}
+          />
+          <Image
+            src={instagram}
+            alt="Instagram"
+            onClick={() => {
+              router.push("https://www.instagram.com/");
+            }}
+            width={30}
+            height={30}
+            style={{ cursor: "pointer" }}
+          />
         </div>
       </div>
     </FooterStyled>
