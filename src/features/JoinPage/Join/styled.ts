@@ -5,7 +5,7 @@ export const JoinStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 100px;
     font-size: 20px;
     font-weight: 700;
   }

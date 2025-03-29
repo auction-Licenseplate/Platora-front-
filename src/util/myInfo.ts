@@ -50,6 +50,23 @@ export const myInfo = (info: string) => {
   // 반환할 포인트 모달창 여닫기
   const [refundModalOpen, setRefundModalOpen] = useState(false);
 
+  // 테이블 모달창 여닫기
+  const [tableModalOpen, setTableModalOpen] = useState(false);
+  const [tableData, setTableData] = useState([]);
+
+  // 테이블 타입 받기
+  const [modalType, setModalType] = useState("");
+
+  // 테이블 데이터 받기
+  const [refundTableData, setRefundTableData] = useState([]);
+  const [vehicleTableData, setVehicleTableData] = useState([]);
+
+  // 테이블 컬럼
+  const columns = [
+    { title: "항목", dataIndex: "item", key: "item" },
+    { title: "상세", dataIndex: "state", key: "state" },
+  ];
+
   // 비밀번호
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -61,19 +78,25 @@ export const myInfo = (info: string) => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordCheckError, setPasswordCheckError] = useState("");
 
+  // 차량 input 비어있는지 확인
+  const [vehicleNumber, setVehicleNumber] = useState(""); // 차량 번호 상태
+  const [file, setFile] = useState(null); // 파일 상태
+
+  const FileUpload = (file: any) => {
+    setFile(file); // 파일 상태 업데이트
+  };
+
+  const handleVehicleNumberChange = (e: any) => {
+    setVehicleNumber(e.target.value); // 차량 번호 상태 업데이트
+  };
+
   const formattedPoint = userInfo.point
     ? userInfo.point.toLocaleString("ko-KR") + " point"
     : "0 point";
 
-  // 반환하기 클릭
-  const handleRefundClick = () => {
-    setRefundModalOpen(true);
-  };
-
   // 포인트 반환 요청
   const handleRefundModalOk = () => {
     const token = Cookies.get("token");
-
     if (refundDetails.refundPoint <= 0) {
       Modal.error({
         content: "반환할 포인트는 0보다 큰 값이어야 합니다.",
@@ -185,6 +208,70 @@ export const myInfo = (info: string) => {
     setPasswordCheckError(isValid ? "" : "비밀번호가 일치하지 않습니다.");
   };
 
+  // 반환 데이터 요청 -> 해당 유저의 refund_amount 랑 환불 성공 여부! < 이것도 추가해야 할 것 같아!!
+  const fetchRefundData = async () => {
+    // try {
+    //   const response = await axios.get("http://localhost:5000/pay/refundData", {
+    //     headers: {
+    //       Authorization: `Bearer ${Cookies.get("token")}`,
+    //     },
+    //   });
+    //   setRefundTableData(response.data);
+    // } catch (error) {
+    //   console.error("Util -> myInfo(fetchRefundData) 오류:", error);
+    // }
+  };
+
+  // vehicle 데이터 요청 -> plate_num, ownership_statu 두 개 보내줘!
+  const fetchVehicleData = async () => {
+    // try {
+    //   const response = await axios.get(
+    //     "http://localhost:5000/vehicles/vehicleData",
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${Cookies.get("token")}`,
+    //       },
+    //     }
+    //   );
+    //   setVehicleTableData(response.data);
+    // } catch (error) {
+    //   console.error("Util -> myInfo(fetchVehicleData) 오류:", error);
+    // }
+  };
+
+  // 테이블 타입에 따라 데이터 받기
+  const handleTableModalOpen = (type: string) => {
+    setModalType(type);
+    if (type === "refund") {
+      fetchRefundData();
+    } else if (type === "vehicle") {
+      fetchVehicleData();
+    }
+    setTableModalOpen(true);
+  };
+
+  // 파일 저장 -> users 테이블에 certificate 부분 파일 저장! multer 로 저장한다고 해놨어!
+  const handleFileUpload = async (file: any) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      // const response = await axios.post(
+      //   "http://localhost:5000/users/upload",
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   }
+      // );
+      // console.log("파일 업로드 성공:", response.data);
+      console.log("파일 업로드");
+    } catch (error) {
+      console.error("파일 업로드 실패:", error);
+    }
+  };
+
   return {
     userInfo,
     setUserInfo,
@@ -192,7 +279,6 @@ export const myInfo = (info: string) => {
     setIsEditable,
     cardCompanies,
     formattedPoint,
-    handleRefundClick,
     handleRefundModalOk,
     handleRefundPointChange,
     setMaxRefundPoint,
@@ -209,5 +295,23 @@ export const myInfo = (info: string) => {
     passwordCheckError,
     handlePasswordChange,
     handlePasswordCheckChange,
+    handleFileUpload,
+    tableModalOpen,
+    setTableModalOpen,
+    tableData,
+    setTableData,
+    columns,
+    handleTableModalOpen,
+    modalType,
+    setModalType,
+    refundTableData,
+    vehicleTableData,
+
+    vehicleNumber,
+    setVehicleNumber,
+    file,
+    setFile,
+    FileUpload,
+    handleVehicleNumberChange,
   };
 };

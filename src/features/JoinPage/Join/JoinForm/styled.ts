@@ -31,6 +31,7 @@ export const JoinFormStyled = styled.div`
       justify-content: center;
       flex-direction: column;
     }
+
     .joinForm-btnDiv {
       display: flex;
       justify-content: center;

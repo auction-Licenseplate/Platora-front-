@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
@@ -13,6 +13,18 @@ import closeIcon from "@/assets/images/closeIcon.png";
 const Main = () => {
   const router = useRouter();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsToggleOpen(false); // 페이지가 변경될 때마다 토글 닫기
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router.events]);
 
   const handleToggleClick = () => {
     setIsToggleOpen(!isToggleOpen);
@@ -30,6 +42,7 @@ const Main = () => {
                 src={toggleLogo}
                 alt="platora logo image"
                 layout="responsive"
+                priority
               />
             </div>
             <Image
@@ -46,6 +59,28 @@ const Main = () => {
 
           <div className="categoryContainer">
             <h2> Grade 1</h2>
+
+            <h2
+              onClick={() => {
+                router.push("/join");
+              }}
+            >
+              join
+            </h2>
+            <h2
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              login
+            </h2>
+            <h2
+              onClick={() => {
+                router.push("/myPage");
+              }}
+            >
+              mypage
+            </h2>
           </div>
         </div>
 

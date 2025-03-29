@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const MyInfoStyled = styled.div`
   &.main-wrap {
+    margin-top: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,6 +30,7 @@ export const MyInfoStyled = styled.div`
           align-items: center;
           justify-content: center;
           gap: 10px;
+          position: relative;
 
           h3 {
             width: 150px;
@@ -36,12 +38,31 @@ export const MyInfoStyled = styled.div`
 
           .input {
             width: 70%;
+            border: none;
+          }
 
-            &:read-only {
-              pointer-events: none;
-              background-color: rgba(255, 255, 255, 0.67);
+          .fileInput {
+            cursor: pointer;
+          }
+
+          .upLoad {
+            width: 100%;
+            display: flex;
+            gap: 30px;
+          }
+
+          .upLoad Button {
+            border: none;
+
+            &:hover {
+              border: none;
+              color: black;
             }
           }
+        }
+
+        .readOnly:read-only {
+          pointer-events: none;
         }
 
         .passBtn {
@@ -52,6 +73,10 @@ export const MyInfoStyled = styled.div`
           cursor: pointer;
           font-weight: bold;
           transition: all 0.3s ease;
+        }
+
+        .passBtn:disabled {
+          pointer-events: none;
         }
 
         .passBtn:hover {
@@ -69,16 +94,20 @@ export const MyInfoStyled = styled.div`
           width: 200px;
         }
 
-        .inputAlert {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
+        .alert {
+          position: absolute;
+          top: 35px;
+          left: 160px;
+          font-size: small;
+          color: rgb(185, 1, 1);
+        }
 
-          .alert {
-            position: absolute;
-            font-size: small;
-            color: rgb(216, 37, 37);
-          }
+        .alertCheck {
+          position: absolute;
+          top: 45px;
+          left: 160px;
+          font-size: small;
+          color: rgb(185, 1, 1);
         }
       }
     }

@@ -49,10 +49,15 @@ export const HeaderStyled = styled.div`
     }
 
     .main-container {
+      position: fixed;
+      width: 100%;
+      top: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 30px;
+      background-color: #262626;
+      z-index: 1000;
     }
 
     .toggleBtn {
