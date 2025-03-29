@@ -57,7 +57,7 @@ const Main = ({ info }: Props) => {
     refundPoint: 0,
   });
 
-  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
+  const [refundModalOpen, setrefundModalOpen] = useState(false);
 
   useEffect(() => {
     // const token = Cookies.get("token");
@@ -101,38 +101,34 @@ const Main = ({ info }: Props) => {
 
   // 첫 번째 모달 (반환하기 확인)
   const handleRefundClick = () => {
-    // 첫 번째 모달을 띄우는 방식
-    setIsRefundModalOpen(true);
-  };
-
-  const handleRefundModalCancel = () => {
-    setIsRefundModalOpen(false); // 두 번째 모달 닫기
+    setrefundModalOpen(true);
   };
 
   const handleRefundModalOk = () => {
     if (refundDetails.refundPoint <= 0) {
       modal.error({
-        title: "포인트 반환 오류",
         content: "반환할 포인트는 0보다 큰 값이어야 합니다.",
       });
       return;
     }
-    axios
-      .post("http://localhost:5000/auth/refund-point", refundDetails)
-      .then((response) => {
-        console.log("포인트 반환 처리됨", response.data);
-        setIsRefundModalOpen(false); // 모달 닫기
-        modal.success({
-          title: "포인트 반환이 완료되었습니다.",
-        });
-      })
-      .catch((error) => {
-        console.error("포인트 반환 처리 오류:", error);
-        modal.error({
-          title: "포인트 반환에 실패했습니다.",
-          content: "문제가 발생했습니다. 다시 시도해주세요.",
-        });
-      });
+
+    setrefundModalOpen(false);
+    // axios
+    //   .post("http://localhost:5000/auth/refund-point", refundDetails)
+    //   .then((response) => {
+    //     console.log("포인트 반환 처리됨", response.data);
+    //     setrefundModalOpen(false); // 모달 닫기
+    //     modal.success({
+    //       title: "포인트 반환이 완료되었습니다.",
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error("포인트 반환 처리 오류:", error);
+    //     modal.error({
+    //       title: "포인트 반환에 실패했습니다.",
+    //       content: "문제가 발생했습니다. 다시 시도해주세요.",
+    //     });
+    //   });
   };
 
   // 반환할 포인트가 바뀔 때마다 처리
@@ -249,13 +245,20 @@ const Main = ({ info }: Props) => {
 
       <Modal
         title="포인트 반환"
-        open={isRefundModalOpen}
+        open={refundModalOpen}
         onOk={handleRefundModalOk}
-        onCancel={() => setIsRefundModalOpen(false)}
+        onCancel={() => setrefundModalOpen(false)}
+        okButtonProps={{
+          disabled: !(
+            refundDetails.account &&
+            refundDetails.cardCompany &&
+            refundDetails.refundPoint
+          ),
+        }}
       >
         <div className="refund-form">
-          <div className="inputs">
-            <h2>계좌번호</h2>
+          <div className="input-group">
+            <label>계좌번호</label>
             <Input
               className="input"
               placeholder="계좌번호 (숫자, -만 허용)"
