@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { MyInfoStyled } from "./styled";
 import { Input, Modal, Select } from "antd";
 import Cookies from "js-cookie";
+import axios from "axios";
 import { myInfo } from "@/util/myInfo";
 
 interface Props {
@@ -31,6 +31,12 @@ const Main = ({ info }: Props) => {
     refundModalOpen,
     refundDetails,
     setRefundModalOpen,
+    password,
+    passwordCheck,
+    passwordError,
+    passwordCheckError,
+    handlePasswordChange,
+    handlePasswordCheckChange,
   } = myInfo(info);
 
   useEffect(() => {
@@ -39,27 +45,27 @@ const Main = ({ info }: Props) => {
       console.error("토큰이 없음");
       return;
     }
-    // if (info === "myInfo" || info === "point") {
-    //   axios
-    //     .get("http://localhost:5000/auth/user-info", {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       setUserInfo(response.data);
-    //     })
-    //     .catch((e) => {
-    //       console.error("features -> myInfo(내 정보) 오류 : ", e);
-    //     });
-    // } else if (info === "changePass") {
-    //   axios
-    //     .get("http://localhost:5000/auth/passCheck", {
-    //       headers: { Authorization: `Bearer ${token}` },
-    //     })
-    //     .then((response) => setIsEditable(response.data.provider === ""))
-    //     .catch((e) => console.error("정보 가져오기 오류:", e));
-    // }
+    if (info === "myInfo" || info === "point") {
+      axios
+        .get("http://localhost:5000/users/user-info", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((e) => {
+          console.error("features -> myInfo(내 정보) 오류 : ", e);
+        });
+    } else if (info === "changePass") {
+      axios
+        .get("http://localhost:5000/users/passCheck", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => setIsEditable(response.data.provider === ""))
+        .catch((e) => console.error("정보 가져오기 오류:", e));
+    }
   }, []);
 
   return (
@@ -71,7 +77,7 @@ const Main = ({ info }: Props) => {
             <h1> 내 정보 </h1>
             <div className="inputContainer">
               <div className="inputs">
-                <h2>이름</h2>
+                <h3>이름</h3>
                 <Input
                   className="input"
                   placeholder="이름"
@@ -80,7 +86,7 @@ const Main = ({ info }: Props) => {
                 />
               </div>
               <div className="inputs">
-                <h2>전화번호</h2>
+                <h3>전화번호</h3>
                 <Input
                   className="input"
                   placeholder="전화번호"
@@ -89,7 +95,7 @@ const Main = ({ info }: Props) => {
                 />
               </div>
               <div className="inputs">
-                <h2>이메일</h2>
+                <h3>이메일</h3>
                 <Input
                   className="input"
                   placeholder="이메일"
@@ -105,7 +111,7 @@ const Main = ({ info }: Props) => {
             <h1> 포인트 충전 </h1>
             <div className="inputContainer">
               <div className="inputs">
-                <h2>포인트</h2>
+                <h3>포인트</h3>
                 <Input
                   className="input"
                   placeholder="포인트"
@@ -115,7 +121,7 @@ const Main = ({ info }: Props) => {
               </div>
               <div className="pointInfos">
                 <p onClick={handleRefundClick}>반환하기</p>
-                <p onClick={handleRefundClick}>내역보기</p>
+                <p>내역보기</p>
               </div>
             </div>
           </>
@@ -124,16 +130,34 @@ const Main = ({ info }: Props) => {
             <h1> 비밀번호 변경 </h1>
             <div className="inputContainer">
               <div className="inputs">
-                <h2>비밀번호</h2>
-                <Input className="input" placeholder="비밀번호를 입력하세요" />
+                <h3>비밀번호</h3>
+                <div className="inputAlert">
+                  <Input
+                    className="input"
+                    placeholder="비밀번호를 입력하세요"
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                  <p className="alert">{passwordError}</p>
+                </div>
               </div>
               <div className="inputs">
-                <h2>비밀번호 재확인</h2>
-                <Input
-                  className="input"
-                  placeholder="비밀번호를 다시 입력하세요"
-                />
+                <h3>
+                  비밀번호 <br /> 확인
+                </h3>
+                <div className="inputAlert">
+                  <Input
+                    className="input"
+                    placeholder="비밀번호를 다시 입력하세요"
+                    type="password"
+                    value={passwordCheck}
+                    onChange={handlePasswordCheckChange}
+                  />
+                  <p className="alert">{passwordCheckError}</p>
+                </div>
               </div>
+              <button className="passBtn"> 변경하기 </button>
             </div>
           </>
         ) : info === "vehicle" ? (

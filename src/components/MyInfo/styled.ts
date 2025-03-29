@@ -17,7 +17,7 @@ export const MyInfoStyled = styled.div`
         width: 80%;
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
+        align-items: center;
         gap: 30px;
         background-color: rgba(255, 255, 255, 0.45);
         padding: 50px;
@@ -30,8 +30,8 @@ export const MyInfoStyled = styled.div`
           justify-content: center;
           gap: 10px;
 
-          h2 {
-            width: 100px;
+          h3 {
+            width: 150px;
           }
 
           .input {
@@ -44,8 +44,22 @@ export const MyInfoStyled = styled.div`
           }
         }
 
+        .passBtn {
+          width: 200px;
+          padding: 5px 10px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+          font-weight: bold;
+          transition: all 0.3s ease;
+        }
+
+        .passBtn:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
         .pointInfos {
-          margin-right: 20px;
           cursor: pointer;
           display: flex;
           gap: 30px;
@@ -53,6 +67,18 @@ export const MyInfoStyled = styled.div`
 
         .input-group Select {
           width: 200px;
+        }
+
+        .inputAlert {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+
+          .alert {
+            position: absolute;
+            font-size: small;
+            color: rgb(216, 37, 37);
+          }
         }
       }
     }

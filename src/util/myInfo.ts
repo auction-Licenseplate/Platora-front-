@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Modal } from "antd";
+import axios from "axios";
+import modal from "antd/es/modal";
+import Cookies from "js-cookie";
 
 // 유저 정보 타입 정의
 export interface UserInfo {
@@ -47,8 +50,16 @@ export const myInfo = (info: string) => {
   // 반환할 포인트 모달창 여닫기
   const [refundModalOpen, setRefundModalOpen] = useState(false);
 
+  // 비밀번호
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
   // 비밀번호 input 활성화, 비활성화
   const [isEditable, setIsEditable] = useState(false);
+
+  // 비밀번호 에러 메시지
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordCheckError, setPasswordCheckError] = useState("");
 
   const formattedPoint = userInfo.point
     ? userInfo.point.toLocaleString("ko-KR") + " point"
@@ -61,30 +72,34 @@ export const myInfo = (info: string) => {
 
   // 포인트 반환 요청
   const handleRefundModalOk = () => {
+    const token = Cookies.get("token");
+
     if (refundDetails.refundPoint <= 0) {
       Modal.error({
         content: "반환할 포인트는 0보다 큰 값이어야 합니다.",
       });
       return;
     }
-
-    setRefundModalOpen(false);
-    // axios
-    //   .post("http://localhost:5000/auth/refund-point", refundDetails)
-    //   .then((response) => {
-    //     console.log("포인트 반환 처리됨", response.data);
-    //     setrefundModalOpen(false); // 모달 닫기
-    //     modal.success({
-    //       title: "포인트 반환이 완료되었습니다.",
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error("포인트 반환 처리 오류:", error);
-    //     modal.error({
-    //       title: "포인트 반환에 실패했습니다.",
-    //       content: "문제가 발생했습니다. 다시 시도해주세요.",
-    //     });
-    //   });
+    axios
+      .post("http://localhost:5000/pay/refund-point", refundDetails, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("포인트 반환 처리됨", response.data);
+        setRefundModalOpen(false); // 모달 닫기
+        modal.success({
+          title: "포인트 반환이 완료되었습니다.",
+        });
+      })
+      .catch((error) => {
+        console.error("포인트 반환 처리 오류:", error);
+        modal.error({
+          title: "포인트 반환에 실패했습니다.",
+          content: "문제가 발생했습니다. 다시 시도해주세요.",
+        });
+      });
   };
 
   // 포인트 유효성 검사
@@ -141,6 +156,35 @@ export const myInfo = (info: string) => {
     });
   };
 
+  // 비밀번호 유효성 조건
+  const validatePassword = (password: string) => {
+    const isLengthValid = password.length >= 10;
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[^a-zA-Z0-9]/.test(password); // 특수문자 확인
+    return isLengthValid && hasLowerCase && hasNumber && hasSpecialChar;
+  };
+
+  // 비밀번호 유효성 검사
+  const handlePasswordChange = (e: any) => {
+    const value = e.target.value;
+    setPassword(value);
+    const isValid = validatePassword(value);
+    setPasswordError(
+      isValid
+        ? ""
+        : "비밀번호는 최소한 10자 이상, 숫자, 특수문자를 포함해야 합니다."
+    );
+  };
+
+  // 비밀번호 재확인
+  const handlePasswordCheckChange = (e: any) => {
+    const value = e.target.value;
+    setPasswordCheck(value);
+    const isValid = value === password;
+    setPasswordCheckError(isValid ? "" : "비밀번호가 일치하지 않습니다.");
+  };
+
   return {
     userInfo,
     setUserInfo,
@@ -157,5 +201,13 @@ export const myInfo = (info: string) => {
     refundModalOpen,
     refundDetails,
     setRefundModalOpen,
+    password,
+    setPassword,
+    passwordCheck,
+    setPasswordCheck,
+    passwordError,
+    passwordCheckError,
+    handlePasswordChange,
+    handlePasswordCheckChange,
   };
 };
