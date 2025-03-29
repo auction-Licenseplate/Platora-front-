@@ -9,7 +9,7 @@ const Main = () => {
 
   return (
     <MyPageStyled className={clsx("main-wrap")}>
-      <div className="main-container">
+      <div className="mainContainer">
         <div className="leftContainer">
           <StickyMenu pageInfo={"myPage"} />
         </div>

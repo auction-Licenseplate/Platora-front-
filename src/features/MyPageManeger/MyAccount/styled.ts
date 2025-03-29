@@ -9,6 +9,7 @@ export const MyAccountStyled = styled.div`
 
     .main-container {
       display: flex;
+      align-items: center;
       gap: 30px;
       padding: 10px;
       width: 100%;

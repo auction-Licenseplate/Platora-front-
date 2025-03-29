@@ -44,9 +44,15 @@ export const MyInfoStyled = styled.div`
           }
         }
 
-        .returnPoint {
+        .pointInfos {
           margin-right: 20px;
           cursor: pointer;
+          display: flex;
+          gap: 30px;
+        }
+
+        .input-group Select {
+          width: 200px;
         }
       }
     }

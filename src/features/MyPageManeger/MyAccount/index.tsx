@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { MyAccountStyled } from "./styled";
-import MyInfo from "@/features/MyPageManeger/MyInfo";
+import MyInfo from "@/components/MyInfo";
 
 const Main = () => {
   const router = useRouter();
@@ -12,6 +12,8 @@ const Main = () => {
         <div className="myInfoContainer">
           <MyInfo info={"myInfo"} />
           <MyInfo info={"point"} />
+          <MyInfo info={"changePass"} />
+          <MyInfo info={"vehicle"} />
         </div>
       </div>
     </MyAccountStyled>
