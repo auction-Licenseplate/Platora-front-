@@ -11,6 +11,9 @@ import Image from "next/image";
 
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
+const TOSS_CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
+const TOSS_SECRET_KEY = process.env.NEXT_PUBLIC_TOSS_SECRET_KEY;
+
 // 이미지
 import accountLogo from "@/assets/images/accountLogo.png";
 import pointLogo from "@/assets/images/pointLogo.png";
@@ -37,35 +40,23 @@ const fetchUserInfo = async (token: string) => {
 
 const handleTossPayment = async (userInfo: any) => {
   try {
-    const token = Cookies.get("token");
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
+    // const token = Cookies.get("token");
+    // if (!token) {
+    //   alert("로그인이 필요합니다.");
+    //   return;
+    // }
 
-    const amount = 5000; // 충전 금액
+    const amount = 5000;
     const orderId = `order-${Date.now()}`;
+    const userId = Cookies.get("userId");
     const orderName = "포인트 충전";
 
-    // 백엔드에 결제 준비 요청
-    const { data } = await axios.post(
-      "http://localhost:5000/payments/ready",
-      { amount },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const toss = await loadTossPayments(TOSS_CLIENT_KEY as string);
 
-    const clientKey = data.clientKey;
-
-    // TossPayments 객체 로드
-    const toss = await loadTossPayments(clientKey);
-
-    // userInfo가 존재하는지 확인
-    if (!userInfo || !userInfo.name) {
-      alert("사용자 정보가 없습니다.");
-      return;
-    }
+    // if (!userInfo || !userInfo.name) {
+    //   alert("사용자 정보가 없습니다.");
+    //   return;
+    // }
 
     // 결제 요청
     toss.requestPayment("카드", {
@@ -73,8 +64,8 @@ const handleTossPayment = async (userInfo: any) => {
       orderId,
       orderName,
       customerName: userInfo.name,
-      successUrl: `${window.location.origin}/payment/success?orderId=${orderId}&amount=${amount}`,
-      failUrl: `${window.location.origin}/payment/fail`,
+      successUrl: `http://localhost:3000/payment/success?orderId=${orderId}&amount=${amount}$userId=${userId}`,
+      failUrl: `http://localhost:3000/payment/fail`,
     });
   } catch (error) {
     console.error("결제 요청 중 오류:", error);
