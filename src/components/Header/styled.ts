@@ -125,6 +125,11 @@ export const HeaderStyled = styled.div`
       cursor: pointer;
     }
 
+    .signUp {
+      display: flex;
+      gap: 10px;
+    }
+
     .logoImg {
       display: flex;
       align-items: center;
@@ -137,8 +142,8 @@ export const HeaderStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 35px;
+      width: 40px;
+      height: 25px;
     }
 
     @media screen and (max-width: 768px) {

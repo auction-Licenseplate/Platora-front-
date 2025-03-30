@@ -20,17 +20,42 @@ export const MyPageStyled = styled.div`
 
       .leftContainer {
         width: 30%;
-        height: 200px;
+        height: auto;
         position: sticky;
-        top: 100px;
-        background-color: rgba(255, 255, 255, 0.45);
-        border-radius: 15px;
-        padding: 15px;
+        align-items: center;
+        display: flex;
+        top: 70px;
+        margin-bottom: 30px;
         z-index: 10;
+      }
+
+      .line {
+        width: 1px;
+        margin-top: 50px;
+        height: 450px;
+        background-color: rgba(255, 255, 255, 0.5);
       }
 
       .mainContent {
         width: 70%;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .leftContainer,
+      .line {
+        display: none !important;
+      }
+
+      .mainContent {
+        width: 100% !important;
+        padding: 20px !important;
+      }
+    }
+
+    @media screen and (max-width: 590px) {
+      .mainContent {
+        padding: 0px !important;
       }
     }
   }

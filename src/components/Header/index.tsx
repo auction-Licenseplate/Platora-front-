@@ -3,16 +3,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 // 로고 이미지
 import logo from "@/assets/images/Logo_plotora(black).png";
 import toggleLogo from "@/assets/images/Logo_plotora(white).png";
 import userIcon from "@/assets/images/userIcon.png";
 import closeIcon from "@/assets/images/closeIcon.png";
+import favoriteIcon from "@/assets/images/favoriteIcon.png";
+import logoutIcon from "@/assets/images/logoutIcon.png";
 
-const Main = () => {
+const Header = () => {
   const router = useRouter();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
+
+  const token = Cookies.get("token");
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -76,7 +81,10 @@ const Main = () => {
             </h2>
             <h2
               onClick={() => {
-                router.push("/myPage");
+                router.push({
+                  pathname: "/myPage",
+                  query: { menu: "myInfo" },
+                });
               }}
             >
               mypage
@@ -101,15 +109,48 @@ const Main = () => {
             <Image src={logo} alt="platora logo image" layout="responsive" />
           </div>
 
-          <div
-            className="signUp"
-            onClick={() => {
-              router.push("/login");
-            }}
-          >
-            <div className="userIcon">
-              <Image src={userIcon} alt="user icon" layout="responsive" />
-            </div>
+          <div className="signUp">
+            {token ? (
+              <>
+                <div className="userIcon">
+                  <Image
+                    src={userIcon}
+                    alt="user icon"
+                    layout="responsive"
+                    onClick={() => {
+                      router.push("/login");
+                    }}
+                  />
+                </div>
+                <div className="userIcon">
+                  <Image
+                    src={favoriteIcon}
+                    alt="favorite icon"
+                    layout="responsive"
+                  />
+                </div>
+                <div className="userIcon">
+                  <Image
+                    src={logoutIcon}
+                    alt="logout icon"
+                    layout="responsive"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="userIcon">
+                  <Image
+                    src={userIcon}
+                    alt="user icon"
+                    layout="responsive"
+                    onClick={() => {
+                      router.push("/login");
+                    }}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </HeaderStyled>
@@ -117,4 +158,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Header;

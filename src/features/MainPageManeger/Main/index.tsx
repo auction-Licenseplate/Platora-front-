@@ -23,7 +23,10 @@ const Main = () => {
         </div>
         <div
           onClick={() => {
-            router.push("/myPage");
+            router.push({
+              pathname: "/myPage",
+              query: { menu: "myInfo" },
+            });
           }}
         >
           myPage

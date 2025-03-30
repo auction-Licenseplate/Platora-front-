@@ -9,6 +9,8 @@ import { myInfo } from "@/util/myInfo";
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 
+import { loadTossPayments } from "@tosspayments/payment-sdk";
+
 // 이미지
 import accountLogo from "@/assets/images/accountLogo.png";
 import pointLogo from "@/assets/images/pointLogo.png";
@@ -19,8 +21,69 @@ interface Props {
   info: string;
 }
 
+const fetchUserInfo = async (token: string) => {
+  try {
+    const response = await axios.get("http://localhost:5000/users/user-info", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("사용자 정보 로딩 실패", error);
+    return null;
+  }
+};
+
+const handleTossPayment = async (userInfo: any) => {
+  try {
+    const token = Cookies.get("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const amount = 5000; // 충전 금액
+    const orderId = `order-${Date.now()}`;
+    const orderName = "포인트 충전";
+
+    // 백엔드에 결제 준비 요청
+    const { data } = await axios.post(
+      "http://localhost:5000/payments/ready",
+      { amount },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    const clientKey = data.clientKey;
+
+    // TossPayments 객체 로드
+    const toss = await loadTossPayments(clientKey);
+
+    // userInfo가 존재하는지 확인
+    if (!userInfo || !userInfo.name) {
+      alert("사용자 정보가 없습니다.");
+      return;
+    }
+
+    // 결제 요청
+    toss.requestPayment("카드", {
+      amount,
+      orderId,
+      orderName,
+      customerName: userInfo.name,
+      successUrl: `${window.location.origin}/payment/success?orderId=${orderId}&amount=${amount}`,
+      failUrl: `${window.location.origin}/payment/fail`,
+    });
+  } catch (error) {
+    console.error("결제 요청 중 오류:", error);
+    alert("결제를 시작할 수 없습니다.");
+  }
+};
+
 // 메인 화면
-const Main = ({ info }: Props) => {
+const MyInfo = ({ info }: Props) => {
   const router = useRouter();
 
   const {
@@ -158,7 +221,9 @@ const Main = ({ info }: Props) => {
                   내역보기
                 </p>
               </div>
-              <button className="passBtn">충전하기</button>
+              <button className="passBtn" onClick={handleTossPayment}>
+                충전하기
+              </button>
             </div>
           </>
         ) : info === "changePass" ? (
@@ -322,4 +387,4 @@ const Main = ({ info }: Props) => {
   );
 };
 
-export default Main;
+export default MyInfo;

@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+
+.GlitchFont {
+  font-family: "Black Han Sans", sans-serif;
+  color: #262626;
+  /* text-shadow: 2px 2px 0 #ff0000, -2px -2px 0 #00ffff; */
+  position: relative;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
