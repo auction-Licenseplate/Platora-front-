@@ -21,7 +21,7 @@ export const LoginFormStyled = styled.div`
       gap: 10px;
       color: white;
       margin-bottom: 10px;
-      width: 100%; /* 👈 부모 요소에도 width 100% 적용 */
+      width: 100%;
     }
 
     .loginForm-idDiv Input {

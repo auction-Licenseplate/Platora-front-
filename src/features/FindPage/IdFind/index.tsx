@@ -4,8 +4,10 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import { useState } from "react";
 
 const IdFind = () => {
+  const [userId, serUserId] = useState("");
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -21,15 +23,16 @@ const IdFind = () => {
       axios // 아이디 찾기 요청
         .post("http://localhost:5000/auth/login", data) // 서버 URL
         .then((res) => {
-          if (res.data) {
+          if ((res.data.message = "200 유저정보없음")) {
             alert("가입되지 않은 아이디입니다.");
-          } else {
+          }
+          if ((res.data.message = "200")) {
             console.log("아이디 찾기 성공", res.data);
-            alert(res.data);
+            serUserId(res.data.userId);
           }
         })
         .catch((error) => {
-          console.error("로그인 실패 :", error);
+          console.error("에러 :", error);
         });
     },
   });
@@ -52,7 +55,7 @@ const IdFind = () => {
   return (
     <IdFindStyled className={clsx("IdFind-wrap")}>
       <div className="IdFind-container">
-        <form onSubmit={formik.handleSubmit}>
+        <form className="IdFind-form" onSubmit={formik.handleSubmit}>
           <div className="IdFind-idDiv">
             <div className="IdFind-textDiv">이름</div>
             <Input
@@ -73,10 +76,36 @@ const IdFind = () => {
               onChange={handlePhoneChange} // 전화번호 형식에 맞게 처리
             />
           </div>
-
+          <br></br>
+          <div className="IdFind-findDiv">
+            <span
+              onClick={() => {
+                router.push("/find/pw");
+              }}
+            >
+              pw찾기
+            </span>
+            /
+            <span
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              로그인 하기
+            </span>
+            /
+            <span
+              onClick={() => {
+                router.push("/join");
+              }}
+            >
+              회원가입
+            </span>
+          </div>
           <Button htmlType="submit">아이디 찾기</Button>
         </form>
       </div>
+      <div>{userId}</div>
     </IdFindStyled>
   );
 };

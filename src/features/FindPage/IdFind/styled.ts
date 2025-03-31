@@ -25,8 +25,16 @@ export const IdFindStyled = styled.div`
       display: flex;
       flex-wrap: nowrap;
     }
+    .IdFind-form {
+      width: 20%;
+    }
     Input {
       width: 100%;
+    }
+    .IdFind-findDiv {
+      color: gray;
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
   }
 `;
