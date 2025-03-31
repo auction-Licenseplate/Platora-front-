@@ -12,7 +12,6 @@ import Image from "next/image";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
 const TOSS_CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
-const TOSS_SECRET_KEY = process.env.NEXT_PUBLIC_TOSS_SECRET_KEY;
 
 // 이미지
 import accountLogo from "@/assets/images/accountLogo.png";
@@ -28,7 +27,7 @@ const handleTossPayment = async (userInfo: any) => {
   try {
     const amount = 5000;
     const orderId = `order-${Date.now()}`;
-    const userId = Cookies.get("token");
+    const userId = Cookies.get("token") || "user";
     const orderName = "포인트 충전";
 
     const toss = await loadTossPayments(TOSS_CLIENT_KEY as string);
