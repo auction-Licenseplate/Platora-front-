@@ -13,7 +13,7 @@ const Main = () => {
       <Advertising />
 
       {/* 인기있는 상품 */}
-      {/* <BestProduct /> */}
+      <BestProduct />
     </MainStyled>
   );
 };

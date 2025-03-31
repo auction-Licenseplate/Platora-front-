@@ -11,8 +11,6 @@ import Image from "next/image";
 
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
-const TOSS_CLIENT_KEY = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
-
 // 이미지
 import accountLogo from "@/assets/images/accountLogo.png";
 import pointLogo from "@/assets/images/pointLogo.png";
@@ -30,7 +28,12 @@ const handleTossPayment = async (userInfo: any) => {
     const userId = Cookies.get("token") || "user";
     const orderName = "포인트 충전";
 
-    const toss = await loadTossPayments(TOSS_CLIENT_KEY as string);
+    const response = await axios.get(
+      "http://localhost:3001/api/toss-client-key"
+    );
+    const tossClientKey = response.data.tossClientKey;
+
+    const toss = await loadTossPayments(tossClientKey);
 
     // 결제 요청
     toss.requestPayment("카드", {

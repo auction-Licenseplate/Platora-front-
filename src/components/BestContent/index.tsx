@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import axios from "axios";
 import { BestContentStyled } from "./styled";
+import Image from "next/image";
+
+// 이미지
+import carImg1 from "@/assets/images/carImage1.jpeg";
 
 interface ContentItem {
   id: number;
@@ -39,6 +43,10 @@ const BestContent = () => {
             <h3 className="content-title">{content.title}</h3>
           </div>
         ))} */}
+        <div className="content-item">
+          <Image src={carImg1} alt="platora image" width={200} />
+          <h3 className="content-title"></h3>
+        </div>
       </BestContentStyled>
     </>
   );
