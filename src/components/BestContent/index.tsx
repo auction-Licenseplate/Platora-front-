@@ -3,9 +3,13 @@ import clsx from "clsx";
 import axios from "axios";
 import { BestContentStyled } from "./styled";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 // 이미지
 import carImg1 from "@/assets/images/carImage1.jpeg";
+import carImg2 from "@/assets/images/carImage2.png";
+import carImg3 from "@/assets/images/carImage3.jpeg";
 
 interface ContentItem {
   id: number;
@@ -14,7 +18,7 @@ interface ContentItem {
 }
 
 const BestContent = () => {
-  const [bestContents, setBestContents] = useState<ContentItem[]>([]);
+  // const [bestContents, setBestContents] = useState<ContentItem[]>([]);
 
   useEffect(() => {
     // const fetchBestContents = async () => {
@@ -30,23 +34,23 @@ const BestContent = () => {
     // fetchBestContents();
   }, []);
 
+  const bestContents = [
+    { id: 1, image: carImg1, title: "ㅇㅇㅇㅇㅇ" },
+    { id: 2, image: carImg2, title: "ㅇㅇㅇㅇㅇ" },
+    { id: 3, image: carImg3, title: "ㅇㅇㅇㅇㅇ" },
+  ];
+
   return (
     <>
       <BestContentStyled className={clsx("main-wrap")}>
-        {/* {bestContents.map((content) => (
-          <div key={content.id} className="content-item">
-            <img
-              src={content.image}
-              alt={content.title}
-              className="content-image"
-            />
-            <h3 className="content-title">{content.title}</h3>
-          </div>
-        ))} */}
-        <div className="content-item">
-          <Image src={carImg1} alt="platora image" width={200} />
-          <h3 className="content-title"></h3>
-        </div>
+        <Swiper spaceBetween={50} slidesPerView={3}>
+          {bestContents.map((content) => (
+            <SwiperSlide key={content.id}>
+              <Image src={content.image} alt={content.title} width={700} />
+              <h3 className="content-title">{content.title}</h3>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </BestContentStyled>
     </>
   );

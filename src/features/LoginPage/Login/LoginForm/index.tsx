@@ -17,7 +17,9 @@ const LoginForm = () => {
         password: values.password,
       };
       axios
-        .post("http://localhost:5000/auth/login", data) // 서버 URL
+        .post("http://localhost:5000/auth/login", data, {
+          withCredentials: true,
+        }) // 서버 URL
         .then((res) => {
           if (res.data.message === "200 비밀번호 불일치함") {
             console.log(res.data.message, "============");

@@ -17,7 +17,9 @@ const Header = () => {
   const router = useRouter();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-  const token = Cookies.get("token");
+  const token = Cookies.get("access_token");
+
+  console.log("쿠키", token);
 
   useEffect(() => {
     const handleRouteChange = () => {
