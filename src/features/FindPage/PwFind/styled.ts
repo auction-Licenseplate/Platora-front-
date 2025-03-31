@@ -6,7 +6,8 @@ interface PwFindStyledProps {
 
 export const PwFindStyled = styled.div<PwFindStyledProps>`
   &.PwFind-wrap {
-    margin: 100px auto;
+    margin: auto;
+    margin-bottom: 50px;
     width: 100%;
 
     .PwFind-container {
@@ -22,8 +23,7 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
     // .PwFind-container1에 container의 디자인을 그대로 적용
     .PwFind-container1 {
       max-width: 1280px;
-      width: 30%;
-      display: flex;
+      width: 100%;
       justify-content: center;
       align-items: center;
       text-align: center;
@@ -37,22 +37,31 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
       color: white;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       margin-bottom: 10px;
       gap: 5px;
     }
 
     .PwFind-textDiv {
       display: flex;
-
       flex-wrap: nowrap;
     }
     .PwFind-textDiv1 {
       display: flex;
       flex-wrap: nowrap;
     }
-
+    .PwFind-form {
+      width: 20%;
+    }
     Input {
       width: 100%;
+    }
+    .PwFind-findDiv {
+      color: gray;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
     }
   }
 `;

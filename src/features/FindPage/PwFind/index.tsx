@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 const PwFind = () => {
-  const [display, setDisplay] = useState<string>("block"); // 클래스
+  const [display, setDisplay] = useState<string>("none"); // 클래스
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -23,12 +23,11 @@ const PwFind = () => {
       axios // 가입된 유저 인지 본인 확인 요청
         .post("http://localhost:5000/auth/findpw", data) // 서버 URL
         .then((res) => {
-          if (res.data) {
+          if (res.data.message === "200 유저정보없음") {
             alert("가입되지 않은 아이디입니다.");
           } else {
-            console.log("아이디 찾기 성공", res.data);
-            alert(res.data);
-            setDisplay("block");
+            console.log("비밀번호 입력받기");
+            setDisplay("flex");
           }
         })
         .catch((error) => {
@@ -45,7 +44,6 @@ const PwFind = () => {
       console.log(values);
       const data = {
         password: values.pw,
-        passwordCheck: values.pwCheck,
       };
       axios //새 비밀번호 업데이트 요청
         .post("http://localhost:5000/auth/pwfind/updatepw", data) // 서버 URL
@@ -80,7 +78,7 @@ const PwFind = () => {
   return (
     <PwFindStyled className={clsx("PwFind-wrap")} display={display}>
       <div className="PwFind-container">
-        <form onSubmit={formik.handleSubmit}>
+        <form className="PwFind-form" onSubmit={formik.handleSubmit}>
           <div className="PwFind-idDiv">
             <div className="PwFind-textDiv">이름</div>
             <Input
@@ -102,12 +100,38 @@ const PwFind = () => {
             />
           </div>
 
+          <div className="PwFind-findDiv">
+            <span
+              onClick={() => {
+                router.push("/find/pw");
+              }}
+            >
+              pw찾기
+            </span>
+            /
+            <span
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              로그인하기
+            </span>
+            /
+            <span
+              onClick={() => {
+                router.push("/join");
+              }}
+            >
+              회원가입
+            </span>
+          </div>
+
           <Button htmlType="submit">비밀번호 변경하기</Button>
         </form>
       </div>
       <br></br>
       <div className="PwFind-container1">
-        <form onSubmit={PwFormik.handleSubmit}>
+        <form className="PwFind-form" onSubmit={PwFormik.handleSubmit}>
           <div className="PwFind-idDiv">
             <div className="PwFind-textDiv1">새 비밀번호</div>
             <Input

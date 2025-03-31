@@ -12,7 +12,6 @@ const LoginForm = () => {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values);
       const data = {
         email: values.email,
         password: values.password,
@@ -20,12 +19,14 @@ const LoginForm = () => {
       axios
         .post("http://localhost:5000/auth/login", data) // 서버 URL
         .then((res) => {
-          if (res.data) {
-            alert("가입되지 않은 아이디입니다.");
-          } else {
-            console.log("로그인 성공", res.data);
-            router.push("/");
+          if (res.data.message === "200 비밀번호 불일치함") {
+            console.log(res.data.message, "============");
+            return alert("비밀번호 틀림");
           }
+          if (res.data.message === "200 유저정보 없음") {
+            return alert("존재하지 않는 아이디입니다");
+          }
+          router.push("/");
         })
         .catch((error) => {
           console.error("로그인 실패 :", error);
@@ -57,12 +58,20 @@ const LoginForm = () => {
           <div className="loginForm-findDiv">
             <span
               onClick={() => {
-                router.push("/find");
+                router.push("/find/id");
               }}
             >
               id찾기
             </span>
-            /<span>pw찾기</span>/
+            /
+            <span
+              onClick={() => {
+                router.push("/find/pw");
+              }}
+            >
+              pw찾기
+            </span>
+            /
             <span
               onClick={() => {
                 router.push("/join");
