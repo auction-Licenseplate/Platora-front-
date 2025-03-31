@@ -17,6 +17,7 @@ export const MyPageStyled = styled.div`
       width: 100%;
       max-width: 1280px;
       height: auto;
+      margin-top: 30px;
 
       .leftContainer {
         width: 30%;

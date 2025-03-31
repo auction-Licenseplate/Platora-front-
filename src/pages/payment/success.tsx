@@ -15,7 +15,7 @@ const PaymentSuccess = () => {
     method: string
   ) => {
     try {
-      await axios.post("http://localhost:5000/payments/save", {
+      await axios.post("http://localhost:5000/pay/save", {
         orderId,
         user_id: userId,
         auction_id: auctionId,
