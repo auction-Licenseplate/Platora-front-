@@ -24,47 +24,21 @@ interface Props {
   info: string;
 }
 
-const fetchUserInfo = async (token: string) => {
-  try {
-    const response = await axios.get("http://localhost:5000/users/user-info", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("사용자 정보 로딩 실패", error);
-    return null;
-  }
-};
-
 const handleTossPayment = async (userInfo: any) => {
   try {
-    // const token = Cookies.get("token");
-    // if (!token) {
-    //   alert("로그인이 필요합니다.");
-    //   return;
-    // }
-
     const amount = 5000;
     const orderId = `order-${Date.now()}`;
-    const userId = Cookies.get("userId");
+    const userId = Cookies.get("token");
     const orderName = "포인트 충전";
 
     const toss = await loadTossPayments(TOSS_CLIENT_KEY as string);
-
-    // if (!userInfo || !userInfo.name) {
-    //   alert("사용자 정보가 없습니다.");
-    //   return;
-    // }
 
     // 결제 요청
     toss.requestPayment("카드", {
       amount,
       orderId,
       orderName,
-      customerName: userInfo.name,
-      successUrl: `http://localhost:3000/payment/success?orderId=${orderId}&amount=${amount}$userId=${userId}`,
+      successUrl: `http://localhost:3000/payment/success?&amount=${amount}$userId=${userId}`,
       failUrl: `http://localhost:3000/payment/fail`,
     });
   } catch (error) {

@@ -5,24 +5,28 @@ import Cookies from "js-cookie";
 
 const PaymentSuccess = () => {
   const router = useRouter();
-  const { orderId, amount, userId } = router.query;
+  const { amount, userId } = router.query;
 
   const handlePaymentSuccess = async (
-    orderId: string,
     userId: string,
-    auctionId: string,
     amount: number,
     method: string
   ) => {
     try {
-      await axios.post("http://localhost:5000/payments/save", {
-        orderId,
-        user_id: userId,
-        auction_id: auctionId,
-        payment_method: method,
-        amount,
-        status: "success",
-      });
+      // payment 테이블 -> userId(토큰이라서 검증이 필요)에 따라 amount 저장
+      await axios.post(
+        "http://localhost:5000/pay/save",
+        {
+          payment_method: method,
+          amount,
+          status: "success",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      );
 
       alert("결제가 완료되었습니다.");
       router.push("/myPage?menu=myInfo");
@@ -35,20 +39,11 @@ const PaymentSuccess = () => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const amount = query.get("amount");
-    const orderId = query.get("orderId");
     const userId = query.get("userId");
-    const auctionId = query.get("auctionId");
+    const method = "카드";
 
-    const method = query.get("method");
-
-    if (orderId && userId && auctionId && amount && method) {
-      handlePaymentSuccess(
-        orderId,
-        userId,
-        auctionId,
-        parseInt(amount),
-        method
-      );
+    if (userId && amount && method) {
+      handlePaymentSuccess(userId, parseInt(amount), method);
     }
   }, []);
 
