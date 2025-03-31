@@ -1,17 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const counterSlice1 = createSlice({
-  name: "counter1",
-  initialState: { value: 3 },
+interface UserState {
+  email: string | null; // 이메일 저장용 상태
+}
+
+const initialState: UserState = {
+  email: null,
+};
+
+const userSlice = createSlice({
+  name: "user",
+  initialState,
   reducers: {
-    increment1: (state) => {
-      state.value += 1;
-    },
-    decrement1: (state) => {
-      state.value -= 1;
+    setUserEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload;
     },
   },
 });
 
-export const { increment1, decrement1 } = counterSlice1.actions;
-export default counterSlice1.reducer; // ✅ default export 확인
+export const { setUserEmail } = userSlice.actions;
+export default userSlice.reducer;

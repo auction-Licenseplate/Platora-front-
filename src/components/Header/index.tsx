@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
 import { cookies } from "next/headers";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 // 로고 이미지
 import logo from "@/assets/images/Logo_plotora(black).png";
@@ -57,6 +59,10 @@ const Header = () => {
   const handleToggleClick = () => {
     setIsToggleOpen(!isToggleOpen);
   };
+
+  const email = useSelector((state: RootState) => state.user.email);
+
+  console.log("현재 로그인된 이메일:", email);
 
   return (
     <>

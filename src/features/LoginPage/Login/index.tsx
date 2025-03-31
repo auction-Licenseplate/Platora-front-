@@ -1,4 +1,3 @@
-import { exportPages } from "next/dist/export/worker";
 import { LoginStyled } from "./styled";
 import LoginForm from "./LoginForm";
 import NaverLogin from "./NaverLogin";
@@ -19,7 +18,6 @@ const Login = () => {
         <NaverLogin />
         <KakaoLogin />
         <GoogleLogin />
-        <OpenAiTest />
       </div>
     </LoginStyled>
   );
