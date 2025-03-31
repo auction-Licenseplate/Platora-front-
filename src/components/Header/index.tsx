@@ -12,14 +12,19 @@ import userIcon from "@/assets/images/userIcon.png";
 import closeIcon from "@/assets/images/closeIcon.png";
 import favoriteIcon from "@/assets/images/favoriteIcon.png";
 import logoutIcon from "@/assets/images/logoutIcon.png";
+import Cookie from "js-cookie";
 
 const Header = () => {
   const router = useRouter();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-  const token = Cookies.get("access_token");
+  const token = Cookie.get("access_token");
 
-  console.log("쿠키", token);
+  console.log("쿠키", token); // 쿠키의 값 출력
+
+  // const token = Cookies.get("access_token");
+
+  // console.log("쿠키", token);
 
   useEffect(() => {
     const handleRouteChange = () => {
