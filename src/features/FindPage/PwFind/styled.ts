@@ -38,7 +38,7 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
       flex-direction: column;
       justify-content: center;
       margin-bottom: 10px;
-      gap: 5px;
+      gap: 3px;
     }
 
     .PwFind-textDiv {
@@ -60,10 +60,20 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
     }
 
     .PwFind-findDiv {
+      width: 100%;
+
+      color: gray;
       margin-top: 15px;
       margin-bottom: 15px;
       display: flex;
+      justify-content: center;
       gap: 10px;
+      font-size: 1.2vw;
+    }
+    .pwfind-error {
+      color: red;
+      height: 20px;
+      font-size: 1vw;
     }
   }
 `;

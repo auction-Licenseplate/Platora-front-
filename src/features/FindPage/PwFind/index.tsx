@@ -5,9 +5,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import { useState } from "react";
+import { validatePassword } from "@/util/validation";
 
 const PwFind = () => {
+  const [user, setUser] = useState("");
   const [display, setDisplay] = useState<string>("none"); // 클래스
+
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -23,11 +26,13 @@ const PwFind = () => {
       axios // 가입된 유저 인지 본인 확인 요청
         .post("http://localhost:5000/auth/findpw", data) // 서버 URL
         .then((res) => {
-          if (res.data.message === "200 유저정보없음") {
+          if (res.data.message === "저장된 비밀번호 없음") {
             alert("가입되지 않은 아이디입니다.");
+            setDisplay("none");
           } else {
             console.log("비밀번호 입력받기");
             setDisplay("flex");
+            setUser(res.data.userID);
           }
         })
         .catch((error) => {
@@ -35,21 +40,44 @@ const PwFind = () => {
         });
     },
   });
+
   const PwFormik = useFormik({
     initialValues: {
       pw: "",
       pwCheck: "",
     },
+    validate: (values) => {
+      const errors: any = {};
+
+      // 비밀번호 유효성 검사
+      if (!values.pw) {
+        errors.pw = "비밀번호를 입력해주세요.";
+      } else if (!validatePassword(values.pw)) {
+        errors.pw =
+          "비밀번호는 최소 10자 이상, 숫자와 특수문자가 포함되어야 합니다.";
+      }
+
+      // 비밀번호 확인 검사
+      if (!values.pwCheck) {
+        errors.pwCheck = "비밀번호 확인을 입력해주세요.";
+      } else if (values.pw !== values.pwCheck) {
+        errors.pwCheck = "비밀번호가 일치하지 않습니다.";
+      }
+
+      return errors;
+    },
     onSubmit: (values) => {
       console.log(values);
       const data = {
         password: values.pw,
+        userID: user,
       };
+      console.log(data);
       axios //새 비밀번호 업데이트 요청
         .post("http://localhost:5000/auth/pwfind/updatepw", data) // 서버 URL
         .then((res) => {
           if (res.data) {
-            alert("가입되지 않은 아이디입니다.");
+            alert("비밀번호 업데이트 실패");
           } else {
             console.log("비밀번호 변경 성공", res.data);
             router.push("/login");
@@ -60,6 +88,7 @@ const PwFind = () => {
         });
     },
   });
+
   const handlePhoneChange = (e: any) => {
     let value = e.target.value.replace(/[^\d]/g, ""); // 숫자만 허용
     if (value.length > 11) {
@@ -80,7 +109,7 @@ const PwFind = () => {
       <div className="PwFind-container">
         <form className="PwFind-form" onSubmit={formik.handleSubmit}>
           <div className="PwFind-idDiv">
-            <div className="PwFind-textDiv">이름</div>
+            <div className="PwFind-textDiv">이메일</div>
             <Input
               type="text"
               name="id"
@@ -103,10 +132,10 @@ const PwFind = () => {
           <div className="PwFind-findDiv">
             <span
               onClick={() => {
-                router.push("/find/pw");
+                router.push("/find/id");
               }}
             >
-              pw찾기
+              iD찾기
             </span>
             /
             <span
@@ -129,7 +158,7 @@ const PwFind = () => {
           <Button htmlType="submit">비밀번호 변경하기</Button>
         </form>
       </div>
-      <br></br>
+      <br />
       <div className="PwFind-container1">
         <form className="PwFind-form" onSubmit={PwFormik.handleSubmit}>
           <div className="PwFind-idDiv">
@@ -138,22 +167,30 @@ const PwFind = () => {
               type="password"
               name="pw"
               onChange={PwFormik.handleChange}
-              placeholder="이메일을 입력해주세요"
+              placeholder="새 비밀번호를 입력해주세요"
               value={PwFormik.values.pw}
             />
+            <div className="pwfind-error" style={{ color: "red" }}>
+              {PwFormik.errors.pw || ""}
+            </div>
           </div>
           <div className="PwFind-idDiv">
             <div className="PwFind-textDiv1">새 비밀번호 재확인</div>
             <Input
-              name="pwCheck"
-              placeholder="전화번호를 입력해주세요"
               type="password"
-              value={PwFormik.values.pwCheck} // 전화번호 필드의 값을 formik 상태에서 가져오기
-              onChange={PwFormik.handleChange} // 전화번호 형식에 맞게 처리
+              name="pwCheck"
+              placeholder="비밀번호 재확인을 입력해주세요"
+              value={PwFormik.values.pwCheck}
+              onChange={PwFormik.handleChange}
             />
+            <div className="pwfind-error" style={{ color: "red" }}>
+              {PwFormik.errors.pwCheck || ""}
+            </div>
           </div>
 
-          <Button htmlType="submit">비밀번호 변경하기</Button>
+          <Button htmlType="submit" disabled={!PwFormik.isValid}>
+            비밀번호 변경하기
+          </Button>
         </form>
       </div>
     </PwFindStyled>
