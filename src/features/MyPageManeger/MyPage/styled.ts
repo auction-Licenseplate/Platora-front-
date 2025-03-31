@@ -34,7 +34,6 @@ export const MyPageStyled = styled.div`
         width: 1px;
         margin-top: 50px;
         height: 450px;
-        background-color: rgba(255, 255, 255, 0.5);
       }
 
       .mainContent {

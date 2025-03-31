@@ -14,13 +14,14 @@ export const IdFindStyled = styled.div`
       text-align: center;
       margin: 0 auto;
     }
+
     .IdFind-idDiv {
       width: 100%;
-      color: white;
       display: flex;
       flex-direction: column;
       margin-bottom: 10px;
     }
+
     .IdFind-textDiv {
       display: flex;
       flex-wrap: nowrap;
@@ -32,7 +33,6 @@ export const IdFindStyled = styled.div`
       width: 100%;
     }
     .IdFind-findDiv {
-      color: gray;
       margin-top: 15px;
       margin-bottom: 15px;
     }

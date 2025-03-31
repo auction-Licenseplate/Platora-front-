@@ -8,7 +8,6 @@ export const StickyMenuStyled = styled.div`
 
     .title {
       font-size: 40px;
-      color: rgb(68, 68, 68);
       text-shadow: 1.5px 1.5px 0 #ff0000, -1.5px -1.5px 0 #00ffff;
     }
 
@@ -19,7 +18,6 @@ export const StickyMenuStyled = styled.div`
       gap: 30px;
       padding: 10px;
       top: 25px;
-      color: rgb(80, 80, 80);
 
       .cursor {
         cursor: pointer;
@@ -32,7 +30,6 @@ export const StickyMenuStyled = styled.div`
     }
 
     .active {
-      color: white;
       text-shadow: 1.5px 1.5px 0 #ff0000, -1.5px -1.5px 0 #00ffff;
     }
 

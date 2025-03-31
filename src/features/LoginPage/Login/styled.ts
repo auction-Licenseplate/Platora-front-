@@ -20,25 +20,26 @@ export const LoginStyled = styled.div`
       flex-grow: 1;
       height: 1px;
       border: none;
-      background-color: #ddd;
     }
 
     .divider span {
       margin: 0 10px;
-      color: white;
       font-size: 14px;
       font-weight: bold;
     }
+
     .loginform-socialbtn {
       width: 50px;
       height: 50px;
       border-radius: 50%;
     }
+
     .loginForm-socialDiv {
       display: flex;
       gap: 20px;
       margin-bottom: 50px;
     }
+
     Button {
       width: 100%;
     }

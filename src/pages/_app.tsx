@@ -16,6 +16,7 @@ const TokenLoader = () => {
     axios
       .get("http://localhost:5000/auth/tokenCheck", { withCredentials: true })
       .then((res) => {
+        console.log("토큰", res.data);
         if (res.data.token) {
           dispatch(setUserToken(res.data.token));
         }
