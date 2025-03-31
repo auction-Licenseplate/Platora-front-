@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
-import Cookies from "js-cookie";
+import { cookies } from "next/headers";
 
 // 로고 이미지
 import logo from "@/assets/images/Logo_plotora(black).png";
@@ -23,6 +23,12 @@ const Header = () => {
   console.log("쿠키", token); // 쿠키의 값 출력
 
   // const token = Cookies.get("access_token");
+
+  // const token = cookies(null).access_token;
+
+  // const token = req.cookies['access_token'];
+
+  // console.log("dd", document.cookie);
 
   // console.log("쿠키", token);
 
