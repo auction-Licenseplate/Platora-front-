@@ -136,6 +136,17 @@ export const HeaderStyled = styled.div`
       justify-content: center;
       width: 250px;
       height: 50px;
+      cursor: pointer;
+    }
+
+    .marginLogoImg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 250px;
+      height: 50px;
+      margin-left: 20px;
+      cursor: pointer;
     }
 
     .userIcon {
@@ -173,7 +184,7 @@ export const HeaderStyled = styled.div`
 
     .slider:before {
       position: absolute;
-      content: "🌙";
+      content: "☀️";
       height: 20px;
       width: 20px;
       left: 4px;
@@ -191,7 +202,7 @@ export const HeaderStyled = styled.div`
     }
 
     input:checked + .slider:before {
-      content: "☀️";
+      content: "🌙";
       transform: translateX(24px);
     }
 

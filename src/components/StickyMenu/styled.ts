@@ -17,7 +17,6 @@ export const StickyMenuStyled = styled.div`
       flex-direction: column;
       gap: 30px;
       padding: 10px;
-      top: 25px;
 
       .cursor {
         cursor: pointer;

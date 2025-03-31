@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const AdvertisingStyled = styled.div`
   &.main-wrap {
-    margin-bottom: 70px;
     width: 100%;
     height: 40px;
     background-color: rgb(161, 215, 218);

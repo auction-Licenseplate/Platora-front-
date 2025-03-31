@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { setTheme, toggleTheme } from "@/store/themeSlice";
 
 // 로고 이미지
 import logo from "@/assets/images/Logo_plotora(black).png";
@@ -13,11 +14,16 @@ import userIcon from "@/assets/images/userIcon.png";
 import closeIcon from "@/assets/images/closeIcon.png";
 import favoriteIcon from "@/assets/images/favoriteIcon.png";
 import logoutIcon from "@/assets/images/logoutIcon.png";
-import { Input } from "antd";
+import axios from "axios";
 
 const Header = () => {
   const router = useRouter();
+
   const token = useSelector((state: RootState) => state.user.token);
+
+  // Redux에서 테마 모드 가져오기
+  const mode = useSelector((state: RootState) => state.theme.mode);
+  const dispatch = useDispatch();
 
   // 토글 여닫기
   const [isToggleOpen, setIsToggleOpen] = useState(false);
@@ -37,20 +43,27 @@ const Header = () => {
     };
   }, [router.events]);
 
-  // 다크, 라이트 모드
+  // 다크, 라이트 모드 redux에 저장
   useEffect(() => {
-    // 페이지 로드 시 로컬 스토리지 값 확인
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "light") {
-        document.body.classList.add("light-mode");
-        setIsDarkMode(false);
-      } else {
-        document.body.classList.remove("light-mode");
-        setIsDarkMode(true);
+      if (savedTheme) {
+        dispatch(setTheme(savedTheme as "light" | "dark"));
       }
     }
-  }, []);
+  }, [dispatch]);
+
+  // 모드 변경 시 로컬 스토리지에 테마 저장
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", mode);
+      if (mode === "light") {
+        document.body.classList.add("light-mode");
+      } else {
+        document.body.classList.remove("light-mode");
+      }
+    }
+  }, [mode]);
 
   // 토글 클릭 시
   const handleToggleClick = () => {
@@ -59,15 +72,18 @@ const Header = () => {
 
   // 다크, 라이트 모드 선택 시
   const handleThemeToggle = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
+    dispatch(toggleTheme());
+  };
 
-    if (newMode) {
-      document.body.classList.remove("light-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.add("light-mode");
-      localStorage.setItem("theme", "light");
+  // 로그아웃
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout", {
+        withCredentials: true,
+      });
+      router.push("/");
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
     }
   };
 
@@ -128,10 +144,10 @@ const Header = () => {
             <label className="switch">
               <input
                 type="checkbox"
-                checked={isDarkMode}
+                checked={mode === "dark"}
                 onChange={handleThemeToggle}
               />
-              <span className="slider">{isDarkMode ? "🌙" : "☀️"}</span>
+              <span className="slider">{mode === "dark" ? "☀️" : "🌙"}</span>
             </label>
           </div>
         </div>
@@ -145,7 +161,7 @@ const Header = () => {
           </div>
 
           <div
-            className="logoImg"
+            className={token ? "marginLogoImg" : "logoImg"}
             onClick={() => {
               router.push("/");
             }}
@@ -178,6 +194,7 @@ const Header = () => {
                     src={logoutIcon}
                     alt="logout icon"
                     layout="responsive"
+                    onClick={handleLogout}
                   />
                 </div>
               </>

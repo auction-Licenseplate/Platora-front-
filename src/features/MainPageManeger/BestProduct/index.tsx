@@ -5,7 +5,7 @@ import BestContent from "@/components/BestContent";
 const BestProduct = () => {
   return (
     <>
-      <BestProductStyled className={clsx("main-wrap")}>
+      <BestProductStyled className={clsx("main-wrap-best")}>
         <div className="bestProductContent">
           <BestContent />
         </div>

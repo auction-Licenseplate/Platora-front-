@@ -8,6 +8,8 @@ import axios from "axios";
 import { myInfo } from "@/util/myInfo";
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
@@ -16,6 +18,11 @@ import accountLogo from "@/assets/images/accountLogo.png";
 import pointLogo from "@/assets/images/pointLogo.png";
 import passwordLogo from "@/assets/images/passwordLogo.png";
 import vehicleLogo from "@/assets/images/vehicleLogo.png";
+
+import accountBlack from "@/assets/images/myAccountLogo(black).png";
+import pointBlack from "@/assets/images/pointLogo(black).png";
+import passwordBlack from "@/assets/images/passwordLogo(black).png";
+import vehicleBlack from "@/assets/images/vehicleLogo(black).png";
 
 interface Props {
   info: string;
@@ -52,6 +59,10 @@ const handleTossPayment = async (userInfo: any) => {
 // 메인 화면
 const MyInfo = ({ info }: Props) => {
   const router = useRouter();
+  const token = useSelector((state: RootState) => state.user.token);
+  const theme = useSelector((state: RootState) => state.theme.mode);
+
+  const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
 
   const {
     userInfo,
@@ -94,41 +105,49 @@ const MyInfo = ({ info }: Props) => {
   } = myInfo(info);
 
   useEffect(() => {
-    // const token = useSelector((state: RootState) => state.user.token);
-    // if (!token) {
-    //   console.error("토큰이 없음");
-    //   return;
-    // }
-    // if (info === "myInfo" || info === "point") {
-    //   axios
-    //     .get("http://localhost:5000/users/user-info", {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     })
-    //     .then((response) => {
-    //       setUserInfo(response.data);
-    //     })
-    //     .catch((e) => {
-    //       console.error("features -> myInfo(내 정보) 오류 : ", e);
-    //     });
-    // } else if (info === "changePass") {
-    //   axios
-    //     .get("http://localhost:5000/users/passCheck", {
-    //       headers: { Authorization: `Bearer ${token}` },
-    //     })
-    //     .then((response) => setIsEditable(response.data.provider === ""))
-    //     .catch((e) => console.error("정보 가져오기 오류:", e));
-    // }
+    if (!token) {
+      console.error("토큰이 없음");
+      return;
+    }
+    if (info === "myInfo" || info === "point") {
+      axios
+        .get("http://localhost:5000/users/user-info", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setUserInfo(response.data);
+        })
+        .catch((e) => {
+          console.error("features -> myInfo(내 정보) 오류 : ", e);
+        });
+    } else if (info === "changePass") {
+      axios
+        .get("http://localhost:5000/users/passCheck", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => setIsEditable(response.data.provider === ""))
+        .catch((e) => console.error("정보 가져오기 오류:", e));
+    }
   }, []);
 
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
+
   return (
-    <MyInfoStyled className={clsx("main-wrap")}>
+    <MyInfoStyled className={clsx("main-wrap-info")}>
       <div className="main-container">
         {/* 내 정보 */}
         {info === "myInfo" ? (
           <>
-            <Image src={accountLogo} alt="account logo" width={350} />
+            <Image
+              key={isDarkMode ? "dark" : "light"}
+              src={isDarkMode ? accountLogo : accountBlack}
+              alt="account logo"
+              width={350}
+            />
             <div className="inputContainer">
               <div className="inputs readOnly">
                 <h3>이름</h3>
@@ -161,7 +180,12 @@ const MyInfo = ({ info }: Props) => {
           </>
         ) : info === "point" ? (
           <>
-            <Image src={pointLogo} alt="point logo" width={200} />
+            <Image
+              key={isDarkMode ? "dark" : "light"}
+              src={isDarkMode ? pointLogo : pointBlack}
+              alt="point logo"
+              width={200}
+            />
             <div className="inputContainer">
               <div className="inputs readOnly">
                 <h3>포인트</h3>
@@ -195,7 +219,12 @@ const MyInfo = ({ info }: Props) => {
           </>
         ) : info === "changePass" ? (
           <>
-            <Image src={passwordLogo} alt="password logo" width={300} />
+            <Image
+              key={isDarkMode ? "dark" : "light"}
+              src={isDarkMode ? passwordLogo : passwordBlack}
+              alt="password logo"
+              width={300}
+            />
             <div className="inputContainer">
               <div className="inputs">
                 <h3>비밀번호</h3>
@@ -236,7 +265,12 @@ const MyInfo = ({ info }: Props) => {
           </>
         ) : info === "vehicle" ? (
           <>
-            <Image src={vehicleLogo} alt="vehicle logo" width={250} />
+            <Image
+              key={isDarkMode ? "dark" : "light"}
+              src={isDarkMode ? vehicleLogo : vehicleBlack}
+              alt="vehicle logo"
+              width={250}
+            />
             <div className="inputContainer">
               <div className="inputs">
                 <h3>차량 번호</h3>

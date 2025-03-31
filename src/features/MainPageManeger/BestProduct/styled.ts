@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const BestProductStyled = styled.div`
-  &.main-wrap {
+  &.main-wrap-best {
     width: 100%;
   }
 `;

@@ -23,7 +23,11 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
 
   const login = (code: string) => {
     axios
-      .post(`http://localhost:5000/auth/login/${type}`, { code }) // 서버 URL
+      .post(
+        `http://localhost:5000/auth/login/${type}`,
+        { code },
+        { withCredentials: true }
+      ) // 서버 URL
       .then((res) => {
         if ((res.data.message = "200 유저정보없음")) {
           setIsSuccess(false); // 로그인 성공 시 상태 업데이트

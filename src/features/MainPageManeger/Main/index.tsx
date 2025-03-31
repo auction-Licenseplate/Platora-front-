@@ -3,17 +3,29 @@ import { useRouter } from "next/router";
 import { MainStyled } from "./styled";
 import Advertising from "../Advertising";
 import BestProduct from "../BestProduct";
+import { Button } from "antd";
 
 const Main = () => {
   const router = useRouter();
-  // const id:number = 2 변수 선언 예시
+
+  const handleClick = () => {
+    router.push("/write");
+  };
+
   return (
     <MainStyled className={clsx("main-wrap")}>
       {/* 광고 */}
       <Advertising />
 
-      {/* 인기있는 상품 */}
+      {/* 관리자 홍보 */}
       <BestProduct />
+
+      {/* 곧 시작 경매 */}
+
+      {/* 글 작성하기 */}
+      <Button onClick={handleClick}> 글 작성하기 </Button>
+
+      {/* 전체 경매 */}
     </MainStyled>
   );
 };

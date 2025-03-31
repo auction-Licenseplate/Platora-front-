@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const MyInfoStyled = styled.div`
-  &.main-wrap {
-    margin-top: 70px;
+  &.main-wrap-info {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-bottom: 50px;
 
     .main-container {
       width: 100%;

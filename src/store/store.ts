@@ -1,10 +1,13 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import UserSlice from "./userSlice";
+import themeReducer from "./themeSlice";
+
 // Redux Store 생성
 const store = configureStore({
   reducer: {
     user: UserSlice,
+    theme: themeReducer,
   },
 });
 
