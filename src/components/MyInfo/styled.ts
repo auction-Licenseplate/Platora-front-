@@ -21,7 +21,6 @@ export const MyInfoStyled = styled.div`
         flex-direction: column;
         align-items: center;
         gap: 30px;
-        background-color: rgba(255, 255, 255, 0.45);
         padding: 50px;
         border-radius: 15px;
         position: relative;

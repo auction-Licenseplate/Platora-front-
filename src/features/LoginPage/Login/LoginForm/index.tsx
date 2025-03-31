@@ -5,9 +5,8 @@ import axios from "axios";
 import { Router, useRouter } from "next/router";
 import clsx from "clsx";
 import { useDispatch } from "react-redux";
-import * as userSlice from "@/store/userSlice";
+
 const LoginForm = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -32,8 +31,6 @@ const LoginForm = () => {
             return alert("존재하지 않는 아이디입니다");
           }
           router.push("/");
-          console.log(res.data);
-          dispatch(userSlice.setUserEmail(res.data.email));
         })
         .catch((error) => {
           console.error("로그인 실패 :", error);

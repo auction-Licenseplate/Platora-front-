@@ -94,7 +94,7 @@ const MyInfo = ({ info }: Props) => {
   } = myInfo(info);
 
   useEffect(() => {
-    // const token = Cookies.get("token");
+    // const token = useSelector((state: RootState) => state.user.token);
     // if (!token) {
     //   console.error("토큰이 없음");
     //   return;

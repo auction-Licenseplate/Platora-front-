@@ -17,13 +17,16 @@ export const JoinFormStyled = styled.div`
       width: 100%;
       margin-top: 10px;
     }
+
     .join-div {
     }
+
     .join-errormessage {
       color: red;
       font-size: 12px;
       height: 20px;
     }
+
     .joinForm-container {
       max-width: 1280px;
       display: flex;

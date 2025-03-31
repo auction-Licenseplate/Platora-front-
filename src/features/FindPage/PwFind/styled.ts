@@ -34,7 +34,6 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
 
     .PwFind-idDiv {
       width: 100%;
-      color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -46,19 +45,24 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
       display: flex;
       flex-wrap: nowrap;
     }
+
     .PwFind-textDiv1 {
       display: flex;
       flex-wrap: nowrap;
     }
+
     .PwFind-form {
       width: 20%;
     }
+
     Input {
       width: 100%;
     }
+
     .PwFind-findDiv {
-      color: gray;
-      margin-top: 10px;
+      width: 100%;
+      margin-top: 15px;
+
       margin-bottom: 15px;
     }
 

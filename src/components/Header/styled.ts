@@ -146,6 +146,55 @@ export const HeaderStyled = styled.div`
       height: 25px;
     }
 
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #333;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "🌙";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    input:checked + .slider {
+      background-color: #f1c40f;
+    }
+
+    input:checked + .slider:before {
+      content: "☀️";
+      transform: translateX(24px);
+    }
+
     @media screen and (max-width: 768px) {
       .logoImg {
         width: 150px;

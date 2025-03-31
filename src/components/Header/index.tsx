@@ -13,11 +13,18 @@ import userIcon from "@/assets/images/userIcon.png";
 import closeIcon from "@/assets/images/closeIcon.png";
 import favoriteIcon from "@/assets/images/favoriteIcon.png";
 import logoutIcon from "@/assets/images/logoutIcon.png";
+import { Input } from "antd";
 
 const Header = () => {
   const router = useRouter();
-  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const token = useSelector((state: RootState) => state.user.token);
 
+  // 토글 여닫기
+  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  // 다크, 라이트 모드
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // 토글 변경 시에
   useEffect(() => {
     const handleRouteChange = () => {
       setIsToggleOpen(false); // 페이지가 변경될 때마다 토글 닫기
@@ -30,11 +37,39 @@ const Header = () => {
     };
   }, [router.events]);
 
+  // 다크, 라이트 모드
+  useEffect(() => {
+    // 페이지 로드 시 로컬 스토리지 값 확인
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+        setIsDarkMode(false);
+      } else {
+        document.body.classList.remove("light-mode");
+        setIsDarkMode(true);
+      }
+    }
+  }, []);
+
+  // 토글 클릭 시
   const handleToggleClick = () => {
     setIsToggleOpen(!isToggleOpen);
   };
 
-  const token = useSelector((state: RootState) => state.user.token);
+  // 다크, 라이트 모드 선택 시
+  const handleThemeToggle = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+
+    if (newMode) {
+      document.body.classList.remove("light-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.add("light-mode");
+      localStorage.setItem("theme", "light");
+    }
+  };
 
   return (
     <>
@@ -90,6 +125,14 @@ const Header = () => {
             >
               mypage
             </h2>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={isDarkMode}
+                onChange={handleThemeToggle}
+              />
+              <span className="slider">{isDarkMode ? "🌙" : "☀️"}</span>
+            </label>
           </div>
         </div>
 
