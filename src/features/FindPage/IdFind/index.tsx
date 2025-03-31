@@ -19,7 +19,6 @@ const IdFind = () => {
         setUserId("이름과 전화번호를 입력해주세요.");
         return;
       }
-
       const data = {
         name: values.name,
         phone: values.phone,
@@ -81,7 +80,8 @@ const IdFind = () => {
               onChange={handlePhoneChange} // 전화번호 형식에 맞게 처리
             />
           </div>
-          <br></br>
+          <div className="IdFind-findidDiv">{userId}</div>
+
           <div className="IdFind-findDiv">
             <span
               onClick={() => {
@@ -110,7 +110,6 @@ const IdFind = () => {
           <Button htmlType="submit">아이디 찾기</Button>
         </form>
       </div>
-      <div style={{ color: "white" }}>{userId}</div>
     </IdFindStyled>
   );
 };

@@ -10,6 +10,7 @@ interface SocialCallbackProps {
 const SocialCallback = ({ type }: SocialCallbackProps) => {
   const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(false); // 로그인 성공 여부 상태
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const { code } = router.query;
@@ -29,11 +30,12 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
         { withCredentials: true }
       ) // 서버 URL
       .then((res) => {
-        if ((res.data.message = "200 유저정보없음")) {
-          setIsSuccess(false); // 로그인 성공 시 상태 업데이트
+        if ((res.data.message = "가입되지 않은 유저")) {
+          setIsSuccess(false);
+          setUser(res.data.user.id);
         } else {
           setIsSuccess(true);
-          router.push("/"); // 로그인 실패 시 홈으로 리디렉션
+          router.push("/");
         }
       })
       .catch((error) => {
@@ -42,7 +44,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
   };
 
   if (!isSuccess) {
-    return <PlusInfo />; // 로그인 성공 시 Join 컴포넌트를 렌더링
+    return <PlusInfo userid={user} />; // 로그인 성공 시 Join 컴포넌트를 렌더링
   }
 
   return <div>로딩 중...</div>; // 로딩 중 화면 표시

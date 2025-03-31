@@ -4,8 +4,12 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { Input, Button } from "antd";
 import clsx from "clsx";
-const PlusInfo = () => {
+interface userData {
+  userid?: string;
+}
+const PlusInfo = ({ userid }: userData) => {
   const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -13,6 +17,7 @@ const PlusInfo = () => {
     },
     onSubmit: (values) => {
       const data = {
+        userID: userid,
         name: values.name,
         phone: values.phone,
       };
@@ -26,6 +31,22 @@ const PlusInfo = () => {
         });
     },
   });
+
+  const handlePhoneChange = (e: any) => {
+    let value = e.target.value.replace(/[^\d]/g, ""); // 숫자만 허용
+    if (value.length > 11) {
+      value = value.slice(0, 11); // 최대 11자리까지 허용
+    }
+    if (value.length > 3 && value.length <= 6) {
+      value = value.replace(/(\d{3})(\d{1,4})/, "$1-$2");
+    } else if (value.length > 6) {
+      value = value.replace(/(\d{3})(\d{4})(\d{1,4})/, "$1-$2-$3");
+    }
+
+    // 폼 상태 업데이트
+    formik.setFieldValue("phone", value); // 포맷팅된 값을 formik 상태에 반영
+  };
+
   return (
     <PlusInfoStyled className={clsx("plusinfo-wrap")}>
       <div className="plusinfo-container">
@@ -43,9 +64,10 @@ const PlusInfo = () => {
             <div className="plusinfo-textDiv">전화번호</div>
             <Input
               name="phone"
-              placeholder="비밀번호를 입력해주세요"
+              placeholder="전화번호를 입력해주세요"
               type="text"
-              onChange={formik.handleChange}
+              value={formik.values.phone} // 상태에 있는 phone 값을 입력란에 넣어줍니다.
+              onChange={handlePhoneChange} // 전화번호 포맷팅을 먼저 처리
             />
           </div>
           <Button htmlType="submit">회원가입</Button>

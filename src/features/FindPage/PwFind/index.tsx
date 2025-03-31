@@ -135,7 +135,7 @@ const PwFind = () => {
                 router.push("/find/id");
               }}
             >
-              iD찾기
+              id찾기
             </span>
             /
             <span
