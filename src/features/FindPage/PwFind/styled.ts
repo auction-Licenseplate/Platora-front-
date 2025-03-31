@@ -61,8 +61,6 @@ export const PwFindStyled = styled.div<PwFindStyledProps>`
 
     .PwFind-findDiv {
       width: 100%;
-
-      color: gray;
       margin-top: 15px;
       margin-bottom: 15px;
       display: flex;
