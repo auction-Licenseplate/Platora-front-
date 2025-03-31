@@ -5,7 +5,7 @@ import axios from "axios";
 import { Router, useRouter } from "next/router";
 import clsx from "clsx";
 import { useDispatch } from "react-redux";
-import { setUserEmail } from "@/store/userSlice";
+import * as userSlice from "@/store/userSlice";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -33,7 +33,7 @@ const LoginForm = () => {
           }
           router.push("/");
           console.log(res.data);
-          dispatch(setUserEmail(res.data.email));
+          dispatch(userSlice.setUserEmail(res.data.email));
         })
         .catch((error) => {
           console.error("로그인 실패 :", error);

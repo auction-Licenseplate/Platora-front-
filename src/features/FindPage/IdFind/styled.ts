@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const IdFindStyled = styled.div`
   &.IdFind-wrap {
-    margin: 100px auto;
+    margin: auto;
+    margin-bottom: 50px;
     width: 100%;
 
     .IdFind-container {
@@ -19,7 +20,9 @@ export const IdFindStyled = styled.div`
       color: white;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       margin-bottom: 10px;
+      gap: 3px;
     }
     .IdFind-textDiv {
       display: flex;
@@ -33,8 +36,13 @@ export const IdFindStyled = styled.div`
     }
     .IdFind-findDiv {
       color: gray;
-      margin-top: 15px;
+      margin-top: 10px;
       margin-bottom: 15px;
+    }
+    .IdFind-findidDiv {
+      font-size: 1vw;
+      color: white;
+      margin-top: 10px;
     }
   }
 `;
