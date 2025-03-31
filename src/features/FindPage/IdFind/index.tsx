@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 const IdFind = () => {
-  const [userId, serUserId] = useState("");
+  const [userId, setUserId] = useState("");
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -15,20 +15,25 @@ const IdFind = () => {
       phone: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      if (!values.name.trim() || !values.phone.trim()) {
+        setUserId("이름과 전화번호를 입력해주세요.");
+        return;
+      }
+
       const data = {
         name: values.name,
         phone: values.phone,
       };
+      console.log(data);
       axios // 아이디 찾기 요청
-        .post("http://localhost:5000/auth/login", data) // 서버 URL
+        .post("http://localhost:5000/auth/findID", data) // 서버 URL
         .then((res) => {
-          if ((res.data.message = "200 유저정보없음")) {
-            alert("가입되지 않은 아이디입니다.");
+          if (res.data.message === "저장된 아이디 없음") {
+            return setUserId("가입되지 않은 아이디입니다.");
           }
-          if ((res.data.message = "200")) {
-            console.log("아이디 찾기 성공", res.data);
-            serUserId(res.data.userId);
+          if (res.data.email) {
+            console.log("아이디 찾기 성공", res.data.email);
+            setUserId(res.data.email);
           }
         })
         .catch((error) => {
@@ -105,7 +110,7 @@ const IdFind = () => {
           <Button htmlType="submit">아이디 찾기</Button>
         </form>
       </div>
-      <div>{userId}</div>
+      <div style={{ color: "white" }}>{userId}</div>
     </IdFindStyled>
   );
 };
