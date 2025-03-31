@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
-import { cookies } from "next/headers";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
@@ -14,35 +13,10 @@ import userIcon from "@/assets/images/userIcon.png";
 import closeIcon from "@/assets/images/closeIcon.png";
 import favoriteIcon from "@/assets/images/favoriteIcon.png";
 import logoutIcon from "@/assets/images/logoutIcon.png";
-import Cookie from "js-cookie";
 
 const Header = () => {
   const router = useRouter();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-
-  const [token, setToken] = useState<string | null>(null);
-
-  // const token = cookies(null).access_token;
-
-  // const token = req.cookies['access_token'];
-
-  // console.log("dd", document.cookie);
-
-  useEffect(() => {
-    // 클라이언트에서 쿠키 읽기
-    const cookies = document.cookie.split(";");
-    const tokenCookie = cookies.find((cookie) =>
-      cookie.trim().startsWith("access_token=")
-    );
-
-    console.log(document.cookie);
-
-    if (tokenCookie) {
-      const tokenValue = tokenCookie.split("=")[1];
-      setToken(tokenValue);
-      console.log(tokenValue);
-    }
-  }, []);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -60,9 +34,7 @@ const Header = () => {
     setIsToggleOpen(!isToggleOpen);
   };
 
-  const email = useSelector((state: RootState) => state.user.email);
-
-  console.log("현재 로그인된 이메일:", email);
+  const token = useSelector((state: RootState) => state.user.token);
 
   return (
     <>

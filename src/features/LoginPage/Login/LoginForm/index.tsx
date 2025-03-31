@@ -31,7 +31,7 @@ const LoginForm = () => {
           if (res.data.message === "200 유저정보 없음") {
             return alert("존재하지 않는 아이디입니다");
           }
-          // router.push("/");
+          router.push("/");
           console.log(res.data);
           dispatch(setUserEmail(res.data.email));
         })
