@@ -18,11 +18,7 @@ const Header = () => {
   const router = useRouter();
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-  const token = Cookie.get("access_token");
-
-  console.log("쿠키", token); // 쿠키의 값 출력
-
-  // const token = Cookies.get("access_token");
+  const [token, setToken] = useState<string | null>(null);
 
   // const token = cookies(null).access_token;
 
@@ -30,7 +26,21 @@ const Header = () => {
 
   // console.log("dd", document.cookie);
 
-  // console.log("쿠키", token);
+  useEffect(() => {
+    // 클라이언트에서 쿠키 읽기
+    const cookies = document.cookie.split(";");
+    const tokenCookie = cookies.find((cookie) =>
+      cookie.trim().startsWith("access_token=")
+    );
+
+    console.log(document.cookie);
+
+    if (tokenCookie) {
+      const tokenValue = tokenCookie.split("=")[1];
+      setToken(tokenValue);
+      console.log(tokenValue);
+    }
+  }, []);
 
   useEffect(() => {
     const handleRouteChange = () => {
