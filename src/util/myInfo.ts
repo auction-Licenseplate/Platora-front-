@@ -13,6 +13,11 @@ export interface UserInfo {
   point?: number;
 }
 
+interface RefundData {
+  item: string;
+  state: any;
+}
+
 export const cardCompanies = [
   "삼성카드",
   "신한카드",
@@ -65,7 +70,8 @@ export const myInfo = (info: string) => {
   const [modalType, setModalType] = useState("");
 
   // 테이블 데이터 받기
-  const [refundTableData, setRefundTableData] = useState([]);
+  const [refundTableData, setRefundTableData] = useState<RefundData[]>([]);
+
   const [vehicleTableData, setVehicleTableData] = useState([]);
 
   // 테이블 컬럼
@@ -87,7 +93,7 @@ export const myInfo = (info: string) => {
 
   // 차량 input 비어있는지 확인
   const [vehicleNumber, setVehicleNumber] = useState(""); // 차량 번호 상태
-  const [file, setFile] = useState(null); // 파일 상태
+  const [file, setFile] = useState<File | null>(null); // 파일 상태
 
   const FileUpload = (file: any) => {
     setFile(file); // 파일 상태 업데이트
@@ -246,34 +252,43 @@ export const myInfo = (info: string) => {
 
   // 반환 데이터 요청 -> 해당 유저의 refund_amount 랑 환불 성공 여부! < 이것도 추가해야 할 것 같아!!
   const fetchRefundData = async () => {
-    // try {
-    //   const response = await axios.get("http://localhost:5000/pay/refundData", {
-    //     withCredentials: true,
-    //     headers: {
-    //        Authorization: `Bearer ${token}`,
-    //      },
-    //   });
-    //   setRefundTableData(response.data);
-    // } catch (error) {
-    //   console.error("Util -> myInfo(fetchRefundData) 오류:", error);
-    // }
+    try {
+      const response = await axios.get("http://localhost:5000/pay/refundData", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const refundData = response.data.map((item: any) => ({
+        item: `${item.refund_amount.toLocaleString()} 포인트`,
+        state: item.refund_status,
+      }));
+
+      setRefundTableData(refundData);
+    } catch (error) {
+      console.error("Util -> myInfo(fetchRefundData) 오류:", error);
+    }
   };
 
   // vehicle 데이터 요청 -> plate_num, ownership_statu 두 개 보내줘!
   const fetchVehicleData = async () => {
-    // try {
-    //   const response = await axios.get(
-    //     "http://localhost:5000/vehicles/vehicleData",
-    //       withCredentials: true,
-    //       headers: {
-    //          Authorization: `Bearer ${token}`,
-    //        },
-    //     }
-    //   );
-    //   setVehicleTableData(response.data);
-    // } catch (error) {
-    //   console.error("Util -> myInfo(fetchVehicleData) 오류:", error);
-    // }
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/vehicles/vehicleData",
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(response.data);
+      setVehicleTableData(response.data);
+    } catch (error) {
+      console.error("Util -> myInfo(fetchVehicleData) 오류:", error);
+    }
   };
 
   // 테이블 타입에 따라 데이터 받기
@@ -288,25 +303,53 @@ export const myInfo = (info: string) => {
   };
 
   // 파일 저장 -> users 테이블에 certificate 부분 파일 저장! multer 로 저장한다고 해놨어!
-  const handleFileUpload = async (file: any) => {
+  const handleFileUpload = async (file: any, onSuccess: any) => {
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      // const response = await axios.post(
-      //   "http://localhost:5000/users/upload",
-      //   formData,
-      //   {
-      //     withCredentials: true,
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }
-      // );
-      // console.log("파일 업로드 성공:", response.data);
-      console.log("파일 업로드");
+      const response = await axios.post(
+        "http://localhost:5000/users/upload",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("파일 업로드 성공:", response.data);
+      onSuccess(response.data);
     } catch (error) {
       console.error("파일 업로드 실패:", error);
+    }
+  };
+
+  // 공인 인증서 보내기
+  const handleRegister = async () => {
+    const formData = new FormData();
+    formData.append("vehicleNumber", vehicleNumber);
+    if (file) {
+      formData.append("file", file);
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/vehicles/register",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("✅ 차량 등록 성공:", response.data);
+      alert("🚗 차량 정보가 성공적으로 등록되었습니다!");
+    } catch (error) {
+      console.log("util -> myInfo :", error);
     }
   };
 
@@ -357,5 +400,6 @@ export const myInfo = (info: string) => {
     pointDetails,
     setPointDetails,
     handlePointChange,
+    handleRegister,
   };
 };

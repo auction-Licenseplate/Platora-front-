@@ -109,6 +109,7 @@ const MyInfo = ({ info }: Props) => {
     setPointDetails,
     handlePointChange,
     setPassword,
+    handleRegister,
   } = myInfo(info);
 
   useEffect(() => {
@@ -314,7 +315,9 @@ const MyInfo = ({ info }: Props) => {
                 <div className="input fileInput">
                   <Upload
                     className="upLoad"
-                    customRequest={({ file }) => handleFileUpload(file)}
+                    customRequest={({ file, onSuccess }) =>
+                      handleFileUpload(file, onSuccess)
+                    }
                   >
                     <Button icon={<UploadOutlined />}>파일 선택</Button>
                   </Upload>
@@ -329,7 +332,11 @@ const MyInfo = ({ info }: Props) => {
                   내역보기
                 </p>
               </div>
-              <button className="passBtn" disabled={!vehicleNumber || !file}>
+              <button
+                className="passBtn"
+                disabled={!vehicleNumber || !!file}
+                onClick={handleRegister}
+              >
                 등록하기
               </button>
             </div>
