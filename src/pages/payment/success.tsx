@@ -23,6 +23,7 @@ const PaymentSuccess = () => {
           paymentKey,
         },
         {
+          withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
           },

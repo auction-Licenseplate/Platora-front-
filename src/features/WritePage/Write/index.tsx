@@ -5,6 +5,11 @@ import { Input } from "antd";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { EditorState, ContentState } from "draft-js";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+
+// { withCredentials: true },
 
 // 서버 사이드 렌더링을 하지 않도록 설정 -> 클라이언트 측에서만 로드
 const Editor = dynamic(
@@ -15,11 +20,15 @@ const Editor = dynamic(
 ) as any;
 
 const WriteContainer = () => {
+  // 에디터 내용 저장
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  // 이미지 프리뷰
   const [frontImage, setFrontImage] = useState<string | null>(null);
   const [sideImage1, setSideImage1] = useState<string | null>(null);
   const [sideImage2, setSideImage2] = useState<string | null>(null);
 
-  // preview
+  // 프리뷰
   const handleImageChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     setImage: React.Dispatch<React.SetStateAction<string | null>>
@@ -34,9 +43,7 @@ const WriteContainer = () => {
     }
   };
 
-  // 에디터 내용 저장
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+  // 에디터 기본 내용
   useEffect(() => {
     const initialContent = `차량 연도: \n차량 상태: \n기타 정보: `;
     const contentState = ContentState.createFromText(initialContent);
@@ -46,6 +53,40 @@ const WriteContainer = () => {
   // editorState에 값 설정
   const onEditorStateChange = (editorState: any) => {
     setEditorState(editorState);
+  };
+
+  const handleSubmit = async () => {
+    const carInfo = editorState.getCurrentContent().getPlainText(); // 에디터 내용 추출
+
+    const token = useSelector((state: RootState) => state.user.userToken);
+
+    const formData = new FormData();
+    formData.append("title", "차량 제목");
+    formData.append("car_info", carInfo);
+
+    if (frontImage) formData.append("car_img[]", frontImage);
+    if (sideImage1) formData.append("car_img[]", sideImage1);
+    if (sideImage2) formData.append("car_img[]", sideImage2);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/vehicles/addWrite",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("저장 성공", response.data);
+      }
+    } catch (error) {
+      console.error("저장 실패", error);
+    }
   };
 
   return (
@@ -103,10 +144,10 @@ const WriteContainer = () => {
           {/* 저장 버튼 */}
           <button
             className="saveBtn"
-            onClick={() => console.log("발행")}
+            onClick={handleSubmit}
             disabled={!frontImage || !sideImage1 || !sideImage2}
           >
-            발행
+            등록
           </button>
         </div>
       </WritePageStyled>
