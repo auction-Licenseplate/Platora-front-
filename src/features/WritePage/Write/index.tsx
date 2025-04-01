@@ -8,172 +8,169 @@ import { EditorState, ContentState } from "draft-js";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { useRouter } from "next/router";
 
-// { withCredentials: true },
-
-// 서버 사이드 렌더링을 하지 않도록 설정 -> 클라이언트 측에서만 로드
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 ) as any;
 
+const validationSchema = Yup.object({
+  title: Yup.string().required("제목은 필수 항목입니다."),
+  frontImage: Yup.mixed().required("정면 사진이 필요합니다."),
+  sideImage1: Yup.mixed().required("측면1 사진이 필요합니다."),
+  sideImage2: Yup.mixed().required("측면2 사진이 필요합니다."),
+});
+
 const WriteContainer = () => {
-  // 에디터 내용 저장
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const router = useRouter();
 
-  // 이미지 프리뷰
-  const [frontImage, setFrontImage] = useState<string | null>(null);
-  const [sideImage1, setSideImage1] = useState<string | null>(null);
-  const [sideImage2, setSideImage2] = useState<string | null>(null);
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(
+      ContentState.createFromText("차량 연도:\n차량 상태:\n기타 정보:")
+    )
+  );
 
-  // 프리뷰
-  const handleImageChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setImage: React.Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const token = useSelector((state: RootState) => state.user.userToken);
 
-  // 에디터 기본 내용
   useEffect(() => {
-    const initialContent = `차량 연도: \n차량 상태: \n기타 정보: `;
-    const contentState = ContentState.createFromText(initialContent);
-    setEditorState(EditorState.createWithContent(contentState));
+    if (!token) {
+      router.push("/login");
+    }
   }, []);
 
-  // editorState에 값 설정
-  const onEditorStateChange = (editorState: any) => {
-    setEditorState(editorState);
-  };
-
-  const handleSubmit = async () => {
-    const carInfo = editorState.getCurrentContent().getPlainText(); // 에디터 내용 추출
-
-    const token = useSelector((state: RootState) => state.user.userToken);
-
-    const formData = new FormData();
-    formData.append("title", "차량 제목");
-    formData.append("car_info", carInfo);
-
-    if (frontImage) formData.append("car_img[]", frontImage);
-    if (sideImage1) formData.append("car_img[]", sideImage1);
-    if (sideImage2) formData.append("car_img[]", sideImage2);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/vehicles/addWrite",
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        console.log("저장 성공", response.data);
-      }
-    } catch (error) {
-      console.error("저장 실패", error);
-    }
-  };
-
   return (
-    <>
-      <WritePageStyled className={clsx("main-wrap")}>
-        <div className="writeContent">
-          <h1>Write</h1>
+    <WritePageStyled className={clsx("main-wrap")}>
+      <div className="writeContent">
+        <h1>Write</h1>
 
-          {/* 제목 입력 */}
-          <div className="writeInput">
-            <label>제목</label>
-            <Input type="text" placeholder="번호판을 입력하세요" />
-          </div>
+        <Formik
+          initialValues={{
+            title: "",
+            frontImage: null,
+            sideImage1: null,
+            sideImage2: null,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={async (values) => {
+            const formData = new FormData();
+            formData.append("title", values.title);
+            formData.append(
+              "car_info",
+              editorState.getCurrentContent().getPlainText()
+            );
+            if (values.frontImage !== null)
+              formData.append("car_img", values.frontImage);
+            if (values.sideImage1 !== null)
+              formData.append("car_img", values.sideImage1);
+            if (values.sideImage2 !== null)
+              formData.append("car_img  ", values.sideImage2);
 
-          {/* 이미지 업로드 */}
-          <div className="writeImgInputs">
-            <ImageUpload
-              label="정면"
-              image={frontImage}
-              onChange={(e) => handleImageChange(e, setFrontImage)}
-            />
-            <ImageUpload
-              label="측면 1"
-              image={sideImage1}
-              onChange={(e) => handleImageChange(e, setSideImage1)}
-            />
-            <ImageUpload
-              label="측면 2"
-              image={sideImage2}
-              onChange={(e) => handleImageChange(e, setSideImage2)}
-            />
-          </div>
+            try {
+              formData.forEach((value, key) => {
+                console.log(key, value);
+              });
+              // const response = await axios.post(
+              //   "http://localhost:3000/vehicles/addWrite",
+              //   formData,
+              //   {
+              //     withCredentials: true,
+              //     headers: {
+              //       "Content-Type": "multipart/form-data",
+              //       Authorization: `Bearer ${token}`,
+              //     },
+              //   }
+              // );
 
-          {/* 에디터 */}
-          <Editor
-            className="editorBox"
-            wrapperClassName="wrapper-class"
-            editorClassName="editor"
-            toolbarClassName="toolbar-class"
-            // 툴바 설정
-            toolbar={{
-              // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
-              options: ["inline", "textAlign", "history"],
-              textAlign: { inDropdown: false },
-              history: { inDropdown: false },
-            }}
-            placeholder="내용을 작성해주세요."
-            localization={{
-              locale: "ko",
-            }}
-            editorState={editorState}
-            onEditorStateChange={onEditorStateChange}
-          />
+              // if (response.status === 200) {
+              //   console.log("저장 성공", response.data);
+              //   const imagePaths = response.data.data.images;
+              //   console.log("업로드된 이미지 경로:", imagePaths);
+              // }
+            } catch (error) {
+              console.error("저장 실패", error);
+            }
+          }}
+        >
+          {({ setFieldValue, values, errors, touched }) => (
+            <Form>
+              <div className="writeInput">
+                <label>제목</label>
+                <Field
+                  name="title"
+                  type="text"
+                  placeholder="번호판을 입력하세요"
+                  as={Input}
+                />
+                {errors.title && touched.title && (
+                  <div className="error">{errors.title}</div>
+                )}
+              </div>
 
-          {/* 저장 버튼 */}
-          <button
-            className="saveBtn"
-            onClick={handleSubmit}
-            disabled={!frontImage || !sideImage1 || !sideImage2}
-          >
-            등록
-          </button>
-        </div>
-      </WritePageStyled>
-    </>
+              <div className="writeImgInputs">
+                <ImageUpload
+                  label="정면"
+                  name="frontImage"
+                  setFieldValue={setFieldValue}
+                  image={values.frontImage}
+                />
+                <ImageUpload
+                  label="측면 1"
+                  name="sideImage1"
+                  setFieldValue={setFieldValue}
+                  image={values.sideImage1}
+                />
+                <ImageUpload
+                  label="측면 2"
+                  name="sideImage2"
+                  setFieldValue={setFieldValue}
+                  image={values.sideImage2}
+                />
+              </div>
+
+              <Editor
+                className="editorBox"
+                toolbar={{ options: ["inline", "textAlign", "history"] }}
+                placeholder="내용을 작성해주세요."
+                localization={{ locale: "ko" }}
+                editorState={editorState}
+                onEditorStateChange={setEditorState}
+              />
+
+              <button className="saveBtn" type="submit">
+                등록
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </WritePageStyled>
   );
 };
 
-// 이미지 업로드 & 미리보기 컴포넌트
-const ImageUpload = ({
-  label,
-  image,
-  onChange,
-}: {
-  label: string;
-  image: string | null;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => {
+const ImageUpload = ({ label, name, setFieldValue, image }: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFieldValue(name, file);
+    }
+  };
+
   return (
     <div className="writePreInput">
       <label>{label}</label>
-      <Input type="file" accept="image/*" onChange={onChange} />
+      <Input type="file" accept="image/*" onChange={handleChange} />
       <div className="previewContainer">
         {image ? (
-          <img src={image} alt={`${label} 미리보기`} className="previewImg" />
+          <img
+            src={URL.createObjectURL(image)}
+            alt={label}
+            className="previewImg"
+          />
         ) : (
-          <span className="previewText">이미지 선택</span>
+          <span>이미지 선택</span>
         )}
       </div>
     </div>

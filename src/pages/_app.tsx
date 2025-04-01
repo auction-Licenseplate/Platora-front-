@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Provider, useDispatch } from "react-redux";
-import store from "../store/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store, { RootState } from "../store/store";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
@@ -11,18 +11,19 @@ import axios from "axios";
 // 토큰을 가져오는 컴포넌트
 const TokenLoader = () => {
   const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/auth/tokenCheck", { withCredentials: true })
-      .then((res) => {
-        if (res.data.token) {
-          dispatch(setUserToken(res.data.token));
-        }
-      })
-      .catch((error) => {
-        console.error("로그인 상태 확인 실패:", error);
-      });
+    if (token) {
+      axios
+        .get("http://localhost:5000/auth/tokenCheck", { withCredentials: true })
+        .then((res) => {
+          if (res.data.token) {
+            dispatch(setUserToken(res.data.token));
+          }
+        })
+        .catch(() => {});
+    }
   }, [dispatch]);
 
   return null;

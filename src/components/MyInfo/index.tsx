@@ -311,7 +311,7 @@ const MyInfo = ({ info }: Props) => {
               </div>
               <div className="inputs">
                 <h3>공인 인증서</h3>
-                <div className="input">
+                <div className="input fileInput">
                   <Upload
                     className="upLoad"
                     customRequest={({ file }) => handleFileUpload(file)}

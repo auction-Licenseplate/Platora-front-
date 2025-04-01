@@ -86,8 +86,9 @@ const Header = () => {
           withCredentials: true,
         }
       );
-      router.push("/");
-      window.location.reload();
+      router.push("/").then(() => {
+        window.location.reload();
+      });
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }

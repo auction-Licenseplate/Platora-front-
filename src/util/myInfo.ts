@@ -59,9 +59,7 @@ export const myInfo = (info: string) => {
   const [pointModalOpen, setPointModalOpen] = useState(false);
 
   // 충전할 포인트
-  const [pointDetails, setPointDetails] = useState({
-    point: 0,
-  });
+  const [pointDetails, setPointDetails] = useState({ point: 0 });
 
   // 테이블 타입 받기
   const [modalType, setModalType] = useState("");
