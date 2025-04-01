@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
@@ -30,15 +30,6 @@ const Header = () => {
 
   // 다크, 라이트 모드
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // 로그인 유무
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (token) {
-      // window.location.reload();
-    }
-  }, [token]);
 
   // 토글 변경 시에
   useEffect(() => {
@@ -96,6 +87,7 @@ const Header = () => {
         }
       );
       router.push("/");
+      window.location.reload();
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }
