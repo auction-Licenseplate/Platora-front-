@@ -4,7 +4,7 @@ import NaverLogin from "./NaverLogin";
 import KakaoLogin from "./KakaoLogin";
 import GoogleLogin from "./GoogleLogin";
 import clsx from "clsx";
-import OpenAiTest from "@/features/OpenAi";
+
 const Login = () => {
   return (
     <LoginStyled className={clsx("login-wrap")}>

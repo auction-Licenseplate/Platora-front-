@@ -31,6 +31,7 @@ interface Props {
 // 메인 화면
 const MyInfo = ({ info }: Props) => {
   const router = useRouter();
+  const [pw, setPw] = useState<string>("");
   const token = useSelector((state: RootState) => state.user.userToken);
   const theme = useSelector((state: RootState) => state.theme.mode);
 
@@ -107,6 +108,7 @@ const MyInfo = ({ info }: Props) => {
     pointDetails,
     setPointDetails,
     handlePointChange,
+    setPassword,
   } = myInfo(info);
 
   useEffect(() => {
@@ -142,6 +144,15 @@ const MyInfo = ({ info }: Props) => {
   useEffect(() => {
     setIsDarkMode(theme === "dark");
   }, [theme]);
+
+  const pwvalue = () => {
+    console.log(password);
+    axios
+      .post("http://localhost:5000/auth/pwfind/updatepw", password)
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <MyInfoStyled className={clsx("main-wrap-info")}>
@@ -245,7 +256,9 @@ const MyInfo = ({ info }: Props) => {
                   placeholder="비밀번호를 입력하세요"
                   type="password"
                   value={password}
-                  onChange={handlePasswordChange}
+                  onChange={() => {
+                    handlePasswordChange;
+                  }}
                 />
                 {password && <p className="alert">{passwordError}</p>}
               </div>
@@ -264,6 +277,9 @@ const MyInfo = ({ info }: Props) => {
               </div>
               <button
                 className="passBtn"
+                onClick={() => {
+                  pwvalue;
+                }}
                 disabled={
                   !password ||
                   !passwordCheck ||
