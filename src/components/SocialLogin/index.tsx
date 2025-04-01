@@ -33,6 +33,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
         if ((res.data.message = "가입되지 않은 유저")) {
           setIsSuccess(false);
           setUser(res.data.user.id);
+          console.log(user);
         } else {
           setIsSuccess(true);
           router.push("/");
