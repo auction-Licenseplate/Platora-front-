@@ -11,19 +11,16 @@ import axios from "axios";
 // 토큰을 가져오는 컴포넌트
 const TokenLoader = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    if (token) {
-      axios
-        .get("http://localhost:5000/auth/tokenCheck", { withCredentials: true })
-        .then((res) => {
-          if (res.data.token) {
-            dispatch(setUserToken(res.data.token));
-          }
-        })
-        .catch(() => {});
-    }
+    axios
+      .get("http://localhost:5000/auth/tokenCheck", { withCredentials: true })
+      .then((res) => {
+        if (res.data.token) {
+          dispatch(setUserToken(res.data.token));
+        }
+      })
+      .catch(() => {});
   }, [dispatch]);
 
   return null;

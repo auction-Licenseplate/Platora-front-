@@ -120,9 +120,16 @@ export const myInfo = (info: string) => {
       })
       .then((response) => {
         console.log("포인트 반환 처리됨", response.data);
+
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          point: response.data.remainingPoint, // 남은 포인트 적용
+        }));
+
         setRefundModalOpen(false); // 모달 닫기
         modal.success({
           title: "포인트 반환이 완료되었습니다.",
+          content: `현재 잔여 포인트: ${response.data.remainingPoint} P`,
         });
       })
       .catch((error) => {
