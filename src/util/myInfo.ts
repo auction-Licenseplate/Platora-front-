@@ -289,6 +289,7 @@ export const myInfo = (info: string) => {
       // const response = await axios.post(
       //   "http://localhost:5000/users/upload",
       //   formData,
+      //   withCredentials: true,
       //   {
       //     headers: {
       //       "Content-Type": "multipart/form-data",

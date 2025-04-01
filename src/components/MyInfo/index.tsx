@@ -117,6 +117,7 @@ const MyInfo = ({ info }: Props) => {
     if (info === "myInfo" || info === "point") {
       axios
         .get("http://localhost:5000/users/user-info", {
+          withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -130,6 +131,7 @@ const MyInfo = ({ info }: Props) => {
     } else if (info === "changePass") {
       axios
         .get("http://localhost:5000/users/passCheck", {
+          withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => setIsEditable(response.data.provider === ""))
