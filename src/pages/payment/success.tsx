@@ -9,7 +9,7 @@ const PaymentSuccess = () => {
   const router = useRouter();
   const { paymentKey, amount } = router.query;
 
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useSelector((state: RootState) => state.user.userToken);
 
   const handlePaymentSuccess = async (amount: number, method: string) => {
     try {
