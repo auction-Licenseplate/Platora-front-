@@ -36,9 +36,7 @@ const Header = () => {
 
   useEffect(() => {
     if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
+      // window.location.reload();
     }
   }, [token]);
 
@@ -186,7 +184,7 @@ const Header = () => {
           </div>
 
           <div className="signUp">
-            {isLoggedIn ? (
+            {token ? (
               <>
                 <div className="userIcon">
                   <Image
