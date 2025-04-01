@@ -92,6 +92,11 @@ export const MyInfoStyled = styled.div`
           .input {
             width: 70%;
             border: none;
+            background-color: rgb(190, 190, 190);
+          }
+
+          .fileInput {
+            background-color: rgba(255, 255, 255, 0);
           }
 
           .fileInput {
