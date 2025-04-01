@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Modal } from "antd";
 import axios from "axios";
 import modal from "antd/es/modal";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 // 유저 정보 타입 정의
 export interface UserInfo {
@@ -54,6 +55,14 @@ export const myInfo = (info: string) => {
   const [tableModalOpen, setTableModalOpen] = useState(false);
   const [tableData, setTableData] = useState([]);
 
+  // 포인트 모달창 여닫기
+  const [pointModalOpen, setPointModalOpen] = useState(false);
+
+  // 충전할 포인트
+  const [pointDetails, setPointDetails] = useState({
+    point: 0,
+  });
+
   // 테이블 타입 받기
   const [modalType, setModalType] = useState("");
 
@@ -94,9 +103,10 @@ export const myInfo = (info: string) => {
     ? userInfo.point.toLocaleString("ko-KR") + " point"
     : "0 point";
 
+  const token = useSelector((state: RootState) => state.user.token);
+
   // 포인트 반환 요청
   const handleRefundModalOk = () => {
-    const token = Cookies.get("token");
     if (refundDetails.refundPoint <= 0) {
       Modal.error({
         content: "반환할 포인트는 0보다 큰 값이어야 합니다.",
@@ -125,7 +135,7 @@ export const myInfo = (info: string) => {
       });
   };
 
-  // 포인트 유효성 검사
+  // 환불 포인트 유효성 검사
   const handleRefundPointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 쉼표 제거
     let value = e.target.value.replace(/,/g, "");
@@ -144,6 +154,26 @@ export const myInfo = (info: string) => {
       setRefundDetails({
         ...refundDetails,
         refundPoint: pointValue,
+      });
+    }
+  };
+
+  // 포인트 유효성 검사
+  const handlePointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 쉼표 제거
+    let value = e.target.value.replace(/,/g, "");
+
+    // 0으로 시작하지 않게
+    if (/^0/.test(value) && value.length > 1) {
+      value = value.replace(/^0+/, "");
+    }
+
+    // 반환 포인트 0 이상
+    if (/^\d+$/.test(value) || value === "") {
+      let pointValue = Math.max(Number(value), 1); // 최소값 1
+
+      setPointDetails({
+        point: pointValue,
       });
     }
   };
@@ -213,8 +243,8 @@ export const myInfo = (info: string) => {
     // try {
     //   const response = await axios.get("http://localhost:5000/pay/refundData", {
     //     headers: {
-    //       Authorization: `Bearer ${Cookies.get("token")}`,
-    //     },
+    //        Authorization: `Bearer ${token}`,
+    //      },
     //   });
     //   setRefundTableData(response.data);
     // } catch (error) {
@@ -229,8 +259,8 @@ export const myInfo = (info: string) => {
     //     "http://localhost:5000/vehicles/vehicleData",
     //     {
     //       headers: {
-    //         Authorization: `Bearer ${Cookies.get("token")}`,
-    //       },
+    //          Authorization: `Bearer ${token}`,
+    //        },
     //     }
     //   );
     //   setVehicleTableData(response.data);
@@ -313,5 +343,11 @@ export const myInfo = (info: string) => {
     setFile,
     FileUpload,
     handleVehicleNumberChange,
+
+    pointModalOpen,
+    setPointModalOpen,
+    pointDetails,
+    setPointDetails,
+    handlePointChange,
   };
 };

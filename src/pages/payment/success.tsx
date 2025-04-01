@@ -2,16 +2,16 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const PaymentSuccess = () => {
   const router = useRouter();
-  const { amount, userId } = router.query;
+  const { paymentKey, amount } = router.query;
 
-  const handlePaymentSuccess = async (
-    userId: string,
-    amount: number,
-    method: string
-  ) => {
+  const token = useSelector((state: RootState) => state.user.token);
+
+  const handlePaymentSuccess = async (amount: number, method: string) => {
     try {
       // payment 테이블 -> userId(토큰이라서 검증이 필요)에 따라 amount 저장
       await axios.post(
@@ -20,10 +20,11 @@ const PaymentSuccess = () => {
           payment_method: method,
           amount,
           status: "success",
+          paymentKey,
         },
         {
           headers: {
-            Authorization: `Bearer ${userId}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -39,11 +40,10 @@ const PaymentSuccess = () => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const amount = query.get("amount");
-    const userId = query.get("userId");
     const method = "카드";
 
-    if (userId && amount && method) {
-      handlePaymentSuccess(userId, parseInt(amount), method);
+    if (amount && method) {
+      handlePaymentSuccess(parseInt(amount), method);
     }
   }, []);
 

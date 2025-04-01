@@ -28,34 +28,6 @@ interface Props {
   info: string;
 }
 
-const handleTossPayment = async (userInfo: any) => {
-  try {
-    const amount = 5000;
-    const orderId = `order-${Date.now()}`;
-    const userId = Cookies.get("token") || "user";
-    const orderName = "포인트 충전";
-
-    const response = await axios.get(
-      "http://localhost:3001/api/toss-client-key"
-    );
-    const tossClientKey = response.data.tossClientKey;
-
-    const toss = await loadTossPayments(tossClientKey);
-
-    // 결제 요청
-    toss.requestPayment("카드", {
-      amount,
-      orderId,
-      orderName,
-      successUrl: `http://localhost:3000/payment/success?&amount=${amount}$userId=${userId}`,
-      failUrl: `http://localhost:3000/payment/fail`,
-    });
-  } catch (error) {
-    console.error("결제 요청 중 오류:", error);
-    alert("결제를 시작할 수 없습니다.");
-  }
-};
-
 // 메인 화면
 const MyInfo = ({ info }: Props) => {
   const router = useRouter();
@@ -63,6 +35,34 @@ const MyInfo = ({ info }: Props) => {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+
+  const handleTossPayment = async (userInfo: any) => {
+    try {
+      const amount = pointDetails.point;
+      const orderId = `order-${Date.now()}`;
+      const orderName = "포인트 충전";
+
+      // 클라이언트 키 넘겨주기
+      const response = await axios.get(
+        "http://localhost:5000/pay/toss-client-key"
+      );
+      const tossClientKey = response.data.tossClientKey;
+
+      const toss = await loadTossPayments(tossClientKey);
+
+      // 결제 요청
+      toss.requestPayment("카드", {
+        amount,
+        orderId,
+        orderName,
+        successUrl: `http://localhost:3000/payment/success?&amount=${amount}`,
+        failUrl: `http://localhost:3000/payment/fail`,
+      });
+    } catch (error) {
+      console.error("결제 요청 중 오류:", error);
+      alert("결제를 시작할 수 없습니다.");
+    }
+  };
 
   const {
     userInfo,
@@ -102,6 +102,11 @@ const MyInfo = ({ info }: Props) => {
     setFile,
     FileUpload,
     handleVehicleNumberChange,
+    pointModalOpen,
+    setPointModalOpen,
+    pointDetails,
+    setPointDetails,
+    handlePointChange,
   } = myInfo(info);
 
   useEffect(() => {
@@ -212,7 +217,12 @@ const MyInfo = ({ info }: Props) => {
                   내역보기
                 </p>
               </div>
-              <button className="passBtn" onClick={handleTossPayment}>
+              <button
+                className="passBtn"
+                onClick={() => {
+                  setPointModalOpen(true);
+                }}
+              >
                 충전하기
               </button>
             </div>
@@ -383,6 +393,26 @@ const MyInfo = ({ info }: Props) => {
           }
           columns={columns}
         />
+      </Modal>
+
+      {/* 포인트 충전 모달 */}
+      <Modal
+        title="포인트 충전"
+        open={pointModalOpen}
+        onCancel={() => setPointModalOpen(false)}
+        footer={null}
+      >
+        <div className="input-group">
+          <label>충전할 포인트</label>
+          <Input
+            value={pointDetails.point.toLocaleString()}
+            onChange={handlePointChange}
+            type="text"
+            placeholder="충전할 포인트를 입력하여 주세요"
+          />
+        </div>
+
+        <Button onClick={handleTossPayment}> 충전하기 </Button>
       </Modal>
     </MyInfoStyled>
   );
