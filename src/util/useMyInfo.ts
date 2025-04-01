@@ -70,9 +70,9 @@ export const myInfo = (info: string) => {
   const [modalType, setModalType] = useState("");
 
   // 테이블 데이터 받기
-  const [refundTableData, setRefundTableData] = useState<RefundData[]>([]);
+  const [refundTableData, setRefundTableData] = useState<object[]>([]);
 
-  const [vehicleTableData, setVehicleTableData] = useState([]);
+  const [vehicleTableData, setVehicleTableData] = useState<object[]>([]);
 
   // 테이블 컬럼
   const columns = [
@@ -310,26 +310,9 @@ export const myInfo = (info: string) => {
   };
 
   // 파일 저장 -> users 테이블에 certificate 부분 파일 저장! multer 로 저장한다고 해놨어!
-  const handleFileUpload = async (file: any, onSuccess: any) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/users/upload",
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("파일 업로드 성공:", response.data);
-      onSuccess(response.data);
-    } catch (error) {
-      console.error("파일 업로드 실패:", error);
-    }
+  const handleFileUpload = (file: File, onSuccess: any) => {
+    setFile(file); // 파일을 상태로만 저장
+    onSuccess("파일이 선택되었습니다."); // 즉시 성공 콜백 실행
   };
 
   // 공인 인증서 보내기

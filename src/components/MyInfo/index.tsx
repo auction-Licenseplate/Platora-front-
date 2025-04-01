@@ -5,7 +5,7 @@ import { MyInfoStyled } from "./styled";
 import { Button, Input, Modal, Select, Table, Upload } from "antd";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { myInfo } from "@/util/myInfo";
+import { myInfo } from "@/util/useMyInfo";
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { useSelector } from "react-redux";
@@ -316,7 +316,7 @@ const MyInfo = ({ info }: Props) => {
                   <Upload
                     className="upLoad"
                     customRequest={({ file, onSuccess }) =>
-                      handleFileUpload(file, onSuccess)
+                      handleFileUpload(file as File, onSuccess)
                     }
                   >
                     <Button icon={<UploadOutlined />}>파일 선택</Button>
