@@ -290,6 +290,7 @@ export const myInfo = (info: string) => {
       //   "http://localhost:5000/users/upload",
       //   formData,
       //   {
+      //     withCredentials: true,
       //     headers: {
       //       "Content-Type": "multipart/form-data",
       //     },
