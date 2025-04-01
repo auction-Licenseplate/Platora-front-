@@ -26,9 +26,10 @@ const LoginForm = () => {
           if (res.data.message === "200 비밀번호 불일치함") {
             console.log(res.data.message, "============");
             return alert("비밀번호 틀림");
-          }
-          if (res.data.message === "200 유저정보 없음") {
+          } else if (res.data.message === "200 유저정보 없음") {
             return alert("존재하지 않는 아이디입니다");
+          } else {
+            router.push("/");
           }
           router.push("/").then(() => {
             window.location.reload();

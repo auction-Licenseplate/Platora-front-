@@ -103,7 +103,7 @@ export const myInfo = (info: string) => {
     ? userInfo.point.toLocaleString("ko-KR") + " point"
     : "0 point";
 
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useSelector((state: RootState) => state.user.userToken);
 
   // 포인트 반환 요청
   const handleRefundModalOk = () => {
