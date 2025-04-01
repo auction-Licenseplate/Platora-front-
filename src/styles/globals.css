@@ -90,6 +90,11 @@ body {
   color: var(--background);
 }
 
+/* 글 작성하기 */
+.writeContent label {
+  color: var(--foreground);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

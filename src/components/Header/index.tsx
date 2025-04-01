@@ -27,8 +27,20 @@ const Header = () => {
 
   // 토글 여닫기
   const [isToggleOpen, setIsToggleOpen] = useState(false);
+
   // 다크, 라이트 모드
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // 로그인 유무
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   // 토글 변경 시에
   useEffect(() => {
@@ -78,9 +90,13 @@ const Header = () => {
   // 로그아웃
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/auth/logout", {
-        withCredentials: true,
-      });
+      await axios.post(
+        "http://localhost:5000/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       router.push("/");
     } catch (error) {
       console.error("로그아웃 실패:", error);
@@ -170,7 +186,7 @@ const Header = () => {
           </div>
 
           <div className="signUp">
-            {token ? (
+            {isLoggedIn ? (
               <>
                 <div className="userIcon">
                   <Image
@@ -178,7 +194,10 @@ const Header = () => {
                     alt="user icon"
                     layout="responsive"
                     onClick={() => {
-                      router.push("/login");
+                      router.push({
+                        pathname: "/myPage",
+                        query: { menu: "myInfo" },
+                      });
                     }}
                   />
                 </div>

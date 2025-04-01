@@ -15,14 +15,17 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noImplicitAny": false
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "next.config.js",
-    "next.config.js"
+    "next.config.js",
+    "src",
+    "src/types"
   ],
   "exclude": ["node_modules"]
 }
