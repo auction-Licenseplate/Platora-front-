@@ -41,10 +41,8 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
             setUser(res.data.user);
             setIsSuccess(false); // 로그인 실패 상태
           } else {
-            // user가 있을 경우 성공 처리
-            console.log("로그인 성공");
-            setUser(res.data.user);
             setIsSuccess(true); // 로그인 성공 상태
+            router.push("/");
           }
         });
     } catch (error) {
