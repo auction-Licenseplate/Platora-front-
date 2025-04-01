@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { WritePageStyled } from "./styled";
 import { Input } from "antd";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -24,6 +25,8 @@ const validationSchema = Yup.object({
 });
 
 const WriteContainer = () => {
+  const router = useRouter();
+
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
       ContentState.createFromText("차량 연도:\n차량 상태:\n기타 정보:")
@@ -31,6 +34,12 @@ const WriteContainer = () => {
   );
 
   const token = useSelector((state: RootState) => state.user.userToken);
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
 
   return (
     <WritePageStyled className={clsx("main-wrap")}>
