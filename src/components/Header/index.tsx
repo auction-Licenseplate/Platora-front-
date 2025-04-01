@@ -19,7 +19,7 @@ import axios from "axios";
 const Header = () => {
   const router = useRouter();
 
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useSelector((state: RootState) => state.user.userToken);
 
   // Redux에서 테마 모드 가져오기
   const mode = useSelector((state: RootState) => state.theme.mode);
@@ -40,7 +40,7 @@ const Header = () => {
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [token]);
 
   // 토글 변경 시에
   useEffect(() => {

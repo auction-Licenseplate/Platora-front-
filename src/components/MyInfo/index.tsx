@@ -31,7 +31,7 @@ interface Props {
 // 메인 화면
 const MyInfo = ({ info }: Props) => {
   const router = useRouter();
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useSelector((state: RootState) => state.user.userToken);
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
