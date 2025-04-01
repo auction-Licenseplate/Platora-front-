@@ -335,7 +335,7 @@ export const myInfo = (info: string) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/vehicles/register",
+        "http://localhost:5000/certificate/register",
         formData,
         {
           withCredentials: true,
