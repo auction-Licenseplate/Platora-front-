@@ -113,6 +113,7 @@ export const myInfo = (info: string) => {
     }
     axios
       .post("http://localhost:5000/pay/refund-point", refundDetails, {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -240,6 +241,7 @@ export const myInfo = (info: string) => {
   const fetchRefundData = async () => {
     // try {
     //   const response = await axios.get("http://localhost:5000/pay/refundData", {
+    //     withCredentials: true,
     //     headers: {
     //        Authorization: `Bearer ${token}`,
     //      },
@@ -255,7 +257,7 @@ export const myInfo = (info: string) => {
     // try {
     //   const response = await axios.get(
     //     "http://localhost:5000/vehicles/vehicleData",
-    //     {
+    //       withCredentials: true,
     //       headers: {
     //          Authorization: `Bearer ${token}`,
     //        },
