@@ -165,7 +165,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? accountLogo : accountBlack}
               alt="account logo"
-              width={350}
+              width={300}
             />
             <div className="inputContainer">
               <div className="inputs readOnly">
@@ -203,7 +203,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? pointLogo : pointBlack}
               alt="point logo"
-              width={200}
+              width={150}
             />
             <div className="inputContainer">
               <div className="inputs readOnly">
@@ -247,7 +247,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? passwordLogo : passwordBlack}
               alt="password logo"
-              width={300}
+              width={250}
             />
             <div className="inputContainer">
               <div className="inputs">
@@ -298,7 +298,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? vehicleLogo : vehicleBlack}
               alt="vehicle logo"
-              width={250}
+              width={200}
             />
             <div className="inputContainer">
               <div className="inputs">

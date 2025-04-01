@@ -284,6 +284,13 @@ export const myInfo = (info: string) => {
         }
       );
 
+      // const vehicleData = response.data.map((item: any) => ({
+      //   item: `${item.refund_amount.toLocaleString()} 포인트`,
+      //   state: item.refund_status,
+      // }));
+
+      // setVehicleTableData(vehicleData);
+
       console.log(response.data);
       setVehicleTableData(response.data);
     } catch (error) {
