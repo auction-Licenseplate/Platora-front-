@@ -8,11 +8,10 @@ import { useState } from "react";
 import { Modal } from "antd";
 
 interface MenuProps {
-  pageInfo: string;
   menu: string;
 }
 
-const StickyMenu = ({ pageInfo, menu }: MenuProps) => {
+const StickyMenu = ({ menu }: MenuProps) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
@@ -54,28 +53,33 @@ const StickyMenu = ({ pageInfo, menu }: MenuProps) => {
   return (
     <StickyMenuStyled className={clsx("main-wrap")}>
       <div className="myPageSticky GlitchFont">
-        {pageInfo === "myPage" ? (
-          <>
-            <h1 className="title"> 마이페이지 </h1>
-            {menuItems.map((item) => (
-              <h1
-                key={item.value}
-                className={clsx("cursor", {
-                  active: item.value === menu,
-                })}
-                onClick={() => {
-                  if (item.value === "withdraw") {
-                    handleWithdraw();
-                  }
-                }}
-              >
-                {item.label}
-              </h1>
-            ))}
-          </>
-        ) : (
-          <h1> 승인 요청 </h1>
-        )}
+        <>
+          <h1 className="title"> 마이페이지 </h1>
+          {menuItems.map((item) => (
+            <h1
+              key={item.value}
+              className={clsx("cursor", {
+                active: item.value === menu,
+              })}
+              onClick={() => {
+                if (item.value === "withdraw") {
+                  handleWithdraw();
+                } else {
+                  router.push(
+                    {
+                      pathname: router.pathname,
+                      query: { menu: item.value },
+                    },
+                    undefined,
+                    { shallow: true }
+                  );
+                }
+              }}
+            >
+              {item.label}
+            </h1>
+          ))}
+        </>
       </div>
     </StickyMenuStyled>
   );

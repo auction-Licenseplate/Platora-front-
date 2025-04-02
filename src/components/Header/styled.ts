@@ -145,7 +145,7 @@ export const HeaderStyled = styled.div`
       justify-content: center;
       width: 250px;
       height: 50px;
-      margin-left: 20px;
+      margin-left: 30px;
       cursor: pointer;
     }
 
