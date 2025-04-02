@@ -88,8 +88,8 @@ const MyInfo = ({ info }: Props) => {
 
   useEffect(() => {
     if (!token) {
-      console.error("토큰이 없음");
-      return;
+      console.log("토큰 없음");
+      router.push("/login");
     }
     if (info === "myInfo" || info === "point") {
       axios

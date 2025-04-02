@@ -381,8 +381,10 @@ export const myInfo = (info: string) => {
         }
       );
 
-      console.log("✅ 차량 등록 성공:", response.data);
-      alert("🚗 차량 정보가 성공적으로 등록되었습니다!");
+      Modal.success({
+        title: "🚗 차량 등록 완료",
+        content: "차량 정보가 성공적으로 등록되었습니다!",
+      });
     } catch (error) {
       console.log("util -> myInfo :", error);
     }

@@ -20,7 +20,9 @@ const TokenLoader = () => {
           dispatch(setUserToken(res.data.token));
         }
       })
-      .catch(() => {});
+      .catch((e) => {
+        console.log(e);
+      });
   }, [dispatch]);
 
   return null;
