@@ -13,13 +13,7 @@ const JoinAgree = ({ agree, setAgree }: { agree: boolean; setAgree: any }) => {
   const token = useSelector((state: RootState) => state.user.userToken);
 
   const agreeAxios = (type: string) => {
-    axios.post(
-      "http://localhost:5000/users/userCheck",
-      { term: type },
-      {
-        withCredentials: true,
-      }
-    );
+    axios.post("http://localhost:5000/users/userCheck", { term: type });
   };
 
   return (
