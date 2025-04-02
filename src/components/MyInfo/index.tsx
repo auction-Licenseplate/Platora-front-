@@ -5,12 +5,12 @@ import { MyInfoStyled } from "./styled";
 import { Button, Input, Modal, Select, Table, Upload } from "antd";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { myInfo } from "@/util/myInfo";
+import { myInfo } from "@/util/useMyInfo";
 import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import AiPoint from "@/features/MyPageManeger/AiPoint";
+
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
 // 이미지
@@ -36,34 +36,6 @@ const MyInfo = ({ info }: Props) => {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
-
-  const handleTossPayment = async (userInfo: any) => {
-    try {
-      const amount = pointDetails.point;
-      const orderId = `order-${Date.now()}`;
-      const orderName = "포인트 충전";
-
-      // 클라이언트 키 넘겨주기
-      const response = await axios.get(
-        "http://localhost:5000/pay/toss-client-key"
-      );
-      const tossClientKey = response.data.tossClientKey;
-
-      const toss = await loadTossPayments(tossClientKey);
-
-      // 결제 요청
-      toss.requestPayment("카드", {
-        amount,
-        orderId,
-        orderName,
-        successUrl: `http://localhost:3000/payment/success?&amount=${amount}`,
-        failUrl: `http://localhost:3000/payment/fail`,
-      });
-    } catch (error) {
-      console.error("결제 요청 중 오류:", error);
-      alert("결제를 시작할 수 없습니다.");
-    }
-  };
 
   const {
     userInfo,
@@ -109,6 +81,8 @@ const MyInfo = ({ info }: Props) => {
     setPointDetails,
     handlePointChange,
     setPassword,
+    handleRegister,
+    handleTossPayment,
   } = myInfo(info);
 
   useEffect(() => {
@@ -164,7 +138,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? accountLogo : accountBlack}
               alt="account logo"
-              width={350}
+              width={300}
             />
             <div className="inputContainer">
               <div className="inputs readOnly">
@@ -202,7 +176,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? pointLogo : pointBlack}
               alt="point logo"
-              width={200}
+              width={150}
             />
             <div className="inputContainer">
               <div className="inputs readOnly">
@@ -246,7 +220,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? passwordLogo : passwordBlack}
               alt="password logo"
-              width={300}
+              width={250}
             />
             <div className="inputContainer">
               <div className="inputs">
@@ -297,7 +271,7 @@ const MyInfo = ({ info }: Props) => {
               key={isDarkMode ? "dark" : "light"}
               src={isDarkMode ? vehicleLogo : vehicleBlack}
               alt="vehicle logo"
-              width={250}
+              width={200}
             />
             <div className="inputContainer">
               <div className="inputs">
@@ -314,7 +288,9 @@ const MyInfo = ({ info }: Props) => {
                 <div className="input fileInput">
                   <Upload
                     className="upLoad"
-                    customRequest={({ file }) => handleFileUpload(file)}
+                    customRequest={({ file, onSuccess }) =>
+                      handleFileUpload(file as File, onSuccess)
+                    }
                   >
                     <Button icon={<UploadOutlined />}>파일 선택</Button>
                   </Upload>
@@ -329,7 +305,11 @@ const MyInfo = ({ info }: Props) => {
                   내역보기
                 </p>
               </div>
-              <button className="passBtn" disabled={!vehicleNumber || !file}>
+              <button
+                className="passBtn"
+                disabled={!vehicleNumber || !!file}
+                onClick={handleRegister}
+              >
                 등록하기
               </button>
             </div>
@@ -401,7 +381,7 @@ const MyInfo = ({ info }: Props) => {
 
       {/* table 모달창 */}
       <Modal
-        title={modalType === "refund" ? "환불 내역 보기" : "차량 내역 보기"}
+        title={modalType === "refund" ? "결제 내역 보기" : "차량 내역 보기"}
         open={tableModalOpen}
         onCancel={() => setTableModalOpen(false)}
         footer={null}

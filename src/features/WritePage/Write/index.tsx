@@ -66,29 +66,29 @@ const WriteContainer = () => {
             if (values.sideImage1 !== null)
               formData.append("car_img", values.sideImage1);
             if (values.sideImage2 !== null)
-              formData.append("car_img  ", values.sideImage2);
+              formData.append("car_img", values.sideImage2);
 
             try {
               formData.forEach((value, key) => {
                 console.log(key, value);
               });
-              // const response = await axios.post(
-              //   "http://localhost:3000/vehicles/addWrite",
-              //   formData,
-              //   {
-              //     withCredentials: true,
-              //     headers: {
-              //       "Content-Type": "multipart/form-data",
-              //       Authorization: `Bearer ${token}`,
-              //     },
-              //   }
-              // );
+              const response = await axios.post(
+                "http://localhost:5000/vehicles/addWrite",
+                formData,
+                {
+                  withCredentials: true,
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
 
-              // if (response.status === 200) {
-              //   console.log("저장 성공", response.data);
-              //   const imagePaths = response.data.data.images;
-              //   console.log("업로드된 이미지 경로:", imagePaths);
-              // }
+              if (response.status === 200) {
+                console.log("저장 성공", response.data);
+                const imagePaths = response.data.data.images;
+                console.log("업로드된 이미지 경로:", imagePaths);
+              }
             } catch (error) {
               console.error("저장 실패", error);
             }

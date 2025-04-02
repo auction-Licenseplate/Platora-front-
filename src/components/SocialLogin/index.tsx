@@ -42,7 +42,9 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
             setIsSuccess(false); // 로그인 실패 상태
           } else {
             setIsSuccess(true); // 로그인 성공 상태
-            router.push("/");
+            router.push("/").then(() => {
+              window.location.reload();
+            });
           }
         });
     } catch (error) {

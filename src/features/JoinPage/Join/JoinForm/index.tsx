@@ -1,5 +1,5 @@
 import { JoinFormStyled } from "./styled";
-import { Input, Button } from "antd";
+import { Input, Button, Modal } from "antd";
 import clsx from "clsx";
 import { useState } from "react";
 import { useFormik } from "formik";
@@ -33,6 +33,10 @@ const JoinForm = () => {
   const [passwordCheckError, setPasswordCheckError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [nameError, setNameError] = useState("");
+
+  // 중복 여부 상태 변수
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
+  const [isPhoneDuplicate, setIsPhoneDuplicate] = useState(false);
 
   const handleEmailChange = (e: any) => {
     const value = e.target.value;
@@ -86,6 +90,41 @@ const JoinForm = () => {
     setPhoneError(isValid ? "" : "전화번호는 13자이어야 합니다.");
   };
 
+  // 중복 검사 함수 -> email, phone 중복 확인해서 중복이면 exists = true, 중복이 아니면 exists = false
+  const handleDuplicateCheck = async (type: "email" | "phone") => {
+    try {
+      const data = type === "email" ? { email } : { phone };
+
+      const response = await axios.post(
+        `http://localhost:5000/auth/check/${type}`,
+        data
+      );
+      if (response.data.exists) {
+        if (type === "email") {
+          setIsEmailDuplicate(true);
+          setEmailError("이미 사용된 이메일입니다.");
+        } else {
+          setIsPhoneDuplicate(true);
+          setPhoneError("이미 사용된 전화번호입니다.");
+        }
+      } else {
+        if (type === "email") {
+          setIsEmailDuplicate(false);
+        } else {
+          setIsPhoneDuplicate(false);
+        }
+        Modal.success({
+          content: `사용 가능한 ${type}입니다.`,
+        });
+      }
+    } catch (error) {
+      console.error(`${type} 중복 검사 실패:`, error);
+      Modal.error({
+        content: `${type} 중복 검사 실패. 다시 시도해주세요.`,
+      });
+    }
+  };
+
   // 버튼 활성화 여부 계산
   const isFormValid =
     isEmailValid &&
@@ -114,7 +153,7 @@ const JoinForm = () => {
         .post("http://localhost:5000/auth/signup", data) // 서버 URL
         .then((response) => {
           console.log("회원가입 성공:", response.data);
-          router.push("/");
+          router.push("/login");
         })
         .catch((error) => {
           console.error("회원가입 실패:", error);
@@ -138,6 +177,9 @@ const JoinForm = () => {
               placeholder="abc123@xxx.com"
             />
             <div className="join-errormessage">{emailError}</div>
+            <Button onClick={() => handleDuplicateCheck("email")}>
+              이메일 중복 확인
+            </Button>
           </div>
           <div className="join-div">
             <label htmlFor="password">비밀번호</label>
@@ -194,11 +236,14 @@ const JoinForm = () => {
               placeholder="010-0000-0000"
             />
             <div className="join-errormessage">{phoneError}</div>
+            <Button onClick={() => handleDuplicateCheck("phone")}>
+              전화번호 중복 확인
+            </Button>
           </div>
           <div className="joinForm-btnDiv">
             <Button
               htmlType="submit"
-              disabled={!isFormValid} // 각 입력의 유효성 상태에 기반하여 버튼을 활성화/비활성화
+              disabled={!isFormValid || isEmailDuplicate || isPhoneDuplicate} // 각 입력의 유효성 상태에 기반하여 버튼을 활성화/비활성화
             >
               가입하기
             </Button>
