@@ -4,17 +4,23 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { myInfo } from "@/util/useMyInfo";
+interface Props {
+  info: string;
+}
 
-const PaymentSuccess = () => {
+const PaymentSuccess = ({ info }: Props) => {
   const router = useRouter();
   const { paymentKey, amount } = router.query;
+
+  const { setRefundTableData } = myInfo(info);
 
   const token = useSelector((state: RootState) => state.user.userToken);
 
   const handlePaymentSuccess = async (amount: number, method: string) => {
     try {
       // payment 테이블 -> userId(토큰이라서 검증이 필요)에 따라 amount 저장
-      await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/pay/save",
         {
           payment_method: method,

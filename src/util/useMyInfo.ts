@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import axios from "axios";
 import modal from "antd/es/modal";
@@ -120,20 +120,12 @@ export const myInfo = (info: string) => {
       return;
     }
     axios
-      .post(
-        "http://localhost:5000/pay/refund-point",
-        {
-          account: refundDetails.account, // 계좌번호 추가
-          cardCompany: refundDetails.cardCompany, // 카드사 정보 추가
-          refundPoint: refundDetails.refundPoint, // 반환할 포인트
+      .post("http://localhost:5000/pay/refund-point", refundDetails, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      })
       .then((response) => {
         console.log("포인트 반환 처리됨");
 
@@ -300,15 +292,30 @@ export const myInfo = (info: string) => {
         },
       });
 
-      const refundData = response.data.map((item: any) => ({
-        item: `- ${item.refund_amount.toLocaleString()} 포인트`,
-        state: item.refund_status,
+      if (!response.data || response.data.length === 0) {
+        return;
+      }
+
+      const refundData = response.data.map((item: any, index: number) => ({
+        item: `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`,
+        state: item.refund_status || "처리 중",
+        key: index,
       }));
 
-      setRefundTableData(refundData);
+      // 기존 결제 내역을 유지하면서 환불 내역을 추가
+      setRefundTableData((prev) => [...refundData, ...prev]);
     } catch (error) {
       console.error("Util -> myInfo(fetchRefundData) 오류:", error);
     }
+  };
+
+  const payTableInfo = async () => {
+    await axios.post("http://localhost:5000/pay/payInfo", {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   // vehicle 데이터 요청 -> plate_num, ownership_statu 두 개 보내줘!
@@ -433,5 +440,7 @@ export const myInfo = (info: string) => {
     handleRegister,
 
     handleTossPayment,
+
+    setRefundTableData,
   };
 };
