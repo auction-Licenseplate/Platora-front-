@@ -278,37 +278,43 @@ export const myInfo = (info: string) => {
   };
 
   // 반환 데이터 요청 -> 해당 유저의 refund_amount 랑 환불 성공 여부! < 이것도 추가해야 할 것 같아!!
-  const fetchRefundData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/pay/refundData", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } catch (error) {
-      console.error("Util -> myInfo(fetchRefundData) 오류:", error);
-    }
-  };
+  // const fetchRefundData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:5000/pay/refundData", {
+  //       withCredentials: true,
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Util -> myInfo(fetchRefundData) 오류:", error);
+  //   }
+  // };
 
   // payments 에서 amount, refund_amount, status, refund_status 가져오기
   const payTableInfo = async () => {
-    const response = await axios.post("http://localhost:5000/pay/payInfo", {
+    const response = await axios.get("http://localhost:5000/pay/payInfo", {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    const payData = response.data.map((item: any, index: number) => ({
-      item: item.refund_amount
-        ? `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`
-        : `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
-      state: item.refund_status || item.status || "처리 중",
-      key: index,
-    }));
+    if (response.data.payPoint.length === 0) {
+      return;
+    } else {
+      const payData = response.data.payPoint.map(
+        (item: any, index: number) => ({
+          item: item.refund_amount
+            ? `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`
+            : `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
+          state: item.refund_status || item.status || "처리 중",
+          key: index,
+        })
+      );
 
-    setRefundTableData(payData);
+      setRefundTableData(payData);
+    }
   };
 
   // vehicle 데이터 요청 -> plate_num, ownership_statu 두 개 보내줘!
@@ -324,14 +330,13 @@ export const myInfo = (info: string) => {
         }
       );
 
-      // const vehicleData = response.data.map((item: any) => ({
-      //   item: item.plate_num,
-      //   state: item.ownership_status,
-      // }));
+      const vehicleData = response.data.map((item: any) => ({
+        item: item.plate_num,
+        state: item.ownership_status,
+      }));
 
-      // setVehicleTableData(vehicleData);
+      setVehicleTableData(vehicleData);
 
-      console.log(response.data);
       setVehicleTableData(response.data);
     } catch (error) {
       console.error("Util -> myInfo(fetchVehicleData) 오류:", error);
@@ -342,7 +347,7 @@ export const myInfo = (info: string) => {
   const handleTableModalOpen = (type: string) => {
     setModalType(type);
     if (type === "refund") {
-      fetchRefundData();
+      payTableInfo();
     } else if (type === "vehicle") {
       fetchVehicleData();
     }
@@ -365,7 +370,7 @@ export const myInfo = (info: string) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/certificate/register",
+        "http://localhost:5000/users/register",
         formData,
         {
           withCredentials: true,

@@ -39,6 +39,7 @@ const WriteContainer = () => {
     if (!token) {
       router.push("/login");
     }
+    // else if (공인 인증서 없는 유저) { Modal.(마이페이지에서 공인 인증서를 등록하여주세요) }
   }, []);
 
   return (
@@ -84,10 +85,9 @@ const WriteContainer = () => {
                 }
               );
 
-              if (response.status === 200) {
+              if (response.data.message === "작성글 저장완료") {
                 console.log("저장 성공", response.data);
                 const imagePaths = response.data.data.images;
-                console.log("업로드된 이미지 경로:", imagePaths);
               }
             } catch (error) {
               console.error("저장 실패", error);

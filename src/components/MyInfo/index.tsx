@@ -81,6 +81,7 @@ const MyInfo = ({ info }: Props) => {
     setPassword,
     handleRegister,
     handleTossPayment,
+    payTableInfo,
   } = myInfo(info);
 
   useEffect(() => {
@@ -305,7 +306,7 @@ const MyInfo = ({ info }: Props) => {
               </div>
               <button
                 className="passBtn"
-                disabled={!vehicleNumber || !!file}
+                disabled={!vehicleNumber || !file}
                 onClick={handleRegister}
               >
                 등록하기

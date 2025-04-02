@@ -150,13 +150,21 @@ const JoinForm = () => {
         phone: values.phone,
       };
       axios
-        .post("http://localhost:5000/auth/signup", data) // 서버 URL
+        .post("http://localhost:5000/auth/signup", data)
         .then((response) => {
           console.log("회원가입 성공:", response.data);
+          const userId = response.data.userEmail;
+
+          return axios.post("http://localhost:5000/users/userCheck", {
+            user_id: userId,
+            term: "이용약관",
+          });
+        })
+        .then(() => {
           router.push("/login");
         })
         .catch((error) => {
-          console.error("회원가입 실패:", error);
+          console.error("회원가입 또는 이용약관 저장 실패:", error);
         });
     },
   });
