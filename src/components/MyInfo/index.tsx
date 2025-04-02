@@ -378,7 +378,7 @@ const MyInfo = ({ info }: Props) => {
 
       {/* table 모달창 */}
       <Modal
-        title={modalType === "refund" ? "환불 내역 보기" : "차량 내역 보기"}
+        title={modalType === "refund" ? "결제 내역 보기" : "차량 내역 보기"}
         open={tableModalOpen}
         onCancel={() => setTableModalOpen(false)}
         footer={null}

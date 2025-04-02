@@ -154,11 +154,6 @@ export const myInfo = (info: string) => {
     // 쉼표 제거
     let value = e.target.value.replace(/,/g, "");
 
-    // 0으로 시작하지 않게
-    if (/^0/.test(value) && value.length > 1) {
-      value = value.replace(/^0+/, "");
-    }
-
     // 반환 포인트 0 이상
     if (/^\d+$/.test(value) || value === "") {
       let pointValue = Math.max(Number(value), 1); // 최소값 1
@@ -291,31 +286,29 @@ export const myInfo = (info: string) => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      if (!response.data || response.data.length === 0) {
-        return;
-      }
-
-      const refundData = response.data.map((item: any, index: number) => ({
-        item: `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`,
-        state: item.refund_status || "처리 중",
-        key: index,
-      }));
-
-      // 기존 결제 내역을 유지하면서 환불 내역을 추가
-      setRefundTableData((prev) => [...refundData, ...prev]);
     } catch (error) {
       console.error("Util -> myInfo(fetchRefundData) 오류:", error);
     }
   };
 
+  // payments 에서 amount, refund_amount, status, refund_status 가져오기
   const payTableInfo = async () => {
-    await axios.post("http://localhost:5000/pay/payInfo", {
+    const response = await axios.post("http://localhost:5000/pay/payInfo", {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    const payData = response.data.map((item: any, index: number) => ({
+      item: item.refund_amount
+        ? `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`
+        : `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
+      state: item.refund_status || item.status || "처리 중",
+      key: index,
+    }));
+
+    setRefundTableData(payData);
   };
 
   // vehicle 데이터 요청 -> plate_num, ownership_statu 두 개 보내줘!
@@ -442,5 +435,6 @@ export const myInfo = (info: string) => {
     handleTossPayment,
 
     setRefundTableData,
+    payTableInfo,
   };
 };

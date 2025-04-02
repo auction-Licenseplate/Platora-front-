@@ -13,7 +13,7 @@ const PaymentSuccess = ({ info }: Props) => {
   const router = useRouter();
   const { paymentKey, amount } = router.query;
 
-  const { setRefundTableData } = myInfo(info);
+  const { setRefundTableData, setUserInfo } = myInfo(info);
 
   const token = useSelector((state: RootState) => state.user.userToken);
 
