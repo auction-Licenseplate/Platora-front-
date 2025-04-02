@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { WritePageStyled } from "./styled";
-import { Input } from "antd";
+import { Input, Modal } from "antd";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { EditorState, ContentState } from "draft-js";
@@ -26,6 +26,7 @@ const validationSchema = Yup.object({
 
 const WriteContainer = () => {
   const router = useRouter();
+  const token = useSelector((state: RootState) => state.user.userToken);
 
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
@@ -33,13 +34,36 @@ const WriteContainer = () => {
     )
   );
 
-  const token = useSelector((state: RootState) => state.user.userToken);
-
   useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    }
-    // else if (공인 인증서 없는 유저) { Modal.(마이페이지에서 공인 인증서를 등록하여주세요) }
+    const fetchOwnershipStatus = async () => {
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/vehicle/getStatus",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
+
+        const ownershipStatus = response.data.ownership_status;
+
+        if (ownershipStatus === "pending") {
+          Modal.warning({
+            title: "공인 인증서 필요",
+            content: "마이페이지에서 공인 인증서를 등록해주세요.",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching ownership status:", error);
+      }
+    };
+
+    fetchOwnershipStatus();
   }, []);
 
   return (
