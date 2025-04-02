@@ -96,7 +96,7 @@ const JoinForm = () => {
       const data = type === "email" ? { email } : { phone };
 
       const response = await axios.post(
-        `http://localhost:5000/auth/check-${type}`,
+        `http://localhost:5000/auth/check/${type}`,
         data
       );
       if (response.data.exists) {

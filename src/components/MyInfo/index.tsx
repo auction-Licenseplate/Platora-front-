@@ -11,8 +11,6 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
-import { loadTossPayments } from "@tosspayments/payment-sdk";
-
 // 이미지
 import accountLogo from "@/assets/images/accountLogo.png";
 import pointLogo from "@/assets/images/pointLogo.png";
@@ -36,34 +34,6 @@ const MyInfo = ({ info }: Props) => {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
-
-  const handleTossPayment = async (userInfo: any) => {
-    try {
-      const amount = pointDetails.point;
-      const orderId = `order-${Date.now()}`;
-      const orderName = "포인트 충전";
-
-      // 클라이언트 키 넘겨주기
-      const response = await axios.get(
-        "http://localhost:5000/pay/toss-client-key"
-      );
-      const tossClientKey = response.data.tossClientKey;
-
-      const toss = await loadTossPayments(tossClientKey);
-
-      // 결제 요청
-      toss.requestPayment("카드", {
-        amount,
-        orderId,
-        orderName,
-        successUrl: `http://localhost:3000/payment/success?&amount=${amount}`,
-        failUrl: `http://localhost:3000/payment/fail`,
-      });
-    } catch (error) {
-      console.error("결제 요청 중 오류:", error);
-      alert("결제를 시작할 수 없습니다.");
-    }
-  };
 
   const {
     userInfo,
@@ -110,6 +80,7 @@ const MyInfo = ({ info }: Props) => {
     handlePointChange,
     setPassword,
     handleRegister,
+    handleTossPayment,
   } = myInfo(info);
 
   useEffect(() => {

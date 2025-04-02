@@ -2,13 +2,19 @@ import { PlusInfoStyled } from "./styled";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import axios from "axios";
-import { Input, Button } from "antd";
+import { Input, Button, Modal } from "antd";
 import clsx from "clsx";
+import { useState } from "react";
 interface userData {
   userid?: string;
 }
 const PlusInfo = ({ userid }: userData) => {
   const router = useRouter();
+
+  // 중복 여부 상태 변수
+  const [isPhoneDuplicate, setIsPhoneDuplicate] = useState(false);
+
+  const [phoneError, setPhoneError] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -21,7 +27,6 @@ const PlusInfo = ({ userid }: userData) => {
         name: values.name,
         phone: values.phone,
       };
-      return console.log(data);
       axios
         .post("http://localhost:5000/auth/social/plusinfo", data) // 서버 URL
         .then((res) => {
@@ -48,6 +53,30 @@ const PlusInfo = ({ userid }: userData) => {
     formik.setFieldValue("phone", value); // 포맷팅된 값을 formik 상태에 반영
   };
 
+  const handleDuplicateCheck = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/auth/check/phone",
+        { phone: formik.values.phone }
+      );
+      if (response.data.exists) {
+        setIsPhoneDuplicate(true);
+        setPhoneError("이미 사용된 전화번호입니다.");
+      } else {
+        setIsPhoneDuplicate(false);
+        setPhoneError("");
+        Modal.success({
+          content: "사용 가능한 전화번호입니다.",
+        });
+      }
+    } catch (error) {
+      console.error("전화번호 중복 검사 실패:", error);
+      Modal.error({
+        content: "전화번호 중복 검사 실패. 다시 시도해주세요.",
+      });
+    }
+  };
+
   return (
     <PlusInfoStyled className={clsx("plusinfo-wrap")}>
       <div className="plusinfo-container">
@@ -64,14 +93,18 @@ const PlusInfo = ({ userid }: userData) => {
           <div className="plusinfo-idDiv">
             <div className="plusinfo-textDiv">전화번호</div>
             <Input
+              id="phone"
               name="phone"
               placeholder="전화번호를 입력해주세요"
               type="text"
-              value={formik.values.phone} // 상태에 있는 phone 값을 입력란에 넣어줍니다.
-              onChange={handlePhoneChange} // 전화번호 포맷팅을 먼저 처리
+              value={formik.values.phone}
+              onChange={handlePhoneChange}
             />
+            <Button onClick={handleDuplicateCheck}>전화번호 중복 확인</Button>
           </div>
-          <Button htmlType="submit">회원가입</Button>
+          <Button htmlType="submit" disabled={isPhoneDuplicate}>
+            회원가입
+          </Button>
         </form>
       </div>
     </PlusInfoStyled>

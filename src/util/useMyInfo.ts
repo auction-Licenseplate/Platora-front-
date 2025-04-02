@@ -4,6 +4,8 @@ import axios from "axios";
 import modal from "antd/es/modal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { loadTossPayments } from "@tosspayments/payment-sdk";
+import { preconnect } from "react-dom";
 
 // 유저 정보 타입 정의
 export interface UserInfo {
@@ -118,14 +120,22 @@ export const myInfo = (info: string) => {
       return;
     }
     axios
-      .post("http://localhost:5000/pay/refund-point", refundDetails, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .post(
+        "http://localhost:5000/pay/refund-point",
+        {
+          account: refundDetails.account, // 계좌번호 추가
+          cardCompany: refundDetails.cardCompany, // 카드사 정보 추가
+          refundPoint: refundDetails.refundPoint, // 반환할 포인트
         },
-      })
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
-        console.log("포인트 반환 처리됨", response.data);
+        console.log("포인트 반환 처리됨");
 
         setUserInfo((prevUserInfo) => ({
           ...prevUserInfo,
@@ -198,6 +208,36 @@ export const myInfo = (info: string) => {
     });
   };
 
+  // 충전할 포인트
+  const handleTossPayment = async (userInfo: any) => {
+    try {
+      const amount = pointDetails.point;
+      const orderId = `order-${Date.now()}`;
+      const orderName = "포인트 충전";
+
+      // 클라이언트 키 넘겨주기
+      const response = await axios.get(
+        "http://localhost:5000/pay/toss-client-key"
+      );
+
+      const tossClientKey = response.data.tossClientKey;
+
+      const toss = await loadTossPayments(tossClientKey);
+
+      // 결제 요청
+      toss.requestPayment("카드", {
+        amount,
+        orderId,
+        orderName,
+        successUrl: `http://localhost:3000/payment/success?&amount=${amount}`,
+        failUrl: `http://localhost:3000/payment/fail`,
+      });
+    } catch (error) {
+      console.error("결제 요청 중 오류:", error);
+      alert("결제를 시작할 수 없습니다.");
+    }
+  };
+
   // 계좌번호 유효성 검사
   const handleAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 숫자 - 만 가능
@@ -261,7 +301,7 @@ export const myInfo = (info: string) => {
       });
 
       const refundData = response.data.map((item: any) => ({
-        item: `${item.refund_amount.toLocaleString()} 포인트`,
+        item: `- ${item.refund_amount.toLocaleString()} 포인트`,
         state: item.refund_status,
       }));
 
@@ -285,8 +325,8 @@ export const myInfo = (info: string) => {
       );
 
       // const vehicleData = response.data.map((item: any) => ({
-      //   item: `${item.refund_amount.toLocaleString()} 포인트`,
-      //   state: item.refund_status,
+      //   item: item.plate_num,
+      //   state: item.ownership_status,
       // }));
 
       // setVehicleTableData(vehicleData);
@@ -391,5 +431,7 @@ export const myInfo = (info: string) => {
     setPointDetails,
     handlePointChange,
     handleRegister,
+
+    handleTossPayment,
   };
 };
