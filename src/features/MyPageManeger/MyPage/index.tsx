@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { MyPageStyled } from "./styled";
-import StickyMenu from "@/components/StickyMenu";
+import StickyMenu from "@/features/MyPageManeger/MyAccount/StickyMenu";
 import MyAccount from "@/features/MyPageManeger/MyAccount";
 
 const MyPage = () => {
