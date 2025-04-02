@@ -21,7 +21,7 @@ const PlusInfo = ({ userid }: userData) => {
         name: values.name,
         phone: values.phone,
       };
-      return console.log(data);
+      console.log(data);
       axios
         .post("http://localhost:5000/auth/social/plusinfo", data) // 서버 URL
         .then((res) => {

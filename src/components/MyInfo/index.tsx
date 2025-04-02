@@ -10,7 +10,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-
+import AiPoint from "@/features/MyPageManeger/AiPoint";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 
 // 이미지
@@ -333,6 +333,7 @@ const MyInfo = ({ info }: Props) => {
                 등록하기
               </button>
             </div>
+            <AiPoint />
           </>
         ) : (
           <></>
