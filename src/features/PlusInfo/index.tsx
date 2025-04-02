@@ -30,7 +30,9 @@ const PlusInfo = ({ userid }: userData) => {
       axios
         .post("http://localhost:5000/auth/social/plusinfo", data) // 서버 URL
         .then((res) => {
-          router.push("/");
+          router.push("/").then(() => {
+            window.location.reload();
+          });
         })
         .catch((error) => {
           console.error("회원가입 실패 :", error);

@@ -18,9 +18,6 @@ const JoinAgree = ({ agree, setAgree }: { agree: boolean; setAgree: any }) => {
       { term: type },
       {
         withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     );
   };
