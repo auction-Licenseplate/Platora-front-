@@ -67,16 +67,6 @@ export const MyInfoStyled = styled.div`
           }
         }
 
-        &::before {
-          border-color: rgba(255, 0, 0, 0.5);
-          animation: glitchBox 0.5s infinite linear alternate;
-        }
-
-        &::after {
-          border-color: rgba(0, 255, 255, 0.5);
-          animation: glitchBox 0.5s infinite linear alternate-reverse;
-        }
-
         .inputs {
           width: 100%;
           display: flex;
