@@ -153,7 +153,7 @@ const JoinForm = () => {
         .post("http://localhost:5000/auth/signup", data) // 서버 URL
         .then((response) => {
           console.log("회원가입 성공:", response.data);
-          router.push("/");
+          router.push("/login");
         })
         .catch((error) => {
           console.error("회원가입 실패:", error);

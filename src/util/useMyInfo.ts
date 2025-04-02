@@ -137,7 +137,7 @@ export const myInfo = (info: string) => {
         setRefundModalOpen(false); // 모달 닫기
         modal.success({
           title: "포인트 반환이 완료되었습니다.",
-          content: `현재 잔여 포인트: ${response.data.remainingPoint} P`,
+          onOk: () => window.location.reload(),
         });
       })
       .catch((error) => {
@@ -156,7 +156,7 @@ export const myInfo = (info: string) => {
 
     // 반환 포인트 0 이상
     if (/^\d+$/.test(value) || value === "") {
-      let pointValue = Math.max(Number(value), 1); // 최소값 1
+      let pointValue = Math.max(Number(value), 0); // 최소값 1
       if (pointValue > (userInfo.point || 0)) {
         pointValue = userInfo.point || 0;
       }
