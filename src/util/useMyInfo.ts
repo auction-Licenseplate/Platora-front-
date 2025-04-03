@@ -326,7 +326,7 @@ export const myInfo = (info: string) => {
     if (file) formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:5000/users/register", formData, {
+      await axios.post("http://localhost:5000/users/certificate", formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -336,6 +336,7 @@ export const myInfo = (info: string) => {
       Modal.success({
         title: "🚗 차량 등록 완료",
         content: "차량 정보가 성공적으로 등록되었습니다!",
+        onOk: () => window.location.reload(),
       });
     } catch (error) {
       console.log("util -> myInfo :", error);

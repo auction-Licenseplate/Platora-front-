@@ -63,7 +63,7 @@ const PlusInfo = ({ userid }: userData) => {
         { phone: formik.values.phone }
       );
 
-      console.log(response.data.exists);
+      console.log("비밀번호 확인 : ", response.data.exists);
 
       if (response.data.exists) {
         setIsPhoneDuplicate(true);
