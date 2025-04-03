@@ -49,7 +49,20 @@ const MyPosts = () => {
     <MyPostsStyled className={clsx("main-wrap")}>
       <div className="myPostContainer">
         <div className="postInfoBox">
-          {/* {posts.map((post) => (
+          {/* 승인 전 */}
+          {/* {pendingPosts.map((post) => (
+            <div key={post.id}>
+              <h3>{post.title}</h3>
+              <img src={post.car_img} alt="Car" width="200" />
+              <p>{post.car_info}</p>
+              <p>번호판: {post.plate_num}</p>
+              <p>작성자: {post.userId}</p>
+            </div>
+          ))} */}
+
+          {/* 승인 후 */}
+
+          {/* {goingPosts.map((post) => (
             <div key={post.id}>
               <h3>{post.title}</h3>
               <img src={post.car_img} alt="Car" width="200" />

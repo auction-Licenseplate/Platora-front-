@@ -14,17 +14,31 @@ interface ScoreType {
 
 const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
   const [userPoint, setUsetPoint] = useState(0);
+
   const token = useSelector((state: RootState) => state.user.userToken);
-  axios
-    .get("http://localhost:5000/users/user-info", {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      setUsetPoint(res.data.point);
-    });
+
+  useEffect(() => {
+    let isMounted = true; //마운트 여부 체크
+
+    axios
+      .get("http://localhost:5000/users/user-info", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (isMounted) {
+          setUsetPoint(res.data.point);
+        }
+      })
+      .catch((err) => console.error("Error:", err));
+
+    return () => {
+      isMounted = false; //언마운트 시 상태 변경 방지
+    };
+  }, [token]);
+
   const prompt = `
 너는 차량 번호판 등급을 평가하는 AI야.  
  반드시 앞자리 숫자 뒷자리 숫자 둘다 포함해서 4가 3개 이상 들어가면 있으면 10등급이고 점수,가격도 최하점이야
@@ -74,7 +88,7 @@ const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
       return alert("포인트 100P가 필요한 서비스입니다.충전 후 이용해주세요");
     } else {
       axios
-        .post("http://localhost:5000/vehicles/aichat", { message: prompt }) // 객체로 전송
+        .post("http://localhost:5000/openai/aichat", { message: prompt }) // 객체로 전송
         .then((res) => {
           let cleanData = res.data.replace(/```json|```/g, "").trim();
 
@@ -84,10 +98,12 @@ const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
             ? responseData[0]
             : responseData;
           setScore(scoreData); // 점수 응답 저장
-          axios.post("http://localhost:5000/pointmin", token).then((res) => {
-            console.log(res.data);
-            window.location.reload();
-          }); // 포인트 차감 요청
+          axios
+            .post("http://localhost:5000/pay/pointminus", token)
+            .then((res) => {
+              console.log(res.data);
+              window.location.reload();
+            }); // 포인트 차감 요청
         })
         .catch((err) => {
           console.error("Error:", err);

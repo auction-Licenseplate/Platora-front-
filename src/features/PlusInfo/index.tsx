@@ -14,8 +14,6 @@ const PlusInfo = ({ userid }: userData) => {
   // 중복 여부 상태 변수
   const [isPhoneDuplicate, setIsPhoneDuplicate] = useState(false);
 
-  const [phoneError, setPhoneError] = useState("");
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -63,14 +61,13 @@ const PlusInfo = ({ userid }: userData) => {
         { phone: formik.values.phone }
       );
 
-      console.log("비밀번호 확인 : ", response.data.exists);
-
       if (response.data.exists) {
         setIsPhoneDuplicate(true);
-        setPhoneError("이미 사용된 전화번호입니다.");
+        Modal.error({
+          content: "이미 사용 중인 전화번호입니다.",
+        });
       } else {
         setIsPhoneDuplicate(false);
-        setPhoneError("");
         Modal.success({
           content: "사용 가능한 전화번호입니다.",
         });

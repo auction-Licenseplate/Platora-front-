@@ -16,6 +16,8 @@ import closeIcon from "@/assets/images/closeIcon.png";
 import favoriteIcon from "@/assets/images/favoriteIcon.png";
 import logoutIcon from "@/assets/images/logoutIcon.png";
 import axios from "axios";
+import { Collapse, Table } from "antd";
+import Panel from "antd/es/splitter/Panel";
 
 const Header = () => {
   const router = useRouter();
@@ -30,6 +32,12 @@ const Header = () => {
 
   // 다크, 라이트 모드
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // 타입 별 메인 컴포넌트 변경
+  const [type, setType] = useState<number>(1);
+
+  // 등급 숨겨두기
+  const [activeKey, setActiveKey] = useState<string | string[]>("");
 
   // 토글 변경 시에
   useEffect(() => {
@@ -89,6 +97,31 @@ const Header = () => {
     router.push("/");
   };
 
+  // 타입 변경
+  const handleClick = (selectedType: number) => {
+    setType(selectedType);
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: "등급 별 게시글",
+      children: (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {[...Array(10)].map((_, index) => (
+            <h2
+              key={index}
+              onClick={() => router.push(`/tier/${index + 1}`)}
+              style={{ cursor: "pointer", margin: "5px 0" }}
+            >
+              Tier {index + 1}
+            </h2>
+          ))}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <>
       {isToggleOpen && <Overlay onClick={handleToggleClick} />}
@@ -117,7 +150,7 @@ const Header = () => {
           <hr />
 
           <div className="categoryContainer">
-            <h2> Grade 1</h2>
+            <Collapse accordion items={items} />
 
             <h2
               onClick={() => {

@@ -54,7 +54,7 @@ const StickyMenu = ({ menu }: MenuProps) => {
     <StickyMenuStyled className={clsx("main-wrap")}>
       <div className="myPageSticky GlitchFont">
         <>
-          <h1 className="title"> 마이페이지 </h1>
+          <h1 className="title"> MYPAGE </h1>
           {menuItems.map((item) => (
             <h1
               key={item.value}
