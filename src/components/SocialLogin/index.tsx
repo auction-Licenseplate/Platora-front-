@@ -32,8 +32,6 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log("응답 데이터:", res);
-
           // 조건 수정
           if (typeof res.data.user === "number") {
             // user가 undefined, null, 또는 falsy 값인 경우

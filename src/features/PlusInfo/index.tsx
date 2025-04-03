@@ -56,11 +56,15 @@ const PlusInfo = ({ userid }: userData) => {
   };
 
   const handleDuplicateCheck = async () => {
+    const type = "phone";
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/check/phone",
+        `http://localhost:5000/auth/phoneCheck`,
         { phone: formik.values.phone }
       );
+
+      console.log(response.data.exists);
+
       if (response.data.exists) {
         setIsPhoneDuplicate(true);
         setPhoneError("이미 사용된 전화번호입니다.");
