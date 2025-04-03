@@ -18,7 +18,6 @@ const PwFind = () => {
       phone: "",
     },
     onSubmit: (values) => {
-      console.log(values);
       const data = {
         email: values.id,
         phone: values.phone,
@@ -30,7 +29,6 @@ const PwFind = () => {
             alert("가입되지 않은 아이디입니다.");
             setDisplay("none");
           } else {
-            console.log("비밀번호 입력받기");
             setDisplay("flex");
             setUser(res.data.userID);
           }
@@ -67,19 +65,16 @@ const PwFind = () => {
       return errors;
     },
     onSubmit: (values) => {
-      console.log(values);
       const data = {
         password: values.pw,
         userID: user,
       };
-      console.log(data);
       axios //새 비밀번호 업데이트 요청
         .post("http://localhost:5000/auth/pwfind/updatepw", data) // 서버 URL
         .then((res) => {
-          if (res.data) {
+          if (res.data.message === "사용자 없음") {
             alert("비밀번호 업데이트 실패");
           } else {
-            console.log("비밀번호 변경 성공", res.data);
             router.push("/login");
           }
         })

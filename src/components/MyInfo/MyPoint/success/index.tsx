@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { myInfo } from "@/util/useMyInfo";
+import { Modal } from "antd";
+import { PaymentSuccessStyled } from "./styled";
 
 interface Props {
   info: string;
@@ -37,8 +39,12 @@ const PaymentSuccess = ({ info }: Props) => {
         }
       );
 
-      alert("결제가 완료되었습니다.");
-      router.push("/myPage?menu=myInfo");
+      Modal.success({
+        content: "결제가 완료되었습니다.",
+        onOk: () => {
+          router.push("/myPage?menu=myInfo");
+        },
+      });
     } catch (error) {
       console.error("결제 정보 저장 실패:", error);
       alert("결제 정보 저장 중 오류가 발생했습니다.");
@@ -55,7 +61,11 @@ const PaymentSuccess = ({ info }: Props) => {
     }
   }, []);
 
-  return <p>결제 처리 중입니다...</p>;
+  return (
+    <PaymentSuccessStyled>
+      <p>결제 처리 중입니다...</p>
+    </PaymentSuccessStyled>
+  );
 };
 
 export default PaymentSuccess;
