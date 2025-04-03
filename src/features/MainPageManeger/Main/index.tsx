@@ -19,7 +19,7 @@ const Main = ({ type }: { type: number }) => {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/vehicle/getStatus",
+        "http://localhost:5000/admin/getStatus",
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -46,7 +46,7 @@ const Main = ({ type }: { type: number }) => {
     <MainStyled className={clsx("main-wrap")}>
       {type ? (
         // <Tier type={type} />
-        <div></div>
+        <div> {} </div>
       ) : (
         <>
           {/* 관리자 홍보 */}
