@@ -9,7 +9,7 @@ interface SocialCallbackProps {
 
 const SocialCallback = ({ type }: SocialCallbackProps) => {
   const router = useRouter();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -34,9 +34,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
         .then((res) => {
           console.log("응답 데이터:", res);
 
-          // 조건 수정
           if (typeof res.data.user === "number") {
-            // user가 undefined, null, 또는 falsy 값인 경우
             console.log("로그인 실패, user가 없습니다.");
             setUser(res.data.user);
             setIsSuccess(false); // 로그인 실패 상태
@@ -54,10 +52,10 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
   };
 
   if (!isSuccess) {
-    return <PlusInfo userid={user} />; // 로그인 성공 시 PlusInfo 컴포넌트 렌더링
+    return <PlusInfo userid={user} />; // 로그인 실패 시 PlusInfo 컴포넌트 렌더링
   }
 
-  return <div>로딩 중...</div>; // 로딩 중 화면 표시
+  return <div style={{ width: 1000, height: 1000 }}></div>; // 로딩 중 화면 표시
 };
 
 export default SocialCallback;
