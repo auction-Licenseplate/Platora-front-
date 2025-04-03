@@ -19,6 +19,11 @@ interface RefundData {
   state: any;
 }
 
+interface ScoreType {
+  grade: string;
+  score: number;
+  price: number;
+}
 export const cardCompanies = [
   "삼성카드",
   "신한카드",
@@ -96,6 +101,11 @@ export const myInfo = (info: string) => {
   // - 차량 번호, 파일
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  //차량 번호판 점수
+  const [score, setScore] = useState<ScoreType | null>(null);
+
+  useEffect(() => {}, [score]);
 
   // ✅ 포인트 관련 함수
 
@@ -320,9 +330,13 @@ export const myInfo = (info: string) => {
   };
 
   // ⑵ 차량 등록 요청
-  const handleRegister = async () => {
+  const handleRegister = async (score) => {
     const formData = new FormData();
     formData.append("vehicleNumber", vehicleNumber);
+    formData.append("grade", String(score?.grade)); // 숫자일 수도 있으니 String 변환
+    formData.append("score", String(score?.score));
+    formData.append("price", String(score?.price));
+
     if (file) formData.append("file", file);
 
     try {
@@ -336,7 +350,7 @@ export const myInfo = (info: string) => {
       Modal.success({
         title: "🚗 차량 등록 완료",
         content: "차량 정보가 성공적으로 등록되었습니다!",
-        onOk: () => window.location.reload(),
+        // onOk: () => window.location.reload(),
       });
     } catch (error) {
       console.log("util -> myInfo :", error);
@@ -400,6 +414,8 @@ export const myInfo = (info: string) => {
     handleVehicleNumberChange,
     handleFileUpload,
     handleRegister,
+    score,
+    setScore,
 
     // ✅ 포인트 충전 모달
     pointModalOpen,

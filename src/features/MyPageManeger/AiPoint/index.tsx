@@ -1,18 +1,30 @@
 import { AipointStyled } from "./styled";
 import { Input, Button } from "antd";
 import axios from "axios";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { myInfo } from "@/util/useMyInfo";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 interface ScoreType {
-  grade: string;
-  score: number;
-  price: number;
+  score: any;
+  setScore: any;
+  point: string | "";
+  setPoint: any;
 }
 
-const AiPoint = () => {
-  const [score, setScore] = useState<ScoreType | null>(null); // score 초기값을 빈 문자열로 설정
-  const [point, setPoint] = useState("");
-
+const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
+  const [userPoint, setUsetPoint] = useState(0);
+  const token = useSelector((state: RootState) => state.user.userToken);
+  axios
+    .get("http://localhost:5000/users/user-info", {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      setUsetPoint(res.data.point);
+    });
   const prompt = `
 너는 차량 번호판 등급을 평가하는 AI야.  
  반드시 앞자리 숫자 뒷자리 숫자 둘다 포함해서 4가 3개 이상 들어가면 있으면 10등급이고 점수,가격도 최하점이야
@@ -53,33 +65,39 @@ const AiPoint = () => {
 
 
 `;
-
   const handleChange = (e) => {
     setPoint(e.target.value);
   };
 
   const scoreCheck = () => {
-    axios
-      .post("http://localhost:5000/vehicles/aichat", { message: prompt }) // 객체로 전송
-      .then((res) => {
-        console.log("서버 응답:", res.data);
-        let cleanData = res.data.replace(/```json|```/g, "").trim();
-        console.log(cleanData);
-        // JSON 파싱
-        const responseData = JSON.parse(cleanData);
-        const scoreData = Array.isArray(responseData)
-          ? responseData[0]
-          : responseData;
-        setScore(scoreData); // 점수 응답 저장
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-      });
+    if (userPoint < 100) {
+      return alert("포인트 100P가 필요한 서비스입니다.충전 후 이용해주세요");
+    } else {
+      axios
+        .post("http://localhost:5000/vehicles/aichat", { message: prompt }) // 객체로 전송
+        .then((res) => {
+          let cleanData = res.data.replace(/```json|```/g, "").trim();
+
+          // JSON 파싱
+          const responseData = JSON.parse(cleanData);
+          const scoreData = Array.isArray(responseData)
+            ? responseData[0]
+            : responseData;
+          setScore(scoreData); // 점수 응답 저장
+          axios.post("http://localhost:5000/pointmin", token).then((res) => {
+            console.log(res.data);
+            window.location.reload();
+          }); // 포인트 차감 요청
+        })
+        .catch((err) => {
+          console.error("Error:", err);
+        });
+    }
   };
 
   return (
     <AipointStyled>
-      <div style={{ color: "white" }}>점수 테스트</div>
+      <div style={{ color: "white" }}>번호판 점수 확인</div>
       <Input
         value={point}
         onChange={handleChange}
@@ -90,7 +108,7 @@ const AiPoint = () => {
       <div style={{ color: "white" }}>등급: {score?.grade ?? "없음"}</div>
       <div style={{ color: "white" }}>점수: {score?.score ?? "없음"}</div>
       <div style={{ color: "white" }}>
-        가격: {score?.price ? score.price.toLocaleString() : "없음"}
+        시작 가격: {score?.price ? score.price.toLocaleString() : "없음"}
       </div>
     </AipointStyled>
   );

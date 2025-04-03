@@ -71,7 +71,6 @@ const MyInfo = ({ info }: Props) => {
     handleTossPayment,
     pwvalue,
   } = myInfo(info);
-
   // 랜더링 시 사용자 정보 가져오기 & 비밀번호 활성화, 비활성화
   useEffect(() => {
     if (!token) {
@@ -152,7 +151,6 @@ const MyInfo = ({ info }: Props) => {
               file={file}
               handleRegister={handleRegister}
             />
-            <AiPoint />
           </>
         ) : (
           <></>

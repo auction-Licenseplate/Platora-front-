@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { Button, Input, Upload } from "antd";
-
+import AiPoint from "@/features/MyPageManeger/AiPoint";
 // 이미지
 import vehicleLogo from "@/assets/images/vehicleLogo.png";
 import vehicleBlack from "@/assets/images/vehicleLogo(black).png";
 import { UploadOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { myInfo } from "@/util/useMyInfo";
 
 const Vehicle = ({
   isDarkMode,
@@ -15,6 +17,9 @@ const Vehicle = ({
   file,
   handleRegister,
 }) => {
+  const { score, setScore } = myInfo("");
+  const [point, setPoint] = useState("");
+
   return (
     <>
       <Image
@@ -30,9 +35,18 @@ const Vehicle = ({
             className="input"
             value={vehicleNumber}
             onChange={handleVehicleNumberChange}
+            onBlur={(e) => {
+              setPoint(e.target.value);
+            }}
             placeholder="차량 번호를 입력하세요"
           />
         </div>
+        <AiPoint
+          score={score}
+          setScore={setScore}
+          point={point}
+          setPoint={setPoint}
+        />
         <div className="inputs">
           <h3>공인 인증서</h3>
           <div className="input fileInput">
@@ -57,8 +71,10 @@ const Vehicle = ({
         </div>
         <button
           className="passBtn"
-          disabled={!vehicleNumber || !file}
-          onClick={handleRegister}
+          disabled={!vehicleNumber || !file || !score}
+          onClick={() => {
+            handleRegister(score);
+          }}
         >
           등록하기
         </button>
