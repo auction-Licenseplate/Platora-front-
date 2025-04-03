@@ -14,7 +14,7 @@ const MyPage = () => {
     <MyPageStyled className={clsx("main-wrap")}>
       <div className="mainContainer">
         <div className="leftContainer">
-          <StickyMenu pageInfo={"myPage"} menu={menuValue} />
+          <StickyMenu menu={menuValue} />
           <div className="line"></div>
         </div>
         <div className="mainContent">
