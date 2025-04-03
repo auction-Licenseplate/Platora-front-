@@ -2,17 +2,44 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { MainStyled } from "./styled";
 import BestProduct from "../BestProduct";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import axios from "axios";
 
 const Main = ({ type }: { type: number }) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  const handleClick = () => {
-    // if(!token || )
-    router.push("/write");
+  const handleClick = async () => {
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/vehicle/getStatus",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      const ownershipStatus = response.data.ownership_status;
+
+      if (ownershipStatus === "pending") {
+        Modal.warning({
+          title: "공인 인증서 필요",
+          content: "마이페이지에서 공인 인증서를 등록해주세요.",
+          onOk: () => router.push("/mypage"),
+        });
+      } else {
+        router.push("/write");
+      }
+    } catch (error) {
+      console.error("Error fetching ownership status:", error);
+    }
   };
 
   return (
