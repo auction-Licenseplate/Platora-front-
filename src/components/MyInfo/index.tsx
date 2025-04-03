@@ -72,6 +72,7 @@ const MyInfo = ({ info }: Props) => {
     pwvalue,
   } = myInfo(info);
 
+  // 랜더링 시 사용자 정보 가져오기 & 비밀번호 활성화, 비활성화
   useEffect(() => {
     if (!token) {
       console.log("토큰 없음");
@@ -103,6 +104,7 @@ const MyInfo = ({ info }: Props) => {
     }
   }, []);
 
+  // 모드에 따라 이미지 변경 시 필요
   useEffect(() => {
     setIsDarkMode(theme === "dark");
   }, [theme]);
