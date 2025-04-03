@@ -31,22 +31,25 @@ const Vehicle = ({
       <div className="inputContainer">
         <div className="inputs">
           <h3>차량 번호</h3>
-          <Input
-            className="input"
-            value={vehicleNumber}
-            onChange={handleVehicleNumberChange}
-            onBlur={(e) => {
-              setPoint(e.target.value);
-            }}
-            placeholder="차량 번호를 입력하세요"
-          />
+          <div className="vehicleInputs">
+            <Input
+              className="vehicleInput"
+              value={vehicleNumber}
+              onChange={handleVehicleNumberChange}
+              onBlur={(e) => {
+                setPoint(e.target.value);
+              }}
+              placeholder="차량 번호를 입력하세요"
+            />
+            <AiPoint
+              score={score}
+              setScore={setScore}
+              point={point}
+              setPoint={setPoint}
+            />
+          </div>
         </div>
-        <AiPoint
-          score={score}
-          setScore={setScore}
-          point={point}
-          setPoint={setPoint}
-        />
+
         <div className="inputs">
           <h3>공인 인증서</h3>
           <div className="input fileInput">

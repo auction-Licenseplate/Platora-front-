@@ -24,10 +24,12 @@ const MyAccount = ({ menu }: MenuProps) => {
             </>
           ) : menu === "myPosts" ? (
             <>
-              <MyPosts />
+              <MyPosts type={"posts"} />
             </>
           ) : menu === "myFavorites" ? (
-            <></>
+            <>
+              <MyPosts type={"favorite"} />
+            </>
           ) : (
             <></>
           )}

@@ -20,6 +20,13 @@ export const HeaderStyled = styled.div`
       transform: translateX(-100%);
       transition: transform 0.3s ease-in-out;
       clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       /* 토글 슬라이드 */
       &.open {
@@ -82,9 +89,76 @@ export const HeaderStyled = styled.div`
     .categoryContainer {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 20px;
       padding: 10px;
       color: white;
+
+      .toggleInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .tier-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .tier-title {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+        user-select: none;
+
+        .tier-icon {
+          margin-top: 5px;
+          font-size: 15px;
+        }
+      }
+
+      .tier-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        margin: 15px 0 0 15px;
+      }
+
+      .tier-list.open {
+        max-height: 300px;
+      }
+
+      .tier-item {
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .tier-item:hover {
+        color: rgb(185, 185, 185);
+      }
+
+      .toggleTexts {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        h2 {
+          cursor: pointer;
+          transition: 0.3s;
+        }
+
+        h2:hover {
+          color: rgb(185, 185, 185);
+        }
+      }
+
+      .switch {
+        margin-top: 20px;
+      }
     }
 
     /* 글리치 효과 */

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MyPostsStyled = styled.div`
-  &.main-wrap {
+  &.main-wrap-myPosts {
     width: 100%;
 
     .myPostContainer {
@@ -12,6 +12,10 @@ export const MyPostsStyled = styled.div`
       padding: 20px;
       align-items: center;
       justify-content: center;
+    }
+
+    .postInfoBox {
+      width: 100%;
     }
   }
 `;

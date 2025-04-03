@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { myInfo } from "@/util/useMyInfo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import clsx from "clsx";
 interface ScoreType {
   score: any;
   setScore: any;
@@ -112,19 +113,24 @@ const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
   };
 
   return (
-    <AipointStyled>
-      <div style={{ color: "white" }}>번호판 점수 확인</div>
+    <AipointStyled className={clsx("main-wrap-ai")}>
       <Input
         value={point}
         onChange={handleChange}
         type="text"
-        placeholder="번호판을 입력하세요"
+        className="plateInput"
+        placeholder="등록 시 해당 번호판으로 등록됩니다."
+        disabled
       />
-      <Button onClick={scoreCheck}>점수 확인</Button>
-      <div style={{ color: "white" }}>등급: {score?.grade ?? "없음"}</div>
-      <div style={{ color: "white" }}>점수: {score?.score ?? "없음"}</div>
-      <div style={{ color: "white" }}>
-        시작 가격: {score?.price ? score.price.toLocaleString() : "없음"}
+      <div className="inputTexts">
+        <button onClick={scoreCheck} className="passBtn">
+          점수 확인
+        </button>
+        <div style={{ color: "white" }}>등급: {score?.grade ?? "없음"}</div>
+        <div style={{ color: "white" }}>점수: {score?.score ?? "없음"}</div>
+        <div style={{ color: "white" }}>
+          시작 가격: {score?.price ? score.price.toLocaleString() : "없음"}
+        </div>
       </div>
     </AipointStyled>
   );

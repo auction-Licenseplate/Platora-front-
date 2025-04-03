@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/icons": "^6.0.0",
+    "@ant-design/icons": "^5.6.1",
     "@rc-component/util": "^1.2.1",
     "@reduxjs/toolkit": "^2.6.1",
     "@tosspayments/payment-sdk": "^1.9.1",

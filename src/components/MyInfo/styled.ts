@@ -40,31 +40,29 @@ export const MyInfoStyled = styled.div`
           pointer-events: none;
         }
 
-        @keyframes glitchBox {
-          0% {
-            clip-path: inset(0% 0 0 0);
-            transform: translate(0, 0);
-          }
-          20% {
-            clip-path: inset(10% 0 40% 0);
-            transform: translate(-2px, -2px);
-          }
-          40% {
-            clip-path: inset(40% 0 10% 0);
-            transform: translate(2px, 2px);
-          }
-          60% {
-            clip-path: inset(10% 0 40% 0);
-            transform: translate(-2px, -2px);
-          }
-          80% {
-            clip-path: inset(40% 0 10% 0);
-            transform: translate(2px, 2px);
-          }
-          100% {
-            clip-path: inset(0% 0 0 0);
-            transform: translate(0, 0);
-          }
+        .vehicleInputs {
+          width: 70%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .vehicleInput {
+          width: 100%;
+          border: none;
+          background-color: rgb(190, 190, 190);
+        }
+
+        .plateInput {
+          width: 100%;
+          border: none;
+          margin: 10px 0;
+          background-color: rgb(190, 190, 190);
+        }
+
+        .inputTexts {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
         .inputs {

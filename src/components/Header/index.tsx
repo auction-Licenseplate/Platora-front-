@@ -7,37 +7,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
 import { setTheme, toggleTheme } from "@/store/themeSlice";
+import Toggle from "./Toggle";
 
 // 로고 이미지
 import logo from "@/assets/images/Logo_plotora(black).png";
-import toggleLogo from "@/assets/images/Logo_plotora(white).png";
 import userIcon from "@/assets/images/userIcon.png";
-import closeIcon from "@/assets/images/closeIcon.png";
 import favoriteIcon from "@/assets/images/favoriteIcon.png";
 import logoutIcon from "@/assets/images/logoutIcon.png";
 import axios from "axios";
-import { Collapse, Table } from "antd";
-import Panel from "antd/es/splitter/Panel";
 
 const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  // Redux에서 테마 모드 가져오기
-  const mode = useSelector((state: RootState) => state.theme.mode);
-
   // 토글 여닫기
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-  // 다크, 라이트 모드
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // 타입 별 메인 컴포넌트 변경
-  const [type, setType] = useState<number>(1);
-
-  // 등급 숨겨두기
-  const [activeKey, setActiveKey] = useState<string | string[]>("");
+  // 타입 별 게시글 토글
+  const [isTierOpen, setIsTierOpen] = useState(false);
 
   // 토글 변경 시에
   useEffect(() => {
@@ -52,36 +40,22 @@ const Header = () => {
     };
   }, [router.events]);
 
-  // 다크, 라이트 모드 redux에 저장
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        dispatch(setTheme(savedTheme as "light" | "dark"));
-      }
-    }
-  }, [dispatch]);
-
-  // 모드 변경 시 로컬 스토리지에 테마 저장
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", mode);
-      if (mode === "light") {
-        document.body.classList.add("light-mode");
-      } else {
-        document.body.classList.remove("light-mode");
-      }
-    }
-  }, [mode]);
-
   // 토글 클릭 시
   const handleToggleClick = () => {
     setIsToggleOpen(!isToggleOpen);
   };
 
-  // 다크, 라이트 모드 선택 시
-  const handleThemeToggle = () => {
-    dispatch(toggleTheme());
+  // 등급 별 게시글 토글 열고 닫기
+  const toggleTierList = () => {
+    setIsTierOpen((prev) => !prev);
+  };
+
+  // 타입 변경
+  const handleClick = (selectedType: number) => {
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, type: selectedType },
+    });
   };
 
   // 로그아웃
@@ -97,95 +71,20 @@ const Header = () => {
     router.push("/");
   };
 
-  // 타입 변경
-  const handleClick = (selectedType: number) => {
-    setType(selectedType);
-  };
-
-  const items = [
-    {
-      key: "1",
-      label: "등급 별 게시글",
-      children: (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {[...Array(10)].map((_, index) => (
-            <h2
-              key={index}
-              onClick={() => router.push(`/tier/${index + 1}`)}
-              style={{ cursor: "pointer", margin: "5px 0" }}
-            >
-              Tier {index + 1}
-            </h2>
-          ))}
-        </div>
-      ),
-    },
-  ];
-
   return (
     <>
       {isToggleOpen && <Overlay onClick={handleToggleClick} />}
 
       <HeaderStyled className={clsx("main-wrap")}>
-        <div className={`toggleInfo ${isToggleOpen ? "open" : ""}`}>
-          <div className="imageContainer">
-            <div className="toggleLogoImg">
-              <Image
-                src={toggleLogo}
-                alt="platora logo image"
-                layout="responsive"
-                priority
-              />
-            </div>
-            <Image
-              src={closeIcon}
-              alt="close icon"
-              onClick={handleToggleClick}
-              width={40}
-              height={40}
-              style={{ cursor: "pointer" }}
-            />
-          </div>
-
-          <hr />
-
-          <div className="categoryContainer">
-            <Collapse accordion items={items} />
-
-            <h2
-              onClick={() => {
-                router.push("/join");
-              }}
-            >
-              join
-            </h2>
-            <h2
-              onClick={() => {
-                router.push("/login");
-              }}
-            >
-              login
-            </h2>
-            <h2
-              onClick={() => {
-                router.push({
-                  pathname: "/myPage",
-                  query: { menu: "myInfo" },
-                });
-              }}
-            >
-              mypage
-            </h2>
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={mode === "dark"}
-                onChange={handleThemeToggle}
-              />
-              <span className="slider">{mode === "dark" ? "☀️" : "🌙"}</span>
-            </label>
-          </div>
-        </div>
+        <Toggle
+          isToggleOpen={isToggleOpen}
+          handleToggleClick={handleToggleClick}
+          token={token}
+          toggleTierList={toggleTierList}
+          isTierOpen={isTierOpen}
+          handleClick={handleClick}
+          handleLogout={handleLogout}
+        />
 
         {/* 네비게이션 바 */}
         <div className="main-container">

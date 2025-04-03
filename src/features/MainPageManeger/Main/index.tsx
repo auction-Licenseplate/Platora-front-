@@ -6,11 +6,16 @@ import { Button, Modal } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import axios from "axios";
+import Tier from "../Tier";
+import { useEffect, useState } from "react";
+import AllProduct from "../AllProduct";
 
-const Main = ({ type }: { type: number }) => {
+const Main = () => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
+  const type = router.query.type ? Number(router.query.type) : undefined;
 
+  // 글 작성 버튼 클릭 시
   const handleClick = async () => {
     if (!token) {
       router.push("/login");
@@ -45,8 +50,7 @@ const Main = ({ type }: { type: number }) => {
   return (
     <MainStyled className={clsx("main-wrap")}>
       {type ? (
-        // <Tier type={type} />
-        <div> {} </div>
+        <Tier type={type} />
       ) : (
         <>
           {/* 관리자 홍보 */}
@@ -58,6 +62,7 @@ const Main = ({ type }: { type: number }) => {
           <Button onClick={handleClick}> 글 작성하기 </Button>
 
           {/* 전체 경매 */}
+          <AllProduct />
         </>
       )}
     </MainStyled>

@@ -7,8 +7,6 @@ import axios from "axios";
 import { myInfo } from "@/util/useMyInfo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import AiPoint from "@/features/MyPageManeger/AiPoint";
-import { loadTossPayments } from "@tosspayments/payment-sdk";
 import MyInfor from "./MyInfor/index";
 
 // 컴포넌트

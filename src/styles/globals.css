@@ -9,6 +9,7 @@
   --myPageSticky-color: rgb(80, 80, 80);
   --active-color: white;
   --title-color: rgb(146, 146, 146);
+  --post-color: rgb(206, 206, 206);
 }
 
 .light-mode {
@@ -20,6 +21,7 @@
   --myPageSticky-color: rgb(173, 173, 173);
   --active-color: rgb(56, 56, 56);
   --title-color: rgb(100, 100, 100);
+  --post-color: rgb(114, 114, 114);
 }
 
 .GlitchFont {
@@ -33,6 +35,10 @@ body {
   max-width: 100vw;
   user-select: none;
   -webkit-user-drag: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* scrollbar-width: thin; */
+  /* scrollbar-color: black transparent; */
 }
 
 body {
@@ -94,6 +100,30 @@ body {
 /* 글 작성하기 */
 .writeContent label {
   color: var(--foreground);
+}
+
+/* 내 게시글 */
+.postsInfo {
+  background-color: var(--post-color);
+  color: var(--background);
+}
+
+.postText {
+  color: var(--background);
+}
+
+.postLine {
+  border-left: var(--background);
+}
+
+.circle {
+  background-color: var(--background);
+}
+
+/* 관심 상품 */
+.product-info {
+  background-color: var(--foreground);
+  color: var(--background);
 }
 
 * {

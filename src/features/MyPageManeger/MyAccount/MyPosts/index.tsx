@@ -5,87 +5,78 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import MyPost from "./MyPost";
 
-const MyPosts = () => {
+interface Props {
+  type: string;
+}
+
+const MyPosts = ({ type }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  // 게시글 데이터
+  // 내 게시글 데이터
   const [pendingPosts, setPendingPosts] = useState([]);
-  const [goingPosts, serGoingPosts] = useState([]);
+  const [goingPosts, setGoingPosts] = useState([]);
+
+  // 즐겨찾기
+  const [favoritePosts, setFavoritePosts] = useState([]);
 
   // 게시글 요청 -> 해당 유저의 모든 정보 -> title, car_img, car_info, plate_num, write_status
   useEffect(() => {
-    const getPost = async () => {
-      try {
-        const pending = await axios.get(
-          "http://localhost:5000/vehicles/getMyPosts",
-          {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${token}` },
-            params: { write_status: "pending" },
-          }
-        );
-        setPendingPosts(pending.data);
+    if (!token) {
+      router.push("/login");
+    }
 
-        const going = await axios.get(
-          "http://localhost:5000/auctions/getPosts",
-          {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${token}` },
-            params: { status: ["going", "before"] },
-          }
-        );
-        serGoingPosts(going.data);
+    const fetchPosts = async () => {
+      try {
+        if (type === "posts") {
+          const pending = await axios.get(
+            "http://localhost:5000/vehicles/getMyPosts",
+            {
+              withCredentials: true,
+              headers: { Authorization: `Bearer ${token}` },
+              params: { write_status: "pending" },
+            }
+          );
+          setPendingPosts(pending.data);
+
+          const going = await axios.get(
+            "http://localhost:5000/auctions/getPosts",
+            {
+              withCredentials: true,
+              headers: { Authorization: `Bearer ${token}` },
+              params: { status: ["going", "before"] },
+            }
+          );
+          setGoingPosts(going.data);
+        } else if (type === "favorite") {
+          // const favorite = await axios.get(
+          //   "http://localhost:5000/favorites/getMyFavorites",
+          //   {
+          //     withCredentials: true,
+          //     headers: { Authorization: `Bearer ${token}` },
+          //   }
+          // );
+          // setFavoritePosts(favorite.data);
+        }
       } catch (e) {
         console.log(e);
       }
     };
 
-    getPost();
+    fetchPosts();
   }, []);
 
   return (
-    <MyPostsStyled className={clsx("main-wrap")}>
+    <MyPostsStyled className={clsx("main-wrap-myPosts")}>
       <div className="myPostContainer">
         <div className="postInfoBox">
-          {/* 승인 전 */}
-          {/* {pendingPosts.map((post) => (
-            <div key={post.id}>
-              <h3>{post.title}</h3>
-              <img src={post.car_img} alt="Car" width="200" />
-              <p>{post.car_info}</p>
-              <p>번호판: {post.plate_num}</p>
-              <p>작성자: {post.userId}</p>
-            </div>
-          ))} */}
-
-          {/* 승인 후 */}
-
-          {/* {goingPosts.map((post) => (
-            <div key={post.id}>
-              <h3>{post.title}</h3>
-              <img src={post.car_img} alt="Car" width="200" />
-              <p>{post.car_info}</p>
-              <p>번호판: {post.plate_num}</p>
-              <p>작성자: {post.userId}</p>
-            </div>
-          ))} */}
-
-          <div className="postsInfo">
-            <div className="circle"></div>
-
-            <div className="postImg"></div>
-
-            <div className="line"></div>
-
-            <div className="postTexts">
-              <div className="postTitle"></div>
-              <div className="postContents"></div>
-            </div>
-
-            <div className="circle"></div>
-          </div>
+          {type === "posts" ? (
+            <MyPost type="posts" />
+          ) : (
+            <MyPost type="favorite" />
+          )}
         </div>
       </div>
     </MyPostsStyled>
