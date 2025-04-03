@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
 import { setTheme, toggleTheme } from "@/store/themeSlice";
 
@@ -18,12 +19,11 @@ import axios from "axios";
 
 const Header = () => {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.user.userToken);
 
   // Redux에서 테마 모드 가져오기
   const mode = useSelector((state: RootState) => state.theme.mode);
-  const dispatch = useDispatch();
 
   // 토글 여닫기
   const [isToggleOpen, setIsToggleOpen] = useState(false);
@@ -78,20 +78,14 @@ const Header = () => {
 
   // 로그아웃
   const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://localhost:5000/auth/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      router.push("/").then(() => {
-        window.location.reload();
-      });
-    } catch (error) {
-      console.error("로그아웃 실패:", error);
-    }
+    const token = document.cookie;
+    const accessToken = token
+      .split("; ")
+      .find((row) => row.startsWith("accessToken="))
+      ?.split("=")[1];
+    document.cookie =
+      "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    dispatch(setUserToken(null));
   };
 
   return (

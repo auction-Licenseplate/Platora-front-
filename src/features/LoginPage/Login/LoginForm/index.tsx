@@ -4,10 +4,14 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { Router, useRouter } from "next/router";
 import clsx from "clsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "@/store/userSlice";
+import { RootState } from "@/store/store";
 
 const LoginForm = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.user.userToken);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -29,11 +33,10 @@ const LoginForm = () => {
           } else if (res.data.message === "200 유저정보 없음") {
             return alert("존재하지 않는 아이디입니다");
           } else {
+            console.log(res.data.token);
+            dispatch(setUserToken(res.data.token));
             router.push("/");
           }
-          router.push("/").then(() => {
-            window.location.reload();
-          });
         })
         .catch((error) => {
           console.error("로그인 실패 :", error);

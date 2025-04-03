@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import PlusInfo from "@/features/PlusInfo";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setUserToken } from "@/store/userSlice";
+import { RootState } from "@/store/store";
 interface SocialCallbackProps {
   type: string;
 }
@@ -11,7 +13,8 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
   const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(true);
   const [user, setUser] = useState("");
-
+  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.user.userToken);
   useEffect(() => {
     if (!router.isReady) return; // router.query가 준비될 때까지 대기
 
@@ -40,9 +43,8 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
             setIsSuccess(false); // 로그인 실패 상태
           } else {
             setIsSuccess(true); // 로그인 성공 상태
-            router.push("/").then(() => {
-              window.location.reload();
-            });
+            dispatch(setUserToken(res.data.token));
+            router.push("/");
           }
         });
     } catch (error) {
