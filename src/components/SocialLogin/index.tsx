@@ -35,8 +35,6 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log("응답 데이터:", res);
-
           if (typeof res.data.user === "number") {
             console.log("로그인 실패, user가 없습니다.");
             setUser(res.data.user);
