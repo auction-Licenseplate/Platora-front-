@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
+import { request } from "http";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -22,24 +23,19 @@ const LoginForm = () => {
         email: values.email,
         password: values.password,
       };
+
       axios
         .post("http://localhost:5000/auth/login", data, {
           withCredentials: true,
         }) // 서버 URL
         .then((res) => {
-          if (res.data.message === "200 비밀번호 불일치함") {
-            console.log(res.data.message, "============");
-            return alert("비밀번호 틀림");
-          } else if (res.data.message === "200 유저정보 없음") {
-            return alert("존재하지 않는 아이디입니다");
-          } else {
-            console.log(res.data.token);
-            dispatch(setUserToken(res.data.token));
-            router.push("/");
-          }
+          dispatch(setUserToken(res.data.token));
+          router.push("/").then(() => {
+            window.location.reload();
+          });
         })
         .catch((error) => {
-          console.error("로그인 실패 :", error);
+          alert(error.response.data.message);
         });
     },
   });

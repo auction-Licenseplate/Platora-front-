@@ -153,7 +153,7 @@ const JoinForm = () => {
         .post("http://localhost:5000/auth/signup", data)
         .then((response) => {
           console.log("회원가입 성공:", response.data);
-          const userId = response.data.userEmail;
+          const userId = response.data.email;
 
           return axios.post("http://localhost:5000/users/userCheck", {
             user_id: userId,

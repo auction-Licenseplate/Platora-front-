@@ -191,6 +191,12 @@ const Header = () => {
                     src={favoriteIcon}
                     alt="favorite icon"
                     layout="responsive"
+                    onClick={() => {
+                      router.push({
+                        pathname: "/myPage",
+                        query: { menu: "myFavorites" },
+                      });
+                    }}
                   />
                 </div>
                 <div className="userIcon">

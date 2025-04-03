@@ -242,6 +242,7 @@ const MyInfo = ({ info }: Props) => {
         okButtonProps={{
           disabled: !pointDetails.point,
         }}
+        onOk={() => handleTossPayment()}
       >
         <div className="input-group">
           <label>충전할 포인트</label>

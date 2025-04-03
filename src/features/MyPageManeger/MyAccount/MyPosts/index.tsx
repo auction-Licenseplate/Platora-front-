@@ -33,7 +33,7 @@ const MyPosts = () => {
           {
             withCredentials: true,
             headers: { Authorization: `Bearer ${token}` },
-            params: { status: "going" },
+            params: { status: ["going", "before"] },
           }
         );
         serGoingPosts(going.data);

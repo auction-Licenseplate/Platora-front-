@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { myInfo } from "@/util/useMyInfo";
+
 interface Props {
   info: string;
 }

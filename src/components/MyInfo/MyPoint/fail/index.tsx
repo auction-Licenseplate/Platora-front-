@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { PaymentFailStyled } from "./fail/styled";
+import { PaymentFailStyled } from "./styled";
 import clsx from "clsx";
 
 const PaymentFail = () => {
