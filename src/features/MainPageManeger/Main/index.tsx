@@ -13,9 +13,10 @@ import AllProduct from "../AllProduct";
 const Main = () => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
+  useEffect(() => {
+    console.log(token);
+  }, [token]);
   const type = router.query.type ? Number(router.query.type) : undefined;
-
-  console.log(token);
 
   // 글 작성 버튼 클릭 시
   const handleClick = async () => {

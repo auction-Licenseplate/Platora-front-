@@ -30,9 +30,7 @@ const LoginForm = () => {
         }) // 서버 URL
         .then((res) => {
           dispatch(setUserToken(res.data.token));
-          router.push("/").then(() => {
-            window.location.reload();
-          });
+          router.push("/");
         })
         .catch((error) => {
           alert(error.response.data.message);
