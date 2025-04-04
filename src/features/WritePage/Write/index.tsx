@@ -11,6 +11,7 @@ import { RootState } from "@/store/store";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -26,7 +27,7 @@ const validationSchema = Yup.object({
 
 const WriteContainer = () => {
   const router = useRouter();
-  const token = useSelector((state: RootState) => state.user.userToken);
+  const token = Cookies.get("accessToken");
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -36,32 +37,38 @@ const WriteContainer = () => {
         return;
       }
 
-      console.log("실패");
-      router.push("/myPage");
+      router.push({
+        pathname: "/myPage",
+        query: { menu: "myInfo" },
+      });
 
-      //   try {
-      //     const response = await axios.get(
-      //       "http://localhost:5000/admin/getStatus",
-      //       {
-      //         headers: { Authorization: `Bearer ${token}` },
-      //         withCredentials: true,
-      //       }
-      //     );
+      // 공인 인증서 상태 보내기 vehicles 테이블 -> ownership_status 필요
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/vehicles/getStatus",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
 
-      //     const ownershipStatus = response.data.ownership_status;
+        const ownershipStatus = response.data.ownership_status;
 
-      //     if (ownershipStatus === "pending") {
-      //       Modal.warning({
-      //         title: "공인 인증서 필요",
-      //         content: "마이페이지에서 공인 인증서를 등록해주세요.",
-      //         onOk: () => {
-      //            router.push("/mypage");
-      //         },
-      //       });
-      //     }
-      //   } catch (error) {
-      //     console.error("Error fetching ownership status:", error);
-      //   }
+        if (ownershipStatus === "pending" || ownershipStatus === "waiting") {
+          Modal.warning({
+            title: "공인 인증서 필요",
+            content: "마이페이지에서 공인 인증서를 등록해주세요.",
+            onOk: () => {
+              router.push({
+                pathname: "/myPage",
+                query: { menu: "myInfo" },
+              });
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching ownership status:", error);
+      }
     };
 
     fetchStatus();

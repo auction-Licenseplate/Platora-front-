@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 //   id: number;
 //   title: string;
 //   price: string;
-//   end-: string;
+//   end_time: string;
 //   seller: string;
 // }
 
@@ -54,6 +54,7 @@ const AllProduct = () => {
   const token = useSelector((state: RootState) => state.user.userToken);
   // const [products, setProducts] = useState<Product[]>([]);
 
+  // 필요한 정보 : 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
   // useEffect(() => {
   //   const fetchAuctions = async () => {
   //     try {
@@ -63,6 +64,7 @@ const AllProduct = () => {
   //       const data = await response.json();
 
   //       const now = new Date().getTime();
+
   //       const formattedData = data.map((item: any) => {
   //         const endTime = new Date(item.end_time).getTime();
   //         const timeDiff = endTime - now;
