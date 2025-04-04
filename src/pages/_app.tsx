@@ -13,21 +13,18 @@ const TokenLoader = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/auth/tokenCheck", { withCredentials: true })
-      .then((res) => {
-        if (res.data.token) {
-          dispatch(setUserToken(res.data.token));
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [dispatch]);
+    const token = document.cookie;
+    const accessToken = token
+      .split("; ")
+      .find((row) => row.startsWith("accessToken="))
+      ?.split("=")[1];
 
+    if (accessToken) {
+      dispatch(setUserToken(accessToken));
+    }
+  }, [dispatch]);
   return null;
 };
-
 // 최상위 App 컴포넌트
 export default function App({ Component, pageProps }: AppProps) {
   // 타입 별 메인 컴포넌트 변경
