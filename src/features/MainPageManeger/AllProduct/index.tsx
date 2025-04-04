@@ -58,10 +58,10 @@ const AllProduct = () => {
   // useEffect(() => {
   //   const fetchAuctions = async () => {
   //     try {
-  //       const response = await fetch(
+  //       const response = await axios.post(
   //         "http://localhost:5000/auctions/getAllProduct"
   //       );
-  //       const data = await response.json();
+  //       const data = await response.data;
 
   //       const now = new Date().getTime();
 

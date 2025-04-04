@@ -18,7 +18,7 @@ interface Auction {
   end_time: string;
   // bid_count: number;
   seller: string;
-  status: "before" | "going" | "completed";
+  status: "befro" | "going" | "completed";
 }
 
 const Tier = ({ type }: tierProps) => {
@@ -37,8 +37,10 @@ const Tier = ({ type }: tierProps) => {
       router.push("/login");
     }
   }, []);
+
   // 등급에 따른 게시글 요청 -> grades 테이블의 grade_name에 따라 게시글 요청
   // grade_name의 id를 가진 auctions의 auction_num, 판매자명, 차량 번호판, 등급, 현재가, end_time, status
+
   // useEffect(() => {
   //   const fetchAuctions = async () => {
   //     const grade = getGradeName(type);
@@ -48,7 +50,7 @@ const Tier = ({ type }: tierProps) => {
   //         `http://localhost:5000/grades?grade=${grade}`
   //       );
 
-  //       const statusOrder = { before: 0, going: 1, completed: 2 };
+  //       const statusOrder = { befro: 0, going: 1, completed: 2 };
   //       const sortedAuctions = response.data.sort(
   //         (a: Auction, b: Auction) =>
   //           statusOrder[a.status] - statusOrder[b.status]

@@ -35,11 +35,15 @@ const Main = () => {
 
       const ownershipStatus = response.data.ownership_status;
 
-      if (ownershipStatus === "pending") {
+      if (ownershipStatus === "pending" || ownershipStatus === "waiting") {
         Modal.warning({
           title: "공인 인증서 필요",
           content: "마이페이지에서 공인 인증서를 등록해주세요.",
-          onOk: () => router.push("/mypage"),
+          onOk: () =>
+            router.push({
+              pathname: "/myPage",
+              query: { menu: "myFavorites" },
+            }),
         });
       } else {
         router.push("/write");

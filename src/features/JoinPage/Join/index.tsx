@@ -1,9 +1,22 @@
 import { JoinStyled } from "./styled";
 import JoinForm from "./JoinForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JoinAgree from "./JoinAgree";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useRouter } from "next/router";
 const Join = () => {
   const [agree, setAgree] = useState<boolean>(false);
+  const router = useRouter();
+  const token = useSelector((state: RootState) => state.user.userToken);
+
+  console.log(token);
+
+  useEffect(() => {
+    if (token) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <JoinStyled>
