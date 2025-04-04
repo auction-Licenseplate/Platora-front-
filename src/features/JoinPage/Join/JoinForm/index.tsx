@@ -1,7 +1,7 @@
 import { JoinFormStyled } from "./styled";
 import { Input, Button, Modal } from "antd";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { Router, useRouter } from "next/router";
@@ -11,6 +11,8 @@ import {
   validatePassword,
   validatePhone,
 } from "@/util/validation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const JoinForm = () => {
   const router = useRouter();
@@ -124,6 +126,14 @@ const JoinForm = () => {
       });
     }
   };
+
+  // const token = useSelector((state: RootState) => state.user.userToken);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     router.push("/");
+  //   }
+  // }, [token]);
 
   // 버튼 활성화 여부 계산
   const isFormValid =

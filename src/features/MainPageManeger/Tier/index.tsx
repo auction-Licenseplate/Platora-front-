@@ -16,7 +16,7 @@ interface Auction {
   grade_name: string;
   current_price: number;
   end_time: string;
-  // bid_count: number;
+  bid_count: number;
   seller: string;
   status: "befro" | "going" | "completed";
 }
@@ -40,6 +40,7 @@ const Tier = ({ type }: tierProps) => {
 
   // 등급에 따른 게시글 요청 -> grades 테이블의 grade_name에 따라 게시글 요청
   // grade_name의 id를 가진 auctions의 auction_num, 판매자명, 차량 번호판, 등급, 현재가, end_time, status
+  // bid_count
 
   // useEffect(() => {
   //   const fetchAuctions = async () => {

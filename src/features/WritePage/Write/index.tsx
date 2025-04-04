@@ -27,11 +27,10 @@ const validationSchema = Yup.object({
 
 const WriteContainer = () => {
   const router = useRouter();
-  const token = Cookies.get("accessToken");
+  const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
     const fetchStatus = async () => {
-      console.log(token);
       if (!token) {
         router.push("/login");
         return;

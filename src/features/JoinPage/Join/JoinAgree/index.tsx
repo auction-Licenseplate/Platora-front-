@@ -3,7 +3,8 @@ import { JoinAgreeStyled } from "./styled";
 import { Checkbox } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 // setAgree의 타입을 React.Dispatch<React.SetStateAction<boolean>>로 명시
 const JoinAgree = ({ agree, setAgree }: { agree: boolean; setAgree: any }) => {

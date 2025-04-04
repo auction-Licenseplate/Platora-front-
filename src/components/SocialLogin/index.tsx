@@ -36,6 +36,9 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
         )
         .then((res) => {
           if (typeof res.data.user === "number") {
+            if (type === "naver") {
+              router.push("/");
+            }
             console.log("로그인 실패, user가 없습니다.");
             setUser(res.data.user);
             setIsSuccess(false); // 로그인 실패 상태

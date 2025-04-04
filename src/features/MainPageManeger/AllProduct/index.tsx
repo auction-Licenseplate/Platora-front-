@@ -55,11 +55,12 @@ const AllProduct = () => {
   // const [products, setProducts] = useState<Product[]>([]);
 
   // 필요한 정보 : 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
+
   // useEffect(() => {
   //   const fetchAuctions = async () => {
   //     try {
   //       const response = await axios.post(
-  //         "http://localhost:5000/auctions/getAllProduct"
+  //         "http://localhost:5000/boards/getAllProduct"
   //       );
   //       const data = await response.data;
 

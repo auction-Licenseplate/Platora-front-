@@ -10,13 +10,11 @@ const Join = () => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  console.log(token);
-
   useEffect(() => {
     if (token) {
       router.push("/");
     }
-  }, []);
+  }, [token]);
 
   return (
     <JoinStyled>
