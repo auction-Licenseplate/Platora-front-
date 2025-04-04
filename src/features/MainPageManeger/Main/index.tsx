@@ -15,6 +15,8 @@ const Main = () => {
   const token = useSelector((state: RootState) => state.user.userToken);
   const type = router.query.type ? Number(router.query.type) : undefined;
 
+  console.log(token);
+
   // 글 작성 버튼 클릭 시
   const handleClick = async () => {
     if (!token) {

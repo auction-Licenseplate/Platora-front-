@@ -30,6 +30,7 @@ const WriteContainer = () => {
 
   useEffect(() => {
     const fetchStatus = async () => {
+      console.log(token);
       if (!token) {
         router.push("/login");
         return;

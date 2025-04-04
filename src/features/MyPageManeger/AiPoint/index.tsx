@@ -100,7 +100,10 @@ const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
             : responseData;
           setScore(scoreData); // 점수 응답 저장
           axios
-            .post("http://localhost:5000/pay/pointminus", token)
+            .post("http://localhost:5000/pay/pointminus", {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            })
             .then((res) => {
               console.log(res.data);
               window.location.reload();
