@@ -13,7 +13,7 @@ import carImg3 from "@/assets/images/carImage3.jpeg";
 
 interface ContentItem {
   id: number;
-  image: string;
+  image?: string;
   title: string;
 }
 
@@ -24,7 +24,7 @@ const BestContent = () => {
     // const fetchContents = async () => {
     //   try {
     //     const response = await axios.get(
-    //       "http://localhost:5000/admin/contents?limit=3"
+    //       "http://localhost:5000/admins/contents?limit=3"
     //     );
     //     setContents(response.data);
     //   } catch (error) {
@@ -47,6 +47,7 @@ const BestContent = () => {
           <div key={content.id} className="carousel-item">
             <div className="image-container">
               <Image
+                // src={`http://localhost:5000/uploads/${content.image}`}
                 src={content.image}
                 alt={content.title}
                 layout="fill"

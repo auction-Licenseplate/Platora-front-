@@ -16,7 +16,7 @@ interface Product {
   endTime: string;
   seller: string;
   timeLeft?: string;
-  imageUrl: string;
+  imageUrls: string[];
 }
 
 const AllProduct = () => {
@@ -52,6 +52,13 @@ const AllProduct = () => {
             timeLeft = `${hours}시간 ${minutes}분`;
           }
 
+          const imageUrls =
+            item.imageUrl && typeof item.imageUrl === "string"
+              ? item.imageUrl.split(",")
+              : [];
+
+          console.log(imageUrls);
+
           return {
             id: index + 1, // 또는 item.id가 있다면 사용
             title: item.vehicleTitle,
@@ -60,7 +67,7 @@ const AllProduct = () => {
             endTime: item.endTime,
             seller: item.userName,
             timeLeft,
-            imageUrl: item.imageUrl,
+            imageUrls,
           };
         });
 

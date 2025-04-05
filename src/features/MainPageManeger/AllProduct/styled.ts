@@ -8,7 +8,9 @@ export const AllProductStyled = styled.div`
 
     .product-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(4, 280px);
+      justify-content: center;
+      gap: 20px;
       padding: 20px;
     }
 
@@ -46,6 +48,44 @@ export const AllProductStyled = styled.div`
       width: 100%;
       padding: 10px;
       border-radius: 10px;
+      text-align: center;
+
+      hr {
+        margin-top: 10px;
+      }
+    }
+
+    .spanText {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      font-size: medium;
+    }
+
+    .prevIcon,
+    .nextIcon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prevIcon {
+      left: 8px;
+    }
+
+    .nextIcon {
+      right: 8px;
     }
 
     p {

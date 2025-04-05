@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import clsx from "clsx";
 import { WritePageStyled } from "./styled";
 import { Breadcrumb, Input, Modal } from "antd";
@@ -11,7 +11,6 @@ import { RootState } from "@/store/store";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 const Editor = dynamic(
@@ -26,18 +25,30 @@ const validationSchema = Yup.object({
   sideImage2: Yup.mixed().required("측면2 사진이 필요합니다."),
 });
 
-const WriteContainer = () => {
+const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  const [localFile, setLocalFile] = useState<File | null>(null);
+  const isMounted = useRef(true);
+
   useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
     const fetchStatus = async () => {
       if (!token) {
-        router.push("/login");
+        if (isMounted) {
+          router.push("/login");
+        }
         return;
       }
 
-      // 공인 인증서 상태 보내기 vehicles 테이블 -> ownership_status 필요
       try {
         const response = await axios.get(
           "http://localhost:5000/admins/getStatus",
@@ -49,7 +60,10 @@ const WriteContainer = () => {
 
         const ownershipStatus = response.data.ownership_status;
 
-        if (ownershipStatus === "pending" || ownershipStatus === "waiting") {
+        if (
+          isMounted &&
+          (ownershipStatus === "pending" || ownershipStatus === "waiting")
+        ) {
           Modal.warning({
             title: "공인 인증서 필요",
             content: "마이페이지에서 공인 인증서를 등록해주세요.",
@@ -62,12 +76,34 @@ const WriteContainer = () => {
           });
         }
       } catch (error) {
-        console.error("Error fetching ownership status:", error);
+        if (isMounted) {
+          console.error("Error fetching ownership status:", error);
+        }
       }
     };
 
     fetchStatus();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
+  // 메모리 누수 방지
+  useEffect(() => {
+    let objectUrl: string | null = null;
+
+    if (localFile) {
+      objectUrl = URL.createObjectURL(localFile);
+      // 사용하고 나서 메모리 해제 필요함
+    }
+
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [localFile]);
 
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
@@ -238,10 +274,24 @@ const WriteContainer = () => {
 };
 
 const ImageUpload = ({ label, name, setFieldValue, image }: any) => {
+  const [localFile, setLocalFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (localFile && isMounted) {
+      setFieldValue(name, localFile);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [localFile, name, setFieldValue]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFieldValue(name, file);
+      setLocalFile(file);
     }
   };
 
@@ -250,9 +300,9 @@ const ImageUpload = ({ label, name, setFieldValue, image }: any) => {
       <label>{label}</label>
       <Input type="file" accept="image/*" onChange={handleChange} />
       <div className="previewContainer">
-        {image ? (
+        {localFile || image ? (
           <img
-            src={URL.createObjectURL(image)}
+            src={URL.createObjectURL(localFile || image)}
             alt={label}
             className="previewImg"
           />

@@ -29,13 +29,18 @@ const Header = () => {
 
   // 토글 변경 시에
   useEffect(() => {
+    let isMounted = true;
+
     const handleRouteChange = () => {
-      setIsToggleOpen(false); // 페이지가 변경될 때마다 토글 닫기
+      if (isMounted) {
+        setIsToggleOpen(false); // 페이지가 변경될 때마다 토글 닫기
+      }
     };
 
     router.events.on("routeChangeStart", handleRouteChange);
 
     return () => {
+      isMounted = false;
       router.events.off("routeChangeStart", handleRouteChange);
     };
   }, [router.events]);
