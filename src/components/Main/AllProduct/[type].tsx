@@ -6,6 +6,11 @@ import clsx from "clsx";
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
+
+// 이미지
+import noProduct from "@/assets/images/NoAuction(whiteFont).png";
+import noProductBlack from "@/assets/images/NoAuction(blackFont).png";
 
 interface Product {
   id: number;
@@ -19,15 +24,20 @@ interface Product {
   imageUrls: string[];
 }
 
-const AllProduct = () => {
+interface TeirProps {
+  type?: number;
+}
+
+const AllProduct = ({ type }: TeirProps) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  const { type } = router.query;
-  const selectedType = typeof type === "string" ? parseInt(type, 10) : null;
-
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  // 다크, 라이트 모드 -> 이미지 바뀌어야 함
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
 
   useEffect(() => {
     const fetchAuctions = async () => {
@@ -45,11 +55,17 @@ const AllProduct = () => {
 
           let timeLeft = "종료됨";
           if (timeDiff > 0) {
-            const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+              (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
             const minutes = Math.floor(
               (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
             );
-            timeLeft = `${hours}시간 ${minutes}분`;
+
+            timeLeft = `${
+              days > 0 ? `${days}일 ` : ""
+            }${hours}시간 ${minutes}분`;
           }
 
           const imageUrls =
@@ -57,10 +73,8 @@ const AllProduct = () => {
               ? item.imageUrl.split(",")
               : [];
 
-          console.log(imageUrls);
-
           return {
-            id: index + 1, // 또는 item.id가 있다면 사용
+            id: index + 1,
             title: item.vehicleTitle,
             gradeName: parseInt(item.gradeName, 10),
             price: item.finalPrice,
@@ -81,27 +95,39 @@ const AllProduct = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedType) {
-      const result = products.filter(
-        (product) => product.gradeName === selectedType
-      );
+    if (type) {
+      const result = products.filter((product) => product.gradeName === type);
       setFilteredProducts(result);
     } else {
       setFilteredProducts(products);
     }
-  }, [products, selectedType]);
+  }, [products, type]);
+
+  // 모드에 따라 이미지 변경 시 필요
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
 
   return (
     <AllProductStyled className={clsx("main-wrap-products")}>
-      <div className="product-container">
-        {!type
-          ? products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))
-          : filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-      </div>
+      {products.length === 0 || filteredProducts.length === 0 ? (
+        <Image
+          className="noAuctionImg"
+          key={isDarkMode ? "dark" : "light"}
+          src={isDarkMode ? noProduct : noProductBlack}
+          alt="No Auction"
+        />
+      ) : (
+        <div className="product-container">
+          {!type
+            ? products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            : filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+        </div>
+      )}
     </AllProductStyled>
   );
 };

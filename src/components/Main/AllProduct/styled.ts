@@ -4,7 +4,16 @@ export const AllProductStyled = styled.div`
   &.main-wrap-products {
     width: 100%;
     max-width: 1280px;
+    padding: 20px;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+
+    .noAuctionImg {
+      margin-top: 10px;
+      width: 60%;
+      height: 400px;
+    }
 
     .product-container {
       display: grid;
@@ -15,6 +24,7 @@ export const AllProductStyled = styled.div`
     }
 
     .product-card {
+      position: relative;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -22,25 +32,19 @@ export const AllProductStyled = styled.div`
       flex-direction: column;
       align-items: center;
       padding: 10px;
+      cursor: pointer;
     }
 
     .product-image {
+      position: relative;
       width: 100%;
       height: 150px;
       border-radius: 10px;
       overflow: hidden;
-
-      background-color: skyblue; // 이미지 들어오면 지우기
+      background-color: transparent;
     }
 
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .product-card:hover .product-image img {
+    .product-card:hover .product-image .ant-image-img {
       transform: scale(1.1);
     }
 
@@ -97,17 +101,32 @@ export const AllProductStyled = styled.div`
       .product-container {
         grid-template-columns: repeat(3, 1fr);
       }
+
+      .noAuctionImg {
+        width: 80%;
+        height: 400px;
+      }
     }
 
     @media (max-width: 768px) {
       .product-container {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .noAuctionImg {
+        width: 90%;
+        height: 350px;
+      }
     }
 
     @media (max-width: 480px) {
       .product-container {
         grid-template-columns: repeat(1, 1fr);
+      }
+
+      .noAuctionImg {
+        width: 100%;
+        height: 250px;
       }
     }
   }

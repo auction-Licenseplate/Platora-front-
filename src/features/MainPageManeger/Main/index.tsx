@@ -8,7 +8,8 @@ import { RootState } from "@/store/store";
 import axios from "axios";
 import Tier from "../Tier";
 import { useEffect, useState } from "react";
-import AllProduct from "../AllProduct/[type]";
+import AllProduct from "../../../components/Main/AllProduct/[type]";
+import SoonProduct from "@/components/Main/SoonProduct/[type]";
 
 const Main = () => {
   const router = useRouter();
@@ -62,7 +63,7 @@ const Main = () => {
           <BestProduct />
 
           {/* 곧 시작 경매 */}
-          {/* <SoonProdct /> */}
+          <SoonProduct />
 
           {/* 글 작성하기 */}
           <Button onClick={handleClick}> 글 작성하기 </Button>
