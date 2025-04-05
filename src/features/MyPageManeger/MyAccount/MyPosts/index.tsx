@@ -48,7 +48,7 @@ const MyPosts = ({ type }: Props) => {
             {
               withCredentials: true,
               headers: { Authorization: `Bearer ${token}` },
-              params: { status: ["going", "befro"] },
+              params: { status: ["going", "before"] },
             }
           );
           setGoingPosts(going.data);

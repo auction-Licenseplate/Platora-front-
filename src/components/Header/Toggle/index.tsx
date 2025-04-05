@@ -119,58 +119,58 @@ const Toggle = ({
           {!token ? (
             <>
               <div className="tier-container">
-                <h2 onClick={toggleTierList} className="tier-title">
+                <h3 onClick={toggleTierList} className="tier-title">
                   등급 별 게시글
                   {isTierOpen ? (
                     <UpOutlined className="tier-icon" />
                   ) : (
                     <DownOutlined className="tier-icon" />
                   )}
-                </h2>
+                </h3>
                 <div className={`tier-list ${isTierOpen ? "open" : ""}`}>
                   {[...Array(10)].map((_, index) => (
-                    <h2
+                    <h3
                       key={index}
                       className="tier-item"
                       onClick={() => router.push("/login")}
                     >
                       Tier {index + 1}
-                    </h2>
+                    </h3>
                   ))}
                 </div>
               </div>
 
               <div className="toggleTexts">
-                <h2 onClick={() => router.push("/login")}>로그인</h2>
-                <h2 onClick={() => router.push("/join")}>회원가입</h2>
+                <h3 onClick={() => router.push("/login")}>로그인</h3>
+                <h3 onClick={() => router.push("/join")}>회원가입</h3>
               </div>
             </>
           ) : (
             <>
               <div className="tier-container">
-                <h2 onClick={toggleTierList} className="tier-title">
+                <h3 onClick={toggleTierList} className="tier-title">
                   등급 별 게시글
                   {isTierOpen ? (
                     <UpOutlined className="tier-icon" />
                   ) : (
                     <DownOutlined className="tier-icon" />
                   )}
-                </h2>
+                </h3>
                 <div className={`tier-list ${isTierOpen ? "open" : ""}`}>
                   {[...Array(10)].map((_, index) => (
-                    <h2
+                    <h3
                       key={index}
                       className="tier-item"
                       onClick={() => handleClick(index + 1)}
                     >
                       Tier {index + 1}
-                    </h2>
+                    </h3>
                   ))}
                 </div>
               </div>
 
               <div className="toggleTexts">
-                <h2
+                <h3
                   onClick={() =>
                     router.push({
                       pathname: "/myPage",
@@ -179,9 +179,9 @@ const Toggle = ({
                   }
                 >
                   내 계정
-                </h2>
+                </h3>
 
-                <h2
+                <h3
                   onClick={() =>
                     router.push({
                       pathname: "/myPage",
@@ -190,9 +190,9 @@ const Toggle = ({
                   }
                 >
                   내 작성글 보기
-                </h2>
+                </h3>
 
-                <h2
+                <h3
                   onClick={() =>
                     router.push({
                       pathname: "/myPage",
@@ -201,10 +201,10 @@ const Toggle = ({
                   }
                 >
                   관심상품 보기
-                </h2>
+                </h3>
 
-                <h2 onClick={handleWriteClick}>글 작성하기</h2>
-                <h2 onClick={handleLogout}>로그아웃</h2>
+                <h3 onClick={handleWriteClick}>글 작성하기</h3>
+                <h3 onClick={handleLogout}>로그아웃</h3>
               </div>
             </>
           )}

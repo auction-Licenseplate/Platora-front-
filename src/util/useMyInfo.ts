@@ -299,9 +299,10 @@ export const myInfo = (info: string) => {
         }
       );
 
-      const vehicleData = res.data.map((item: any) => ({
+      const vehicleData = res.data.map((item: any, index: number) => ({
         item: item.plate_num,
         state: item.ownership_status,
+        key: index,
       }));
 
       setVehicleTableData(vehicleData);
@@ -350,7 +351,7 @@ export const myInfo = (info: string) => {
       Modal.success({
         title: "🚗 차량 등록 완료",
         content: "차량 정보가 성공적으로 등록되었습니다!",
-        // onOk: () => window.location.reload(),
+        onOk: () => window.location.reload(),
       });
     } catch (error) {
       console.log("util -> myInfo :", error);

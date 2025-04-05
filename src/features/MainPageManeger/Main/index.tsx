@@ -8,14 +8,12 @@ import { RootState } from "@/store/store";
 import axios from "axios";
 import Tier from "../Tier";
 import { useEffect, useState } from "react";
-import AllProduct from "../AllProduct";
+import AllProduct from "../AllProduct/[type]";
 
 const Main = () => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
+
   const type = router.query.type ? Number(router.query.type) : undefined;
 
   // 글 작성 버튼 클릭 시
@@ -27,14 +25,14 @@ const Main = () => {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/admin/getStatus",
+        "http://localhost:5000/admins/getStatus",
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         }
       );
 
-      const ownershipStatus = response.data.ownership_status;
+      const ownershipStatus = response.data;
 
       if (ownershipStatus === "pending" || ownershipStatus === "waiting") {
         Modal.warning({
@@ -43,7 +41,7 @@ const Main = () => {
           onOk: () =>
             router.push({
               pathname: "/myPage",
-              query: { menu: "myFavorites" },
+              query: { menu: "myInfo" },
             }),
         });
       } else {
@@ -64,6 +62,7 @@ const Main = () => {
           <BestProduct />
 
           {/* 곧 시작 경매 */}
+          {/* <SoonProdct /> */}
 
           {/* 글 작성하기 */}
           <Button onClick={handleClick}> 글 작성하기 </Button>

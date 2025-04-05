@@ -226,6 +226,7 @@ const MyInfo = ({ info }: Props) => {
             modalType === "refund" ? refundTableData : vehicleTableData
           }
           columns={columns}
+          rowKey="key"
         />
       </Modal>
 

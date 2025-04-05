@@ -65,14 +65,18 @@ const StickyMenu = ({ menu }: MenuProps) => {
                 if (item.value === "withdraw") {
                   handleWithdraw();
                 } else {
-                  router.push(
-                    {
-                      pathname: router.pathname,
-                      query: { menu: item.value },
-                    },
-                    undefined,
-                    { shallow: true }
-                  );
+                  router
+                    .push(
+                      {
+                        pathname: router.pathname,
+                        query: { menu: item.value },
+                      },
+                      undefined,
+                      { shallow: true }
+                    )
+                    .then(() => {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    });
                 }
               }}
             >

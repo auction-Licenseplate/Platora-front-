@@ -90,7 +90,7 @@ export const HeaderStyled = styled.div`
       display: flex;
       flex-direction: column;
       gap: 20px;
-      padding: 10px;
+      padding: 20px 10px 10px 15px;
       color: white;
 
       .toggleInfo {
@@ -129,7 +129,7 @@ export const HeaderStyled = styled.div`
       }
 
       .tier-list.open {
-        max-height: 300px;
+        max-height: 350px;
       }
 
       .tier-item {
@@ -146,12 +146,12 @@ export const HeaderStyled = styled.div`
         flex-direction: column;
         gap: 20px;
 
-        h2 {
+        h3 {
           cursor: pointer;
           transition: 0.3s;
         }
 
-        h2:hover {
+        h3:hover {
           color: rgb(185, 185, 185);
         }
       }
@@ -298,6 +298,14 @@ export const HeaderStyled = styled.div`
       .toggleLogoImg {
         width: 150px;
         height: 20px;
+      }
+
+      .signUp {
+        display: none;
+      }
+
+      .marginLogoImg {
+        margin: 0 auto;
       }
     }
 

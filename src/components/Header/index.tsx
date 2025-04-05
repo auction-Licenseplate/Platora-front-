@@ -53,8 +53,8 @@ const Header = () => {
   // 타입 변경
   const handleClick = (selectedType: number) => {
     router.push({
-      pathname: router.pathname,
-      query: { ...router.query, type: selectedType },
+      pathname: "/",
+      query: { type: selectedType },
     });
   };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { WritePageStyled } from "./styled";
-import { Input, Modal } from "antd";
+import { Breadcrumb, Input, Modal } from "antd";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { EditorState, ContentState } from "draft-js";
@@ -12,6 +12,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -36,15 +37,10 @@ const WriteContainer = () => {
         return;
       }
 
-      router.push({
-        pathname: "/myPage",
-        query: { menu: "myInfo" },
-      });
-
       // 공인 인증서 상태 보내기 vehicles 테이블 -> ownership_status 필요
       try {
         const response = await axios.get(
-          "http://localhost:5000/vehicles/getStatus",
+          "http://localhost:5000/admins/getStatus",
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -107,9 +103,53 @@ const WriteContainer = () => {
               formData.append("car_img", values.sideImage2);
 
             try {
-              formData.forEach((value, key) => {
-                console.log(key, value);
-              });
+              const existing = await axios.get(
+                `http://localhost:5000/vehicles/checkApprovedPlate?plate=${values.title}`,
+                {
+                  headers: { Authorization: `Bearer ${token}` },
+                  withCredentials: true,
+                }
+              );
+
+              if (!existing.data.exists) {
+                Modal.error({
+                  title: "등록 불가",
+                  content: (
+                    <>
+                      <p>
+                        해당 번호판은 아직 승인되지 않았거나 등록되지 않는
+                        번호판입니다. <br /> 내역을 확인하여 주세요.
+                      </p>
+                      <Breadcrumb
+                        style={{ marginTop: 16 }}
+                        items={[
+                          {
+                            title: (
+                              <a href="/" target="_blank">
+                                <HomeOutlined />
+                              </a>
+                            ),
+                          },
+                          {
+                            title: (
+                              <a href="/myPage?menu=myInfo" target="_blank">
+                                <UserOutlined />
+                                <span style={{ marginLeft: 4 }}>내 계정</span>
+                              </a>
+                            ),
+                          },
+                          {
+                            title: "VEHICLE 내역보기",
+                          },
+                        ]}
+                      />
+                    </>
+                  ),
+                });
+
+                return;
+              }
+
               const response = await axios.post(
                 "http://localhost:5000/vehicles/addWrite",
                 formData,
@@ -123,8 +163,18 @@ const WriteContainer = () => {
               );
 
               if (response.data.message === "작성글 저장완료") {
-                console.log("저장 성공", response.data);
-                const imagePaths = response.data.data.images;
+                Modal.success({
+                  title: "저장 완료하였습니다!",
+                  content: (
+                    <p>
+                      승인 후 해당 이메일로 보내드리겠습니다. <br />
+                      감사합니다.
+                    </p>
+                  ),
+                  onOk: () => {
+                    router.push("/");
+                  },
+                });
               }
             } catch (error) {
               console.error("저장 실패", error);

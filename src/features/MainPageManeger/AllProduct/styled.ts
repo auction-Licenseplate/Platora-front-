@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const AllProductStyled = styled.div`
   &.main-wrap-products {
     width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
 
     .product-container {
       display: grid;
@@ -22,7 +24,7 @@ export const AllProductStyled = styled.div`
 
     .product-image {
       width: 100%;
-      height: 130px;
+      height: 150px;
       border-radius: 10px;
       overflow: hidden;
 

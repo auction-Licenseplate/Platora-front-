@@ -101,13 +101,16 @@ const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
             : responseData;
           setScore(scoreData); // 점수 응답 저장
           axios
-            .post("http://localhost:5000/pay/pointminus", {
-              headers: { Authorization: `Bearer ${token}` },
-              withCredentials: true,
-            })
+            .post(
+              "http://localhost:5000/pay/pointminus",
+              {},
+              {
+                headers: { Authorization: `Bearer ${token}` },
+                withCredentials: true,
+              }
+            )
             .then((res) => {
-              console.log(res.data);
-              window.location.reload();
+              setUsetPoint(userPoint - 100);
             }); // 포인트 차감 요청
         })
         .catch((err) => {
