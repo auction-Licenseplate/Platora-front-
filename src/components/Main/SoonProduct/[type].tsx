@@ -14,6 +14,7 @@ interface Product {
   seller: string;
   timeLeft?: string;
   imageUrls: string[];
+  status: string;
 }
 
 interface SoonProps {
@@ -21,7 +22,7 @@ interface SoonProps {
 }
 
 const SoonProduct = ({ type }: SoonProps) => {
-  const [before, setBefore] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchAuctions = async () => {
@@ -35,6 +36,7 @@ const SoonProduct = ({ type }: SoonProps) => {
 
         // 경매 데이터를 정렬하고 가까운 시간순으로 10개만 가져옴
         const formattedData = data
+          .filter((item: any) => item.status === "before")
           .map((item: any, index: number) => {
             const endTimeMs = new Date(item.endTime).getTime();
             const timeDiff = endTimeMs - now;
@@ -59,8 +61,6 @@ const SoonProduct = ({ type }: SoonProps) => {
                 ? item.imageUrl.split(",")
                 : [];
 
-            console.log(imageUrls[0]);
-
             return {
               id: index + 1,
               title: item.vehicleTitle,
@@ -71,12 +71,13 @@ const SoonProduct = ({ type }: SoonProps) => {
               timeLeft,
               imageUrls,
               endTimeMs,
+              status: item.status,
             };
           })
           .sort((a: any, b: any) => a.endTimeMs - b.endTimeMs)
           .slice(0, 10); // 가장 가까운 10개만 가져오기
 
-        setBefore(formattedData);
+        setProducts(formattedData);
       } catch (error) {
         console.error("경매 데이터를 불러오는 중 오류 발생", error);
       }
@@ -85,24 +86,31 @@ const SoonProduct = ({ type }: SoonProps) => {
     fetchAuctions();
   }, []);
 
-  // 필터링된 상품
-  const filteredProducts = type
-    ? before.filter((product) => product.gradeName === type)
-    : [];
+  let filteredProducts: Product[] = [];
+
+  if (typeof type === "number") {
+    filteredProducts = products.filter((product) => product.gradeName === type);
+  } else {
+    filteredProducts = products;
+  }
 
   return (
     <SoonProductStyled>
-      {before.length > 0 ? (
+      {!type && products.length > 0 ? (
         <Swiper
-          spaceBetween={20}
+          spaceBetween={10}
           slidesPerView={5}
+          navigation={{
+            prevEl: `.swiper-button-prev-${type ?? "default"}`,
+            nextEl: `.swiper-button-next-${type ?? "default"}`,
+          }}
           breakpoints={{
             320: { slidesPerView: 1 },
             768: { slidesPerView: 3 },
             1280: { slidesPerView: 5 },
           }}
         >
-          {before.map((product) => (
+          {products.map((product) => (
             <SwiperSlide key={product.id}>
               <SoonProductCard product={product} />
             </SwiperSlide>
@@ -112,11 +120,15 @@ const SoonProduct = ({ type }: SoonProps) => {
         <></>
       )}
 
-      {filteredProducts.length > 0 && (
+      {type && filteredProducts.length > 0 && (
         <>
           <Swiper
-            spaceBetween={20}
+            spaceBetween={10}
             slidesPerView={5}
+            navigation={{
+              prevEl: `.swiper-button-prev-${type ?? "default"}`,
+              nextEl: `.swiper-button-next-${type ?? "default"}`,
+            }}
             breakpoints={{
               320: { slidesPerView: 1 },
               768: { slidesPerView: 3 },

@@ -1,30 +1,25 @@
 import styled from "styled-components";
 
 export const SoonProductStyled = styled.div`
-  display: flex;
-  margin: 0 auto;
-  gap: 10px;
   width: 100%;
   max-width: 1280px;
+  margin: 0 auto;
 
-  .swiper-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  .swiper {
+    width: 100%;
   }
 
   .swiper-slide {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px !important;
     padding: 10px;
     box-sizing: border-box;
-    margin-right: 0px !important;
   }
 
   .soon-card {
     width: 100%;
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -42,13 +37,14 @@ export const SoonProductStyled = styled.div`
   .soon-image {
     width: 100%;
     height: 150px;
-    overflow: hidden;
-    border-radius: 10px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
   }
 
   .soon-info {
     padding: 10px;
     text-align: center;
+    cursor: pointer;
 
     h3 {
       font-size: 16px;

@@ -16,8 +16,9 @@ export const AllProductStyled = styled.div`
     }
 
     .product-container {
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(4, 280px);
+      grid-template-columns: repeat(4, 250px);
       justify-content: center;
       gap: 20px;
       padding: 20px;
@@ -42,6 +43,19 @@ export const AllProductStyled = styled.div`
       border-radius: 10px;
       overflow: hidden;
       background-color: transparent;
+
+      .productImg {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out;
+        filter: blur(5px);
+      }
+
+      .productImg.clear {
+        filter: none;
+      }
     }
 
     .product-card:hover .product-image .ant-image-img {
@@ -127,6 +141,10 @@ export const AllProductStyled = styled.div`
       .noAuctionImg {
         width: 100%;
         height: 250px;
+      }
+
+      .productImg {
+        width: 140% !important;
       }
     }
   }

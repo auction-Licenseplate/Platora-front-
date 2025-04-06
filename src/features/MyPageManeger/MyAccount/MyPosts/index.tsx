@@ -33,13 +33,14 @@ const MyPosts = ({ type }: Props) => {
         if (type === "posts") {
           // 승인 전 vehicles 테이블 -> title, car_img, car_info, grades 테이블의 grade_name
           const waiting = await axios.get(
-            "http://localhost:5000/vehicles/getMyPosts",
+            "http://localhost:5000/boards/getMyPosts",
             {
               withCredentials: true,
               headers: { Authorization: `Bearer ${token}` },
               params: { write_status: "waiting" },
             }
           );
+          console.log("waiting", waiting.data);
           setPendingPosts(waiting.data);
 
           // 승인 후 boards 테이블 -> 경매 번호(auctions 테이블), 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
@@ -51,6 +52,8 @@ const MyPosts = ({ type }: Props) => {
               params: { status: ["going", "before"] },
             }
           );
+
+          console.log("going", going.data);
           setGoingPosts(going.data);
         } else if (type === "favorite") {
           // 해당 유저의 관심 상품 -> 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status

@@ -68,6 +68,7 @@ const MyInfo = ({ info }: Props) => {
     handleRegister,
     handleTossPayment,
     pwvalue,
+    setVehicleTableData,
   } = myInfo(info);
   // 랜더링 시 사용자 정보 가져오기 & 비밀번호 활성화, 비활성화
   useEffect(() => {
@@ -148,6 +149,7 @@ const MyInfo = ({ info }: Props) => {
               handleFileUpload={handleFileUpload}
               file={file}
               handleRegister={handleRegister}
+              setVehicleTableData={setVehicleTableData}
             />
           </>
         ) : (

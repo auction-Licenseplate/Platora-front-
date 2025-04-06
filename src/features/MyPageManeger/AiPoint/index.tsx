@@ -11,9 +11,16 @@ interface ScoreType {
   setScore: any;
   point: string | "";
   setPoint: any;
+  setVehicleTableData: any;
 }
 
-const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
+const AiPoint = ({
+  score,
+  setScore,
+  point,
+  setPoint,
+  setVehicleTableData,
+}: ScoreType) => {
   const [userPoint, setUsetPoint] = useState(0);
 
   const token = useSelector((state: RootState) => state.user.userToken);
@@ -111,6 +118,15 @@ const AiPoint = ({ score, setScore, point, setPoint }: ScoreType) => {
             )
             .then((res) => {
               setUsetPoint(userPoint - 100);
+              setVehicleTableData((prev) => [
+                {
+                  key: Date.now(), // 고유 키
+                  date: new Date().toLocaleDateString(),
+                  item: "차량 점수 확인",
+                  point: -100,
+                },
+                ...prev,
+              ]);
             }); // 포인트 차감 요청
         })
         .catch((err) => {

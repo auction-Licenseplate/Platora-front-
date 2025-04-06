@@ -33,17 +33,14 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   const isMounted = useRef(true);
 
   useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+    isMounted.current = true;
 
-  useEffect(() => {
-    let isMounted = true;
+    // 페이지 내 새로고침 시 redux 값 초기화 => 이를 방지
+    if (token === null || token === undefined) return;
 
     const fetchStatus = async () => {
       if (!token) {
-        if (isMounted) {
+        if (isMounted.current) {
           router.push("/login");
         }
         return;
@@ -61,22 +58,24 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         const ownershipStatus = response.data.ownership_status;
 
         if (
-          isMounted &&
+          isMounted.current &&
           (ownershipStatus === "pending" || ownershipStatus === "waiting")
         ) {
           Modal.warning({
             title: "공인 인증서 필요",
             content: "마이페이지에서 공인 인증서를 등록해주세요.",
             onOk: () => {
-              router.push({
-                pathname: "/myPage",
-                query: { menu: "myInfo" },
-              });
+              if (isMounted.current) {
+                router.push({
+                  pathname: "/myPage",
+                  query: { menu: "myInfo" },
+                });
+              }
             },
           });
         }
       } catch (error) {
-        if (isMounted) {
+        if (isMounted.current) {
           console.error("Error fetching ownership status:", error);
         }
       }
@@ -85,9 +84,9 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
     fetchStatus();
 
     return () => {
-      isMounted = false;
+      isMounted.current = false;
     };
-  }, []);
+  }, [token]);
 
   // 메모리 누수 방지
   useEffect(() => {

@@ -81,6 +81,7 @@ export const myInfo = (info: string) => {
   const [refundTableData, setRefundTableData] = useState<object[]>([]);
   const [vehicleTableData, setVehicleTableData] = useState<object[]>([]);
   const columns = [
+    { title: "날짜", dataIndex: "date", key: "date" },
     { title: "항목", dataIndex: "item", key: "item" },
     { title: "상세", dataIndex: "state", key: "state" },
   ];
@@ -406,6 +407,7 @@ export const myInfo = (info: string) => {
     setRefundTableData,
     vehicleTableData,
     payTableInfo,
+    setVehicleTableData,
 
     // ✅ 차량 등록 관련
     vehicleNumber,

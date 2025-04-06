@@ -34,7 +34,6 @@ const SoonProductCard = ({ product }: Props) => {
             width: "100%",
             height: "150px",
             objectFit: "cover",
-            borderRadius: "10px",
             transition: "transform 0.3s ease-in-out",
             filter: token ? "none" : "blur(5px)",
           }}

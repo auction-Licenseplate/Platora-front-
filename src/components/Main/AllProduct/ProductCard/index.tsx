@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Image } from "antd";
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi"; // 좌우 화살표 import
+import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -50,14 +50,7 @@ const ProductCard = ({ product }: Props) => {
           src={originalUrl}
           alt={product.title}
           preview={token ? true : false}
-          style={{
-            width: "100%",
-            height: "150px",
-            objectFit: "cover",
-            borderRadius: "10px",
-            transition: "transform 0.3s ease-in-out",
-            filter: token ? "none" : "blur(5px)",
-          }}
+          className={`productImg ${token ? "clear" : ""}`}
         />
 
         {token ? (

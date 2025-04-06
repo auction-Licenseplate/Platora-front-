@@ -56,6 +56,7 @@ const Toggle = ({
     dispatch(toggleTheme());
   };
 
+  // 글 작성 버튼 클릭 시
   const handleWriteClick = async () => {
     if (!token) {
       router.push("/login");
@@ -64,14 +65,14 @@ const Toggle = ({
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/admin/getStatus",
+        "http://localhost:5000/admins/getStatus",
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         }
       );
 
-      const ownershipStatus = response.data.ownership_status;
+      const ownershipStatus = response.data;
 
       if (ownershipStatus === "pending" || ownershipStatus === "waiting") {
         Modal.warning({
@@ -80,7 +81,7 @@ const Toggle = ({
           onOk: () =>
             router.push({
               pathname: "/myPage",
-              query: { menu: "myFavorites" },
+              query: { menu: "myInfo" },
             }),
         });
       } else {
