@@ -74,7 +74,7 @@ const AllProduct = ({ type }: TeirProps) => {
               : [];
 
           return {
-            id: item.id,
+            id: item.auctionID,
             title: item.vehicleTitle,
             gradeName: parseInt(item.gradeName, 10),
             price: item.finalPrice,
@@ -121,10 +121,10 @@ const AllProduct = ({ type }: TeirProps) => {
         <div className="product-container">
           {!type
             ? products.map((product, index) => (
-                <ProductCard key={index} product={product} />
+                <ProductCard id={product.id} key={index} product={product} />
               ))
             : filteredProducts.map((product, index) => (
-                <ProductCard key={index} product={product} />
+                <ProductCard id={product.id} key={index} product={product} />
               ))}
         </div>
       )}
