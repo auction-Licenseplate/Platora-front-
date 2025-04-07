@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FooterStyled = styled.div`
-  &.main-wrap {
+  &.main-wrapfooter {
     position: relative;
     bottom: 0;
     display: flex;

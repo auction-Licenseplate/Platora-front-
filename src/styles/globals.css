@@ -3,6 +3,7 @@
 :root {
   --background: #2e2e2e;
   --foreground: white;
+  --labeltext: lightgray;
   --divider-color: #ddd;
   --input-bg: rgba(255, 255, 255, 0.45);
   --line-color: rgba(255, 255, 255, 0.5);
@@ -15,6 +16,7 @@
 .light-mode {
   --background: #ffffff;
   --foreground: #171717;
+  --labeltext: #171717;
   --divider-color: #171717;
   --input-bg: rgba(0, 0, 0, 0.3);
   --line-color: rgba(0, 0, 0, 0.5);
@@ -58,7 +60,7 @@ body {
 }
 
 .join-div label {
-  color: var(--foreground);
+  color: var(--labeltext);
 }
 
 .loginForm-textDiv,
@@ -96,7 +98,9 @@ body {
 .inputContainer {
   background-color: var(--input-bg);
 }
-
+.joinform-input {
+  background-color: var(--input-bg);
+}
 .inputContainer h3 {
   color: var(--background);
 }

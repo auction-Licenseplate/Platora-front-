@@ -8,11 +8,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
 import { request } from "http";
-
+import { useState } from "react";
+import Image from "next/image";
+import seeimg from "@/assets/images/pwsee.png";
+import notsee from "@/assets/images/notsee.png";
 const LoginForm = () => {
+  const [see, setSee] = useState("password");
   const router = useRouter();
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.user.userToken);
+
+  const seepw = () => {
+    if (see === "password") {
+      setSee("text");
+    } else {
+      setSee("password");
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -40,10 +52,9 @@ const LoginForm = () => {
   });
   return (
     <LoginFormStyled className={clsx("loginForm-wrap")}>
-      <div className="loginForm-container">
-        <form onSubmit={formik.handleSubmit}>
+      <div className="loginForm-container1">
+        <form className="loginForm-form" onSubmit={formik.handleSubmit}>
           <div className="loginForm-idDiv">
-            <div className="loginForm-textDiv">id</div>
             <Input
               type="email"
               id="email"
@@ -52,13 +63,19 @@ const LoginForm = () => {
             />
           </div>
           <div className="loginForm-idDiv">
-            <div className="loginForm-textDiv">pw</div>
             <Input
               name="password"
               placeholder="비밀번호를 입력해주세요"
-              type="password"
+              type={see}
               onChange={formik.handleChange}
             />
+            <div className="loginForm-seePw" onClick={seepw}>
+              <Image
+                src={see === "password" ? seeimg : notsee}
+                alt="pwsee"
+                width={20}
+              />
+            </div>
           </div>
           <div className="loginForm-findDiv">
             <span

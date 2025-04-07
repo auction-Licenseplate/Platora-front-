@@ -185,6 +185,7 @@ const JoinForm = () => {
           <div className="join-div">
             <label htmlFor="email">이메일</label>
             <Input
+              className="joinform-input"
               type="email"
               id="email"
               value={email}
@@ -195,13 +196,17 @@ const JoinForm = () => {
               placeholder="abc123@xxx.com"
             />
             <div className="join-errormessage">{emailError}</div>
-            <Button onClick={() => handleDuplicateCheck("email")}>
+            <Button
+              className="join-check"
+              onClick={() => handleDuplicateCheck("email")}
+            >
               이메일 중복 확인
             </Button>
           </div>
           <div className="join-div">
             <label htmlFor="password">비밀번호</label>
             <Input
+              className="joinform-input"
               type="password"
               id="password"
               value={password}
@@ -216,6 +221,7 @@ const JoinForm = () => {
           <div className="join-div">
             <label htmlFor="passwordCheck">비밀번호 확인</label>
             <Input
+              className="joinform-input"
               type="password"
               id="passwordCheck"
               value={passwordCheck}
@@ -230,6 +236,7 @@ const JoinForm = () => {
           <div className="join-div">
             <label htmlFor="name">이름</label>
             <Input
+              className="joinform-input"
               type="text"
               id="name"
               value={name}
@@ -244,6 +251,7 @@ const JoinForm = () => {
           <div className="join-div">
             <label htmlFor="phone">전화번호</label>
             <Input
+              className="joinform-input"
               type="text"
               id="phone"
               value={phone}
@@ -254,12 +262,16 @@ const JoinForm = () => {
               placeholder="010-0000-0000"
             />
             <div className="join-errormessage">{phoneError}</div>
-            <Button onClick={() => handleDuplicateCheck("phone")}>
+            <Button
+              className="join-check"
+              onClick={() => handleDuplicateCheck("phone")}
+            >
               전화번호 중복 확인
             </Button>
           </div>
           <div className="joinForm-btnDiv">
             <Button
+              className="joinbtn"
               htmlType="submit"
               disabled={!isFormValid || isEmailDuplicate || isPhoneDuplicate} // 각 입력의 유효성 상태에 기반하여 버튼을 활성화/비활성화
             >

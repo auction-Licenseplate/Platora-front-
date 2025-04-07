@@ -21,16 +21,18 @@ const Login = () => {
 
   return (
     <LoginStyled className={clsx("login-wrap")}>
-      <LoginForm />
-      <div className="divider">
-        <hr />
-        <span>소셜 로그인</span>
-        <hr />
-      </div>
-      <div className="loginForm-socialDiv">
-        <NaverLogin />
-        <KakaoLogin />
-        <GoogleLogin />
+      <div className="loginForm-container">
+        <LoginForm />
+        <div className="divider">
+          <hr />
+          <span>소셜 로그인</span>
+          <hr />
+        </div>
+        <div className="loginForm-socialDiv">
+          <NaverLogin />
+          <KakaoLogin />
+          <GoogleLogin />
+        </div>
       </div>
     </LoginStyled>
   );

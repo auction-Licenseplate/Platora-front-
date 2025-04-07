@@ -39,5 +39,26 @@ export const JoinFormStyled = styled.div`
       display: flex;
       justify-content: center;
     }
+    .join-check {
+      background-color: #777;
+      border: #777;
+      margin-top: -7px;
+      margin-bottom: 7px;
+    }
+    .joinform-input {
+      border: none;
+    }
+    .joinform-input:hover,
+    .joinform-input:focus {
+      background-color: rgba(255, 255, 255, 0.45) !important;
+      color: #fff !important;
+      border-color: #777 !important;
+      box-shadow: none !important;
+    }
+    .joinbtn {
+      background-color: #777;
+      border: #777;
+      color: #fff;
+    }
   }
 `;

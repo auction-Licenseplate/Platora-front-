@@ -13,7 +13,7 @@ const Main = () => {
   const router = useRouter();
   // const id:number = 2 변수 선언 예시
   return (
-    <FooterStyled className={clsx("main-wrap")}>
+    <FooterStyled className={clsx("main-wrapfooter")}>
       <div className="main-container">
         <div className="logoAinfo">
           <Image src={logo} alt="platora logo image" width={200} height={40} />
