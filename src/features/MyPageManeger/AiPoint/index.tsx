@@ -122,18 +122,6 @@ const AiPoint = ({
             )
             .then((res) => {
               setUsetPoint(userPoint - 100);
-              setPayTableData((prev) => {
-                const newData = [
-                  {
-                    key: Date.now(),
-                    date: new Date().toLocaleDateString(),
-                    item: "차량 점수 확인",
-                    state: `-100 포인트`,
-                  },
-                  ...prev,
-                ];
-                return newData;
-              });
             }); // 포인트 차감 요청
         })
         .catch((err) => {

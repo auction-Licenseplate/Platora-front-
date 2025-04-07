@@ -294,9 +294,7 @@ export const myInfo = (info: string) => {
         };
       });
 
-      const merged = [...payTableData, ...payData];
-
-      setRefundTableData(merged);
+      setRefundTableData(payData);
     }
   };
 

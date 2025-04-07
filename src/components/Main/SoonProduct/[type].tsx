@@ -110,8 +110,8 @@ const SoonProduct = ({ type }: SoonProps) => {
             1280: { slidesPerView: 5 },
           }}
         >
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
+          {products.map((product, index) => (
+            <SwiperSlide key={index}>
               <SoonProductCard product={product} />
             </SwiperSlide>
           ))}
