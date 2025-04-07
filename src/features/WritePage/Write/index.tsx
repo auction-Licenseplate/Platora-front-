@@ -241,6 +241,8 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                   },
                 });
               }
+
+              sendVehicleData(formData);
             } catch (error) {
               console.error("저장 실패", error);
             }

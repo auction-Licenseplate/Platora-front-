@@ -40,7 +40,7 @@ const MyPosts = ({ type }: Props) => {
               params: { write_status: "waiting" },
             }
           );
-          console.log("waiting", waiting.data);
+          console.log(waiting.data);
           setPendingPosts(waiting.data);
 
           // 승인 후 boards 테이블 -> 경매 번호(auctions 테이블), 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
@@ -53,18 +53,17 @@ const MyPosts = ({ type }: Props) => {
             }
           );
 
-          console.log("going", going.data);
           setGoingPosts(going.data);
         } else if (type === "favorite") {
           // 해당 유저의 관심 상품 -> 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
-          // const favorite = await axios.get(
-          //   "http://localhost:5000/boards/getMyFavorites",
-          //   {
-          //     withCredentials: true,
-          //     headers: { Authorization: `Bearer ${token}` },
-          //   }
-          // );
-          // setFavoritePosts(favorite.data);
+          const favorite = await axios.get(
+            "http://localhost:5000/boards/getMyFavorites",
+            {
+              withCredentials: true,
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          setFavoritePosts(favorite.data);
         }
       } catch (e) {
         console.log(e);
@@ -79,9 +78,13 @@ const MyPosts = ({ type }: Props) => {
       <div className="myPostContainer">
         <div className="postInfoBox">
           {type === "posts" ? (
-            <MyPost type="posts" />
+            <MyPost
+              type="posts"
+              pendingPosts={pendingPosts}
+              goingPosts={goingPosts}
+            />
           ) : (
-            <MyPost type="favorite" />
+            <MyPost type="favorite" favoritePosts={favoritePosts} />
           )}
         </div>
       </div>
