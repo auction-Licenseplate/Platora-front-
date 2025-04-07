@@ -56,7 +56,6 @@ const MyInfo = ({ info }: Props) => {
     handleTableModalOpen,
     modalType,
     columns,
-    refundTableData,
     vehicleTableData,
     vehicleNumber,
     file,
@@ -68,7 +67,9 @@ const MyInfo = ({ info }: Props) => {
     handleRegister,
     handleTossPayment,
     pwvalue,
-    setRefundTableData,
+    refundTableData,
+    payTableData,
+    setPayTableData,
   } = myInfo(info);
 
   // 랜더링 시 사용자 정보 가져오기 & 비밀번호 활성화, 비활성화
@@ -150,7 +151,8 @@ const MyInfo = ({ info }: Props) => {
               handleFileUpload={handleFileUpload}
               file={file}
               handleRegister={handleRegister}
-              setRefundTableData={setRefundTableData}
+              payTableData={payTableData}
+              setPayTableData={setPayTableData}
             />
           </>
         ) : (

@@ -58,7 +58,7 @@ const MyPosts = ({ type }: Props) => {
         } else if (type === "favorite") {
           // 해당 유저의 관심 상품 -> 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
           // const favorite = await axios.get(
-          //   "http://localhost:5000/favorites/getMyFavorites",
+          //   "http://localhost:5000/boards/getMyFavorites",
           //   {
           //     withCredentials: true,
           //     headers: { Authorization: `Bearer ${token}` },

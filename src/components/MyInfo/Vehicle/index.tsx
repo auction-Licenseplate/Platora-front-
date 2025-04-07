@@ -16,7 +16,8 @@ const Vehicle = ({
   handleFileUpload,
   file,
   handleRegister,
-  setRefundTableData,
+  payTableData,
+  setPayTableData,
 }) => {
   const { score, setScore } = myInfo("");
   const [point, setPoint] = useState("");
@@ -47,7 +48,8 @@ const Vehicle = ({
               setScore={setScore}
               point={point}
               setPoint={setPoint}
-              setRefundTableData={setRefundTableData}
+              payTableData={payTableData}
+              setPayTableData={setPayTableData}
             />
           </div>
         </div>

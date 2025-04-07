@@ -62,7 +62,7 @@ const SoonProduct = ({ type }: SoonProps) => {
                 : [];
 
             return {
-              id: index + 1,
+              id: item.id,
               title: item.vehicleTitle,
               gradeName: parseInt(item.gradeName, 10),
               price: item.finalPrice,
@@ -135,8 +135,8 @@ const SoonProduct = ({ type }: SoonProps) => {
               1280: { slidesPerView: 5 },
             }}
           >
-            {filteredProducts.map((product) => (
-              <SwiperSlide key={product.id}>
+            {filteredProducts.map((product, index) => (
+              <SwiperSlide key={index}>
                 <SoonProductCard product={product} />
               </SwiperSlide>
             ))}

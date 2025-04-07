@@ -80,6 +80,8 @@ export const myInfo = (info: string) => {
   // - 각 타입에 따른 테이블 정보
   const [refundTableData, setRefundTableData] = useState<object[]>([]);
   const [vehicleTableData, setVehicleTableData] = useState<object[]>([]);
+  const [payTableData, setPayTableData] = useState<object[]>([]);
+
   const columns = [
     { title: "날짜", dataIndex: "date", key: "date" },
     { title: "항목", dataIndex: "item", key: "item" },
@@ -292,7 +294,9 @@ export const myInfo = (info: string) => {
         };
       });
 
-      setRefundTableData(payData);
+      const merged = [...payTableData, ...payData];
+
+      setRefundTableData(merged);
     }
   };
 
@@ -392,6 +396,8 @@ export const myInfo = (info: string) => {
     setMaxRefundPoint,
     handleAccountChange,
     handleCardCompanyChange,
+    payTableData,
+    setPayTableData,
 
     // ✅ 비밀번호 변경 관련
     password,

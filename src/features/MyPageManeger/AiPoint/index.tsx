@@ -11,7 +11,8 @@ interface ScoreType {
   setScore: any;
   point: string | "";
   setPoint: any;
-  setRefundTableData: any;
+  setPayTableData: any;
+  payTableData: object[];
 }
 
 const AiPoint = ({
@@ -19,7 +20,8 @@ const AiPoint = ({
   setScore,
   point,
   setPoint,
-  setRefundTableData,
+  payTableData,
+  setPayTableData,
 }: ScoreType) => {
   const [userPoint, setUsetPoint] = useState(0);
 
@@ -120,7 +122,7 @@ const AiPoint = ({
             )
             .then((res) => {
               setUsetPoint(userPoint - 100);
-              setRefundTableData((prev) => {
+              setPayTableData((prev) => {
                 const newData = [
                   {
                     key: Date.now(),
@@ -130,7 +132,6 @@ const AiPoint = ({
                   },
                   ...prev,
                 ];
-                console.log("새 테이블 데이터:", newData);
                 return newData;
               });
             }); // 포인트 차감 요청
