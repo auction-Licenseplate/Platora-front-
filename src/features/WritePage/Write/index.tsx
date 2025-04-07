@@ -128,7 +128,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         }
       );
 
-      // 응답의 data에 접근
       if (response.data.message === "작성글 저장완료") {
         Modal.success({
           title: "저장 완료하였습니다!",
@@ -176,7 +175,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
               formData.append("car_img", values.sideImage2);
 
             try {
-              // 유저 아이디에 따라 해당 title이 있을 때 실행
               const existing = await axios.get(
                 `http://localhost:5000/vehicles/checkApprovedPlate?plate=${values.title}`,
                 {
@@ -185,7 +183,9 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                 }
               );
 
-              if (!existing.data.exists) {
+              console.log(existing.data.exists);
+
+              if (!existing.data.exists.isApproved) {
                 Modal.error({
                   title: "등록 불가",
                   content: (
@@ -224,7 +224,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                 return;
               }
 
-              if (!existing.data.alreadyWritten) {
+              if (existing.data.exists.alreadyWritten) {
                 Modal.confirm({
                   title: "이미 등록된 번호판입니다",
                   content: (
@@ -240,7 +240,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                     return;
                   },
                 });
-                return;
               }
             } catch (error) {
               console.error("저장 실패", error);
