@@ -18,20 +18,20 @@ interface ContentItem {
 }
 
 const BestContent = () => {
-  // const [contents, setContents] = useState<ContentItem[]>([]);
+  const [contents, setContents] = useState<ContentItem[]>([]);
 
   useEffect(() => {
-    // const fetchContents = async () => {
-    //   try {
-    //     const response = await axios.get(
-    //       "http://localhost:5000/admins/contents?limit=3"
-    //     );
-    //     setContents(response.data);
-    //   } catch (error) {
-    //     console.error("데이터 가져오기 실패:", error);
-    //   }
-    // };
-    // fetchContents();
+    const fetchContents = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/admins/contents?limit=3"
+        );
+        setContents(response.data);
+      } catch (error) {
+        console.error("데이터 가져오기 실패:", error);
+      }
+    };
+    fetchContents();
   }, []);
 
   const fetchContents = [

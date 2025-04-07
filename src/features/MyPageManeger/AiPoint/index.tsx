@@ -11,7 +11,7 @@ interface ScoreType {
   setScore: any;
   point: string | "";
   setPoint: any;
-  setVehicleTableData: any;
+  setRefundTableData: any;
 }
 
 const AiPoint = ({
@@ -19,7 +19,7 @@ const AiPoint = ({
   setScore,
   point,
   setPoint,
-  setVehicleTableData,
+  setRefundTableData,
 }: ScoreType) => {
   const [userPoint, setUsetPoint] = useState(0);
 
@@ -107,6 +107,8 @@ const AiPoint = ({
             ? responseData[0]
             : responseData;
           setScore(scoreData); // 점수 응답 저장
+
+          // 포인트 차감 요청
           axios
             .post(
               "http://localhost:5000/pay/pointminus",
@@ -118,15 +120,19 @@ const AiPoint = ({
             )
             .then((res) => {
               setUsetPoint(userPoint - 100);
-              setVehicleTableData((prev) => [
-                {
-                  key: Date.now(), // 고유 키
-                  date: new Date().toLocaleDateString(),
-                  item: "차량 점수 확인",
-                  point: -100,
-                },
-                ...prev,
-              ]);
+              setRefundTableData((prev) => {
+                const newData = [
+                  {
+                    key: Date.now(),
+                    date: new Date().toLocaleDateString(),
+                    item: "차량 점수 확인",
+                    state: `-100 포인트`,
+                  },
+                  ...prev,
+                ];
+                console.log("새 테이블 데이터:", newData);
+                return newData;
+              });
             }); // 포인트 차감 요청
         })
         .catch((err) => {
