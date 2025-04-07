@@ -223,6 +223,10 @@ export const HeaderStyled = styled.div`
       cursor: pointer;
     }
 
+    .centerLogo {
+      margin: 0 auto;
+    }
+
     .userIcon {
       display: flex;
       align-items: center;

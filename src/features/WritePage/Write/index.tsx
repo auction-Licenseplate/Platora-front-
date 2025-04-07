@@ -29,8 +29,12 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  // 파일 보내기
   const [localFile, setLocalFile] = useState<File | null>(null);
   const isMounted = useRef(true);
+
+  // 제목 보내주기 (이미 있는 건지 구분하려고)
+  const [titleValue, setTitleValue] = useState("");
 
   useEffect(() => {
     isMounted.current = true;
@@ -48,7 +52,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/admins/getStatus",
+          `http://localhost:5000/admins/getStatus`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -76,7 +80,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         }
       } catch (error) {
         if (isMounted.current) {
-          console.error("Error fetching ownership status:", error);
+          console.error(error);
         }
       }
     };
@@ -110,6 +114,40 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
     )
   );
 
+  const sendVehicleData = async (formData: FormData) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/vehicles/addWrite",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // 응답의 data에 접근
+      if (response.data.message === "작성글 저장완료") {
+        Modal.success({
+          title: "저장 완료하였습니다!",
+          content: (
+            <p>
+              승인 후 해당 이메일로 보내드리겠습니다. <br />
+              감사합니다.
+            </p>
+          ),
+          onOk: () => {
+            router.push("/");
+          },
+        });
+      }
+    } catch (error) {
+      console.error("저장 실패", error);
+    }
+  };
+
   return (
     <WritePageStyled className={clsx("main-wrap")}>
       <div className="writeContent">
@@ -138,6 +176,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
               formData.append("car_img", values.sideImage2);
 
             try {
+              // 유저 아이디에 따라 해당 title이 있을 때 실행
               const existing = await axios.get(
                 `http://localhost:5000/vehicles/checkApprovedPlate?plate=${values.title}`,
                 {
@@ -152,7 +191,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                   content: (
                     <>
                       <p>
-                        해당 번호판은 아직 승인되지 않았거나 등록되지 않는
+                        해당 번호판은 아직 승인되지 않았거나 등록되지 않은
                         번호판입니다. <br /> 내역을 확인하여 주세요.
                       </p>
                       <Breadcrumb
@@ -185,31 +224,23 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                 return;
               }
 
-              const response = await axios.post(
-                "http://localhost:5000/vehicles/addWrite",
-                formData,
-                {
-                  withCredentials: true,
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-
-              if (response.data.message === "작성글 저장완료") {
-                Modal.success({
-                  title: "저장 완료하였습니다!",
+              if (!existing.data.alreadyWritten) {
+                Modal.confirm({
+                  title: "이미 등록된 번호판입니다",
                   content: (
-                    <p>
-                      승인 후 해당 이메일로 보내드리겠습니다. <br />
-                      감사합니다.
-                    </p>
+                    <>
+                      <p>해당 번호판은 이미 작성된 글이 존재합니다.</p>
+                      <p>덮어씌우시겠습니까?</p>
+                    </>
                   ),
                   onOk: () => {
-                    router.push("/");
+                    sendVehicleData(formData);
+                  },
+                  onCancel: () => {
+                    return;
                   },
                 });
+                return;
               }
             } catch (error) {
               console.error("저장 실패", error);

@@ -76,6 +76,9 @@ const Header = () => {
     router.push("/");
   };
 
+  // 해당 페이지에서 스타일 변경
+  const isOnlyLogo = /^\/(login|join|find\/(id|pw))/.test(router.asPath);
+
   return (
     <>
       {isToggleOpen && <Overlay onClick={handleToggleClick} />}
@@ -91,16 +94,19 @@ const Header = () => {
           handleLogout={handleLogout}
         />
 
-        {/* 네비게이션 바 */}
         <div className="main-container">
-          <div className="toggleBtn" onClick={handleToggleClick}>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          {!isOnlyLogo && (
+            <div className="toggleBtn" onClick={handleToggleClick}>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          )}
 
           <div
-            className={token ? "marginLogoImg" : "logoImg"}
+            className={clsx(token ? "marginLogoImg" : "logoImg", {
+              centerLogo: isOnlyLogo,
+            })}
             onClick={() => {
               router.push("/");
             }}
@@ -108,46 +114,46 @@ const Header = () => {
             <Image src={logo} alt="platora logo image" layout="responsive" />
           </div>
 
-          <div className="signUp">
-            {token ? (
-              <>
-                <div className="userIcon">
-                  <Image
-                    src={userIcon}
-                    alt="user icon"
-                    layout="responsive"
-                    onClick={() => {
-                      router.push({
-                        pathname: "/myPage",
-                        query: { menu: "myInfo" },
-                      });
-                    }}
-                  />
-                </div>
-                <div className="userIcon">
-                  <Image
-                    src={favoriteIcon}
-                    alt="favorite icon"
-                    layout="responsive"
-                    onClick={() => {
-                      router.push({
-                        pathname: "/myPage",
-                        query: { menu: "myFavorites" },
-                      });
-                    }}
-                  />
-                </div>
-                <div className="userIcon">
-                  <Image
-                    src={logoutIcon}
-                    alt="logout icon"
-                    layout="responsive"
-                    onClick={handleLogout}
-                  />
-                </div>
-              </>
-            ) : (
-              <>
+          {!isOnlyLogo && (
+            <div className="signUp">
+              {token ? (
+                <>
+                  <div className="userIcon">
+                    <Image
+                      src={userIcon}
+                      alt="user icon"
+                      layout="responsive"
+                      onClick={() => {
+                        router.push({
+                          pathname: "/myPage",
+                          query: { menu: "myInfo" },
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="userIcon">
+                    <Image
+                      src={favoriteIcon}
+                      alt="favorite icon"
+                      layout="responsive"
+                      onClick={() => {
+                        router.push({
+                          pathname: "/myPage",
+                          query: { menu: "myFavorites" },
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="userIcon">
+                    <Image
+                      src={logoutIcon}
+                      alt="logout icon"
+                      layout="responsive"
+                      onClick={handleLogout}
+                    />
+                  </div>
+                </>
+              ) : (
                 <div className="userIcon">
                   <Image
                     src={userIcon}
@@ -158,9 +164,9 @@ const Header = () => {
                     }}
                   />
                 </div>
-              </>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
       </HeaderStyled>
     </>
