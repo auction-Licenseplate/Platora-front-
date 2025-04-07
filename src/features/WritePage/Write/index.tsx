@@ -242,7 +242,12 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                 });
               }
 
-              sendVehicleData(formData);
+              if (
+                existing.data.exists.isApproved &&
+                !existing.data.exists.alreadyWritten
+              ) {
+                sendVehicleData(formData);
+              }
             } catch (error) {
               console.error("저장 실패", error);
             }

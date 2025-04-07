@@ -54,6 +54,12 @@ body {
   margin-top: 70px;
 }
 
+@media (max-width: 768px) {
+  .main-wrap {
+    margin-top: 30px;
+  }
+}
+
 /* 로그인 폼 */
 .divider hr {
   background-color: var(--divider-color);

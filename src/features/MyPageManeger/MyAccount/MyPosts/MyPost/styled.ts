@@ -10,11 +10,17 @@ export const MyPostStyled = styled.div`
 
     .postsInfo {
       display: flex;
+      flex-direction: row;
       align-items: center;
+      justify-content: center;
       padding: 10px;
       position: relative;
       width: 100%;
-      height: 150px;
+      height: auto;
+      flex-wrap: wrap;
+      gap: 10px;
+      box-sizing: border-box;
+      margin-bottom: 30px;
     }
 
     .circle {
@@ -37,19 +43,23 @@ export const MyPostStyled = styled.div`
     }
 
     .postImg {
+      position: relative;
       width: 65%;
+      min-width: 200px;
+      max-width: 400px;
       height: 120px;
-      background: #f1f1f1;
       border-radius: 5px;
       margin-left: 10px;
       object-fit: cover;
+      flex-shrink: 0;
     }
 
     .postLine {
       width: 1px;
       height: 120px;
-      border-left: 1px dashed;
+      border-left: 1px dashed #999;
       margin: 0 10px;
+      transition: all 0.3s ease;
     }
 
     .postTexts {
@@ -57,12 +67,18 @@ export const MyPostStyled = styled.div`
       flex-direction: column;
       justify-content: center;
       flex: 1;
+      min-width: 200px;
+      align-items: flex-start;
+      text-align: left;
     }
 
     .postTitle {
       font-size: 16px;
       font-weight: bold;
       margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .postContents {
@@ -71,6 +87,43 @@ export const MyPostStyled = styled.div`
       display: flex;
       flex-direction: column;
       gap: 4px;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1200px) {
+      .postsInfo {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 30px;
+      }
+
+      .postImg {
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .postLine {
+        width: 80%;
+        height: 1px;
+        border-left: none;
+        border-top: 1px dashed #999;
+        margin: 10px 0;
+      }
+
+      .postTexts {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+      }
+
+      .postTitle {
+        font-size: 15px;
+      }
+
+      .postContents {
+        font-size: 13px;
+        align-items: center;
+      }
     }
   }
 `;

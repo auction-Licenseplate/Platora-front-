@@ -380,7 +380,7 @@ export const myInfo = (info: string) => {
   const handleRegister = async (score) => {
     const formData = new FormData();
     formData.append("vehicleNumber", vehicleNumber);
-    formData.append("grade", String(score?.grade)); // 숫자일 수도 있으니 String 변환
+    formData.append("grade", String(score?.grade));
     formData.append("score", String(score?.score));
     formData.append("price", String(score?.price));
 

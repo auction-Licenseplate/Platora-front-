@@ -40,6 +40,7 @@ const MyPosts = ({ type }: Props) => {
               params: { write_status: "waiting" },
             }
           );
+
           console.log(waiting.data);
           setPendingPosts(waiting.data);
 
@@ -71,7 +72,7 @@ const MyPosts = ({ type }: Props) => {
     };
 
     fetchPosts();
-  }, []);
+  }, [type]);
 
   return (
     <MyPostsStyled className={clsx("main-wrap-myPosts")}>

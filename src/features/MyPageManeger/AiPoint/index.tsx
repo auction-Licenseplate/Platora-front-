@@ -94,7 +94,6 @@ const AiPoint = ({
   };
 
   const scoreCheck = () => {
-    console.log(token);
     if (userPoint < 100) {
       return alert("포인트 100P가 필요한 서비스입니다.충전 후 이용해주세요");
     } else {
