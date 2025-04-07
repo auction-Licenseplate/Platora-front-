@@ -22,7 +22,7 @@ const DetailPage = ({ id }: detailprops) => {
   }, []);
   return (
     <>
-      <div>gd</div>
+      <div>오늘 왜 이렇게 잠이 오지 </div>
     </>
   );
 };
