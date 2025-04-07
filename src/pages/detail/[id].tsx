@@ -5,3 +5,5 @@ const Detail = () => {
   const { id } = router.query;
   return <DetailPage id={id} />;
 };
+
+export default Detail;

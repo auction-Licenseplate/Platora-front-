@@ -19,9 +19,10 @@ interface Product {
 
 interface Props {
   product: Product;
+  id: number;
 }
 
-const ProductCard = ({ product }: Props) => {
+const ProductCard = ({ product, id }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
@@ -44,7 +45,12 @@ const ProductCard = ({ product }: Props) => {
   const originalUrl = `http://localhost:5000/uploads/${product.imageUrls[currentImageIndex]}`;
 
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      onClick={() => {
+        router.push(`/detail/${id}`);
+      }}
+    >
       <div className="product-image">
         <Image
           src={originalUrl}
