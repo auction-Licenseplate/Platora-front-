@@ -278,13 +278,20 @@ export const myInfo = (info: string) => {
     });
 
     if (res.data.payPoint.length > 0) {
-      const payData = res.data.payPoint.map((item: any, index: number) => ({
-        item: item.refund_amount
-          ? `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`
-          : `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
-        state: item.refund_status || item.status || "처리 중",
-        key: index,
-      }));
+      const payData = res.data.payPoint.map((item: any, index: number) => {
+        const isRefund =
+          item.refund_amount !== null && item.refund_amount !== undefined;
+
+        return {
+          state: isRefund
+            ? `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`
+            : `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
+          date: new Date().toLocaleDateString(),
+          key: Date.now() + index,
+          item: isRefund ? "포인트 환불" : "포인트 충전",
+        };
+      });
+
       setRefundTableData(payData);
     }
   };
@@ -301,6 +308,7 @@ export const myInfo = (info: string) => {
       );
 
       const vehicleData = res.data.map((item: any, index: number) => ({
+        date: new Date().toLocaleDateString(),
         item: item.plate_num,
         state: item.ownership_status,
         key: index,
