@@ -283,15 +283,40 @@ export const myInfo = (info: string) => {
       const payData = res.data.payPoint.map((item: any, index: number) => {
         const isRefund =
           item.refund_amount !== null && item.refund_amount !== undefined;
+        const isPointMinus =
+          item.point_minus !== null && item.point_minus !== undefined;
 
-        return {
-          state: isRefund
-            ? `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`
-            : `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
-          date: new Date().toLocaleDateString(),
-          key: Date.now() + index,
-          item: isRefund ? "포인트 환불" : "포인트 충전",
-        };
+        const date = new Date(item.create_at).toLocaleString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        // 각 항목 구분
+        if (isRefund) {
+          return {
+            item: "포인트 환불",
+            state: `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`,
+            date,
+            key: Date.now() + index,
+          };
+        } else if (isPointMinus) {
+          return {
+            item: "차량 점수 확인",
+            state: `- ${(item.point_minus ?? 0).toLocaleString()} 포인트`,
+            date,
+            key: Date.now() + index,
+          };
+        } else {
+          return {
+            item: "포인트 충전",
+            state: `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
+            date,
+            key: Date.now() + index,
+          };
+        }
       });
 
       setRefundTableData(payData);
@@ -309,12 +334,22 @@ export const myInfo = (info: string) => {
         }
       );
 
-      const vehicleData = res.data.map((item: any, index: number) => ({
-        date: new Date().toLocaleDateString(),
-        item: item.plate_num,
-        state: item.ownership_status,
-        key: index,
-      }));
+      const vehicleData = res.data.map((item: any, index: number) => {
+        const date = new Date(item.create_at).toLocaleString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        return {
+          date,
+          item: item.plate_num,
+          state: item.ownership_status,
+          key: index,
+        };
+      });
 
       setVehicleTableData(vehicleData);
     } catch (error) {
