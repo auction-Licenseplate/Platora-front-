@@ -45,12 +45,7 @@ const ProductCard = ({ product, id }: Props) => {
   const originalUrl = `http://localhost:5000/uploads/${product.imageUrls[currentImageIndex]}`;
 
   return (
-    <div
-      className="product-card"
-      onClick={() => {
-        router.push(`/detail/${id}`);
-      }}
-    >
+    <div className="product-card">
       <div className="product-image">
         <Image
           src={originalUrl}
@@ -79,7 +74,12 @@ const ProductCard = ({ product, id }: Props) => {
         )}
       </div>
 
-      <div className="product-info">
+      <div
+        className="product-info"
+        onClick={() => {
+          router.push(`/detail/${id}`);
+        }}
+      >
         <span className="spanText">
           {product.title} <span>{product.gradeName}등급</span>
         </span>
