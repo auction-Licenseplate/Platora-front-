@@ -31,6 +31,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   // 파일 보내기
   const [localFile, setLocalFile] = useState<File | null>(null);
   const isMounted = useRef(true);
+  const modalShown = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
@@ -47,15 +48,44 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
           }
         );
 
-        const ownershipStatus = response.data.ownership_status;
+        const ownershipStatus = response.data;
 
         if (
           isMounted.current &&
-          (ownershipStatus === "pending" || ownershipStatus === "waiting")
+          !modalShown.current && // 이미 모달이 떴다면 스킵
+          ownershipStatus.message === "차량정보 없음"
         ) {
+          modalShown.current = true; // 모달 표시했음을 기록
           Modal.warning({
             title: "공인 인증서 필요",
-            content: "마이페이지에서 공인 인증서를 등록해주세요.",
+            content: (
+              <>
+                <p>마이페이지에서 공인 인증서를 등록해주세요.</p>
+                <Breadcrumb
+                  style={{ marginTop: 16 }}
+                  items={[
+                    {
+                      title: (
+                        <a href="/" target="_blank">
+                          <HomeOutlined />
+                        </a>
+                      ),
+                    },
+                    {
+                      title: (
+                        <a href="/myPage?menu=myInfo" target="_blank">
+                          <UserOutlined />
+                          <span style={{ marginLeft: 4 }}>내 계정</span>
+                        </a>
+                      ),
+                    },
+                    {
+                      title: "VEHICLE 등록하기",
+                    },
+                  ]}
+                />
+              </>
+            ),
             onOk: () => {
               if (isMounted.current) {
                 router.push({
@@ -175,8 +205,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                   withCredentials: true,
                 }
               );
-
-              console.log(existing.data.exists);
 
               // 다른 유저 번호판일 경우 true
               if (existing.data.exists.anotherUser) {
