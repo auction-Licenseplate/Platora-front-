@@ -39,7 +39,15 @@ const DetailPage = ({ id }: detailprops) => {
       return; // 리퀘스트 보내지 않도록 조기 종료
     }
     axios
-      .post("http://localhost:5000/boards/detail", { id, token })
+      .post(
+        "http://localhost:5000/boards/detail",
+        { id }, // 요청 바디
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // 헤더에 토큰 추가
+          },
+        }
+      )
       .then((res) => {
         if (!res.data || res.data.length === 0) {
           return;
