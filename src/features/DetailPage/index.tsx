@@ -38,35 +38,37 @@ const DetailPage = ({ id }: detailprops) => {
       router.push("/login");
       return; // 리퀘스트 보내지 않도록 조기 종료
     }
-    axios.post("http://localhost:5000/boards/detail", { id }).then((res) => {
-      if (!res.data || res.data.length === 0) {
-        return;
-      }
-      console.log(res.data);
-      const raw = res.data[0];
-      const imgs = raw.vehicle_car_img.split(",");
-      const data = [
-        {
-          id: raw.au_id,
-          carnumber: raw.vehicle_plate_num,
-          itemnumber: raw.au_auction_num,
-          endtime: raw.au_end_time,
-          price: raw.au_final_price,
-          name: raw.bidUser_name,
-          count: raw.bid_bid_count,
-          carimg1: imgs[0],
-          carimg2: imgs[1],
-          carimg3: imgs[2],
-          carinfo: raw.vehicle_car_info,
-          priceunit: raw.grade_price_unit,
-        },
-      ];
-      setArr(data);
-      setImg(data[0].carimg1);
-      setPrice(data[0].price);
-      // 필요한 정보
-      //현재가, 끝나는 날짜, 경매번호, 입찰 기록 , 사진 3장 다 , 물품 설명 , 물품 등록자이름
-    });
+    axios
+      .post("http://localhost:5000/boards/detail", { id, token })
+      .then((res) => {
+        if (!res.data || res.data.length === 0) {
+          return;
+        }
+        console.log(res.data);
+        const raw = res.data[0];
+        const imgs = raw.vehicle_car_img.split(",");
+        const data = [
+          {
+            id: raw.au_id,
+            carnumber: raw.vehicle_plate_num,
+            itemnumber: raw.au_auction_num,
+            endtime: raw.au_end_time,
+            price: raw.au_final_price,
+            name: raw.bidUser_name,
+            count: raw.bid_bid_count,
+            carimg1: imgs[0],
+            carimg2: imgs[1],
+            carimg3: imgs[2],
+            carinfo: raw.vehicle_car_info,
+            priceunit: raw.grade_price_unit,
+          },
+        ];
+        setArr(data);
+        setImg(data[0].carimg1);
+        setPrice(data[0].price);
+        // 필요한 정보
+        //현재가, 끝나는 날짜, 경매번호, 입찰 기록 , 사진 3장 다 , 물품 설명 , 물품 등록자이름
+      });
   }, [id, token, router]);
   useEffect(() => {
     if (arr.length === 0) return;
@@ -132,25 +134,30 @@ const DetailPage = ({ id }: detailprops) => {
         <div>
           <div>
             <div>
-              <Image src={`/${img}`} width={300} height={300} alt="" />
+              <Image
+                src={`http://localhost:5000/uploads//${img}`}
+                width={300}
+                height={300}
+                alt=""
+              />
             </div>
             <div>
               <Image
-                src={`/${arr[0].carimg1}`}
+                src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
                 width={100}
                 height={100}
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
-                src={`/${arr[0].carimg2}`}
+                src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
                 width={100}
                 height={100}
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
-                src={`/${arr[0].carimg3}`}
+                src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
                 width={100}
                 height={100}
                 alt=""
