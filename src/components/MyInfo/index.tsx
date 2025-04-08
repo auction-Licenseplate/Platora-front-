@@ -28,7 +28,9 @@ const MyInfo = ({ info }: Props) => {
   const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
 
   // 비밀번화 활성화, 비활성화
-  const [provider, setProvider] = useState<string | null>(null);
+  const [provider, setProvider] = useState<"naver" | "google" | "kakao" | null>(
+    null
+  );
 
   const {
     userInfo,
@@ -99,7 +101,10 @@ const MyInfo = ({ info }: Props) => {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then((response) => setIsEditable(response.data.provider === ""))
+        .then((response) => {
+          setIsEditable(response.data.provider === "");
+          setProvider(response.data.provider);
+        })
         .catch((e) => console.error("정보 가져오기 오류:", e));
     }
   }, []);

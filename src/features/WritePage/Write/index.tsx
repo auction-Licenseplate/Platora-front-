@@ -138,6 +138,11 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
             router.push("/");
           },
         });
+      } else if (response.data.message === "만족하는 차량 없음") {
+        Modal.error({
+          title: "차량 없음",
+          content: "입력하신 번호판의 차량이 존재하지 않습니다.",
+        });
       }
     } catch (error) {
       console.error("저장 실패", error);

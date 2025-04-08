@@ -4,6 +4,7 @@ import { Input } from "antd";
 // 이미지
 import passwordLogo from "@/assets/images/passwordLogo.png";
 import passwordBlack from "@/assets/images/passwordLogo(black).png";
+import { useEffect } from "react";
 
 const ChangePass = ({
   isDarkMode,
@@ -34,7 +35,7 @@ const ChangePass = ({
             type="password"
             value={password}
             onChange={handlePasswordChange}
-            disabled={provider !== null}
+            disabled={provider !== null && provider !== ""}
           />
           {password && <p className="alert">{passwordError}</p>}
         </div>
@@ -46,7 +47,7 @@ const ChangePass = ({
             type="password"
             value={passwordCheck}
             onChange={handlePasswordCheckChange}
-            disabled={provider !== null}
+            disabled={provider !== null && provider !== ""}
           />
           {passwordCheck && <p className="alertCheck">{passwordCheckError}</p>}
         </div>
