@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 const Detail = () => {
   const router = useRouter();
   const { id } = router.query;
-  return <DetailPage id={typeof id === "number" ? id : ""} />;
+  const stringId = typeof id === "string" ? id : undefined;
+  return <DetailPage id={stringId} />;
 };
 
 export default Detail;
