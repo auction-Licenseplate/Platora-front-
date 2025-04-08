@@ -18,9 +18,10 @@ interface Product {
 
 interface Props {
   product: Product;
+  id: number;
 }
 
-const SoonProductCard = ({ product }: Props) => {
+const SoonProductCard = ({ product, id }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
@@ -39,7 +40,12 @@ const SoonProductCard = ({ product }: Props) => {
           }}
         />
       </div>
-      <div className="soon-info">
+      <div
+        className="soon-info"
+        onClick={() => {
+          router.push(`/detail/${id}`);
+        }}
+      >
         <h3>{product.title}</h3>
         <p className="price">{product.price.toLocaleString()} 원</p>
         <p className="time-left">{product.timeLeft}</p>

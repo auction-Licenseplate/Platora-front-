@@ -16,6 +16,7 @@ const ChangePass = ({
   passwordCheckError,
   pwvalue,
 }) => {
+  console.log(provider);
   return (
     <>
       <Image

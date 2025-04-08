@@ -33,9 +33,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   const [localFile, setLocalFile] = useState<File | null>(null);
   const isMounted = useRef(true);
 
-  // 제목 보내주기 (이미 있는 건지 구분하려고)
-  const [titleValue, setTitleValue] = useState("");
-
   useEffect(() => {
     isMounted.current = true;
 
@@ -182,8 +179,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                   withCredentials: true,
                 }
               );
-
-              console.log(existing.data.exists);
 
               if (!existing.data.exists.isApproved) {
                 Modal.error({

@@ -23,6 +23,7 @@ interface DetailData {
   carinfo: string;
   priceunit: number;
 }
+
 const DetailPage = ({ id }: detailprops) => {
   const [price, setPrice] = useState<number>(0);
   const [arr, setArr] = useState<DetailData[]>([]);
