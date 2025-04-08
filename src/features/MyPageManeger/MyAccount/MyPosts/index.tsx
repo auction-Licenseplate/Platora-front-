@@ -41,7 +41,6 @@ const MyPosts = ({ type }: Props) => {
             }
           );
 
-          console.log(waiting.data);
           setPendingPosts(waiting.data);
 
           // 승인 후 boards 테이블 -> 경매 번호(auctions 테이블), 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status

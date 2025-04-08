@@ -152,14 +152,14 @@ a {
 }
 
 /* 모달창 */
+.ant-modal-wrap {
+  height: 100vh !important;
+}
+
 .ant-modal-centered {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-}
-
-.ant-modal {
-  top: 25% !important;
 }
 
 @media (prefers-color-scheme: dark) {

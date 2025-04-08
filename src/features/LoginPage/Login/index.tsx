@@ -17,7 +17,7 @@ const Login = () => {
     if (token) {
       router.push("/");
     }
-  });
+  }, []);
 
   return (
     <LoginStyled className={clsx("login-wrap")}>

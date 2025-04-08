@@ -32,13 +32,10 @@ const DetailPage = ({ id }: detailprops) => {
   const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    if (token === null) return;
-    if (!token) {
-      router.push("/login");
-      return; // 리퀘스트 보내지 않도록 조기 종료
-    }
     axios.post("http://localhost:5000/boards/detail", { id }).then((res) => {
-      console.log(res.data);
+      if (!res.data || res.data.length === 0) {
+        return;
+      }
       const raw = res.data[0];
       const imgs = raw.vehicle_car_img.split(",");
       const data = [
@@ -116,25 +113,30 @@ const DetailPage = ({ id }: detailprops) => {
         <div>
           <div>
             <div>
-              <Image src={`/${img}`} width={300} height={300} alt="" />
+              <Image
+                src={`http://localhost:5000/uploads/${img}`}
+                width={300}
+                height={300}
+                alt=""
+              />
             </div>
             <div>
               <Image
-                src={`/${arr[0].carimg1}`}
+                src={`http://localhost:5000/uploads/${arr[0].carimg1}`}
                 width={100}
                 height={100}
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
-                src={`/${arr[0].carimg2}`}
+                src={`http://localhost:5000/uploads/${arr[0].carimg2}`}
                 width={100}
                 height={100}
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
-                src={`/${arr[0].carimg3}`}
+                src={`http://localhost:5000/uploads/${arr[0].carimg3}`}
                 width={100}
                 height={100}
                 alt=""

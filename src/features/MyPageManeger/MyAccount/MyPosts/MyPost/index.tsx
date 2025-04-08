@@ -47,7 +47,12 @@ const MyPost = ({
 
         <div className="postLine"></div>
 
-        <div className="postTexts">
+        <div
+          className="postTexts"
+          onClick={() => {
+            router.push(`/detail/${post.auctionId || post.vehicleId}`);
+          }}
+        >
           <div className="postTitle">
             {post.vehicleTitle} : {post.gradeName}
           </div>
