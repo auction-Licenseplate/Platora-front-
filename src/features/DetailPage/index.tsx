@@ -133,6 +133,8 @@ const DetailPage = ({ id }: detailprops) => {
       });
   };
 
+  const likePost = () => {};
+
   return arr.length === 0 ? (
     <div>로딩 중...</div>
   ) : (
