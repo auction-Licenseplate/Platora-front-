@@ -387,21 +387,38 @@ export const myInfo = (info: string) => {
     if (file) formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:5000/users/certificate", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      Modal.success({
-        title: "🚗 차량 등록 완료",
-        content: "차량 정보가 성공적으로 등록되었습니다!",
-        onOk: () => window.location.reload(),
-      });
-    } catch (error) {
-      console.log("util -> myInfo :", error);
-    }
+      const res = await axios.post(
+        "http://localhost:5000/users/certificate",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const message = res.data.message;
+
+      if (message === "이미 등록된 차량입니다.") {
+        Modal.warning({
+          title: "⚠️ 중복된 차량",
+          content: "이미 등록된 차량 번호입니다. 다시 확인해주세요.",
+        });
+      } else if (message === "승인 대기 중인 차량입니다.") {
+        Modal.warning({
+          title: "⚠️ 승인 대기 중인 차량",
+          content: "승인 대기 중인 차량 번호입니다. 내역을 확인해주세요.",
+        });
+      } else {
+        Modal.success({
+          title: "🚗 차량 등록 완료",
+          content: "차량 정보가 성공적으로 등록되었습니다!",
+          onOk: () => window.location.reload(),
+        });
+      }
+    } catch (error: any) {}
   };
 
   return {

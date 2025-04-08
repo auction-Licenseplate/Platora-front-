@@ -32,6 +32,7 @@ const SoonProduct = ({ type }: SoonProps) => {
         );
 
         const data = response.data;
+
         const now = new Date().getTime();
 
         // 경매 데이터를 정렬하고 가까운 시간순으로 10개만 가져옴
@@ -62,7 +63,7 @@ const SoonProduct = ({ type }: SoonProps) => {
                 : [];
 
             return {
-              id: item.id,
+              id: item.auctionID,
               title: item.vehicleTitle,
               gradeName: parseInt(item.gradeName, 10),
               price: item.finalPrice,
@@ -74,6 +75,7 @@ const SoonProduct = ({ type }: SoonProps) => {
               status: item.status,
             };
           })
+          .filter((item: any) => item.timeLeft !== "종료됨")
           .sort((a: any, b: any) => a.endTimeMs - b.endTimeMs)
           .slice(0, 10); // 가장 가까운 10개만 가져오기
 
@@ -112,7 +114,7 @@ const SoonProduct = ({ type }: SoonProps) => {
         >
           {products.map((product, index) => (
             <SwiperSlide key={index}>
-              <SoonProductCard product={product} />
+              <SoonProductCard id={product.id} product={product} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -137,7 +139,7 @@ const SoonProduct = ({ type }: SoonProps) => {
           >
             {filteredProducts.map((product, index) => (
               <SwiperSlide key={index}>
-                <SoonProductCard product={product} />
+                <SoonProductCard id={product.id} product={product} />
               </SwiperSlide>
             ))}
           </Swiper>
