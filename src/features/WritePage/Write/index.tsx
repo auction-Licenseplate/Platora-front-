@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import clsx from "clsx";
 import { WritePageStyled } from "./styled";
 import { Breadcrumb, Input, Modal } from "antd";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { EditorState, ContentState } from "draft-js";
 import axios from "axios";
@@ -36,17 +35,9 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   useEffect(() => {
     isMounted.current = true;
 
-    // 페이지 내 새로고침 시 redux 값 초기화 => 이를 방지
-    if (token === null || token === undefined) return;
+    if (token === "" || !token) return;
 
     const fetchStatus = async () => {
-      if (!token) {
-        if (isMounted.current) {
-          router.push("/login");
-        }
-        return;
-      }
-
       try {
         const response = await axios.get(
           `http://localhost:5000/admins/getStatus`,
@@ -185,6 +176,23 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                 }
               );
 
+              console.log(existing.data.exists);
+
+              // 다른 유저 번호판일 경우 true
+              if (existing.data.exists.anotherUser) {
+                Modal.error({
+                  title: "경매 등록 불가",
+                  content: (
+                    <>
+                      <p>해당 번호판은 다른 사용자가 이미 작성한 차량입니다.</p>
+                      <p>작성 권한이 없습니다.</p>
+                    </>
+                  ),
+                });
+                return;
+              }
+
+              // 등록 안된 경우 false
               if (!existing.data.exists.isApproved) {
                 Modal.error({
                   title: "등록 불가",
@@ -224,6 +232,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                 return;
               }
 
+              // 등록된 번호판일 경우 true
               if (existing.data.exists.alreadyWritten) {
                 Modal.confirm({
                   title: "이미 등록된 번호판입니다",
@@ -244,7 +253,8 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
 
               if (
                 existing.data.exists.isApproved &&
-                !existing.data.exists.alreadyWritten
+                !existing.data.exists.alreadyWritten &&
+                !existing.data.exists.anotherUser
               ) {
                 sendVehicleData(formData);
               }
@@ -315,8 +325,12 @@ const ImageUpload = ({ label, name, setFieldValue, image }: any) => {
   useEffect(() => {
     let isMounted = true;
 
-    if (localFile && isMounted) {
-      setFieldValue(name, localFile);
+    if (localFile) {
+      Promise.resolve().then(() => {
+        if (isMounted) {
+          setFieldValue(name, localFile);
+        }
+      });
     }
 
     return () => {

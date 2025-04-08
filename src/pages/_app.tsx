@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { setUserToken } from "@/store/userSlice";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 
 // 토큰을 가져오는 컴포넌트

@@ -34,12 +34,7 @@ const DetailPage = ({ id }: detailprops) => {
   const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    if (!token) return;
-    if (token === "") {
-      router.push("/login");
-      return;
-    }
-
+    if (token === "" || !token) return;
     axios
       .post(
         "http://localhost:5000/boards/detail",
@@ -81,6 +76,7 @@ const DetailPage = ({ id }: detailprops) => {
         setPrice(data[0].price);
       });
   }, [id, token, router]);
+
   useEffect(() => {
     if (arr.length === 0) return;
 
@@ -94,6 +90,7 @@ const DetailPage = ({ id }: detailprops) => {
 
     return () => clearInterval(interval); // 언마운트 시 인터벌 제거
   }, [arr]);
+
   const priceChange = (type: string) => {
     if (type === "+") {
       setPrice(price + arr[0].priceunit);

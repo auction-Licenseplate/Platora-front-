@@ -28,9 +28,8 @@ const AiPoint = ({
   const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    if (token === null) {
-      return;
-    }
+    if (token === "" || !token) return;
+
     let isMounted = true; //마운트 여부 체크
 
     axios

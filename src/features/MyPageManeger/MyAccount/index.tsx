@@ -3,14 +3,14 @@ import { useRouter } from "next/router";
 import { MyAccountStyled } from "./styled";
 import MyInfo from "@/components/MyInfo";
 import MyPosts from "./MyPosts";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 interface MenuProps {
   menu: string;
 }
 
 const MyAccount = ({ menu }: MenuProps) => {
-  const router = useRouter();
-
   return (
     <MyAccountStyled className={clsx("main-wrap")}>
       <div className="main-container">

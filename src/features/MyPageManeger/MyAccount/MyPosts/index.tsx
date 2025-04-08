@@ -24,9 +24,7 @@ const MyPosts = ({ type }: Props) => {
 
   // 게시글 요청 -> 해당 유저의 모든 정보 -> title, car_img, car_info, plate_num, write_status
   useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    }
+    if (token === "" || !token) return;
 
     const fetchPosts = async () => {
       try {

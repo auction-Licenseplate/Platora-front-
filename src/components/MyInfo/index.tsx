@@ -76,10 +76,8 @@ const MyInfo = ({ info }: Props) => {
 
   // 랜더링 시 사용자 정보 가져오기 & 비밀번호 활성화, 비활성화
   useEffect(() => {
-    if (!token) {
-      console.log("토큰 없음");
-      router.push("/login");
-    }
+    if (token === "" || !token) return;
+
     if (info === "myInfo" || info === "point") {
       axios
         .get("http://localhost:5000/users/user-info", {
