@@ -10,6 +10,7 @@ interface detailprops {
   id: string | undefined;
 }
 interface DetailData {
+  id: number;
   carnumber: string;
   itemnumber: string;
   endtime: string;
@@ -37,11 +38,15 @@ const DetailPage = ({ id }: detailprops) => {
       return; // 리퀘스트 보내지 않도록 조기 종료
     }
     axios.post("http://localhost:5000/boards/detail", { id }).then((res) => {
+      if (!res.data || res.data.length === 0) {
+        return;
+      }
       console.log(res.data);
       const raw = res.data[0];
       const imgs = raw.vehicle_car_img.split(",");
       const data = [
         {
+          id: raw.au_id,
           carnumber: raw.vehicle_plate_num,
           itemnumber: raw.au_auction_num,
           endtime: raw.au_end_time,
@@ -103,6 +108,17 @@ const DetailPage = ({ id }: detailprops) => {
     const minutes = diffMinutes % 60;
 
     return `${days}일 ${hours}시간 ${minutes}분 남음`;
+  };
+  // 입찰가 갱신 요청
+  const updatePrice = () => {
+    axios
+      .post("http://localhost:5000/boards/priceupdate", {
+        id: arr[0].id,
+        price,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return arr.length === 0 ? (
@@ -183,7 +199,7 @@ const DetailPage = ({ id }: detailprops) => {
               </div>
             </div>
             <div>
-              <Button>입찰하기</Button>
+              <Button onClick={updatePrice}>입찰하기</Button>
               <Button>관심 물품</Button>
             </div>
           </div>
