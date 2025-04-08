@@ -11,6 +11,7 @@ interface detailprops {
 }
 interface DetailData {
   id: number;
+  userId: string;
   carnumber: string;
   itemnumber: string;
   endtime: string;
@@ -54,22 +55,23 @@ const DetailPage = ({ id }: detailprops) => {
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
-
+        console.log(res.data);
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
 
         const data = [
           {
             id: raw.au_id,
+            userId: res.data.userId,
             carnumber: raw.vehicle_plate_num,
             itemnumber: raw.au_auction_num,
             endtime: raw.au_end_time,
             price: raw.au_final_price,
             name: raw.bidUser_name,
             count: raw.bid_bid_count,
-            carimg1: imgs[0],
-            carimg2: imgs[1],
-            carimg3: imgs[2],
+            carimg1: imgs[0] || "",
+            carimg2: imgs[1] || "",
+            carimg3: imgs[2] || "",
             carinfo: raw.vehicle_car_info,
             priceunit: raw.grade_price_unit,
           },
@@ -132,8 +134,17 @@ const DetailPage = ({ id }: detailprops) => {
         console.log(res.data);
       });
   };
-
-  const likePost = () => {};
+  // 좋아요 상태 업데이트
+  const likePost = () => {
+    axios
+      .post("http://localhost:5000/boards/likepost", {
+        id: arr[0].id,
+        userId: arr[0].userId,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
 
   return arr.length === 0 ? (
     <div>로딩 중...</div>
