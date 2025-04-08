@@ -75,7 +75,7 @@ const Header = () => {
     document.cookie =
       "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-    dispatch(setUserToken(null));
+    dispatch(setUserToken(""));
     router.push("/");
   };
 

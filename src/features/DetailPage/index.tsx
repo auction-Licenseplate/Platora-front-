@@ -33,11 +33,13 @@ const DetailPage = ({ id }: detailprops) => {
   const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    if (token === null) return;
-    if (!token) {
+    console.log(token);
+    if (!token) return;
+    if (token === "") {
       router.push("/login");
       return; // 리퀘스트 보내지 않도록 조기 종료
     }
+
     axios
       .post(
         "http://localhost:5000/boards/detail",
@@ -74,8 +76,6 @@ const DetailPage = ({ id }: detailprops) => {
         setArr(data);
         setImg(data[0].carimg1);
         setPrice(data[0].price);
-        // 필요한 정보
-        //현재가, 끝나는 날짜, 경매번호, 입찰 기록 , 사진 3장 다 , 물품 설명 , 물품 등록자이름
       });
   }, [id, token, router]);
   useEffect(() => {
@@ -178,6 +178,7 @@ const DetailPage = ({ id }: detailprops) => {
             <div>경매번호 : {arr[0].itemnumber}</div>
             <div>남은 시간 : {getRemainingTime(arr[0].endtime)}</div>
             <div>입찰 횟수 : {arr[0].count}</div>
+            <div>판매자 : {arr[0].name}</div>
             <hr></hr>
             <div>입찰 단위 : {arr[0].priceunit}</div>
             <div>
