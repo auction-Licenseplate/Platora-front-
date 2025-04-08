@@ -51,12 +51,13 @@ const DetailPage = ({ id }: detailprops) => {
         }
       )
       .then((res) => {
-        if (!res.data || res.data.length === 0) {
+        if (!res.data.data || res.data.data.length === 0) {
           return;
         }
-        console.log(res.data.data);
+
         const raw = res.data.data[0];
-        const imgs = raw?.vehicle_car_img.split(",");
+        const imgs = raw.vehicle_car_img.split(",");
+
         const data = [
           {
             id: raw.au_id,
