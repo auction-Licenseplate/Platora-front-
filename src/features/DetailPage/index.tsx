@@ -33,11 +33,10 @@ const DetailPage = ({ id }: detailprops) => {
   const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    console.log(token);
     if (!token) return;
     if (token === "") {
       router.push("/login");
-      return; // 리퀘스트 보내지 않도록 조기 종료
+      return;
     }
 
     axios
@@ -48,6 +47,7 @@ const DetailPage = ({ id }: detailprops) => {
           headers: {
             Authorization: `Bearer ${token}`, // 헤더에 토큰 추가
           },
+          withCredentials: true,
         }
       )
       .then((res) => {
