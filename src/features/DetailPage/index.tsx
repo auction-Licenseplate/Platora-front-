@@ -10,6 +10,7 @@ interface detailprops {
   id: string | undefined;
 }
 interface DetailData {
+  id: number;
   carnumber: string;
   itemnumber: string;
   endtime: string;
@@ -32,33 +33,50 @@ const DetailPage = ({ id }: detailprops) => {
   const token = useSelector((state: RootState) => state.user.userToken);
 
   useEffect(() => {
-    axios.post("http://localhost:5000/boards/detail", { id }).then((res) => {
-      if (!res.data || res.data.length === 0) {
-        return;
-      }
-      const raw = res.data[0];
-      const imgs = raw.vehicle_car_img.split(",");
-      const data = [
+    console.log(token);
+    if (!token) return;
+    if (token === "") {
+      router.push("/login");
+      return; // 리퀘스트 보내지 않도록 조기 종료
+    }
+
+    axios
+      .post(
+        "http://localhost:5000/boards/detail",
+        { id }, // 요청 바디
         {
-          carnumber: raw.vehicle_plate_num,
-          itemnumber: raw.au_auction_num,
-          endtime: raw.au_end_time,
-          price: raw.au_final_price,
-          name: raw.bidUser_name,
-          count: raw.bid_bid_count,
-          carimg1: imgs[0],
-          carimg2: imgs[1],
-          carimg3: imgs[2],
-          carinfo: raw.vehicle_car_info,
-          priceunit: raw.grade_price_unit,
-        },
-      ];
-      setArr(data);
-      setImg(data[0].carimg1);
-      setPrice(data[0].price);
-      // 필요한 정보
-      //현재가, 끝나는 날짜, 경매번호, 입찰 기록 , 사진 3장 다 , 물품 설명 , 물품 등록자이름
-    });
+          headers: {
+            Authorization: `Bearer ${token}`, // 헤더에 토큰 추가
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.data || res.data.length === 0) {
+          return;
+        }
+        console.log(res.data);
+        const raw = res.data[0];
+        const imgs = raw.vehicle_car_img.split(",");
+        const data = [
+          {
+            id: raw.au_id,
+            carnumber: raw.vehicle_plate_num,
+            itemnumber: raw.au_auction_num,
+            endtime: raw.au_end_time,
+            price: raw.au_final_price,
+            name: raw.bidUser_name,
+            count: raw.bid_bid_count,
+            carimg1: imgs[0],
+            carimg2: imgs[1],
+            carimg3: imgs[2],
+            carinfo: raw.vehicle_car_info,
+            priceunit: raw.grade_price_unit,
+          },
+        ];
+        setArr(data);
+        setImg(data[0].carimg1);
+        setPrice(data[0].price);
+      });
   }, [id, token, router]);
   useEffect(() => {
     if (arr.length === 0) return;
@@ -102,6 +120,17 @@ const DetailPage = ({ id }: detailprops) => {
 
     return `${days}일 ${hours}시간 ${minutes}분 남음`;
   };
+  // 입찰가 갱신 요청
+  const updatePrice = () => {
+    axios
+      .post("http://localhost:5000/boards/priceupdate", {
+        id: arr[0].id,
+        price,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
 
   return arr.length === 0 ? (
     <div>로딩 중...</div>
@@ -114,7 +143,7 @@ const DetailPage = ({ id }: detailprops) => {
           <div>
             <div>
               <Image
-                src={`http://localhost:5000/uploads/${img}`}
+                src={`http://localhost:5000/uploads//${img}`}
                 width={300}
                 height={300}
                 alt=""
@@ -122,21 +151,21 @@ const DetailPage = ({ id }: detailprops) => {
             </div>
             <div>
               <Image
-                src={`http://localhost:5000/uploads/${arr[0].carimg1}`}
+                src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
                 width={100}
                 height={100}
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
-                src={`http://localhost:5000/uploads/${arr[0].carimg2}`}
+                src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
                 width={100}
                 height={100}
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
-                src={`http://localhost:5000/uploads/${arr[0].carimg3}`}
+                src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
                 width={100}
                 height={100}
                 alt=""
@@ -149,6 +178,7 @@ const DetailPage = ({ id }: detailprops) => {
             <div>경매번호 : {arr[0].itemnumber}</div>
             <div>남은 시간 : {getRemainingTime(arr[0].endtime)}</div>
             <div>입찰 횟수 : {arr[0].count}</div>
+            <div>판매자 : {arr[0].name}</div>
             <hr></hr>
             <div>입찰 단위 : {arr[0].priceunit}</div>
             <div>
@@ -186,7 +216,7 @@ const DetailPage = ({ id }: detailprops) => {
               </div>
             </div>
             <div>
-              <Button>입찰하기</Button>
+              <Button onClick={updatePrice}>입찰하기</Button>
               <Button>관심 물품</Button>
             </div>
           </div>
