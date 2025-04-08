@@ -54,9 +54,9 @@ const DetailPage = ({ id }: detailprops) => {
         if (!res.data || res.data.length === 0) {
           return;
         }
-        console.log(res.data);
-        const raw = res.data[0];
-        const imgs = raw.vehicle_car_img.split(",");
+        console.log(res.data.data);
+        const raw = res.data.data[0];
+        const imgs = raw?.vehicle_car_img.split(",");
         const data = [
           {
             id: raw.au_id,
