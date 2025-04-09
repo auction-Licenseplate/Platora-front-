@@ -13,7 +13,7 @@ import carImg3 from "@/assets/images/carImage3.jpeg";
 
 interface ContentItem {
   id: number;
-  image?: string;
+  image: string;
   title: string;
 }
 
@@ -26,7 +26,12 @@ const BestContent = () => {
         const response = await axios.get(
           "http://localhost:5000/admins/contents?limit=3"
         );
-        setContents(response.data);
+        const formatted = response.data.map((item: any, idx: number) => ({
+          id: idx,
+          image: `http://localhost:5000/uploads/${item.banner_img}`,
+          title: `배너 이미지 ${idx + 1}`,
+        }));
+        setContents(formatted);
       } catch (error) {
         console.error("데이터 가져오기 실패:", error);
       }
@@ -43,11 +48,10 @@ const BestContent = () => {
   return (
     <BestContentStyled className={clsx("main-wrap-best")}>
       <Carousel autoplay autoplaySpeed={3000}>
-        {fetchContents.map((content) => (
+        {contents.map((content) => (
           <div key={content.id} className="carousel-item">
             <div className="image-container">
               <Image
-                // src={`http://localhost:5000/uploads/${content.image}`}
                 src={content.image}
                 alt={content.title}
                 layout="fill"
