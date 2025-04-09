@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
 import { Button, Input } from "antd";
+import Cookie from "js-cookie";
 interface detailprops {
   id: string | undefined;
 }
@@ -31,10 +32,9 @@ const DetailPage = ({ id }: detailprops) => {
   const [remainTime, setRemainTime] = useState<string>("");
   const [img, setImg] = useState<string>("");
   const router = useRouter();
-  const token = useSelector((state: RootState) => state.user.userToken);
+  const token = Cookie.get("accessToken");
 
   useEffect(() => {
-    if (token === "" || !token) return;
     axios
       .post(
         "http://localhost:5000/boards/detail",
