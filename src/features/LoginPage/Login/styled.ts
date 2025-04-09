@@ -19,7 +19,7 @@ export const LoginStyled = styled.div`
     width: 520px;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +39,6 @@ export const LoginStyled = styled.div`
   }
 
   .loginForm-textDiv {
-    color: #fff;
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 500;
@@ -47,30 +46,25 @@ export const LoginStyled = styled.div`
   }
 
   .loginForm-container input {
-    border: 1px solid #555 !important;
+    border: none !important;
+    border-bottom: 1px solid #555 !important;
+    border-radius: 0 !important;
+    background: transparent;
     transition: none !important;
   }
 
   .loginForm-container input:hover,
   .loginForm-container input:focus {
-    border-color: #777 !important;
+    border-bottom: 1px solid #777 !important;
     box-shadow: none !important;
+    outline: none !important;
   }
-
   button {
     width: 100%;
-    background-color: #0070f3 !important;
-    color: white !important;
     border: none !important;
     font-weight: bold;
     height: 44px;
     transition: background-color 0.3s ease !important;
-  }
-
-  button:hover,
-  button:focus {
-    background-color: #0056c3 !important;
-    color: white !important;
   }
 
   .loginForm-findDiv {
@@ -78,7 +72,6 @@ export const LoginStyled = styled.div`
     justify-content: center;
     gap: 15px;
     margin: 16px 0;
-
     font-size: 14px;
     width: 100%;
 
@@ -91,7 +84,6 @@ export const LoginStyled = styled.div`
   .divider {
     display: flex;
     align-items: center;
-    color: #bbb;
     font-size: 14px;
     margin: 24px 0;
     width: 100%;
@@ -107,14 +99,14 @@ export const LoginStyled = styled.div`
   .loginForm-socialDiv {
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 45px;
     margin-top: 4px;
     width: 100%;
   }
 
   .loginform-socialbtn {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
   }
 `;

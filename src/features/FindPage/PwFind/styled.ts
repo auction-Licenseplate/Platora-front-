@@ -1,75 +1,101 @@
+// styled.ts
 import styled from "styled-components";
 
-interface PwFindStyledProps {
-  display?: string; // display 속성
-}
+export const PwFindStyled = styled.div<{ display: string }>`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-export const PwFindStyled = styled.div<PwFindStyledProps>`
-  &.PwFind-wrap {
-    margin: auto;
-    margin-bottom: 50px;
+  .loginForm-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .loginForm-container {
+    width: 520px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  // .PwFind-container1에 container의 디자인을 그대로 적용
+  .loginForm-container1 {
+    width: 520px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: ${(props) => props.display || "flex"};
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .loginForm-idDiv {
+    margin-bottom: 20px;
+    width: 100%;
+    position: relative;
+  }
+
+  .loginForm-textDiv {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+  }
+
+  .loginForm-container input,
+  .loginForm-container1 input {
+    border: none !important;
+    border-bottom: 1px solid #555 !important;
+    border-radius: 0 !important;
+    background: transparent;
+    transition: none !important;
+  }
+
+  .loginForm-container input:hover,
+  .loginForm-container input:focus,
+  .loginForm-container1 input:hover,
+  .loginForm-container1 input:focus {
+    border-bottom: 1px solid #777 !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .pwfind-error {
+    margin-top: 5px;
+    font-size: 13px;
+    color: red;
+    text-align: left;
+  }
+
+  button {
+    width: 100%;
+    border: none !important;
+    font-weight: bold;
+    height: 44px;
+    transition: background-color 0.3s ease !important;
+  }
+
+  .loginForm-findDiv {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 16px 0;
+    font-size: 14px;
     width: 100%;
 
-    .PwFind-container {
-      max-width: 1280px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      margin: 0 auto;
-    }
-
-    // .PwFind-container1에 container의 디자인을 그대로 적용
-    .PwFind-container1 {
-      max-width: 1280px;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      margin: 0 auto;
-      display: ${(props) =>
-        props.display || "flex"}; // display 속성을 flex로 설정
-    }
-
-    .PwFind-idDiv {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin-bottom: 10px;
-      gap: 3px;
-    }
-
-    .PwFind-textDiv {
-      display: flex;
-      flex-wrap: nowrap;
-    }
-
-    .PwFind-textDiv1 {
-      display: flex;
-      flex-wrap: nowrap;
-    }
-
-    .PwFind-form {
-      width: 20%;
-    }
-
-    Input {
-      width: 100%;
-    }
-
-    .PwFind-findDiv {
-      width: 100%;
-      margin-top: 15px;
-
-      margin-bottom: 15px;
-    }
-
-    .pwfind-error {
-      color: red;
-      height: 20px;
-      font-size: 1vw;
+    span {
+      cursor: pointer;
+      transition: color 0.2s;
     }
   }
 `;

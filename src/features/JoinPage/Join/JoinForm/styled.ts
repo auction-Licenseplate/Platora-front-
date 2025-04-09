@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const JoinFormStyled = styled.div`
   &.joinFrom-wrap {
-    max-width: 100%;
+    width: 100vw;
+    max-width: 100;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,12 +24,19 @@ export const JoinFormStyled = styled.div`
 
     .join-errormessage {
       color: red;
+      width: 100%;
       font-size: 12px;
       height: 20px;
     }
-
-    .joinForm-container {
+    .joinform-divcontainer {
+      width: 30%;
+    }
+    .joinform-formcontainer {
+      width: 100%;
       max-width: 1280px;
+    }
+    .joinForm-container {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -42,23 +50,21 @@ export const JoinFormStyled = styled.div`
     .join-check {
       background-color: #777;
       border: #777;
-      margin-top: -7px;
-      margin-bottom: 7px;
+      margin-top: -2px;
+      margin-bottom: 10px;
     }
     .joinform-input {
-      border: none;
+      border: none !important;
+      border-bottom: 1px solid #555 !important;
+      border-radius: 0 !important;
+      background: transparent;
+      transition: none !important;
     }
     .joinform-input:hover,
     .joinform-input:focus {
-      background-color: rgba(255, 255, 255, 0.45) !important;
-      color: #fff !important;
-      border-color: #777 !important;
+      border-bottom: 1px solid #777 !important;
       box-shadow: none !important;
-    }
-    .joinbtn {
-      background-color: #777;
-      border: #777;
-      color: #fff;
+      outline: none !important;
     }
   }
 `;

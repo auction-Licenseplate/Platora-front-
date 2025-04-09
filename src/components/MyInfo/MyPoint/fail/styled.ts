@@ -25,7 +25,7 @@ export const PaymentFailStyled = styled.div`
 
     button {
       width: 200px;
-      background-color: rgb(238, 238, 238); /* 메인 버튼 - 노랑 */
+
       color: #000;
       border: none;
       padding: 0.75rem 1.5rem;
