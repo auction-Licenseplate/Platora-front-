@@ -50,9 +50,11 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
 
         const ownershipStatus = response.data;
 
+        console.log(ownershipStatus);
+
         if (
           isMounted.current &&
-          !modalShown.current && // 이미 모달이 떴다면 스킵
+          !modalShown.current &&
           ownershipStatus.message === "차량정보 없음"
         ) {
           modalShown.current = true; // 모달 표시했음을 기록
@@ -61,6 +63,51 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
             content: (
               <>
                 <p>마이페이지에서 공인 인증서를 등록해주세요.</p>
+                <Breadcrumb
+                  style={{ marginTop: 16 }}
+                  items={[
+                    {
+                      title: (
+                        <a href="/" target="_blank">
+                          <HomeOutlined />
+                        </a>
+                      ),
+                    },
+                    {
+                      title: (
+                        <a href="/myPage?menu=myInfo" target="_blank">
+                          <UserOutlined />
+                          <span style={{ marginLeft: 4 }}>내 계정</span>
+                        </a>
+                      ),
+                    },
+                    {
+                      title: "VEHICLE 등록하기",
+                    },
+                  ]}
+                />
+              </>
+            ),
+            onOk: () => {
+              if (isMounted.current) {
+                router.push({
+                  pathname: "/myPage",
+                  query: { menu: "myInfo" },
+                });
+              }
+            },
+          });
+        } else if (
+          !modalShown.current &&
+          ownershipStatus.message === "승인된 차량 없음"
+        ) {
+          modalShown.current = true; // 모달 표시했음을 기록
+          Modal.warning({
+            title: "공인 인증서 승인 요청",
+            content: (
+              <>
+                <p>공인 인증서 승인 후 작성이 가능합니다.</p>
+                <p>내역을 확인하여 주세요.</p>
                 <Breadcrumb
                   style={{ marginTop: 16 }}
                   items={[

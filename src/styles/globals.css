@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Song+Myung&display=swap");
 
 :root {
   --background: #2e2e2e;
@@ -12,6 +13,8 @@
   --title-color: rgb(146, 146, 146);
   --post-color: rgb(206, 206, 206);
   --btn-color: rgb(188, 188, 210);
+  --before-color: rgb(220, 220, 220);
+  --after-color: rgb(179, 179, 179);
 }
 
 .light-mode {
@@ -26,32 +29,41 @@
   --active-color: rgb(56, 56, 56);
   --title-color: rgb(100, 100, 100);
   --post-color: rgb(114, 114, 114);
+  --before-color: rgb(60, 60, 60);
+  --after-color: rgb(112, 112, 112);
 }
+
 Button {
   background-color: var(--btn-color) !important;
 }
+
 .GlitchFont {
   font-family: "Black Han Sans", sans-serif;
   color: #262626;
   position: relative;
 }
+
 .loginForm-container {
   background-color: var(--background);
 }
+
 .loginForm-container input,
 .loginForm-container input ::placeholder {
   background-color: var(--input-bg);
   color: var(--title-color);
 }
+
 .loginform-socialtext,
 .loginForm-findDiv {
   color: var(--title-color);
 }
+
 .loginForm-container input:hover,
 .loginForm-container input:focus {
   background-color: var(--input-bg);
   color: var(--title-color);
 }
+
 html,
 body {
   max-width: 100vw;
@@ -124,11 +136,41 @@ body {
 .inputContainer {
   background-color: var(--input-bg);
 }
+
 .joinform-input {
   background-color: var(--input-bg);
 }
+
 .inputContainer h3 {
   color: var(--background);
+}
+
+/* 헤더 */
+.main-container,
+.main-wrapfooter {
+  background-color: var(--background);
+}
+
+.main-wrapfooter {
+  color: var(--labeltext);
+}
+
+.toggleBtn div {
+  background-color: var(--before-color);
+}
+
+.toggleBtn div::before {
+  background-color: var(--before-color);
+}
+
+.toggleBtn div::after {
+  background-color: var(--after-color);
+}
+
+/* 토글 */
+.toggleInfo {
+  background-color: var(--background);
+  color: var(--labeltext);
 }
 
 /* 글 작성하기 */
@@ -180,6 +222,13 @@ a {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+}
+
+/* footer 폰트 */
+.textsInfo {
+  font-family: "Song Myung", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 @media (prefers-color-scheme: dark) {

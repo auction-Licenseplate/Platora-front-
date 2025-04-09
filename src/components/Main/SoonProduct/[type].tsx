@@ -98,6 +98,7 @@ const SoonProduct = ({ type }: SoonProps) => {
 
   return (
     <SoonProductStyled>
+      <h1> Upcoming Auctions </h1>
       {!type && products.length > 0 ? (
         <Swiper
           spaceBetween={10}
