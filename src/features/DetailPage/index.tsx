@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { DetailStyled } from "./styled";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -7,6 +7,9 @@ import { RootState } from "@/store/store";
 import Image from "next/image";
 import { Button, Input } from "antd";
 import Cookie from "js-cookie";
+import fullheart from "@/assets/images/fullheart.png";
+import heart from "@/assets/images/heart.png";
+
 interface detailprops {
   id: string | undefined;
 }
@@ -31,6 +34,7 @@ const DetailPage = ({ id }: detailprops) => {
   const [arr, setArr] = useState<DetailData[]>([]);
   const [remainTime, setRemainTime] = useState<string>("");
   const [img, setImg] = useState<string>("");
+  const [heartimg, setHeartimg] = useState<any>("");
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -77,6 +81,7 @@ const DetailPage = ({ id }: detailprops) => {
         setArr(data);
         setImg(data[0].carimg1);
         setPrice(data[0].price);
+        res.data.isFavorite === true ? setHeartimg(fullheart) : setHeartimg("");
       });
   }, [id, token, router]);
 
@@ -144,6 +149,7 @@ const DetailPage = ({ id }: detailprops) => {
       })
       .then((res) => {
         console.log(res.data);
+        res.data.status === true ? setHeartimg(fullheart) : setHeartimg(heart);
       });
   };
 
@@ -232,7 +238,7 @@ const DetailPage = ({ id }: detailprops) => {
             </div>
             <div>
               <Button onClick={updatePrice}>입찰하기</Button>
-              <Button onClick={likePost}>관심 물품</Button>
+              <Image onClick={likePost} src={heartimg} alt="" />
             </div>
           </div>
         </div>

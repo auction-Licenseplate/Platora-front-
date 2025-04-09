@@ -50,7 +50,7 @@ const MyPost = ({
         <div
           className="postTexts"
           onClick={() => {
-            router.push(`/detail/${post.auctionId || post.vehicleId}`);
+            router.push(`/detail/${post.auctionId || post.auctionID}`);
           }}
         >
           <div className="postTitle">
