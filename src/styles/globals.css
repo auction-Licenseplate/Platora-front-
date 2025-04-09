@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Song+Myung&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
 :root {
   --background: #2e2e2e;
@@ -15,10 +16,11 @@
   --btn-color: rgb(188, 188, 210);
   --before-color: rgb(220, 220, 220);
   --after-color: rgb(179, 179, 179);
+  --swiper-btn: #ffffff;
+  --swiper-btn-dis: #828282;
 }
 
 .light-mode {
-  --btn-color: rgb(163, 172, 60);
   --background: #ffffff;
   --foreground: #171717;
   --labeltext: #171717;
@@ -31,16 +33,28 @@
   --post-color: rgb(114, 114, 114);
   --before-color: rgb(60, 60, 60);
   --after-color: rgb(112, 112, 112);
+  --btn-color: rgb(163, 172, 60);
+  --swiper-btn: #000000;
+  --swiper-btn-dis: #b7b7b7;
 }
 
-Button {
-  background-color: var(--btn-color) !important;
-}
-
+/* 폰트 */
 .GlitchFont {
   font-family: "Black Han Sans", sans-serif;
   color: #262626;
   position: relative;
+}
+
+.mainFont {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  color: var(--foreground);
+}
+
+Button {
+  background-color: var(--btn-color) !important;
 }
 
 .loginForm-container {
@@ -171,6 +185,17 @@ body {
 .toggleInfo {
   background-color: var(--background);
   color: var(--labeltext);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--swiper-btn) !important;
+}
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  color: var(--swiper-btn-dis) !important;
+  cursor: not-allowed;
 }
 
 /* 글 작성하기 */

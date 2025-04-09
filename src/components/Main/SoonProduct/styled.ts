@@ -2,9 +2,28 @@ import styled from "styled-components";
 
 export const SoonProductStyled = styled.div`
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 70px auto 0 auto;
+  position: relative;
 
+  /* swiper 버튼 */
+  .swiper-button-prev,
+  .swiper-button-next {
+    opacity: 1;
+    z-index: 10;
+    margin-top: -5px;
+    transition: opacity 0.3s ease, color 0.3s ease;
+  }
+
+  .swiper-button-next {
+    right: -35px;
+  }
+
+  .swiper-button-prev {
+    left: -35px;
+  }
+
+  /* swiper */
   .swiper {
     width: 100%;
   }
