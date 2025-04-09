@@ -84,7 +84,9 @@ const ProductCard = ({ product, id }: Props) => {
           {product.title} <span>{product.gradeName}등급</span>
         </span>
         <hr />
-        <p>현재가: {product.price}</p>
+        <p>
+          {product.timeLeft === "종료됨" ? "최종가" : "현재가"} {product.price}
+        </p>
         {product.bids !== undefined && <p>입찰 횟수: {product.bids}회</p>}
         <p>남은 시간: {product.timeLeft ?? "종료됨"}</p>
         <p>판매자: {product.seller}</p>

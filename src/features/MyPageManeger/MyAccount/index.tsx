@@ -11,6 +11,12 @@ interface MenuProps {
 }
 
 const MyAccount = ({ menu }: MenuProps) => {
+  const token = useSelector((state: RootState) => state.user.userToken);
+
+  if (!token) {
+    return;
+  }
+
   return (
     <MyAccountStyled className={clsx("main-wrap")}>
       <div className="main-container">

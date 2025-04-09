@@ -9,6 +9,7 @@ import { Button, Input } from "antd";
 import Cookie from "js-cookie";
 import fullheart from "@/assets/images/fullheart.png";
 import heart from "@/assets/images/heart.png";
+import Profile from "./ProfileDetail";
 
 interface detailprops {
   id: string | undefined;
@@ -35,6 +36,8 @@ const DetailPage = ({ id }: detailprops) => {
   const [remainTime, setRemainTime] = useState<string>("");
   const [img, setImg] = useState<string>("");
   const [heartimg, setHeartimg] = useState<any>("");
+  const [sellerOpen, setSellerOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -199,7 +202,14 @@ const DetailPage = ({ id }: detailprops) => {
             <div>경매번호 : {arr[0].itemnumber}</div>
             <div>남은 시간 : {getRemainingTime(arr[0].endtime)}</div>
             <div>입찰 횟수 : {arr[0].count}</div>
-            <div>판매자 : {arr[0].name}</div>
+            <div
+              onClick={() => {
+                setSelectedUserId(arr[0].userId);
+                setSellerOpen(true);
+              }}
+            >
+              판매자 : {arr[0].name}
+            </div>
             <hr></hr>
             <div>입찰 단위 : {arr[0].priceunit}</div>
             <div>
@@ -241,6 +251,13 @@ const DetailPage = ({ id }: detailprops) => {
               <Image onClick={likePost} src={heartimg} alt="" />
             </div>
           </div>
+
+          <Profile
+            open={sellerOpen}
+            onClose={() => setSellerOpen(false)}
+            name={arr[0].name}
+            userId={arr[0].userId}
+          />
         </div>
       </div>
     </DetailStyled>
