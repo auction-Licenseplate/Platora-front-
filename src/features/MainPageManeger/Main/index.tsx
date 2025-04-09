@@ -63,14 +63,20 @@ const Main = () => {
           {/* 관리자 홍보 */}
           <BestProduct />
 
-          {/* 곧 시작 경매 */}
-          <SoonProduct />
+          <div className="mainBoxContainer">
+            {/* 곧 시작 경매 */}
+            <SoonProduct />
 
-          {/* 글 작성하기 */}
-          <Button onClick={handleClick}> 글 작성하기 </Button>
+            {/* 글 작성하기 */}
+            <div className="wrtieBtnContainer">
+              <Button className="writeBtn" onClick={handleClick}>
+                <p className="mainFont">Post Auction</p>
+              </Button>
+            </div>
 
-          {/* 전체 경매 */}
-          <AllProduct />
+            {/* 전체 경매 */}
+            <AllProduct />
+          </div>
         </>
       )}
     </MainStyled>

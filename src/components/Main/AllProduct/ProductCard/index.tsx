@@ -58,15 +58,15 @@ const ProductCard = ({ product, id }: Props) => {
           <>
             {/* 이전 버튼 */}
             {product.imageUrls.length > 1 && (
-              <button onClick={handlePrevImage} className="prevIcon">
+              <div onClick={handlePrevImage} className="prevIcon">
                 <FiChevronLeft size={20} />
-              </button>
+              </div>
             )}
             {/* 다음 버튼 */}
             {product.imageUrls.length > 1 && (
-              <button onClick={handleNextImage} className="nextIcon">
+              <div onClick={handleNextImage} className="nextIcon">
                 <FiChevronRight size={20} />
-              </button>
+              </div>
             )}
           </>
         ) : (

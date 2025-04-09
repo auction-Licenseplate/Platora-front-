@@ -101,10 +101,15 @@ const SoonProduct = ({ type }: SoonProps) => {
 
   return (
     <SoonProductStyled>
-      <h1 className="mainFont"> Upcoming Auctions </h1>
+      {filteredProducts.length > 0 && products.length > 0 ? (
+        <h1 className="mainFont">Upcoming Auctions</h1>
+      ) : (
+        <></>
+      )}
 
-      <div className="swiper-button-prev"></div>
-      <div className="swiper-button-next"></div>
+      <div className="swiper-button-prev">←</div>
+      <div className="swiper-button-next">→</div>
+
       {!type && products.length > 0 ? (
         <Swiper
           spaceBetween={10}
@@ -115,9 +120,10 @@ const SoonProduct = ({ type }: SoonProps) => {
             prevEl: ".swiper-button-prev",
           }}
           breakpoints={{
-            320: { slidesPerView: 1 },
-            768: { slidesPerView: 3 },
-            1280: { slidesPerView: 5 },
+            0: { slidesPerView: 1 },
+            600: { slidesPerView: 2 },
+            900: { slidesPerView: 3 },
+            1200: { slidesPerView: 5 },
           }}
         >
           {products.map((product, index) => (
@@ -143,9 +149,10 @@ const SoonProduct = ({ type }: SoonProps) => {
               prevEl: ".swiper-button-prev",
             }}
             breakpoints={{
-              320: { slidesPerView: 1 },
-              768: { slidesPerView: 3 },
-              1280: { slidesPerView: 5 },
+              0: { slidesPerView: 1 },
+              600: { slidesPerView: 2 },
+              900: { slidesPerView: 3 },
+              1200: { slidesPerView: 5 },
             }}
           >
             {filteredProducts.map((product, index) => (

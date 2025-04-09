@@ -65,7 +65,7 @@ export const HeaderStyled = styled.div`
       justify-content: space-between;
       padding: 10px 30px;
       z-index: 1000;
-      box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 0.15);
+      box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 0.5);
     }
 
     .toggleBtn {
@@ -148,10 +148,6 @@ export const HeaderStyled = styled.div`
         h3 {
           cursor: pointer;
           transition: 0.3s;
-        }
-
-        h3:hover {
-          color: rgb(185, 185, 185);
         }
       }
 

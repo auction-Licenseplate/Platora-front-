@@ -31,6 +31,7 @@ const SoonProductCard = ({ product, id }: Props) => {
         <Image
           src={`http://localhost:5000/uploads/${product.imageUrls[0]}`}
           alt={product.title}
+          preview={token ? true : false}
           style={{
             width: "100%",
             height: "150px",
@@ -47,7 +48,7 @@ const SoonProductCard = ({ product, id }: Props) => {
         }}
       >
         <h3>{product.title}</h3>
-        <p className="price">{product.price.toLocaleString()} 원</p>
+        <p className="price">현재가 : {product.price.toLocaleString()} 원</p>
         <p className="time-left">{product.timeLeft}</p>
       </div>
     </div>

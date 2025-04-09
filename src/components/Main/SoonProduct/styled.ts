@@ -5,22 +5,73 @@ export const SoonProductStyled = styled.div`
   max-width: 1200px;
   margin: 70px auto 0 auto;
   position: relative;
+  text-align: center;
 
-  /* swiper 버튼 */
+  @media (max-width: 768px) {
+    & {
+      margin: 30px auto 0 auto;
+    }
+  }
+
+  .mainFont {
+    margin-bottom: 20px;
+
+    @media (max-width: 550px) {
+      & {
+        margin-bottom: 80px;
+      }
+    }
+  }
+
   .swiper-button-prev,
   .swiper-button-next {
     opacity: 1;
     z-index: 10;
-    margin-top: -5px;
+    margin-top: -165px;
     transition: opacity 0.3s ease, color 0.3s ease;
-  }
+    font-size: 35px;
 
-  .swiper-button-next {
-    right: -35px;
+    &::after {
+      display: none;
+    }
+
+    @media (max-width: 550px) {
+      & {
+        margin-top: -130px;
+      }
+    }
   }
 
   .swiper-button-prev {
-    left: -35px;
+    left: 30px;
+
+    @media (max-width: 550px) {
+      & {
+        left: 60px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      & {
+        left: 40px;
+      }
+    }
+  }
+
+  .swiper-button-next {
+    right: 30px;
+
+    @media (max-width: 550px) {
+      & {
+        right: 60px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      & {
+        right: 40px;
+      }
+    }
   }
 
   /* swiper */
@@ -47,6 +98,18 @@ export const SoonProductStyled = styled.div`
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s ease;
+  }
+
+  @media (max-width: 1200px) {
+    .soon-card {
+      max-width: 350px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .soon-card {
+      max-width: 400px;
+    }
   }
 
   .soon-card:hover {
