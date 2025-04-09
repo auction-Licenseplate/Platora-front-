@@ -232,7 +232,7 @@ const DetailPage = ({ id }: detailprops) => {
             </div>
             <div>
               <Button onClick={updatePrice}>입찰하기</Button>
-              <Button>관심 물품</Button>
+              <Button onClick={likePost}>관심 물품</Button>
             </div>
           </div>
         </div>
