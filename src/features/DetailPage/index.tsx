@@ -84,7 +84,9 @@ const DetailPage = ({ id }: detailprops) => {
         setArr(data);
         setImg(data[0].carimg1);
         setPrice(data[0].price);
-        res.data.isFavorite === true ? setHeartimg(fullheart) : setHeartimg("");
+        res.data.isFavorite === true
+          ? setHeartimg(fullheart)
+          : setHeartimg(heart);
       });
   }, [id, token, router]);
 
