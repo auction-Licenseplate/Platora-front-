@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { SoonProductStyled } from "./styled";
 import SoonProductCard from "./SoonProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 interface Product {
   id: number;
@@ -98,13 +101,18 @@ const SoonProduct = ({ type }: SoonProps) => {
 
   return (
     <SoonProductStyled>
+      <h1 className="mainFont"> Upcoming Auctions </h1>
+
+      <div className="swiper-button-prev"></div>
+      <div className="swiper-button-next"></div>
       {!type && products.length > 0 ? (
         <Swiper
           spaceBetween={10}
           slidesPerView={5}
+          modules={[Navigation]}
           navigation={{
-            prevEl: `.swiper-button-prev-${type ?? "default"}`,
-            nextEl: `.swiper-button-next-${type ?? "default"}`,
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
           }}
           breakpoints={{
             320: { slidesPerView: 1 },
@@ -124,12 +132,15 @@ const SoonProduct = ({ type }: SoonProps) => {
 
       {type && filteredProducts.length > 0 && (
         <>
+          <div className="swiper-button-prev"></div>
+          <div className="swiper-button-next"></div>
           <Swiper
             spaceBetween={10}
             slidesPerView={5}
+            modules={[Navigation]}
             navigation={{
-              prevEl: `.swiper-button-prev-${type ?? "default"}`,
-              nextEl: `.swiper-button-next-${type ?? "default"}`,
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
             }}
             breakpoints={{
               320: { slidesPerView: 1 },

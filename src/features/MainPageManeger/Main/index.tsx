@@ -8,6 +8,7 @@ import { RootState } from "@/store/store";
 import axios from "axios";
 import Tier from "../Tier";
 import { useEffect, useState } from "react";
+
 import AllProduct from "../../../components/Main/AllProduct/[type]";
 import SoonProduct from "@/components/Main/SoonProduct/[type]";
 

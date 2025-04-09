@@ -1,13 +1,16 @@
 import Image from "next/image";
 
 // 이미지
-import toggleLogo from "@/assets/images/Logo_plotora(white).png";
+import logoBlack from "@/assets/images/platoraLogo(black).png";
+import logoWhite from "@/assets/images/platoraLogo(white).png";
+
 import closeIcon from "@/assets/images/closeIcon.png";
+import closeIconBlack from "@/assets/images/closeIcon(black).png";
 import { boolean } from "yup";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { setTheme, toggleTheme } from "@/store/themeSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Modal } from "antd";
@@ -56,6 +59,14 @@ const Toggle = ({
     dispatch(toggleTheme());
   };
 
+  // 다크, 라이트 모드
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
+
   // 글 작성 버튼 클릭 시
   const handleWriteClick = async () => {
     if (!token) {
@@ -98,14 +109,14 @@ const Toggle = ({
         <div className="imageContainer">
           <div className="toggleLogoImg">
             <Image
-              src={toggleLogo}
+              src={isDarkMode ? logoWhite : logoBlack}
               alt="platora logo image"
               layout="responsive"
               priority
             />
           </div>
           <Image
-            src={closeIcon}
+            src={isDarkMode ? closeIcon : closeIconBlack}
             alt="close icon"
             onClick={handleToggleClick}
             width={40}

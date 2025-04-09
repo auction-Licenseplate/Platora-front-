@@ -10,10 +10,15 @@ import { setTheme, toggleTheme } from "@/store/themeSlice";
 import Toggle from "./Toggle";
 
 // 로고 이미지
-import logo from "@/assets/images/Logo_plotora(black).png";
-import userIcon from "@/assets/images/userIcon.png";
-import favoriteIcon from "@/assets/images/favoriteIcon.png";
-import logoutIcon from "@/assets/images/logoutIcon.png";
+import logoBlack from "@/assets/images/platoraLogo(black).png";
+import logoWhite from "@/assets/images/platoraLogo(white).png";
+
+import userIconBlack from "@/assets/images/userIcon(black).png";
+import userIconWhite from "@/assets/images/userIcon(white).png";
+import favoriteIconBlack from "@/assets/images/favoriteIcon(black).png";
+import favoriteIconWhite from "@/assets/images/favoriteIcon(white).png";
+import logoutIconBlack from "@/assets/images/logoutIcon(black).png";
+import logoutIconWhite from "@/assets/images/logoutIcon(white).png";
 import axios from "axios";
 
 const Header = () => {
@@ -26,6 +31,14 @@ const Header = () => {
 
   // 타입 별 게시글 토글
   const [isTierOpen, setIsTierOpen] = useState(false);
+
+  // 다크, 라이트 모드
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
 
   // 토글 변경 시에
   useEffect(() => {
@@ -114,7 +127,11 @@ const Header = () => {
               router.push("/");
             }}
           >
-            <Image src={logo} alt="platora logo image" layout="responsive" />
+            <Image
+              src={isDarkMode ? logoWhite : logoBlack}
+              alt="platora logo image"
+              layout="responsive"
+            />
           </div>
 
           {!isOnlyLogo && (
@@ -123,7 +140,7 @@ const Header = () => {
                 <>
                   <div className="userIcon">
                     <Image
-                      src={userIcon}
+                      src={isDarkMode ? userIconWhite : userIconBlack}
                       alt="user icon"
                       layout="responsive"
                       onClick={() => {
@@ -136,7 +153,7 @@ const Header = () => {
                   </div>
                   <div className="userIcon">
                     <Image
-                      src={favoriteIcon}
+                      src={isDarkMode ? favoriteIconWhite : favoriteIconBlack}
                       alt="favorite icon"
                       layout="responsive"
                       onClick={() => {
@@ -149,7 +166,7 @@ const Header = () => {
                   </div>
                   <div className="userIcon">
                     <Image
-                      src={logoutIcon}
+                      src={isDarkMode ? logoutIconWhite : logoutIconBlack}
                       alt="logout icon"
                       layout="responsive"
                       onClick={handleLogout}
@@ -159,7 +176,7 @@ const Header = () => {
               ) : (
                 <div className="userIcon">
                   <Image
-                    src={userIcon}
+                    src={isDarkMode ? userIconWhite : userIconBlack}
                     alt="user icon"
                     layout="responsive"
                     onClick={() => {

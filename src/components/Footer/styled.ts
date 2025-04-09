@@ -8,18 +8,17 @@ export const FooterStyled = styled.div`
     width: 100%;
     height: auto;
     padding: 30px 15px;
-    background-color: #262626;
+    box-shadow: 0px -4px 6px -2px rgba(0, 0, 0, 0.15);
 
     .main-container {
       width: 100%;
-      color: white;
       display: flex;
       justify-content: space-between;
 
       .textsInfo {
         display: flex;
         flex-direction: column;
-        margin-top: 35px;
+        margin: 35px 0 0 5px;
         gap: 10px;
       }
 

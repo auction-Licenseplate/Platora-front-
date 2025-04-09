@@ -39,12 +39,6 @@ const BestContent = () => {
     fetchContents();
   }, []);
 
-  const fetchContents = [
-    { id: 1, image: carImg1, title: "Car Image 1" },
-    { id: 2, image: carImg2, title: "Car Image 2" },
-    { id: 3, image: carImg3, title: "Car Image 3" },
-  ];
-
   return (
     <BestContentStyled className={clsx("main-wrap-best")}>
       <Carousel autoplay autoplaySpeed={3000}>
@@ -57,9 +51,6 @@ const BestContent = () => {
                 layout="fill"
                 objectFit="cover"
               />
-              <div className="title-overlay">
-                <h3 className="content-title">{content.title}</h3>
-              </div>
             </div>
           </div>
         ))}

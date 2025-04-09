@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const HeaderStyled = styled.div`
   &.main-wrap {
     width: 100%;
-    background-color: #262626;
+    background-color: rgb(0, 0, 0);
     position: relative;
 
     /* 토글 내용 */
@@ -15,8 +15,7 @@ export const HeaderStyled = styled.div`
       max-width: 500px;
       height: 100vh;
       padding: 10px;
-      background-color: #262626;
-      z-index: 1001;
+      z-index: 1003;
       transform: translateX(-100%);
       transition: transform 0.3s ease-in-out;
       clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
@@ -37,6 +36,8 @@ export const HeaderStyled = styled.div`
     hr {
       margin: 10px;
       width: 95%;
+      border: none;
+      border-top: 1px solid #ccc;
     }
 
     .imageContainer {
@@ -63,8 +64,8 @@ export const HeaderStyled = styled.div`
       align-items: center;
       justify-content: space-between;
       padding: 10px 30px;
-      background-color: #262626;
       z-index: 1000;
+      box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 0.15);
     }
 
     .toggleBtn {
@@ -80,7 +81,6 @@ export const HeaderStyled = styled.div`
     .toggleBtn div {
       width: 100%;
       height: 4px;
-      background-color: black;
       position: relative;
       transition: 0.3s;
     }
@@ -91,7 +91,6 @@ export const HeaderStyled = styled.div`
       flex-direction: column;
       gap: 20px;
       padding: 20px 10px 10px 15px;
-      color: white;
 
       .toggleInfo {
         display: flex;
@@ -177,12 +176,10 @@ export const HeaderStyled = styled.div`
 
     .toggleBtn div::before {
       transform: translateX(-2px);
-      background-color: cyan;
     }
 
     .toggleBtn div::after {
       transform: translateX(2px);
-      background-color: red;
     }
 
     /* 호버 시 글리치 효과 강조 */
@@ -201,7 +198,7 @@ export const HeaderStyled = styled.div`
 
     .signUp {
       display: flex;
-      gap: 10px;
+      gap: 20px;
     }
 
     .logoImg {
@@ -231,8 +228,8 @@ export const HeaderStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 25px;
+      width: 30px;
+      height: 15px;
     }
 
     .switch {
@@ -334,7 +331,7 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 1002;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
 `;
