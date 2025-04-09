@@ -35,6 +35,9 @@ const DetailPage = ({ id }: detailprops) => {
   const token = Cookie.get("accessToken");
 
   useEffect(() => {
+    if (!token) {
+      return;
+    }
     axios
       .post(
         "http://localhost:5000/boards/detail",
@@ -125,6 +128,7 @@ const DetailPage = ({ id }: detailprops) => {
     axios
       .post("http://localhost:5000/boards/priceupdate", {
         id: arr[0].id,
+        userId: arr[0].userId,
         price,
       })
       .then((res) => {
