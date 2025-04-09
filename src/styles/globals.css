@@ -11,9 +11,11 @@
   --active-color: white;
   --title-color: rgb(146, 146, 146);
   --post-color: rgb(206, 206, 206);
+  --btn-color: rgb(188, 188, 210);
 }
 
 .light-mode {
+  --btn-color: rgb(163, 172, 60);
   --background: #ffffff;
   --foreground: #171717;
   --labeltext: #171717;
@@ -25,13 +27,31 @@
   --title-color: rgb(100, 100, 100);
   --post-color: rgb(114, 114, 114);
 }
-
+Button {
+  background-color: var(--btn-color) !important;
+}
 .GlitchFont {
   font-family: "Black Han Sans", sans-serif;
   color: #262626;
   position: relative;
 }
-
+.loginForm-container {
+  background-color: var(--background);
+}
+.loginForm-container input,
+.loginForm-container input ::placeholder {
+  background-color: var(--input-bg);
+  color: var(--title-color);
+}
+.loginform-socialtext,
+.loginForm-findDiv {
+  color: var(--title-color);
+}
+.loginForm-container input:hover,
+.loginForm-container input:focus {
+  background-color: var(--input-bg);
+  color: var(--title-color);
+}
 html,
 body {
   max-width: 100vw;

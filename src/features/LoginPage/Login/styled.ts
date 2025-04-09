@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const LoginStyled = styled.div`
   width: 100vw;
   height: 70vh;
-  background-color: #1e1e1e;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +17,6 @@ export const LoginStyled = styled.div`
 
   .loginForm-container {
     width: 520px;
-    background-color: #2c2c2c;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -48,21 +46,13 @@ export const LoginStyled = styled.div`
     text-align: left;
   }
 
-  input {
-    background-color: #3c3c3c !important;
-    color: #fff !important;
+  .loginForm-container input {
     border: 1px solid #555 !important;
     transition: none !important;
-    &::placeholder {
-      color: lightgray !important; /* ✅ 흰색으로 변경 */
-      opacity: 0.8; /* 옵션: 약간 투명하게 */
-    }
   }
 
-  input:hover,
-  input:focus {
-    background-color: #3c3c3c !important;
-    color: #fff !important;
+  .loginForm-container input:hover,
+  .loginForm-container input:focus {
     border-color: #777 !important;
     box-shadow: none !important;
   }
@@ -88,7 +78,7 @@ export const LoginStyled = styled.div`
     justify-content: center;
     gap: 15px;
     margin: 16px 0;
-    color: #bbb;
+
     font-size: 14px;
     width: 100%;
 

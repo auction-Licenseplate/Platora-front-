@@ -25,7 +25,7 @@ const Login = () => {
         <LoginForm />
         <div className="divider">
           <hr />
-          <span>소셜 로그인</span>
+          <span className="loginform -socialtext">소셜 로그인</span>
           <hr />
         </div>
         <div className="loginForm-socialDiv">
