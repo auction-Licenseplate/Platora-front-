@@ -138,8 +138,8 @@ const SoonProduct = ({ type }: SoonProps) => {
 
       {type && filteredProducts.length > 0 && (
         <>
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev">←</div>
+          <div className="swiper-button-next">→</div>
           <Swiper
             spaceBetween={10}
             slidesPerView={5}
