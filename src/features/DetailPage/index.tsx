@@ -202,8 +202,9 @@ const DetailPage = ({ id }: detailprops) => {
       <div className="detail-wrap">
         <div className="detail-title">{arr[0].carnumber}</div>
         <hr />
+        <br></br>
         <div className="detail-container">
-          <div>
+          <div className="detail-imgcontainer">
             <div>
               <Image
                 src={`http://localhost:5000/uploads//${img}`}
@@ -236,67 +237,97 @@ const DetailPage = ({ id }: detailprops) => {
               />
             </div>
           </div>
-          <div>
-            <div>현재가 : {arr[0].price.toLocaleString()}</div>
-            <div>경매번호 : {arr[0].itemnumber}</div>
-            <div>남은 시간 : {getRemainingTime(arr[0].endtime)}</div>
-            <div>
-              입찰 횟수 : {arr[0].count} :{" "}
-              <span
-                onClick={() => {
-                  setListopen(true);
-                }}
-              >
-                기록 보기
+          <div className="detail-textcontainer">
+            <div className="detail-price">
+              <span>현재가</span>
+              <span className="detail-bigprice">
+                {arr[0].price.toLocaleString()}원
               </span>
             </div>
-            <div
-              onClick={() => {
-                setSelectedUserId(arr[0].userId);
-                setSellerOpen(true);
-              }}
-            >
-              판매자 : {arr[0].name}
-            </div>
-            <hr></hr>
-            <div>입찰 단위 : {arr[0].priceunit}</div>
-            <div>
-              희망 입찰가 :
-              <div>
-                <span
-                  onClick={() => {
-                    priceChange("-");
-                  }}
-                >
-                  -
-                </span>
-                <Input
-                  type="Number"
-                  style={{ width: 100 }}
-                  value={price}
-                  onChange={(e) => {
-                    setPrice(Number(e.target.value));
-                  }}
-                />
-                <span
-                  onClick={() => {
-                    priceChange("+");
-                  }}
-                >
-                  +
+            <div className="detail-minibox">
+              <div className="detail-textdiv">
+                <span className="detail-texttitle">경매번호</span>
+                <span>{arr[0].itemnumber}</span>
+              </div>
+              <div className="detail-textdiv">
+                <span className="detail-texttitle">남은 시간</span>
+                <span className="detail-thicktext">
+                  {getRemainingTime(arr[0].endtime)}
                 </span>
               </div>
-            </div>
-            <div>
-              예상 입찰가 : {(price + price * 0.1).toLocaleString()}
-              <div>
-                (물품 가격: {price.toLocaleString()} + 경매 수수료{" "}
-                {(price * 0.1).toLocaleString()})
+              <div className="detail-textdiv">
+                <span className="detail-texttitle">입찰 횟수</span>
+                <span>
+                  {arr[0].count}18
+                  <span
+                    onClick={() => {
+                      setListopen(true);
+                    }}
+                  >
+                    기록 보기
+                  </span>
+                </span>
               </div>
-            </div>
-            <div>
-              <Button onClick={updatePrice}>입찰하기</Button>
-              <Image onClick={likePost} src={heartimg} alt="" />
+              <div className="detail-textdiv">
+                <span className="detail-texttitle">판매자</span>
+                <span
+                  onClick={() => {
+                    setSelectedUserId(arr[0].userId);
+                    setSellerOpen(true);
+                  }}
+                >
+                  {arr[0].name}
+                </span>
+              </div>
+              <hr></hr>
+              <div className="detail-textdiv">
+                <span className="detail-texttitle">입찰 단위</span>
+                <span>{arr[0].priceunit}</span>
+              </div>
+              <div className="detail-textdiv">
+                <span className="detail-texttitle">희망 입찰가</span>
+                <div>
+                  <span
+                    onClick={() => {
+                      priceChange("-");
+                    }}
+                  >
+                    -
+                  </span>
+
+                  <Input
+                    type="Number"
+                    style={{ width: 100 }}
+                    value={price}
+                    onChange={(e) => {
+                      setPrice(Number(e.target.value));
+                    }}
+                  />
+                  <span
+                    onClick={() => {
+                      priceChange("+");
+                    }}
+                  >
+                    +
+                  </span>
+                </div>
+              </div>
+              <div className="detail-textdiv">
+                <span className="detail-pricespan">
+                  <span className="detail-texttitle">예상 입찰가</span>
+                  <span className="detail-thicktext">
+                    {(price + price * 0.1).toLocaleString()}
+                  </span>
+                  <div>
+                    (물품 가격: {price.toLocaleString()} + 경매 수수료{" "}
+                    {(price * 0.1).toLocaleString()})
+                  </div>
+                </span>
+              </div>
+              <div>
+                <Button onClick={updatePrice}>입찰하기</Button>
+                <Image onClick={likePost} src={heartimg} alt="" />
+              </div>
             </div>
           </div>
 
