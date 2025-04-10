@@ -37,22 +37,25 @@ export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let startTime = 0;
+    let timeout: NodeJS.Timeout | null = null;
 
     const start = () => {
+      startTime = Date.now();
       setLoading(true);
-      // 최소 0.5초 동안 로딩 유지
-      timeout = setTimeout(() => {
-        setLoading(false);
-      }, 500);
     };
 
     const end = () => {
-      // 이미 0.5초 타이머 안 돌았으면 기다렸다가 꺼짐
-      timeout && clearTimeout(timeout);
-      timeout = setTimeout(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = 500 - elapsed;
+
+      if (remaining > 0) {
+        timeout = setTimeout(() => {
+          setLoading(false);
+        }, remaining);
+      } else {
         setLoading(false);
-      }, 500);
+      }
     };
 
     router.events.on("routeChangeStart", start);
@@ -60,12 +63,12 @@ export default function App({ Component, pageProps }: AppProps) {
     router.events.on("routeChangeError", end);
 
     return () => {
-      clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout);
       router.events.off("routeChangeStart", start);
       router.events.off("routeChangeComplete", end);
       router.events.off("routeChangeError", end);
     };
-  }, [router]);
+  }, []);
 
   return (
     <>

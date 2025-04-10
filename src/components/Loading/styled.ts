@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const SpinnerWrapper = styled.div`
   position: fixed;
@@ -6,9 +6,15 @@ export const SpinnerWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0);
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+
+  .carIcon {
+    width: 60px;
+    height: 60px;
+  }
 `;

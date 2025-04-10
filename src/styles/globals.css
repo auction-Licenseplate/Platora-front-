@@ -211,7 +211,8 @@ input::placeholder {
 
 /* 헤더 */
 .main-container,
-.main-wrapfooter {
+.main-wrapfooter,
+.loading {
   background-color: var(--background);
 }
 
