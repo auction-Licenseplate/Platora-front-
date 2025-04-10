@@ -40,8 +40,8 @@ const DetailPage = ({ id }: detailprops) => {
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [userpoint, setUserpoint] = useState(0);
   const [preUser, setPreUser] = useState<any>(null);
-  const [list, setList] = useState<any>("");
-  const [listopen, setListopen] = useState<string>("none");
+  const [list, setList] = useState<any[]>([]);
+  const [listopen, setListopen] = useState<boolean>(false);
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -67,7 +67,7 @@ const DetailPage = ({ id }: detailprops) => {
         console.log(res.data);
         const lastData = {
           lastPrice: res.data.lastBid.bid_price,
-          lastUser: res.data.lastBid.user.id,
+          lastUser: res.data.lastBid.user.id, //이전 결제한 사람의 유저아이디로 바꾸기
         };
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
@@ -100,7 +100,7 @@ const DetailPage = ({ id }: detailprops) => {
         setList(res.data.data);
       });
   }, [id, token, router]);
-
+  useEffect(() => {}, [listopen]);
   useEffect(() => {
     if (arr.length === 0) return;
 
@@ -239,7 +239,7 @@ const DetailPage = ({ id }: detailprops) => {
               입찰 횟수 : {arr[0].count} :{" "}
               <span
                 onClick={() => {
-                  setListopen("block");
+                  setListopen(true);
                 }}
               >
                 기록 보기
@@ -302,11 +302,11 @@ const DetailPage = ({ id }: detailprops) => {
             userId={arr[0].userId}
           />
 
-          {listopen === "block" ? (
-            <ListDetail setListopen={setListopen} list={list} />
-          ) : (
-            <></>
-          )}
+          <ListDetail
+            setListopen={setListopen}
+            list={list}
+            listopen={listopen}
+          />
         </div>
       </div>
     </DetailStyled>
