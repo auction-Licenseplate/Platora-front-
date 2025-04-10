@@ -5,7 +5,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
-import { Button, Input } from "antd";
+import { Button, Input, Modal } from "antd";
 import Cookie from "js-cookie";
 import fullheart from "@/assets/images/fullheart.png";
 import heart from "@/assets/images/heart.png";
@@ -38,6 +38,8 @@ const DetailPage = ({ id }: detailprops) => {
   const [heartimg, setHeartimg] = useState<any>("");
   const [sellerOpen, setSellerOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [userpoint, setUserpoint] = useState(0);
+  const [preUser, setPreUser] = useState<any>(null);
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -61,6 +63,10 @@ const DetailPage = ({ id }: detailprops) => {
           return;
         }
         console.log(res.data);
+        const lastData = {
+          lastPrice: res.data.lastBid.bid_price,
+          lastUser: res.data.lastBid.user.id,
+        };
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
 
@@ -87,6 +93,8 @@ const DetailPage = ({ id }: detailprops) => {
         res.data.isFavorite === true
           ? setHeartimg(fullheart)
           : setHeartimg(heart);
+        setUserpoint(res.data.lastBid.user.point);
+        setPreUser(lastData);
       });
   }, [id, token, router]);
 
@@ -135,11 +143,32 @@ const DetailPage = ({ id }: detailprops) => {
   };
   // 입찰가 갱신 요청
   const updatePrice = () => {
+    if (price <= preUser.lastPrice) {
+      Modal.warning({
+        title: "현재가 보다 낮은 금액으로 입찰 할 수 없습니다.",
+        onOk: () => {},
+      });
+      return;
+    }
+    if (price > userpoint) {
+      Modal.warning({
+        title: "포인트 충전 후 이용해주세요.",
+        onOk: () => {
+          router.push({
+            pathname: "/myPage",
+            query: { menu: "myInfo" },
+          });
+        },
+      });
+      return;
+    }
     axios
       .post("http://localhost:5000/boards/priceupdate", {
         id: arr[0].id,
         userId: arr[0].userId,
         price,
+        prePrice: preUser.lastPrice,
+        preUserId: preUser.lastUser,
       })
       .then((res) => {
         console.log(res.data);
