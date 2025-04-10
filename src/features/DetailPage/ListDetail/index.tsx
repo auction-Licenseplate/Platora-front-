@@ -44,11 +44,7 @@ const ListDetail = ({ list, setListopen, listopen }: listProps) => {
       centered
       width={600}
       destroyOnClose
-      bodyStyle={{
-        maxHeight: "400px", // 내부 최대 높이 제한
-        overflowY: "auto", // 세로 스크롤 적용
-        padding: "1rem",
-      }}
+      className="listdetail-modal"
     >
       <Table dataSource={dataSource} columns={columns} />
     </Modal>
