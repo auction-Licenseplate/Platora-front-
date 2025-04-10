@@ -279,7 +279,7 @@ export const myInfo = (info: string) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (res.data.payPoint.length > 0) {
+    if (res.data.payPoint.length > 0 || res.data.bidsData.length > 0) {
       const payData = res.data.payPoint.map((item: any, index: number) => {
         const isRefund =
           item.refund_amount !== null && item.refund_amount !== undefined;
@@ -319,7 +319,41 @@ export const myInfo = (info: string) => {
         }
       });
 
-      setRefundTableData(payData);
+      const bidData = res.data.bidsData.map((item: any, index: number) => {
+        const date = new Date(item.created_at).toLocaleString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        if (
+          item.refund_bid_price !== null &&
+          item.refund_bid_price !== undefined
+        ) {
+          return {
+            item: "입찰 포인트 환불",
+            state: `+ ${(item.refund_bid_price ?? 0).toLocaleString()} 포인트`,
+            date,
+            key: Date.now() + index,
+          };
+        } else {
+          return {
+            item: "입찰 참여",
+            state: `- ${(item.bid_price ?? 0).toLocaleString()} 포인트`,
+            date,
+            key: Date.now() + index,
+          };
+        }
+      });
+
+      // 최신순으로
+      const mergedData = [...payData, ...bidData].sort(
+        (a, b) => b.rawDate.getTime() - a.rawDate.getTime()
+      );
+
+      setRefundTableData(mergedData);
     }
   };
 

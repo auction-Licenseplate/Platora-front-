@@ -19,7 +19,8 @@
   --swiper-btn: #ffffff;
   --swiper-btn-dis: #828282;
   --btn-color: rgba(255, 255, 255, 0.982);
-  --font-color: white;
+  --btn-hover: #ffffff;
+  --font-color: rgb(0, 0, 0);
   --btn-text-color: black;
 }
 
@@ -40,6 +41,7 @@
   --swiper-btn: #000000;
   --swiper-btn-dis: #b7b7b7;
   --btn-color: rgb(242, 243, 235);
+  --btn-hover: #ffffff;
 }
 
 /* 폰트 */
@@ -89,8 +91,7 @@ Button {
 
 button:hover,
 button:focus {
-  background-color: var(--btn-color) !important;
-  opacity: 0.8;
+  background-color: var(--btn-hover) !important;
   color: var(--font-color) !important;
 }
 
@@ -122,8 +123,8 @@ body {
   -webkit-user-drag: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  /* scrollbar-width: thin; */
-  /* scrollbar-color: black transparent; */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(73, 73, 73) transparent;
 }
 
 body {

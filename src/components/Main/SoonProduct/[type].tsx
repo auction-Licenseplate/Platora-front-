@@ -42,8 +42,8 @@ const SoonProduct = ({ type }: SoonProps) => {
         const formattedData = data
           .filter((item: any) => item.status === "before")
           .map((item: any, index: number) => {
-            const endTimeMs = new Date(item.endTime).getTime();
-            const timeDiff = endTimeMs - now;
+            const startTimeMs = new Date(item.startTime).getTime();
+            const timeDiff = startTimeMs - now;
 
             let timeLeft = "종료됨";
             if (timeDiff > 0) {
@@ -74,7 +74,7 @@ const SoonProduct = ({ type }: SoonProps) => {
               seller: item.userName,
               timeLeft,
               imageUrls,
-              endTimeMs,
+              startTimeMs,
               status: item.status,
             };
           })

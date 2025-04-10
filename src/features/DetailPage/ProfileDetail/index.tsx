@@ -23,6 +23,9 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
       })
       .then((res) => {
         console.log(res.data);
+
+        // 키, 변수명 맞춰서 넣기
+        const posts = {};
         // setApprovedPosts(res.data);
       })
       .catch((err) => console.error("유저 게시글 조회 오류:", err));

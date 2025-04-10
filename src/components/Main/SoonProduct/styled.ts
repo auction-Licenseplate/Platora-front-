@@ -124,25 +124,33 @@ export const SoonProductStyled = styled.div`
   }
 
   .soon-info {
-    padding: 10px;
-    text-align: center;
+    padding: 10px 20px 20px 20px;
+    text-align: start;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 
-    h3 {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .price {
+    .priceFont {
       font-size: 14px;
-      color: #333;
-      margin-bottom: 5px;
+
+      .price {
+        font-size: 20px;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
     }
 
     .time-left {
       font-size: 12px;
       color: #777;
+    }
+
+    .seller {
+      font-size: 12px;
+      color: #777;
+      margin-top: -5px;
     }
   }
 `;
