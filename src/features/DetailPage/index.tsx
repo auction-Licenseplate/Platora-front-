@@ -42,6 +42,7 @@ const DetailPage = ({ id }: detailprops) => {
   const [preUser, setPreUser] = useState<any>(null);
   const [list, setList] = useState<any[]>([]);
   const [listopen, setListopen] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -66,8 +67,8 @@ const DetailPage = ({ id }: detailprops) => {
         }
         console.log(res.data);
         const lastData = {
-          lastPrice: res.data.lastBid.bid_price,
-          lastUser: res.data.lastBid.user.id, //이전 결제한 사람의 유저아이디로 바꾸기
+          lastPrice: res.data.lastBid.bidUser_id,
+          lastUser: res.data.lastBid.bid_price,
         };
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
@@ -75,7 +76,7 @@ const DetailPage = ({ id }: detailprops) => {
         const data = [
           {
             id: raw.au_id,
-            userId: res.data.userId,
+            userId: res.data.data.registerUser_id,
             carnumber: raw.vehicle_plate_num,
             itemnumber: raw.au_auction_num,
             endtime: raw.au_end_time,
@@ -95,9 +96,10 @@ const DetailPage = ({ id }: detailprops) => {
         res.data.isFavorite === true
           ? setHeartimg(fullheart)
           : setHeartimg(heart);
-        setUserpoint(res.data.lastBid.user.point);
+        setUserpoint(res.data.lastBid.currentUserPoint);
         setPreUser(lastData);
         setList(res.data.data);
+        setUserId(res.data.currentUserId);
       });
   }, [id, token, router]);
   useEffect(() => {}, [listopen]);
@@ -146,13 +148,14 @@ const DetailPage = ({ id }: detailprops) => {
   };
   // 입찰가 갱신 요청
   const updatePrice = () => {
-    if (price <= preUser.lastPrice) {
-      Modal.warning({
-        title: "현재가 보다 낮은 금액으로 입찰 할 수 없습니다.",
-        onOk: () => {},
-      });
-      return;
-    }
+    if (userId === arr[0].userId)
+      if (price <= preUser.lastPrice) {
+        Modal.warning({
+          title: "현재가 보다 낮은 금액으로 입찰 할 수 없습니다.",
+          onOk: () => {},
+        });
+        return;
+      }
     if (price > userpoint) {
       Modal.warning({
         title: "포인트 충전 후 이용해주세요.",
