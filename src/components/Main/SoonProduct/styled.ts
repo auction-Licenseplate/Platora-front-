@@ -152,5 +152,16 @@ export const SoonProductStyled = styled.div`
       color: #777;
       margin-top: -5px;
     }
+
+    .badgeTitle {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .badgeIcon {
+        width: 18px;
+        height: 18px;
+      }
+    }
   }
 `;

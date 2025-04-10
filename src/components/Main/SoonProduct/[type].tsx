@@ -107,31 +107,32 @@ const SoonProduct = ({ type }: SoonProps) => {
         <></>
       )}
 
-      <div className="swiper-button-prev">←</div>
-      <div className="swiper-button-next">→</div>
-
       {!type && products.length > 0 ? (
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={5}
-          modules={[Navigation]}
-          navigation={{
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          }}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            600: { slidesPerView: 2 },
-            900: { slidesPerView: 3 },
-            1200: { slidesPerView: 5 },
-          }}
-        >
-          {products.map((product, index) => (
-            <SwiperSlide key={index}>
-              <SoonProductCard id={product.id} product={product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <>
+          <div className="swiper-button-prev">←</div>
+          <div className="swiper-button-next">→</div>
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={5}
+            modules={[Navigation]}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              600: { slidesPerView: 2 },
+              900: { slidesPerView: 3 },
+              1200: { slidesPerView: 5 },
+            }}
+          >
+            {products.map((product, index) => (
+              <SwiperSlide key={index}>
+                <SoonProductCard id={product.id} product={product} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </>
       ) : (
         <></>
       )}

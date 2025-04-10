@@ -47,9 +47,14 @@ const SoonProductCard = ({ product, id }: Props) => {
           router.push(`/detail/${id}`);
         }}
       >
-        <p>
-          <Image src={`/badge/badge${product.gradeName}`}></Image>
+        <p className="badgeTitle">
           {product.title}
+
+          <Image
+            className="badgeIcon"
+            src={`/badge/badgeIcon${product.gradeName}.png`}
+            preview={false}
+          />
         </p>
         <span className="priceFont">
           <span className="price">{product.price.toLocaleString()}</span> 원
