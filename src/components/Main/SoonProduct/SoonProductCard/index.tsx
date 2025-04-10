@@ -47,9 +47,16 @@ const SoonProductCard = ({ product, id }: Props) => {
           router.push(`/detail/${id}`);
         }}
       >
-        <h3>{product.title}</h3>
-        <p className="price">현재가 : {product.price.toLocaleString()} 원</p>
-        <p className="time-left">{product.timeLeft}</p>
+        <p>
+          <Image src={`/badge/badge${product.gradeName}`}></Image>
+          {product.title}
+        </p>
+        <span className="priceFont">
+          <span className="price">{product.price.toLocaleString()}</span> 원
+          (현재가)
+        </span>
+        <p className="time-left">시작까지 {product.timeLeft}</p>
+        <p className="seller"> 판매자 : {product.seller}</p>
       </div>
     </div>
   );
