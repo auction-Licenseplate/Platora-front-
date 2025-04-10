@@ -11,6 +11,7 @@ import fullheart from "@/assets/images/fullheart.png";
 import heart from "@/assets/images/heart.png";
 import Profile from "./ProfileDetail";
 import ListDetail from "./ListDetail";
+import clsx from "clsx";
 interface detailprops {
   id: string | undefined;
 }
@@ -67,16 +68,17 @@ const DetailPage = ({ id }: detailprops) => {
         }
         console.log(res.data);
         const lastData = {
-          lastPrice: res.data.lastBid.bidUser_id,
-          lastUser: res.data.lastBid.bid_price,
+          lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
+          lastUser: res.data.lastBid.bidUser_Id, // 최근 결제 아이디
         };
+
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
 
         const data = [
           {
             id: raw.au_id,
-            userId: res.data.data.registerUser_id,
+            userId: raw.registerUser_id, //등록한 사람의 아이디
             carnumber: raw.vehicle_plate_num,
             itemnumber: raw.au_auction_num,
             endtime: raw.au_end_time,
@@ -99,7 +101,7 @@ const DetailPage = ({ id }: detailprops) => {
         setUserpoint(res.data.lastBid.currentUserPoint);
         setPreUser(lastData);
         setList(res.data.data);
-        setUserId(res.data.currentUserId);
+        setUserId(res.data.currentUserId); // 로그인 한 사람의 유저 아이디
       });
   }, [id, token, router]);
   useEffect(() => {}, [listopen]);
@@ -171,7 +173,7 @@ const DetailPage = ({ id }: detailprops) => {
     axios
       .post("http://localhost:5000/boards/priceupdate", {
         id: arr[0].id,
-        userId: arr[0].userId,
+        userId: userId,
         price,
         prePrice: preUser.lastPrice,
         preUserId: preUser.lastUser,
@@ -196,11 +198,11 @@ const DetailPage = ({ id }: detailprops) => {
   return arr.length === 0 ? (
     <div>로딩 중...</div>
   ) : (
-    <DetailStyled>
-      <div>
-        <div>{arr[0].carnumber}</div>
+    <DetailStyled className={clsx("detailstyled")}>
+      <div className="detail-wrap">
+        <div className="detail-title">{arr[0].carnumber}</div>
         <hr />
-        <div>
+        <div className="detail-container">
           <div>
             <div>
               <Image

@@ -95,7 +95,7 @@ button:focus {
   background-color: var(--btn-hover) !important;
   color: var(--btn-text-color) !important;
 }
-
+/* 로그인 폼  */
 .loginForm-container {
   background-color: var(--background);
 }
@@ -121,7 +121,10 @@ button:focus {
   background-color: var(--input-bg);
   color: var(--title-color);
 }
-
+/* 상세 페이지 */
+.detail-title {
+  color: var(--font-color);
+}
 html,
 body {
   max-width: 100vw;
