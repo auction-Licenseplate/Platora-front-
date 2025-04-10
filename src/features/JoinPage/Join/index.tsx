@@ -19,11 +19,15 @@ const Join = () => {
   return (
     <JoinStyled>
       <div className="join-text">회원가입</div>
+      <br></br>
       {agree === false ? (
         <JoinAgree agree={agree} setAgree={setAgree} />
       ) : (
         <JoinForm />
       )}
+      <br></br>
+      <br></br>
+      <br></br>
     </JoinStyled>
   );
 };
