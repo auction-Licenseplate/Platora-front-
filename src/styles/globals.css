@@ -282,12 +282,12 @@ input::placeholder {
 }
 
 /* 관심 상품 */
-
 .product-info {
   background-color: white;
   color: black;
 }
 
+/* 전체 */
 * {
   box-sizing: border-box;
   padding: 0;
