@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image } from "antd";
+import { Image, Tooltip } from "antd";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -14,6 +14,7 @@ interface Product {
   seller: string;
   timeLeft?: string;
   imageUrls: string[];
+  minPrice?: number;
 }
 
 interface Props {
@@ -24,6 +25,8 @@ interface Props {
 const SoonProductCard = ({ product, id }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
+
+  const price = <span></span>;
 
   return (
     <div className="soon-card">
@@ -47,15 +50,25 @@ const SoonProductCard = ({ product, id }: Props) => {
           router.push(`/detail/${id}`);
         }}
       >
-        <p className="badgeTitle">
-          {product.title}
+        <div className="badgeTitle">
+          <span>{product.title}</span>
 
-          <Image
-            className="badgeIcon"
-            src={`/badge/badgeIcon${product.gradeName}.png`}
-            preview={false}
-          />
-        </p>
+          <Tooltip
+            title={
+              <div style={{ whiteSpace: "pre-line", textAlign: "center" }}>
+                {`${
+                  product.gradeName
+                }등급\n최저가 ${product.minPrice?.toLocaleString()}원`}
+              </div>
+            }
+          >
+            <Image
+              className="badgeIcon"
+              src={`/badge/badgeIcon${product.gradeName}.png`}
+              preview={false}
+            />
+          </Tooltip>
+        </div>
         <span className="priceFont">
           <span className="price">{product.price.toLocaleString()}</span> 원
           (현재가)

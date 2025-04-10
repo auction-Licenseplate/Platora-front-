@@ -156,7 +156,7 @@ export const SoonProductStyled = styled.div`
     .badgeTitle {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
 
       .badgeIcon {
         width: 18px;

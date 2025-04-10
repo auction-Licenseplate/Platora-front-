@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
+import { Tooltip } from "antd";
 
 interface postType {
   type: string;
   pendingPosts?: any[];
   goingPosts?: any[];
   favoritePosts?: any[];
+  isWide?: boolean;
 }
 
 const MyPost = ({
@@ -19,6 +21,7 @@ const MyPost = ({
   pendingPosts = [],
   goingPosts = [],
   favoritePosts = [],
+  isWide = false,
 }: postType) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
@@ -30,6 +33,23 @@ const MyPost = ({
   ) => {
     const carImages = post.carImage?.split(",") || [];
     const firstImage = carImages[0]?.trim();
+
+    let timeLeft = "종료됨";
+    if (post.endTime) {
+      const now = new Date().getTime();
+      const endTimeMs = new Date(post.endTime).getTime();
+      const timeDiff = endTimeMs - now;
+
+      if (timeDiff > 0) {
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+        timeLeft = `${days > 0 ? `${days}일 ` : ""}${hours}시간 ${minutes}분`;
+      }
+    }
 
     return (
       <div key={key} className="postsInfo">
@@ -53,8 +73,26 @@ const MyPost = ({
             router.push(`/detail/${post.auctionId || post.auctionID}`);
           }}
         >
-          <div className="postTitle">
-            {post.vehicleTitle} : {post.gradeName}
+          <div className="badgeTitle">
+            <span>{post.vehicleTitle}</span>
+
+            <Tooltip
+              title={
+                <div style={{ whiteSpace: "pre-line", textAlign: "center" }}>
+                  {`${
+                    post.gradeName
+                  }등급\n최저가 ${post.minPrice?.toLocaleString()}원`}
+                </div>
+              }
+            >
+              <Image
+                className="badgeIcon"
+                src={`/badge/badgeIcon${post.gradeName}.png`}
+                alt={post.gradeName}
+                width={17}
+                height={17}
+              />
+            </Tooltip>
           </div>
           <div className="postContents">
             <div className="postText">
@@ -64,9 +102,7 @@ const MyPost = ({
             </div>
 
             <div className="postText">
-              {post.endTime
-                ? `남은 시간: ${new Date(post.endTime).toLocaleString()}`
-                : "입찰 대기 중"}
+              {post.endTime ? `남은 시간: ${timeLeft}` : "입찰 대기 중"}
             </div>
             <div className="postText">판매자: {post.userName}</div>
           </div>
@@ -78,7 +114,7 @@ const MyPost = ({
   };
 
   return (
-    <MyPostStyled className={clsx("main-wrap-myPost")}>
+    <MyPostStyled className={clsx("main-wrap-myPost")} isWide={isWide}>
       {/* 승인 전 */}
       {type === "posts" &&
         pendingPosts.map((post, idx) =>

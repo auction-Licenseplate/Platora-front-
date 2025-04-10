@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const MyPostStyled = styled.div`
+export const MyPostStyled = styled.div<{ isWide?: boolean }>`
   &.main-wrap-myPost {
     width: 100%;
 
@@ -90,40 +90,95 @@ export const MyPostStyled = styled.div`
       word-break: break-word;
     }
 
-    @media (max-width: 1200px) {
-      .postsInfo {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 30px;
-      }
+    .badgeTitle {
+      display: flex;
+      align-items: center;
+      gap: 7px;
 
-      .postImg {
-        width: 100%;
-        margin: 0 auto;
-      }
-
-      .postLine {
-        width: 80%;
-        height: 1px;
-        border-left: none;
-        border-top: 1px dashed #999;
-        margin: 10px 0;
-      }
-
-      .postTexts {
-        width: 100%;
-        align-items: center;
-        text-align: center;
-      }
-
-      .postTitle {
-        font-size: 15px;
-      }
-
-      .postContents {
-        font-size: 13px;
-        align-items: center;
+      .badgeIcon {
+        width: 18px;
+        height: 18px;
       }
     }
+
+    /* isWide가 true일 때(모달 안일 때) */
+    ${({ isWide }) =>
+      isWide &&
+      css`
+        .postsInfo {
+          flex-direction: column;
+          align-items: center;
+          padding: 10px 30px;
+        }
+
+        .postImg {
+          width: 100%;
+          margin: 0 auto;
+        }
+
+        .postLine {
+          width: 80%;
+          height: 1px;
+          border-left: none;
+          border-top: 1px dashed #999;
+          margin: 10px 0;
+        }
+
+        .postTexts {
+          width: 100%;
+          align-items: center;
+          text-align: center;
+        }
+
+        .postTitle {
+          font-size: 15px;
+        }
+
+        .postContents {
+          font-size: 13px;
+          align-items: center;
+        }
+      `}
+
+    /* 원래의 반응형 (isWide가 false일 때만 작동) */
+    ${({ isWide }) =>
+      !isWide &&
+      css`
+        @media (max-width: 1200px) {
+          .postsInfo {
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 30px;
+          }
+
+          .postImg {
+            width: 100%;
+            margin: 0 auto;
+          }
+
+          .postLine {
+            width: 80%;
+            height: 1px;
+            border-left: none;
+            border-top: 1px dashed #999;
+            margin: 10px 0;
+          }
+
+          .postTexts {
+            width: 100%;
+            align-items: center;
+            text-align: center;
+          }
+
+          .postTitle {
+            font-size: 15px;
+          }
+
+          .postContents {
+            font-size: 13px;
+            align-items: center;
+          }
+        }
+      `}
   }
 `;

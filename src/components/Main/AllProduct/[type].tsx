@@ -45,6 +45,7 @@ const AllProduct = ({ type }: TeirProps) => {
         const response = await axios.post(
           "http://localhost:5000/boards/getAllProduct"
         );
+
         const data = response.data;
 
         const now = new Date().getTime();

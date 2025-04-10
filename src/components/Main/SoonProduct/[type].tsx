@@ -18,6 +18,7 @@ interface Product {
   timeLeft?: string;
   imageUrls: string[];
   status: string;
+  minPrice?: number;
 }
 
 interface SoonProps {
@@ -76,6 +77,7 @@ const SoonProduct = ({ type }: SoonProps) => {
               imageUrls,
               startTimeMs,
               status: item.status,
+              minPrice: item.minPrice,
             };
           })
           .filter((item: any) => item.timeLeft !== "종료됨")

@@ -24,9 +24,20 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
       .then((res) => {
         console.log(res.data);
 
-        // 키, 변수명 맞춰서 넣기
-        const posts = {};
-        // setApprovedPosts(res.data);
+        const posts = res.data.map((item: any) => {
+          return {
+            auctionID: item.au_id,
+            vehicleTitle: item.vehicle_plate_num,
+            finalPrice: item.au_final_price,
+            endTime: item.au_end_time,
+            userName: name,
+            carImage: item.vehicle_car_img,
+            gradeName: item.grade_grade_name,
+            minPrice: item.grade_min_price,
+          };
+        });
+
+        setApprovedPosts(posts);
       })
       .catch((err) => console.error("유저 게시글 조회 오류:", err));
   }, [open, userId]);
@@ -36,7 +47,8 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
       <p>
         <strong> 판매자 이름:</strong> {name}
       </p>
-      <MyPost type="posts" goingPosts={approvedPosts} />
+      <br />
+      <MyPost type="posts" goingPosts={approvedPosts} isWide={true} />
     </Modal>
   );
 };
