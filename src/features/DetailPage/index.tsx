@@ -10,7 +10,7 @@ import Cookie from "js-cookie";
 import fullheart from "@/assets/images/fullheart.png";
 import heart from "@/assets/images/heart.png";
 import Profile from "./ProfileDetail";
-
+import ListDetail from "./ListDetail";
 interface detailprops {
   id: string | undefined;
 }
@@ -40,6 +40,8 @@ const DetailPage = ({ id }: detailprops) => {
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [userpoint, setUserpoint] = useState(0);
   const [preUser, setPreUser] = useState<any>(null);
+  const [list, setList] = useState<any>("");
+  const [listopen, setListopen] = useState<string>("none");
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -95,6 +97,7 @@ const DetailPage = ({ id }: detailprops) => {
           : setHeartimg(heart);
         setUserpoint(res.data.lastBid.user.point);
         setPreUser(lastData);
+        setList(res.data.data);
       });
   }, [id, token, router]);
 
@@ -232,7 +235,16 @@ const DetailPage = ({ id }: detailprops) => {
             <div>현재가 : {arr[0].price.toLocaleString()}</div>
             <div>경매번호 : {arr[0].itemnumber}</div>
             <div>남은 시간 : {getRemainingTime(arr[0].endtime)}</div>
-            <div>입찰 횟수 : {arr[0].count}</div>
+            <div>
+              입찰 횟수 : {arr[0].count} :{" "}
+              <span
+                onClick={() => {
+                  setListopen("block");
+                }}
+              >
+                기록 보기
+              </span>
+            </div>
             <div
               onClick={() => {
                 setSelectedUserId(arr[0].userId);
@@ -289,6 +301,12 @@ const DetailPage = ({ id }: detailprops) => {
             name={arr[0].name}
             userId={arr[0].userId}
           />
+
+          {listopen === "block" ? (
+            <ListDetail setListopen={setListopen} list={list} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </DetailStyled>
