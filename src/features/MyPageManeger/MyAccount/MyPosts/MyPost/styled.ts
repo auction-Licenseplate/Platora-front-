@@ -138,6 +138,10 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           font-size: 13px;
           align-items: center;
         }
+
+        .circle {
+          background-color: #ffffff;
+        }
       `}
 
     /* 원래의 반응형 (isWide가 false일 때만 작동) */

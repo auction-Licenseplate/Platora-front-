@@ -86,7 +86,11 @@ const AllProduct = ({ type }: TeirProps) => {
           };
         });
 
-        setProducts(formattedData);
+        const sortedData = formattedData.sort(
+          (a: Product, b: Product) => b.id - a.id
+        );
+
+        setProducts(sortedData);
       } catch (error) {
         console.error("경매 데이터를 불러오는 중 오류 발생", error);
       }

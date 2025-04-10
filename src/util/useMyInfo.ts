@@ -279,6 +279,8 @@ export const myInfo = (info: string) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    console.log(res.data);
+
     if (res.data.payPoint.length > 0 || res.data.bidsData.length > 0) {
       const payData = res.data.payPoint.map((item: any, index: number) => {
         const isRefund =
@@ -319,7 +321,7 @@ export const myInfo = (info: string) => {
         }
       });
 
-      const bidData = res.data.bidsData.map((item: any, index: number) => {
+      const bidData = res.data.refundPoint.map((item: any, index: number) => {
         const date = new Date(item.created_at).toLocaleString("ko-KR", {
           year: "numeric",
           month: "2-digit",

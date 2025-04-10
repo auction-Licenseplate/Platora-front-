@@ -31,6 +31,12 @@ export const MainStyled = styled.div`
       .mainFont {
         font-size: 17px;
       }
+
+      @media (max-width: 520px) {
+        & {
+          margin: 0 auto;
+        }
+      }
     }
   }
 `;

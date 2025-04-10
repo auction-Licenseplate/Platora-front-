@@ -19,6 +19,7 @@ interface Product {
   imageUrls: string[];
   status: string;
   minPrice?: number;
+  startTime?: string;
 }
 
 interface SoonProps {
@@ -81,8 +82,8 @@ const SoonProduct = ({ type }: SoonProps) => {
             };
           })
           .filter((item: any) => item.timeLeft !== "종료됨")
-          .sort((a: any, b: any) => a.endTimeMs - b.endTimeMs)
-          .slice(0, 10); // 가장 가까운 10개만 가져오기
+          .sort((a: any, b: any) => a.startTimeMs - b.startTimeMs)
+          .slice(0, 10);
 
         setProducts(formattedData);
       } catch (error) {

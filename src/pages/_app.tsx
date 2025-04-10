@@ -10,6 +10,9 @@ import { setUserToken } from "@/store/userSlice";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
 
+import LoadingSpinner from "@/components/Loading";
+import { useRouter } from "next/router";
+
 // 토큰을 가져오는 컴포넌트
 const TokenLoader = () => {
   const dispatch = useDispatch();
@@ -30,7 +33,40 @@ const TokenLoader = () => {
 
 // 최상위 App 컴포넌트
 export default function App({ Component, pageProps }: AppProps) {
-  // 타입 별 메인 컴포넌트 변경
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    const start = () => {
+      setLoading(true);
+      // 최소 0.5초 동안 로딩 유지
+      timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    };
+
+    const end = () => {
+      // 이미 0.5초 타이머 안 돌았으면 기다렸다가 꺼짐
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    };
+
+    router.events.on("routeChangeStart", start);
+    router.events.on("routeChangeComplete", end);
+    router.events.on("routeChangeError", end);
+
+    return () => {
+      clearTimeout(timeout);
+      router.events.off("routeChangeStart", start);
+      router.events.off("routeChangeComplete", end);
+      router.events.off("routeChangeError", end);
+    };
+  }, [router]);
+
   return (
     <>
       <Head>
@@ -39,7 +75,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <TokenLoader />
         <Header />
-        <Component {...pageProps} />
+        {loading ? <LoadingSpinner /> : <Component {...pageProps} />}
         <Footer />
       </Provider>
     </>

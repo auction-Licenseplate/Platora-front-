@@ -201,6 +201,7 @@ export const HeaderStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      /* margin: 0 auto; */
       width: 250px;
       height: 50px;
       cursor: pointer;
@@ -212,7 +213,7 @@ export const HeaderStyled = styled.div`
       justify-content: center;
       width: 250px;
       height: 50px;
-      margin-left: 30px;
+      margin-left: 50px;
       cursor: pointer;
     }
 

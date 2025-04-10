@@ -132,8 +132,6 @@ body {
   -webkit-user-drag: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  scrollbar-width: thin;
-  scrollbar-color: rgb(73, 73, 73) transparent;
 }
 
 body {
