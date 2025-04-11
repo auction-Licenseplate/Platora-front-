@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const AipointStyled = styled.div`
-  &.main-wrap-ai {
+  .inputTexts {
+    margin-top: 10px;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px;
   }
 `;

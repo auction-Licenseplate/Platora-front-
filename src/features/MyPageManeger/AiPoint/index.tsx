@@ -1,5 +1,5 @@
 import { AipointStyled } from "./styled";
-import { Input, Button } from "antd";
+import { Input, Button, Modal } from "antd";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { myInfo } from "@/util/useMyInfo";
@@ -24,6 +24,7 @@ const AiPoint = ({
   setPayTableData,
 }: ScoreType) => {
   const [userPoint, setUsetPoint] = useState(0);
+  const [isScoreReady, setIsScoreReady] = useState(false); // ✅ 상태 추가
 
   const token = useSelector((state: RootState) => state.user.userToken);
 
@@ -99,6 +100,7 @@ const AiPoint = ({
     if (userPoint < 100) {
       return alert("포인트 100P가 필요한 서비스입니다.충전 후 이용해주세요");
     } else {
+      setIsScoreReady(false); // 실행 전에 비활성화
       axios
         .post("http://localhost:5000/openai/aichat", { message: prompt }) // 객체로 전송
         .then((res) => {
@@ -123,6 +125,7 @@ const AiPoint = ({
             )
             .then((res) => {
               setUsetPoint(userPoint - 100);
+              setIsScoreReady(true);
             }); // 포인트 차감 요청
         })
         .catch((err) => {
@@ -130,26 +133,38 @@ const AiPoint = ({
         });
     }
   };
+  const handleShowScore = () => {
+    Modal.info({
+      title: "번호판 등급 확인 결과",
+      content: (
+        <div>
+          <p>번호판: {point}</p>
+          <p>등급: {score?.grade ?? "없음"}</p>
+          <p>점수: {score?.score ?? "없음"}</p>
+          <p>시작 가격: {score?.price?.toLocaleString() ?? "없음"}</p>
+        </div>
+      ),
+      okText: "확인",
+    });
+  };
 
   return (
     <AipointStyled className={clsx("main-wrap-ai")}>
-      <Input
-        value={point}
-        onChange={handleChange}
-        type="text"
-        className="plateInput"
-        placeholder="등록 시 해당 번호판으로 등록됩니다."
-        disabled
-      />
       <div className="inputTexts">
         <button onClick={scoreCheck} className="passBtn">
-          점수 확인
+          등급 측정하기
         </button>
-        <div style={{ color: "white" }}>등급: {score?.grade ?? "없음"}</div>
-        <div style={{ color: "white" }}>점수: {score?.score ?? "없음"}</div>
-        <div style={{ color: "white" }}>
-          시작 가격: {score?.price ? score.price.toLocaleString() : "없음"}
-        </div>
+        <button
+          onClick={handleShowScore}
+          className="passBtn"
+          disabled={!isScoreReady}
+          style={{
+            opacity: isScoreReady ? 1 : 0.5, // ✅ 투명도 조절
+            cursor: isScoreReady ? "pointer" : "not-allowed", // 비활성화 느낌 강조
+          }}
+        >
+          등급 확인
+        </button>
       </div>
     </AipointStyled>
   );
