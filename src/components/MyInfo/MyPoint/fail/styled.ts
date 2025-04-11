@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const PaymentFailStyled = styled.div`
-  &.main-wrap {
+  &.main-wrap-error {
     margin-top: 100px;
     display: flex;
     flex-direction: column;

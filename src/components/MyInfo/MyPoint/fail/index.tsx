@@ -1,29 +1,30 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { PaymentFailStyled } from "./styled";
-import clsx from "clsx";
+import { Button, Result } from "antd";
 
 const PaymentFail = () => {
   const router = useRouter();
 
   return (
-    <PaymentFailStyled className={clsx("main-wrap")}>
-      <h1>결제 실패</h1>
-      <p>결제가 실패했습니다. 다시 시도해주세요.</p>
-      <button
-        onClick={() => {
-          router.push("/myPage?menu=myInfo");
-        }}
-      >
-        내 계정으로 이동
-      </button>
-      <button
-        onClick={() => {
-          router.push("/");
-        }}
-      >
-        메인으로 이동
-      </button>
+    <PaymentFailStyled className="main-wrap-errer">
+      <Result
+        status="error"
+        title="결제에 실패했습니다"
+        subTitle="문제가 발생했어요. 다시 시도해 주세요."
+        extra={[
+          <Button
+            type="primary"
+            key="myPage"
+            onClick={() => router.push("/myPage?menu=myInfo")}
+          >
+            내 계정으로 이동
+          </Button>,
+          <Button key="home" onClick={() => router.push("/")}>
+            메인으로 이동
+          </Button>,
+        ]}
+      />
     </PaymentFailStyled>
   );
 };

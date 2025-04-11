@@ -296,6 +296,11 @@ input::placeholder {
   color: black;
 }
 
+/* 결제 성공 */
+.payment-title {
+  color: var(--foreground);
+}
+
 /* 전체 */
 * {
   box-sizing: border-box;
