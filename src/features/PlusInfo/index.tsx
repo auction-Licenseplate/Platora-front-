@@ -64,17 +64,20 @@ const PlusInfo = ({ userid }: userData) => {
       if (response.data.exists) {
         setIsPhoneDuplicate(true);
         Modal.error({
+          centered: true,
           content: "이미 사용 중인 전화번호입니다.",
         });
       } else {
         setIsPhoneDuplicate(false);
         Modal.success({
+          centered: true,
           content: "사용 가능한 전화번호입니다.",
         });
       }
     } catch (error) {
       console.error("전화번호 중복 검사 실패:", error);
       Modal.error({
+        centered: true,
         content: "전화번호 중복 검사 실패. 다시 시도해주세요.",
       });
     }

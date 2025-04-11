@@ -153,13 +153,14 @@ const DetailPage = ({ id }: detailprops) => {
     if (userId === arr[0].userId)
       if (price <= preUser.lastPrice) {
         Modal.warning({
+          centered: true,
           title: "현재가 보다 낮은 금액으로 입찰 할 수 없습니다.",
-          onOk: () => {},
         });
         return;
       }
     if (price > userpoint) {
       Modal.warning({
+        centered: true,
         title: "포인트 충전 후 이용해주세요.",
         onOk: () => {
           router.push({

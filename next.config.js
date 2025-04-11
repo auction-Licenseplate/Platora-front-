@@ -3,6 +3,7 @@
 module.exports = {
   reactStrictMode: true,
   transpilePackages: [
+    "antd",
     "@ant-design",
     "@rc-component",
     "antd",

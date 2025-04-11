@@ -135,6 +135,7 @@ const AiPoint = ({
   };
   const handleShowScore = () => {
     Modal.info({
+      centered: true,
       title: "번호판 등급 확인 결과",
       content: (
         <div>

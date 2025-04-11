@@ -38,6 +38,7 @@ const Main = () => {
 
       if (ownershipStatus === "pending" || ownershipStatus === "waiting") {
         Modal.warning({
+          centered: true,
           title: "공인 인증서 필요",
           content: "마이페이지에서 공인 인증서를 등록해주세요.",
           onOk: () =>

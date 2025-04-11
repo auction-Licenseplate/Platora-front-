@@ -43,7 +43,13 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
   }, [open, userId]);
 
   return (
-    <Modal title="판매자 정보" open={open} onCancel={onClose} footer={null}>
+    <Modal
+      centered
+      title="판매자 정보"
+      open={open}
+      onCancel={onClose}
+      footer={null}
+    >
       <p>
         <strong> 판매자 이름:</strong> {name}
       </p>

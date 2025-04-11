@@ -121,7 +121,10 @@ export const myInfo = (info: string) => {
   // - 환불할 포인트 요청 ( 요청 후 reload )
   const handleRefundModalOk = () => {
     if (refundDetails.refundPoint <= 0) {
-      Modal.error({ content: "반환할 포인트는 0보다 큰 값이어야 합니다." });
+      Modal.error({
+        centered: true,
+        content: "반환할 포인트는 0보다 큰 값이어야 합니다.",
+      });
       return;
     }
     axios
@@ -136,12 +139,14 @@ export const myInfo = (info: string) => {
         }));
         setRefundModalOpen(false);
         modal.success({
+          centered: true,
           title: "포인트 반환이 완료되었습니다.",
           onOk: () => window.location.reload(),
         });
       })
       .catch(() => {
         modal.error({
+          centered: true,
           title: "포인트 반환에 실패했습니다.",
           content: "문제가 발생했습니다. 다시 시도해주세요.",
         });
@@ -257,12 +262,14 @@ export const myInfo = (info: string) => {
       )
       .then(() => {
         Modal.success({
+          centered: true,
           content: "비밀번호 변경이 성공하였습니다!",
           onOk: () => window.location.reload(),
         });
       })
       .catch(() => {
         Modal.error({
+          centered: true,
           content: "비밀번호 변경에 실패하였습니다. 다시 시도해주세요.",
         });
       });
@@ -283,12 +290,8 @@ export const myInfo = (info: string) => {
 
     if (res.data.payPoint.length > 0 || res.data.bidsData.length > 0) {
       const payData = res.data.payPoint.map((item: any, index: number) => {
-        const isRefund =
-          item.refund_amount !== null && item.refund_amount !== undefined;
-        const isPointMinus =
-          item.point_minus !== null && item.point_minus !== undefined;
-
-        const date = new Date(item.create_at).toLocaleString("ko-KR", {
+        const rawDate = new Date(item.create_at);
+        const date = rawDate.toLocaleString("ko-KR", {
           year: "numeric",
           month: "2-digit",
           day: "2-digit",
@@ -296,19 +299,23 @@ export const myInfo = (info: string) => {
           minute: "2-digit",
         });
 
-        // 각 항목 구분
-        if (isRefund) {
+        if (item.refund_amount !== null && item.refund_amount !== undefined) {
           return {
             item: "포인트 환불",
             state: `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`,
             date,
+            rawDate,
             key: Date.now() + index,
           };
-        } else if (isPointMinus) {
+        } else if (
+          item.point_minus !== null &&
+          item.point_minus !== undefined
+        ) {
           return {
             item: "차량 점수 확인",
             state: `- ${(item.point_minus ?? 0).toLocaleString()} 포인트`,
             date,
+            rawDate,
             key: Date.now() + index,
           };
         } else {
@@ -316,13 +323,15 @@ export const myInfo = (info: string) => {
             item: "포인트 충전",
             state: `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
             date,
+            rawDate,
             key: Date.now() + index,
           };
         }
       });
 
       const bidData = res.data.refundPoint.map((item: any, index: number) => {
-        const date = new Date(item.created_at).toLocaleString("ko-KR", {
+        const rawDate = new Date(item.create_at);
+        const date = rawDate.toLocaleString("ko-KR", {
           year: "numeric",
           month: "2-digit",
           day: "2-digit",
@@ -338,6 +347,7 @@ export const myInfo = (info: string) => {
             item: "입찰 포인트 환불",
             state: `+ ${(item.refund_bid_price ?? 0).toLocaleString()} 포인트`,
             date,
+            rawDate,
             key: Date.now() + index,
           };
         } else {
@@ -345,12 +355,12 @@ export const myInfo = (info: string) => {
             item: "입찰 참여",
             state: `- ${(item.bid_price ?? 0).toLocaleString()} 포인트`,
             date,
+            rawDate,
             key: Date.now() + index,
           };
         }
       });
 
-      // 최신순으로
       const mergedData = [...payData, ...bidData].sort(
         (a, b) => b.rawDate.getTime() - a.rawDate.getTime()
       );
@@ -439,16 +449,19 @@ export const myInfo = (info: string) => {
 
       if (message === "이미 등록된 차량입니다.") {
         Modal.warning({
+          centered: true,
           title: "⚠️ 중복된 차량",
           content: "이미 등록된 차량 번호입니다. 다시 확인해주세요.",
         });
       } else if (message === "승인 대기 중인 차량입니다.") {
         Modal.warning({
+          centered: true,
           title: "⚠️ 승인 대기 중인 차량",
           content: "승인 대기 중인 차량 번호입니다. 내역을 확인해주세요.",
         });
       } else {
         Modal.success({
+          centered: true,
           title: "🚗 차량 등록 완료",
           content: "차량 정보가 성공적으로 등록되었습니다!",
           onOk: () => window.location.reload(),

@@ -165,6 +165,7 @@ const MyInfo = ({ info }: Props) => {
 
       {/* 포인트 모달 */}
       <Modal
+        className="Modal"
         title="포인트 반환"
         open={refundModalOpen}
         onOk={handleRefundModalOk}
@@ -176,6 +177,7 @@ const MyInfo = ({ info }: Props) => {
             refundDetails.refundPoint
           ),
         }}
+        centered
       >
         <div className="refund-form">
           <div className="input-group">
@@ -224,10 +226,12 @@ const MyInfo = ({ info }: Props) => {
 
       {/* table 모달창 */}
       <Modal
+        className="Modal"
         title={modalType === "refund" ? "결제 내역 보기" : "차량 내역 보기"}
         open={tableModalOpen}
         onCancel={() => setTableModalOpen(false)}
         footer={null}
+        centered
       >
         <Table
           dataSource={
@@ -241,6 +245,7 @@ const MyInfo = ({ info }: Props) => {
       {/* 포인트 충전 모달 */}
 
       <Modal
+        className="Modal"
         title="포인트 충전"
         open={pointModalOpen}
         onCancel={() => setPointModalOpen(false)}
@@ -248,6 +253,7 @@ const MyInfo = ({ info }: Props) => {
           disabled: !pointDetails.point,
         }}
         onOk={() => handleTossPayment()}
+        centered
       >
         <div className="input-group">
           <label>충전할 포인트</label>

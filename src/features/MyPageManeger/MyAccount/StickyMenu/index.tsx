@@ -25,6 +25,7 @@ const StickyMenu = ({ menu }: MenuProps) => {
   // 회원 탈퇴 요청 -> 쿠키도 삭제
   const handleWithdraw = () => {
     Modal.confirm({
+      centered: true,
       title: "탈퇴하시겠습니까?",
       content: "탈퇴하시면 모든 게시글, 포인트 및 회원 정보가 삭제됩니다.",
       okText: "확인",
@@ -42,6 +43,7 @@ const StickyMenu = ({ menu }: MenuProps) => {
         } catch (error) {
           console.error("회원 탈퇴 실패:", error);
           Modal.error({
+            centered: true,
             title: "오류 발생",
             content: "회원 탈퇴 중 문제가 발생했습니다. 다시 시도해 주세요.",
           });

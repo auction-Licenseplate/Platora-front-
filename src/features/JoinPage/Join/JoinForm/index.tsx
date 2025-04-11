@@ -116,12 +116,14 @@ const JoinForm = () => {
           setIsPhoneDuplicate(false);
         }
         Modal.success({
+          centered: true,
           content: `사용 가능한 ${type}입니다.`,
         });
       }
     } catch (error) {
       console.error(`${type} 중복 검사 실패:`, error);
       Modal.error({
+        centered: true,
         content: `${type} 중복 검사 실패. 다시 시도해주세요.`,
       });
     }

@@ -94,7 +94,7 @@ export const SoonProductStyled = styled.div`
     flex-direction: column;
     gap: 10px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s ease;

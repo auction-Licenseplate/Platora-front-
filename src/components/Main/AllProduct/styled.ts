@@ -18,7 +18,7 @@ export const AllProductStyled = styled.div`
     .product-container {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(4, 250px);
+      grid-template-columns: repeat(4, 277px);
       justify-content: center;
       gap: 20px;
       padding: 20px;
@@ -26,21 +26,21 @@ export const AllProductStyled = styled.div`
 
     .product-card {
       position: relative;
-      border-radius: 12px;
+      border-radius: 5px;
       overflow: hidden;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 10px;
+      padding: 5px;
       cursor: pointer;
+      background-color: #ffffff;
     }
 
     .product-image {
       position: relative;
       width: 100%;
       height: 150px;
-      border-radius: 10px;
+      border-radius: 5px 5px 0 0;
       overflow: hidden;
       background-color: transparent;
 
@@ -48,7 +48,7 @@ export const AllProductStyled = styled.div`
         width: 100%;
         height: 150px;
         object-fit: cover;
-        border-radius: 10px;
+        border-radius: 5px 5px 0 0;
         transition: transform 0.3s ease-in-out;
         filter: blur(5px);
       }
@@ -64,8 +64,8 @@ export const AllProductStyled = styled.div`
 
     .product-info {
       width: 100%;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 10px 0;
+      border-radius: 0 0 5px 5px;
       text-align: center;
 
       hr {

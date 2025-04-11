@@ -103,6 +103,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         ) {
           modalShown.current = true; // 모달 표시했음을 기록
           Modal.warning({
+            centered: true,
             title: "공인 인증서 승인 요청",
             content: (
               <>
@@ -195,6 +196,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
 
       if (response.data.message === "작성글 저장완료") {
         Modal.success({
+          centered: true,
           title: "저장 완료하였습니다!",
           content: (
             <p>
@@ -208,6 +210,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         });
       } else if (response.data.message === "만족하는 차량 없음") {
         Modal.error({
+          centered: true,
           title: "차량 없음",
           content: "입력하신 번호판의 차량이 존재하지 않습니다.",
         });
@@ -256,6 +259,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
               // 다른 유저 번호판일 경우 true
               if (existing.data.exists.anotherUser) {
                 Modal.error({
+                  centered: true,
                   title: "경매 등록 불가",
                   content: (
                     <>
@@ -270,6 +274,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
               // 등록 안된 경우 false
               if (!existing.data.exists.isApproved) {
                 Modal.error({
+                  centered: true,
                   title: "등록 불가",
                   content: (
                     <>
@@ -310,6 +315,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
               // 등록된 번호판일 경우 true
               if (existing.data.exists.alreadyWritten) {
                 Modal.confirm({
+                  centered: true,
                   title: "이미 등록된 번호판입니다",
                   content: (
                     <>

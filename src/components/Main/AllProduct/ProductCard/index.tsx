@@ -52,6 +52,7 @@ const ProductCard = ({ product, id }: Props) => {
           alt={product.title}
           preview={token ? true : false}
           className={`productImg ${token ? "clear" : ""}`}
+          style={{ width: "100%", height: "auto", objectFit: "cover" }}
         />
 
         {token ? (
