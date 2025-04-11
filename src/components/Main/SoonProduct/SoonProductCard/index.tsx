@@ -35,13 +35,7 @@ const SoonProductCard = ({ product, id }: Props) => {
           src={`http://localhost:5000/uploads/${product.imageUrls[0]}`}
           alt={product.title}
           preview={token ? true : false}
-          style={{
-            width: "100%",
-            height: "150px",
-            objectFit: "cover",
-            transition: "transform 0.3s ease-in-out",
-            filter: token ? "none" : "blur(5px)",
-          }}
+          className={`soonImg ${token ? "clear" : ""}`}
         />
       </div>
       <div

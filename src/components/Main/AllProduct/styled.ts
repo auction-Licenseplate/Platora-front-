@@ -44,10 +44,18 @@ export const AllProductStyled = styled.div`
       overflow: hidden;
       background-color: transparent;
 
+      .ant-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
       .productImg {
         width: 100%;
-        height: 150px;
+        height: 100%;
         object-fit: cover;
+        object-position: center;
         border-radius: 5px 5px 0 0;
         transition: transform 0.3s ease-in-out;
         filter: blur(5px);
@@ -62,15 +70,54 @@ export const AllProductStyled = styled.div`
       transform: scale(1.1);
     }
 
+    .badgeTitle {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      .badgeIcon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
     .product-info {
       width: 100%;
-      padding: 10px 0;
+      padding: 20px 20px 15px 20px;
       border-radius: 0 0 5px 5px;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
 
-      hr {
-        margin-top: 10px;
+      .priceFont {
+        font-size: 14px;
+        margin-top: 5px;
+
+        .price {
+          font-size: 20px;
+          color: #333;
+          font-weight: 600;
+          margin: 0 5px 5px 0;
+        }
       }
+    }
+
+    .time-left {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      font-size: 12px;
+      color: #777;
+
+      img {
+        width: 15px;
+      }
+    }
+
+    .seller {
+      font-size: 12px;
+      color: #777;
+      margin-top: -5px;
     }
 
     .spanText {
@@ -111,14 +158,18 @@ export const AllProductStyled = styled.div`
       font-size: 14px;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
+      & {
+        padding: 0px;
+      }
+
       .product-container {
         grid-template-columns: repeat(3, 1fr);
       }
 
       .noAuctionImg {
         width: 80%;
-        height: 400px;
+        min-height: 400px;
       }
     }
 
@@ -129,22 +180,18 @@ export const AllProductStyled = styled.div`
 
       .noAuctionImg {
         width: 90%;
-        height: 350px;
+        min-height: 350px;
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 550px) {
       .product-container {
         grid-template-columns: repeat(1, 1fr);
       }
 
       .noAuctionImg {
         width: 100%;
-        height: 250px;
-      }
-
-      .productImg {
-        width: 140% !important;
+        min-height: 250px;
       }
     }
   }

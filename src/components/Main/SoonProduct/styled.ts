@@ -117,10 +117,33 @@ export const SoonProductStyled = styled.div`
   }
 
   .soon-image {
+    position: relative;
     width: 100%;
     height: 150px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    background-color: transparent;
+
+    .ant-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .soonImg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 5px 5px 0 0;
+      transition: transform 0.3s ease-in-out;
+      filter: blur(5px);
+    }
+
+    .soonImg.clear {
+      filter: none;
+    }
   }
 
   .soon-info {

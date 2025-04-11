@@ -22,6 +22,7 @@ interface Product {
   seller: string;
   timeLeft?: string;
   imageUrls: string[];
+  minPrice?: number;
 }
 
 interface TeirProps {
@@ -83,6 +84,7 @@ const AllProduct = ({ type }: TeirProps) => {
             seller: item.userName,
             timeLeft,
             imageUrls,
+            minPrice: item.minPrice,
           };
         });
 

@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Image } from "antd";
+import { Image, Tooltip } from "antd";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+
+import timeIcon from "@/assets/images/alarmIcon.png";
 
 interface Product {
   id: number;
@@ -15,6 +17,7 @@ interface Product {
   seller: string;
   timeLeft?: string;
   imageUrls: string[];
+  minPrice?: number;
 }
 
 interface Props {
@@ -52,7 +55,6 @@ const ProductCard = ({ product, id }: Props) => {
           alt={product.title}
           preview={token ? true : false}
           className={`productImg ${token ? "clear" : ""}`}
-          style={{ width: "100%", height: "auto", objectFit: "cover" }}
         />
 
         {token ? (
@@ -81,16 +83,37 @@ const ProductCard = ({ product, id }: Props) => {
           router.push(`/detail/${id}`);
         }}
       >
-        <span className="spanText">
-          {product.title} <span>{product.gradeName}등급</span>
+        <div className="badgeTitle">
+          <span>{product.title}</span>
+          <Tooltip
+            title={
+              <div style={{ whiteSpace: "pre-line", textAlign: "center" }}>
+                {`${
+                  product.gradeName
+                }등급\n최저가 ${product.minPrice?.toLocaleString()}원`}
+              </div>
+            }
+          >
+            <Image
+              className="badgeIcon"
+              src={`/badge/badgeIcon${product.gradeName}.png`}
+              preview={false}
+            />
+          </Tooltip>
+        </div>
+        <span className="priceFont">
+          <span className="price">{product.price.toLocaleString()}</span>
+          <span>
+            원 {product.timeLeft === "종료됨" ? "(최종가)" : "(현재가)"}
+          </span>
         </span>
-        <hr />
-        <p>
-          {product.timeLeft === "종료됨" ? "최종가" : "현재가"} {product.price}
-        </p>
         {product.bids !== undefined && <p>입찰 횟수: {product.bids}회</p>}
-        <p>남은 시간: {product.timeLeft ?? "종료됨"}</p>
-        <p>판매자: {product.seller}</p>
+        <p className="time-left">
+          <img src={timeIcon.src} alt="time icon" />
+          {product.timeLeft === "종료됨" ? "" : "종료까지"}
+          {product.timeLeft ?? "종료됨"}
+        </p>
+        <p className="seller">판매자: {product.seller}</p>
       </div>
     </div>
   );
