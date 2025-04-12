@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Song+Myung&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 
 :root {
   --background: #1e1e1e;
@@ -54,6 +55,13 @@
   font-family: "Black Han Sans", sans-serif;
   color: #262626;
   position: relative;
+}
+
+.nomalFont {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500px;
+  font-style: normal;
 }
 
 .mainFont {
@@ -199,8 +207,12 @@ input::placeholder {
   color: var(--myPageSticky-color);
 }
 
-.active {
+.active,
+.cursor.active {
   color: var(--active-color);
+}
+.cursor::after {
+  background-color: var(--active-color);
 }
 
 .title,

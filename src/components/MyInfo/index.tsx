@@ -23,7 +23,7 @@ const MyInfo = ({ info }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  // 다크, 라이트 모드 -> 이미지 바뀌어야 함
+  // 다크, 라이트 모드
   const theme = useSelector((state: RootState) => state.theme.mode);
   const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
 

@@ -8,12 +8,12 @@ import accountBlack from "@/assets/images/myAccountLogo(black).png";
 const MyInfor = ({ isDarkMode, userInfo }) => {
   return (
     <>
-      <Image
+      {/* <Image
         key={isDarkMode ? "dark" : "light"}
         src={isDarkMode ? accountLogo : accountBlack}
         alt="account logo"
         width={300}
-      />
+      /> */}
       <div className="inputContainer">
         <div className="inputs readOnly">
           <h3>이름</h3>

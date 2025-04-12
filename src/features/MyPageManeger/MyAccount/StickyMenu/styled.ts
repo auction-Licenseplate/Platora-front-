@@ -1,35 +1,90 @@
 import styled from "styled-components";
 
 export const StickyMenuStyled = styled.div`
-  &.main-wrap {
+  width: 240px;
+
+  .myPageSticky {
+    width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    height: 400px;
+  }
+
+  .menus {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .cursor {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 8px 4px;
+    text-align: left;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      font-weight: bold;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  .cursor.active {
+    font-weight: bold;
+  }
+
+  .cursor.active::after {
+    width: 100%;
+  }
+
+  .bottomMenu {
     width: 100%;
 
-    .title {
-      font-size: 40px;
-    }
+    p {
+      position: relative;
+      color: rgb(201, 201, 201);
+      font-size: small;
+      margin: 0 0 10px 50px;
+      cursor: pointer;
+      width: 50px;
 
-    .myPageSticky {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      gap: 30px;
-      padding: 10px;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        height: 1px;
+        width: 0;
+        transition: width 0.3s ease;
+        background-color: rgb(201, 201, 201);
+      }
 
-      .cursor {
-        cursor: pointer;
-        transition: color 0.5s ease;
+      &:hover::after {
+        width: 100%;
       }
     }
 
-    @media screen and (max-width: 768px) {
-      & {
-        display: none;
-      }
-      .myPageSticky {
-        display: none;
-      }
+    .logoImg {
+      width: 150px;
+      height: 25px;
     }
   }
 `;

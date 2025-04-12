@@ -4,8 +4,12 @@ import { StickyMenuStyled } from "./styled";
 import axios from "axios";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "antd";
+import Image from "next/image";
+
+import logoBlack from "@/assets/images/platoraLogo(black).png";
+import logoWhite from "@/assets/images/platoraLogo(white).png";
 
 interface MenuProps {
   menu: string;
@@ -15,11 +19,19 @@ const StickyMenu = ({ menu }: MenuProps) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  // 다크, 라이트 모드 -> 이미지 바뀌어야 함
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+
+  // 모드에 따라 이미지 변경
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
+
   const menuItems = [
     { label: "내 정보", value: "myInfo" },
     { label: "내 작성글 보기", value: "myPosts" },
     { label: "관심 상품 보기", value: "myFavorites" },
-    { label: "회원 탈퇴", value: "withdraw" },
   ];
 
   // 회원 탈퇴 요청 -> 쿠키도 삭제
@@ -54,9 +66,8 @@ const StickyMenu = ({ menu }: MenuProps) => {
 
   return (
     <StickyMenuStyled className={clsx("main-wrap")}>
-      <div className="myPageSticky GlitchFont">
-        <>
-          <h1 className="title"> MYPAGE </h1>
+      <div className="myPageSticky nomalFont">
+        <div className="menus">
           {menuItems.map((item) => (
             <h1
               key={item.value}
@@ -64,28 +75,33 @@ const StickyMenu = ({ menu }: MenuProps) => {
                 active: item.value === menu,
               })}
               onClick={() => {
-                if (item.value === "withdraw") {
-                  handleWithdraw();
-                } else {
-                  router
-                    .push(
-                      {
-                        pathname: router.pathname,
-                        query: { menu: item.value },
-                      },
-                      undefined,
-                      { shallow: true }
-                    )
-                    .then(() => {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    });
-                }
+                router
+                  .push(
+                    {
+                      pathname: router.pathname,
+                      query: { menu: item.value },
+                    },
+                    undefined,
+                    { shallow: true }
+                  )
+                  .then(() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  });
               }}
             >
               {item.label}
             </h1>
           ))}
-        </>
+        </div>
+
+        <div className="bottomMenu">
+          <p onClick={handleWithdraw}> 회원탈퇴 </p>
+          <Image
+            className="logoImg"
+            src={isDarkMode ? logoWhite : logoBlack}
+            alt="platora logo"
+          />
+        </div>
       </div>
     </StickyMenuStyled>
   );

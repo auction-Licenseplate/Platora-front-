@@ -33,7 +33,7 @@ export const MyPageStyled = styled.div`
       .line {
         width: 1px;
         margin-top: 50px;
-        height: 450px;
+        height: 500px;
       }
 
       .mainContent {

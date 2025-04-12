@@ -22,7 +22,7 @@ export const MyInfoStyled = styled.div`
         align-items: center;
         gap: 30px;
         padding: 50px;
-        border-radius: 15px;
+        border-radius: 5px;
         position: relative;
 
         &::before,

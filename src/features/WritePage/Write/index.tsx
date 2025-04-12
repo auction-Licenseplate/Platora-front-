@@ -11,6 +11,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import ImageUpload from "./ImageUpload";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -19,9 +20,6 @@ const Editor = dynamic(
 
 const validationSchema = Yup.object({
   title: Yup.string().required("제목은 필수 항목입니다."),
-  frontImage: Yup.mixed().required("정면 사진이 필요합니다."),
-  sideImage1: Yup.mixed().required("측면1 사진이 필요합니다."),
-  sideImage2: Yup.mixed().required("측면2 사진이 필요합니다."),
 });
 
 const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
@@ -30,6 +28,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
 
   // 파일 보내기
   const [localFile, setLocalFile] = useState<File | null>(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const isMounted = useRef(true);
   const modalShown = useRef(false);
 
@@ -49,8 +48,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         );
 
         const ownershipStatus = response.data;
-
-        console.log(ownershipStatus);
 
         if (
           isMounted.current &&
@@ -223,8 +220,6 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   return (
     <WritePageStyled className={clsx("main-wrap")}>
       <div className="writeContent">
-        <h1>Write</h1>
-
         <Formik
           initialValues={{
             title: "",
@@ -344,104 +339,76 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
             }
           }}
         >
-          {({ setFieldValue, values, errors, touched }) => (
-            <Form>
-              <div className="writeInput">
-                <label>제목</label>
-                <Field
-                  name="title"
-                  type="text"
-                  placeholder="번호판을 입력하세요"
-                  as={Input}
-                />
-                {errors.title && touched.title && (
-                  <div className="error">{errors.title}</div>
-                )}
-              </div>
+          {({ setFieldValue, values, errors, touched }) => {
+            const isFormValid =
+              values.title &&
+              values.frontImage &&
+              values.sideImage1 &&
+              values.sideImage2 &&
+              editorState.getCurrentContent().hasText();
 
-              <div className="writeImgInputs">
-                <ImageUpload
-                  label="정면"
-                  name="frontImage"
-                  setFieldValue={setFieldValue}
-                  image={values.frontImage}
-                />
-                <ImageUpload
-                  label="측면 1"
-                  name="sideImage1"
-                  setFieldValue={setFieldValue}
-                  image={values.sideImage1}
-                />
-                <ImageUpload
-                  label="측면 2"
-                  name="sideImage2"
-                  setFieldValue={setFieldValue}
-                  image={values.sideImage2}
-                />
-              </div>
+            useEffect(() => {
+              setIsButtonDisabled(!isFormValid);
+            }, [isFormValid]);
+            return (
+              <Form className="writes">
+                <div className="writeInput">
+                  <Field
+                    name="title"
+                    type="text"
+                    placeholder="등록된 번호판을 입력하세요"
+                    as={Input}
+                  />
+                  {errors.title && touched.title && (
+                    <div className="error">{errors.title}</div>
+                  )}
+                </div>
 
-              <Editor
-                className="editorBox"
-                toolbar={{ options: ["inline", "textAlign", "history"] }}
-                placeholder="내용을 작성해주세요."
-                localization={{ locale: "ko" }}
-                editorState={editorState}
-                onEditorStateChange={setEditorState}
-              />
+                <div className="writeImgInputs">
+                  <ImageUpload
+                    label="정면"
+                    name="frontImage"
+                    setFieldValue={setFieldValue}
+                    image={values.frontImage}
+                  />
 
-              <button className="saveBtn" type="submit">
-                등록
-              </button>
-            </Form>
-          )}
+                  <ImageUpload
+                    label="측면 1"
+                    name="sideImage1"
+                    setFieldValue={setFieldValue}
+                    image={values.sideImage1}
+                  />
+
+                  <ImageUpload
+                    label="측면 2"
+                    name="sideImage2"
+                    setFieldValue={setFieldValue}
+                    image={values.sideImage2}
+                  />
+                </div>
+
+                <Editor
+                  className="editorBox"
+                  toolbar={{ options: ["inline", "textAlign", "history"] }}
+                  placeholder="내용을 작성해주세요."
+                  localization={{ locale: "ko" }}
+                  editorState={editorState}
+                  onEditorStateChange={setEditorState}
+                />
+
+                <button
+                  className="submitBtn"
+                  type="submit"
+                  disabled={isButtonDisabled}
+                >
+                  등록
+                </button>
+              </Form>
+            );
+          }}
         </Formik>
       </div>
     </WritePageStyled>
-  );
-};
-
-const ImageUpload = ({ label, name, setFieldValue, image }: any) => {
-  const [localFile, setLocalFile] = useState<File | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (localFile) {
-      Promise.resolve().then(() => {
-        if (isMounted) {
-          setFieldValue(name, localFile);
-        }
-      });
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [localFile, name, setFieldValue]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setLocalFile(file);
-    }
-  };
-
-  return (
-    <div className="writePreInput">
-      <label>{label}</label>
-      <Input type="file" accept="image/*" onChange={handleChange} />
-      <div className="previewContainer">
-        {localFile || image ? (
-          <img
-            src={URL.createObjectURL(localFile || image)}
-            alt={label}
-            className="previewImg"
-          />
-        ) : (
-          <span>이미지 선택</span>
-        )}
-      </div>
-    </div>
   );
 };
 
