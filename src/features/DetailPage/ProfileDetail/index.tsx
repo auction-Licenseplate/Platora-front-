@@ -44,6 +44,7 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
 
   return (
     <Modal
+      className="Modal"
       centered
       title="판매자 정보"
       open={open}

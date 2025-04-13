@@ -60,7 +60,7 @@ export const StickyMenuStyled = styled.div`
 
     p {
       position: relative;
-      color: rgb(201, 201, 201);
+      color: rgba(136, 136, 136, 0.65);
       font-size: small;
       margin: 0 0 10px 50px;
       cursor: pointer;

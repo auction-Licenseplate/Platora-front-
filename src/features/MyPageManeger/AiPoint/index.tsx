@@ -98,7 +98,16 @@ const AiPoint = ({
 
   const scoreCheck = () => {
     if (userPoint < 100) {
-      return alert("포인트 100P가 필요한 서비스입니다.충전 후 이용해주세요");
+      return Modal.error({
+        centered: true,
+        title: "포인트 부족",
+        content: "포인트 100P가 필요한 서비스입니다. 충전 후 이용해 주세요.",
+      });
+    } else if (point === "") {
+      return Modal.error({
+        centered: true,
+        content: "차량 번호를 정확히 입력해 주세요.",
+      });
     } else {
       setIsScoreReady(false); // 실행 전에 비활성화
       axios
@@ -152,19 +161,19 @@ const AiPoint = ({
   return (
     <AipointStyled className={clsx("main-wrap-ai")}>
       <div className="inputTexts">
-        <button onClick={scoreCheck} className="passBtn">
-          등급 측정하기
+        <button onClick={scoreCheck} className="rankBtn">
+          <p>등급 측정하기</p>
         </button>
         <button
           onClick={handleShowScore}
-          className="passBtn"
+          className="rankBtn"
           disabled={!isScoreReady}
           style={{
-            opacity: isScoreReady ? 1 : 0.5, // ✅ 투명도 조절
-            cursor: isScoreReady ? "pointer" : "not-allowed", // 비활성화 느낌 강조
+            opacity: isScoreReady ? 1 : 0.5,
+            cursor: isScoreReady ? "pointer" : "not-allowed",
           }}
         >
-          등급 확인
+          <p>등급 확인</p>
         </button>
       </div>
     </AipointStyled>

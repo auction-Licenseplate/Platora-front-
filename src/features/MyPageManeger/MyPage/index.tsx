@@ -11,7 +11,7 @@ const MyPage = () => {
   const menuValue: string = Array.isArray(menu) ? menu[0] : menu ?? "default";
 
   return (
-    <MyPageStyled className={clsx("main-wrap")}>
+    <MyPageStyled className={clsx("main-wrap myPageBack")}>
       <div className="mainContainer">
         <div className="leftContainer">
           <StickyMenu menu={menuValue} />

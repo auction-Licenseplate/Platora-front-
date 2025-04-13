@@ -320,7 +320,7 @@ const DetailPage = ({ id }: detailprops) => {
                     {(price + price * 0.1).toLocaleString()}
                   </span>
                   <div>
-                    (물품 가격: {price.toLocaleString()} + 경매 수수료{" "}
+                    (물품 가격: {price.toLocaleString()} + 경매 수수료
                     {(price * 0.1).toLocaleString()})
                   </div>
                 </span>

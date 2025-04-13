@@ -11,7 +11,7 @@ export const MyAccountStyled = styled.div`
       display: flex;
       align-items: center;
       gap: 30px;
-      padding: 10px;
+      padding: 0 10px;
       width: 100%;
 
       .myInfoContainer {

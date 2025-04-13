@@ -18,7 +18,7 @@ const MyAccount = ({ menu }: MenuProps) => {
   }
 
   return (
-    <MyAccountStyled className={clsx("main-wrap")}>
+    <MyAccountStyled className={clsx("main-wrap myAccountBack")}>
       <div className="main-container">
         <div className="myInfoContainer">
           {menu === "myInfo" ? (

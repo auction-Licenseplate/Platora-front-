@@ -194,6 +194,7 @@ const MyInfo = ({ info }: Props) => {
             <Select
               value={refundDetails.cardCompany || "카드사 선택"}
               onChange={handleCardCompanyChange}
+              className="selectCard"
             >
               <Select.Option value="카드사 선택" disabled>
                 카드사 선택
@@ -206,20 +207,20 @@ const MyInfo = ({ info }: Props) => {
             </Select>
           </div>
           <div className="input-group">
-            <label>반환할 포인트</label>
+            <label>반환 포인트</label>
             <Input
               value={refundDetails.refundPoint.toLocaleString()}
               onChange={handleRefundPointChange}
               type="text"
               placeholder="반환할 포인트를 입력하세요"
             />
-            <div
-              className="currentPoint"
-              onClick={setMaxRefundPoint}
-              style={{ cursor: "pointer", marginTop: "10px", color: "#1890ff" }}
-            >
-              현재 포인트: {userInfo.point?.toLocaleString() || "0"} 포인트
-            </div>
+          </div>
+          <div
+            className="currentPoint"
+            onClick={setMaxRefundPoint}
+            style={{ cursor: "pointer", marginTop: "10px", color: "#1890ff" }}
+          >
+            현재 포인트: {userInfo.point?.toLocaleString() || "0"} 포인트
           </div>
         </div>
       </Modal>
@@ -255,7 +256,7 @@ const MyInfo = ({ info }: Props) => {
         onOk={() => handleTossPayment()}
         centered
       >
-        <div className="input-group">
+        <div className="input-group pointInput">
           <label>충전할 포인트</label>
           <Input
             value={pointDetails.point.toLocaleString()}

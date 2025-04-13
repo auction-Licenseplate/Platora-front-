@@ -16,75 +16,62 @@ export const MyInfoStyled = styled.div`
       padding: 10px;
 
       .inputContainer {
-        width: 80%;
+        width: 90%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 30px;
-        padding: 50px;
+        gap: 20px;
+        padding: 30px;
         border-radius: 5px;
         position: relative;
+        background-color: rgb(255, 255, 255);
 
-        &::before,
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
+        .infoText {
+          color: rgb(137, 137, 137);
           width: 100%;
-          height: 100%;
-          border: 4px solid;
-          border-radius: 15px;
-          box-sizing: border-box;
-          mix-blend-mode: difference;
-          pointer-events: none;
-        }
-
-        .vehicleInputs {
-          width: 70%;
           display: flex;
-          flex-direction: column;
-        }
+          gap: 10px;
+          align-items: center;
 
-        .vehicleInput {
-          width: 100%;
-          border: none;
-          background-color: rgb(190, 190, 190);
-        }
-
-        .plateInput {
-          width: 100%;
-          border: none;
-          margin: 10px 0;
-          background-color: rgb(190, 190, 190);
+          .infoIcon {
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+          }
         }
 
         .inputTexts {
           display: flex;
           flex-direction: column;
           align-items: center;
+          margin-top: -5px;
         }
 
         .inputs {
           width: 100%;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: start;
           gap: 10px;
           position: relative;
 
-          h3 {
+          .inputTextIcon {
+            width: 23px;
+            height: 21px;
+          }
+
+          p {
             width: 150px;
           }
 
           .input {
-            width: 70%;
-            border: none;
-            background-color: rgb(190, 190, 190);
+            width: 80%;
+            background-color: rgba(243, 243, 243, 0.5);
           }
 
           .fileInput {
             background-color: rgba(255, 255, 255, 0);
+            border: none;
           }
 
           .fileInput {
@@ -98,23 +85,20 @@ export const MyInfoStyled = styled.div`
           }
 
           .upLoad Button {
-            border: none;
-
-            &:hover {
-              border: none;
-              color: black;
-            }
+            border: 1px solid rgb(194, 194, 194);
           }
         }
 
-        .readOnly:read-only {
+        .readOnly:read-only input {
           pointer-events: none;
+          background-color: rgba(243, 243, 243, 0.5);
         }
 
         .passBtn {
           width: 200px;
           padding: 5px 10px;
           border-radius: 10px;
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
           border: none;
           cursor: pointer;
           font-weight: bold;
@@ -127,13 +111,33 @@ export const MyInfoStyled = styled.div`
 
         .passBtn:hover {
           transform: scale(1.05);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .pointInfos {
           cursor: pointer;
           display: flex;
-          gap: 30px;
+          gap: 60px;
+          margin: 10px 0;
+
+          p {
+            position: relative;
+            font-size: 14px;
+
+            &::after {
+              content: "";
+              position: absolute;
+              left: 0;
+              bottom: -3px;
+              width: 0%;
+              height: 1px;
+              background-color: #7b7b7b;
+              transition: width 0.3s ease-in-out;
+            }
+
+            &:hover::after {
+              width: 100%;
+            }
+          }
         }
 
         .input-group Select {
@@ -158,13 +162,13 @@ export const MyInfoStyled = styled.div`
       }
     }
 
-    @media screen and (max-width: 768px) {
+    @media (max-width: 768px) {
       .inputContainer {
         width: 100% !important;
       }
     }
 
-    @media screen and (max-width: 590px) {
+    @media (max-width: 590px) {
       .inputs {
         flex-direction: column;
         text-align: center;
@@ -173,6 +177,24 @@ export const MyInfoStyled = styled.div`
         .input {
           width: 100% !important;
         }
+      }
+
+      .pointInfos {
+        gap: 20px !important;
+
+        p {
+          font-size: 12px !important;
+        }
+      }
+
+      .ant-upload-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        margin-top: 10px;
+      }
+
+      .ant-upload-list {
+        margin: -17px 0 10px 0 !important;
       }
     }
   }

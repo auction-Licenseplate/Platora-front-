@@ -286,8 +286,6 @@ export const myInfo = (info: string) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log(res.data);
-
     if (res.data.payPoint.length > 0 || res.data.bidsData.length > 0) {
       const payData = res.data.payPoint.map((item: any, index: number) => {
         const rawDate = new Date(item.create_at);
@@ -329,37 +327,46 @@ export const myInfo = (info: string) => {
         }
       });
 
-      const bidData = res.data.refundPoint.map((item: any, index: number) => {
-        const rawDate = new Date(item.create_at);
-        const date = rawDate.toLocaleString("ko-KR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+      const bidData = res.data.refundPoint
+        .filter((item: any) => {
+          return (
+            (item.refund_bid_price && item.refund_bid_price !== 0) ||
+            (item.bid_price && item.bid_price !== 0)
+          );
+        })
+        .map((item: any, index: number) => {
+          const rawDate = new Date(item.create_at);
+          const date = rawDate.toLocaleString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
 
-        if (
-          item.refund_bid_price !== null &&
-          item.refund_bid_price !== undefined
-        ) {
-          return {
-            item: "입찰 포인트 환불",
-            state: `+ ${(item.refund_bid_price ?? 0).toLocaleString()} 포인트`,
-            date,
-            rawDate,
-            key: Date.now() + index,
-          };
-        } else {
-          return {
-            item: "입찰 참여",
-            state: `- ${(item.bid_price ?? 0).toLocaleString()} 포인트`,
-            date,
-            rawDate,
-            key: Date.now() + index,
-          };
-        }
-      });
+          if (
+            item.refund_bid_price !== null &&
+            item.refund_bid_price !== undefined
+          ) {
+            return {
+              item: "입찰 포인트 환불",
+              state: `+ ${(
+                item.refund_bid_price ?? 0
+              ).toLocaleString()} 포인트`,
+              date,
+              rawDate,
+              key: Date.now() + index,
+            };
+          } else {
+            return {
+              item: "입찰 참여",
+              state: `- ${(item.bid_price ?? 0).toLocaleString()} 포인트`,
+              date,
+              rawDate,
+              key: Date.now() + index,
+            };
+          }
+        });
 
       const mergedData = [...payData, ...bidData].sort(
         (a, b) => b.rawDate.getTime() - a.rawDate.getTime()
