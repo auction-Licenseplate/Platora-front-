@@ -7,7 +7,13 @@ export const AllProductStyled = styled.div`
     padding: 20px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    .allAcution {
+      margin: 30px 0;
+    }
 
     .noAuctionImg {
       margin-top: 10px;

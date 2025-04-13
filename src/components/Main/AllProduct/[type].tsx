@@ -117,6 +117,12 @@ const AllProduct = ({ type }: TeirProps) => {
 
   return (
     <AllProductStyled className={clsx("main-wrap-products")}>
+      {filteredProducts.length > 0 && products.length > 0 ? (
+        <h1 className="mainFont allAcution">All Auctions</h1>
+      ) : (
+        <></>
+      )}
+
       {products.length === 0 || filteredProducts.length === 0 ? (
         <Image
           className="noAuctionImg"

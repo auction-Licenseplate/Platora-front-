@@ -14,11 +14,11 @@ export const SoonProductStyled = styled.div`
   }
 
   .mainFont {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 
     @media (max-width: 550px) {
       & {
-        margin-bottom: 80px;
+        margin-bottom: 70px;
       }
     }
   }

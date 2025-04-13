@@ -15,14 +15,36 @@ const Tier = ({ type }: tierProps) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  // 등급 탭
+  const gradeTabs = Array.from({ length: 10 }, (_, i) => i + 1);
+
   useEffect(() => {
     if (!token) {
       router.push("/login");
     }
   }, []);
 
+  const handleClick = (selectedType: number) => {
+    router.push({
+      pathname: "/",
+      query: { type: selectedType },
+    });
+  };
+
   return (
     <TierStyled className={clsx("main-wrap-teir")}>
+      <div className="grade-tab-wrapper">
+        {gradeTabs.map((grade) => (
+          <div
+            key={grade}
+            className={clsx("grade-tab", { selected: type === grade })}
+            onClick={() => handleClick(grade)}
+          >
+            Tier {grade}
+          </div>
+        ))}
+      </div>
+
       {/* 곧 시작 경매 */}
       <SoonProduct type={type} />
 
