@@ -192,9 +192,11 @@ const MyPost = ({
           <div className="postContents">
             <div className="postTexts">
               <div className="postText">
-                {`현재가: ${post.finalPrice.toLocaleString()}원${
-                  isPending ? " (예상 금액)" : ""
-                }`}
+                {timeLeft === "종료됨" && post.endTime
+                  ? `최종가: ${post.finalPrice.toLocaleString()}원`
+                  : `현재가: ${post.finalPrice.toLocaleString()}원${
+                      isPending ? " (예상 금액)" : ""
+                    }`}
               </div>
 
               <div className="postText">
@@ -233,9 +235,27 @@ const MyPost = ({
 
       {/* 승인 후 */}
       {type === "posts" &&
-        goingPosts.map((post, idx) =>
-          renderPost({ ...post }, `going-${idx}`, false)
-        )}
+        goingPosts
+          .slice() // 원본 배열을 건드리지 않기 위해 복사
+          .sort((a, b) => {
+            const now = new Date().getTime();
+            const aEnd = new Date(a.endTime).getTime();
+            const bEnd = new Date(b.endTime).getTime();
+
+            const aDiff = aEnd - now;
+            const bDiff = bEnd - now;
+
+            const aIsEnded = aDiff <= 0;
+            const bIsEnded = bDiff <= 0;
+
+            // 종료된 게시글은 뒤로 보내기
+            if (aIsEnded && !bIsEnded) return 1;
+            if (!aIsEnded && bIsEnded) return -1;
+
+            // 둘 다 종료됐거나 둘 다 진행 중이면 종료 시간이 빠른 순
+            return aEnd - bEnd;
+          })
+          .map((post, idx) => renderPost({ ...post }, `going-${idx}`, false))}
 
       {/* 즐겨찾기 */}
       {type === "favorite" &&

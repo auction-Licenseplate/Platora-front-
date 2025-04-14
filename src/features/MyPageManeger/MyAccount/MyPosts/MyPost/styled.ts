@@ -108,6 +108,10 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
       font-size: 13px;
       font-weight: bold;
       transition: background-color 0.2s ease-in-out;
+
+      @media (max-width: 1240px) {
+        margin-left: -30px;
+      }
     }
 
     .deleteBtn:hover {
