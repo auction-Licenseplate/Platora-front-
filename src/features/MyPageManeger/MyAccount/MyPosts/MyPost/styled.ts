@@ -44,12 +44,12 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
 
     .postImg {
       position: relative;
-      width: 65%;
+      width: 100%;
       min-width: 200px;
       max-width: 400px;
       height: 120px;
       border-radius: 5px;
-      margin-left: 10px;
+      margin-left: 20px;
       object-fit: cover;
       flex-shrink: 0;
     }
@@ -89,9 +89,29 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
       font-size: 14px;
       color: #333;
       display: flex;
+      gap: 4px;
+    }
+
+    .postTexts {
+      display: flex;
       flex-direction: column;
       gap: 4px;
-      word-break: break-word;
+    }
+
+    .deleteBtn {
+      margin-top: 40px;
+      width: 70px;
+      height: 30px;
+      border: 1px solid rgb(189, 189, 189);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .deleteBtn:hover {
+      background-color: rgb(233, 183, 183);
     }
 
     .badgeTitle {
@@ -103,6 +123,38 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
         width: 18px;
         height: 18px;
       }
+
+      .favoriteImg {
+        width: 20px;
+        height: 20px;
+        margin-left: 5px;
+      }
+    }
+
+    .prevIcon,
+    .nextIcon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prevIcon {
+      left: 8px;
+    }
+
+    .nextIcon {
+      right: 8px;
     }
 
     /* isWide가 true일 때(모달 안일 때) */
@@ -113,18 +165,20 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           flex-direction: column;
           align-items: center;
           padding: 10px 30px;
+          background-color: rgb(40, 40, 40);
+          color: white;
         }
 
         .postImg {
-          width: 100%;
-          margin: 0 auto;
+          max-width: 400px;
+          margin: 10px auto 0 auto;
         }
 
         .postLine {
-          width: 80%;
+          width: 90%;
           height: 1px;
           border-left: none;
-          border-top: 1px dashed #999;
+          border-top: 1px dashed #ffffff;
           margin: 10px 0;
         }
 
@@ -132,6 +186,11 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           width: 100%;
           align-items: center;
           text-align: center;
+          margin: 5px 0 10px 0;
+
+          .postText {
+            color: #ffffff;
+          }
         }
 
         .postTitle {
@@ -160,12 +219,12 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           }
 
           .postImg {
-            width: 100%;
+            max-width: 500px;
             margin: 0 auto;
           }
 
           .postLine {
-            width: 80%;
+            width: 90%;
             height: 1px;
             border-left: none;
             border-top: 1px dashed #999;
@@ -176,6 +235,7 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
             width: 100%;
             align-items: center;
             text-align: center;
+            margin-bottom: 10px;
           }
 
           .postTitle {
@@ -184,7 +244,13 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
 
           .postContents {
             font-size: 13px;
+            flex-direction: column;
             align-items: center;
+
+            .deleteBtn {
+              margin: 10px 0;
+              width: 100%;
+            }
           }
         }
       `}

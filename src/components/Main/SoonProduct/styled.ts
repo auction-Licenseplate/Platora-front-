@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SoonProductStyled = styled.div`
   width: 100%;
   max-width: 1200px;
-  margin: 70px auto 0 auto;
+  margin: 30px auto 0 auto;
   position: relative;
   text-align: center;
 
@@ -14,7 +14,7 @@ export const SoonProductStyled = styled.div`
   }
 
   .mainFont {
-    margin-bottom: 30px;
+    margin-bottom: 45px;
 
     @media (max-width: 550px) {
       & {
@@ -37,7 +37,7 @@ export const SoonProductStyled = styled.div`
 
     @media (max-width: 550px) {
       & {
-        margin-top: -130px;
+        margin-top: -160px;
       }
     }
   }

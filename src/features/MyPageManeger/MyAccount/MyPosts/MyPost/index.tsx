@@ -8,6 +8,10 @@ import { RootState } from "@/store/store";
 import Image from "next/image";
 import { Modal, Tooltip } from "antd";
 
+// 이미지
+import fullheart from "@/assets/images/fullheart.png";
+import heart from "@/assets/images/heart.png";
+
 interface postType {
   type: string;
   pendingPosts?: any[];
@@ -25,6 +29,20 @@ const MyPost = ({
 }: postType) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
+
+  // 게시글별 좋아요 상태
+  const [likedMap, setLikedMap] = useState<{ [key: string]: boolean }>({});
+
+  useEffect(() => {
+    if (type === "favorite") {
+      const initLiked: { [key: string]: boolean } = {};
+      favoritePosts.forEach((post) => {
+        const key = post.auctionId || post.auctionID || post.vehicleTitle;
+        initLiked[key] = true; // 좋아요 상태
+      });
+      setLikedMap(initLiked);
+    }
+  }, [type, favoritePosts]);
 
   // 남은 시간 계산
   const renderPost = (
@@ -74,6 +92,44 @@ const MyPost = ({
       }
     };
 
+    // 좋아요 토글 함수
+    const toggleLikePost = async (post: any) => {
+      const key = post.auctionId || post.auctionID;
+
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/boards/likepost",
+          {
+            id: post.auctionID || post.auctionId,
+            userId: post.userId,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setLikedMap((prev) => ({
+          ...prev,
+          [key]: res.data.status,
+        }));
+
+        if (type === "favorite" && res.data.status === false) {
+          Modal.info({
+            centered: true,
+            title: "즐겨찾기에서 제거되었습니다.",
+            onOk: () => router.reload(),
+          });
+        }
+      } catch (error) {
+        Modal.error({ centered: true, title: "좋아요 처리에 실패했습니다." });
+      }
+    };
+
+    const keyId = post.auctionId || post.auctionID;
+
     return (
       <div key={key} className="postsInfo">
         <div className="circle"></div>
@@ -120,32 +176,46 @@ const MyPost = ({
                 height={17}
               />
             </Tooltip>
+
+            {type === "favorite" && (
+              <Image
+                className="favoriteImg"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLikePost(post);
+                }}
+                src={likedMap[keyId] ? fullheart : heart}
+                alt="like icon"
+              />
+            )}
           </div>
           <div className="postContents">
-            <div className="postText">
-              {`현재가: ${post.finalPrice.toLocaleString()}원${
-                isPending ? " (예상 금액)" : ""
-              }`}
+            <div className="postTexts">
+              <div className="postText">
+                {`현재가: ${post.finalPrice.toLocaleString()}원${
+                  isPending ? " (예상 금액)" : ""
+                }`}
+              </div>
+
+              <div className="postText">
+                {post.endTime ? `남은 시간: ${timeLeft}` : "입찰 대기 중"}
+              </div>
+              <div className="postText">판매자: {post.userName}</div>
             </div>
 
-            <div className="postText">
-              {post.endTime ? `남은 시간: ${timeLeft}` : "입찰 대기 중"}
-            </div>
-            <div className="postText">판매자: {post.userName}</div>
+            {/* 승인 전 게시글은 삭제 요청 가능 */}
+            {isPending && (
+              <button
+                className="deleteBtn"
+                onClick={(e) => {
+                  e.stopPropagation(); // 부모 div 클릭 이벤트 방지
+                  handleDeletePost(post.vehicleTitle);
+                }}
+              >
+                삭제 요청
+              </button>
+            )}
           </div>
-
-          {/* 승인 전 게시글은 삭제 요청 가능 */}
-          {isPending && (
-            <button
-              className="deleteBtn"
-              onClick={(e) => {
-                e.stopPropagation(); // 부모 div 클릭 이벤트 방지
-                handleDeletePost(post.vehicleTitle);
-              }}
-            >
-              삭제 요청
-            </button>
-          )}
         </div>
 
         <div className="circle"></div>

@@ -39,7 +39,7 @@
   --myPageSticky-color: rgb(173, 173, 173);
   --active-color: rgb(56, 56, 56);
   --title-color: rgb(100, 100, 100);
-  --post-color: rgb(114, 114, 114);
+  --post-color: rgb(36, 36, 36);
   --before-color: rgb(60, 60, 60);
   --after-color: rgb(112, 112, 112);
   --btn-color: rgb(163, 172, 60);
@@ -269,6 +269,23 @@ input::placeholder {
 /* AllProduct */
 .product-card {
   box-shadow: 2px 2px 10px var(--box-shadow);
+}
+
+/* 등급 별 게시글 */
+.grade-tab {
+  color: gray;
+}
+
+.grade-tab::after {
+  background-color: gray;
+}
+
+.grade-tab.selected {
+  color: var(--foreground);
+}
+
+.grade-tab.selected::after {
+  background-color: var(--foreground);
 }
 
 /* 글 작성하기 */

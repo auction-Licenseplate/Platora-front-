@@ -110,7 +110,7 @@ const ProductCard = ({ product, id }: Props) => {
         {product.bids !== undefined && <p>입찰 횟수: {product.bids}회</p>}
         <p className="time-left">
           <img src={timeIcon.src} alt="time icon" />
-          {product.timeLeft === "종료됨" ? "" : "종료까지"}
+          {product.timeLeft === "종료됨" ? "" : "종료까지  "}
           {product.timeLeft ?? "종료됨"}
         </p>
         <p className="seller">판매자: {product.seller}</p>
