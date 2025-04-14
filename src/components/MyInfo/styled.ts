@@ -103,6 +103,7 @@ export const MyInfoStyled = styled.div`
           cursor: pointer;
           font-weight: bold;
           transition: all 0.3s ease;
+          background-color: #ffffff !important;
         }
 
         .passBtn:disabled {
@@ -111,6 +112,10 @@ export const MyInfoStyled = styled.div`
 
         .passBtn:hover {
           transform: scale(1.05);
+        }
+
+        button {
+          background-color: #ffffff !important;
         }
 
         .pointInfos {

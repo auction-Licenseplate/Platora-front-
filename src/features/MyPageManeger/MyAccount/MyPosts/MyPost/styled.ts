@@ -62,6 +62,10 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
       transition: all 0.3s ease;
     }
 
+    .cursorPointer {
+      cursor: pointer;
+    }
+
     .postTexts {
       display: flex;
       flex-direction: column;

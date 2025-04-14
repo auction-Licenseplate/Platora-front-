@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
-import { Tooltip } from "antd";
+import { Modal, Tooltip } from "antd";
 
 interface postType {
   type: string;
@@ -26,10 +26,11 @@ const MyPost = ({
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  // 남은 시간 계산
   const renderPost = (
     post: any,
     key: number | string,
-    isPending: boolean = false
+    isPending: boolean = false //승인 전
   ) => {
     const carImages = post.carImage?.split(",") || [];
     const firstImage = carImages[0]?.trim();
@@ -51,6 +52,28 @@ const MyPost = ({
       }
     }
 
+    // 삭제 요청 -> auctionId 가 없어서 vehicleTitle (번호판)으로 보냄
+    const handleDeletePost = async (postId: string) => {
+      try {
+        const response = await axios.delete(
+          `http://localhost:5000/boards/deletePosts/${postId}`,
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        Modal.error({
+          centered: true,
+          title: "게시글이 삭제되었습니다.",
+          onOk: () => router.reload(),
+        });
+      } catch (error) {
+        Modal.error({ centered: true, title: "삭제에 실패했습니다." });
+      }
+    };
+
     return (
       <div key={key} className="postsInfo">
         <div className="circle"></div>
@@ -68,10 +91,14 @@ const MyPost = ({
         <div className="postLine"></div>
 
         <div
-          className="postTexts"
-          onClick={() => {
-            router.push(`/detail/${post.auctionId || post.auctionID}`);
-          }}
+          className={`postTexts ${post.endTime ? "cursorPointer" : ""}`}
+          onClick={
+            post.endTime
+              ? () => {
+                  router.push(`/detail/${post.auctionId || post.auctionID}`);
+                }
+              : undefined
+          }
         >
           <div className="badgeTitle">
             <span>{post.vehicleTitle}</span>
@@ -106,6 +133,19 @@ const MyPost = ({
             </div>
             <div className="postText">판매자: {post.userName}</div>
           </div>
+
+          {/* 승인 전 게시글은 삭제 요청 가능 */}
+          {isPending && (
+            <button
+              className="deleteBtn"
+              onClick={(e) => {
+                e.stopPropagation(); // 부모 div 클릭 이벤트 방지
+                handleDeletePost(post.vehicleTitle);
+              }}
+            >
+              삭제 요청
+            </button>
+          )}
         </div>
 
         <div className="circle"></div>

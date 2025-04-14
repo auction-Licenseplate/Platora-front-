@@ -124,7 +124,7 @@ export const HeaderStyled = styled.div`
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease-in-out;
-        margin: 15px 0 0 15px;
+        margin: 15px 0 0 10px;
       }
 
       .tier-list.open {

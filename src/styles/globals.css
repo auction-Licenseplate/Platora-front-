@@ -14,7 +14,7 @@
   --myPageSticky-color: rgb(80, 80, 80);
   --active-color: white;
   --title-color: rgb(146, 146, 146);
-  --post-color: rgb(206, 206, 206);
+  --post-color: rgb(255, 255, 255);
   --btn-color: rgb(188, 188, 210);
   --before-color: rgb(220, 220, 220);
   --after-color: rgb(179, 179, 179);
@@ -99,7 +99,7 @@
   }
 }
 
-Button {
+/* Button {
   background-color: var(--btn-color) !important;
   color: var(--btn-text-color) !important;
 }
@@ -108,7 +108,7 @@ button:hover,
 button:focus {
   background-color: var(--btn-hover) !important;
   color: var(--btn-text-color) !important;
-}
+} */
 
 /* 로딩 */
 .loadingColor .ant-spin-dot-item {

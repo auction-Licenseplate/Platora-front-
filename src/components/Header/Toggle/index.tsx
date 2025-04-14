@@ -148,6 +148,7 @@ const Toggle = ({
                       onClick={() => router.push("/login")}
                     >
                       Tier {index + 1}
+                      {/* {index + 1} 등급 */}
                     </h3>
                   ))}
                 </div>
