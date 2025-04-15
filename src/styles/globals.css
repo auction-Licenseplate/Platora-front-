@@ -39,7 +39,7 @@
   --myPageSticky-color: rgb(173, 173, 173);
   --active-color: rgb(56, 56, 56);
   --title-color: rgb(100, 100, 100);
-  --post-color: rgb(36, 36, 36);
+  --post-color: rgb(220, 220, 220);
   --before-color: rgb(60, 60, 60);
   --after-color: rgb(112, 112, 112);
   --btn-color: rgb(163, 172, 60);
@@ -309,11 +309,11 @@ input::placeholder {
 /* 내 게시글 */
 .postsInfo {
   background-color: var(--post-color);
-  color: var(--background);
+  /* color: var(--background); */
 }
 
 .postText {
-  color: var(--background);
+  /* color: var(--background); */
 }
 
 .postLine {

@@ -24,6 +24,7 @@ const Toggle = ({
   isTierOpen,
   handleClick,
   handleLogout,
+  userRole,
 }) => {
   const router = useRouter();
 

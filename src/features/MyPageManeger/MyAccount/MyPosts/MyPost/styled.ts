@@ -169,8 +169,12 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           flex-direction: column;
           align-items: center;
           padding: 10px 30px;
-          background-color: rgb(40, 40, 40);
-          color: white;
+          background-color: rgb(227, 227, 227);
+        }
+
+        .badgeTitle {
+          font-weight: bold;
+          font-size: 17px;
         }
 
         .postImg {
@@ -182,7 +186,7 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           width: 90%;
           height: 1px;
           border-left: none;
-          border-top: 1px dashed #ffffff;
+          border-top: 1px dashed #000000;
           margin: 10px 0;
         }
 
@@ -191,18 +195,10 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
           align-items: center;
           text-align: center;
           margin: 5px 0 10px 0;
-
-          .postText {
-            color: #ffffff;
-          }
-        }
-
-        .postTitle {
-          font-size: 15px;
         }
 
         .postContents {
-          font-size: 13px;
+          font-size: 14px;
           align-items: center;
         }
 

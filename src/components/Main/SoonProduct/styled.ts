@@ -119,7 +119,7 @@ export const SoonProductStyled = styled.div`
   .soon-image {
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 130px;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     background-color: transparent;

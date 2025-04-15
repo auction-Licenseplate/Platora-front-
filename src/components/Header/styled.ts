@@ -229,6 +229,10 @@ export const HeaderStyled = styled.div`
       height: 15px;
     }
 
+    .alertIcon {
+      width: 27px;
+    }
+
     .switch {
       position: relative;
       display: inline-block;
