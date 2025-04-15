@@ -34,83 +34,88 @@ const Header = () => {
   const [isTierOpen, setIsTierOpen] = useState(false);
 
   // 알람 상태
-  const [notifications, setNotifications] = useState<
-    { id: number; message: string; createdAt: string }[]
+  const [alertData, setAlertData] = useState<
+    { id: number; message: string; createdAt: string; isRead: boolean }[]
   >([]);
-  const [hasNewNotification, setHasNewNotification] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const [readNotifications, setReadNotifications] = useState<number[]>([]);
+  const [newAlert, setNewAlert] = useState(false);
 
   // 유저, 관리자 구분
   const [userRole, setUserRole] = useState<string | null>(null);
 
-  // 알림을 클릭했을 때 처리
-  const handleNotificationClick = (id: number) => {
-    if (!readNotifications.includes(id)) {
-      const updated = [...readNotifications, id];
-      setReadNotifications(updated); // 읽은 알림 상태 업데이트
-      localStorage.setItem("readNotifications", JSON.stringify(updated));
-
-      // 모든 알림을 읽었으면 새 알림이 없다고 설정
-      const unreadNotifications = notifications.filter(
-        (noti) => !updated.includes(noti.id)
-      );
-      setHasNewNotification(unreadNotifications.length > 0);
-      localStorage.setItem(
-        "hasNewNotification",
-        JSON.stringify(unreadNotifications.length > 0)
-      );
-    }
-  };
-
-  // 알림을 열 때 처리
-  const toggleAlert = () => {
-    const willOpen = !isAlertOpen;
-    setIsAlertOpen(willOpen);
-
-    // 알림을 열면 새 알림 표시 상태를 false로 설정
-    if (willOpen) {
-      setHasNewNotification(false);
-      localStorage.setItem("hasNewNotification", JSON.stringify(false));
-    }
-  };
+  // 알람 열기/닫기
+  const toggleAlert = () => setIsAlertOpen((prev) => !prev);
 
   // 알림 데이터
   useEffect(() => {
-    const dummy = [
-      {
-        id: 1,
-        message: "새 공지가 등록되었습니다",
-        createdAt: "2025-04-15T09:00:00Z",
-      },
-      {
-        id: 2,
-        message: "댓글이 달렸습니다",
-        createdAt: "2025-04-15T10:00:00Z",
-      },
-    ];
+    // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
+    const fetchalertData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/alert/getAlert", {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-    // 알림 목록 상태 업데이트
-    setNotifications(dummy);
+        const alertData = res.data;
 
-    // 읽은 알림 목록 처리
-    const savedReadNotifications = localStorage.getItem("readNotifications");
-    if (savedReadNotifications) {
-      setReadNotifications(JSON.parse(savedReadNotifications));
-    }
+        // 안 읽거나 읽어도 3일 안 지난 것만 남김
+        const now = new Date();
 
-    // 새 알림 여부 판단 (읽지 않은 알림이 있는지 확인)
-    const unreadNotifications = dummy.filter(
-      (noti) => !readNotifications.includes(noti.id)
-    );
+        const filtered = alertData.filter((noti) => {
+          if (!noti.isRead) return true;
 
-    // 새 알림이 있을 때만 상태를 업데이트
-    setHasNewNotification(unreadNotifications.length > 0);
-    localStorage.setItem(
-      "hasNewNotification",
-      JSON.stringify(unreadNotifications.length > 0)
-    );
+          const createdAt = new Date(noti.createdAt);
+
+          const diff =
+            (now.getTime() - createdAt.getTime()) / (1000 * 3600 * 24);
+          return diff < 3;
+        });
+
+        setAlertData(filtered);
+      } catch (error) {
+        console.error("알림 불러오기 실패:", error);
+      }
+    };
+
+    fetchalertData();
   }, []);
+
+  // 안 읽은 알림 여부 감지
+  useEffect(() => {
+    const hasUnread = alertData.some((noti) => !noti.isRead);
+    setNewAlert(hasUnread);
+  }, [alertData]);
+
+  // 알림 클릭 처리
+  const readAlert = async (id: number) => {
+    try {
+      // patch: 일부 데이터 변경
+      await axios.patch(
+        `http://localhost:5000/alert/${id}`,
+        { isRead: true },
+        {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setAlertData((prev) =>
+        prev.map((noti) => (noti.id === id ? { ...noti, isRead: true } : noti))
+      );
+    } catch (err) {
+      console.error("알림 상태 변경 실패:", err);
+    }
+  };
+
+  // 알람 정렬 -> 읽은 게 위로
+  const sortedalertData = [...alertData].sort((a, b) => {
+    if (a.isRead === b.isRead) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+    return a.isRead ? 1 : -1;
+  });
 
   // 다크, 라이트 모드
   const theme = useSelector((state: RootState) => state.theme.mode);
@@ -215,13 +220,11 @@ const Header = () => {
         />
 
         <div className="main-container">
-          {!isOnlyLogo && (
-            <div className="toggleBtn" onClick={handleToggleClick}>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          )}
+          <div className="toggleBtn" onClick={handleToggleClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
 
           <div
             className={clsx(token ? "marginLogoImg" : "logoImg", {
@@ -261,28 +264,41 @@ const Header = () => {
                   </div>
 
                   {userRole === "" ? (
-                    <div
-                      className="userIcon alertIcon"
-                      style={{ position: "relative" }}
-                    >
+                    <div className="userIcon alertIcon">
                       <Image
                         src={isDarkMode ? alertIconWhite : alertIconBlack}
                         alt="alert icon"
                         layout="responsive"
                         onClick={toggleAlert}
                       />
-                      {hasNewNotification && (
-                        <span
-                          style={{
-                            position: "absolute",
-                            top: "-5px",
-                            right: "0px",
-                            width: "10px",
-                            height: "10px",
-                            borderRadius: "50%",
-                            background: "red",
-                          }}
-                        />
+                      {newAlert && <span className="alertCircle" />}
+
+                      {isAlertOpen && (
+                        <div className="alertOpen">
+                          {alertData.length === 0 ? (
+                            <p className="alertText">알림이 없습니다</p>
+                          ) : (
+                            sortedalertData.map((noti) => (
+                              <div
+                                key={noti.id}
+                                className="alertMessage"
+                                onClick={() => readAlert(noti.id)}
+                              >
+                                <p
+                                  className="alertText"
+                                  style={{
+                                    color: noti.isRead ? "gray" : "black",
+                                  }}
+                                >
+                                  {noti.message}
+                                </p>
+                                {!noti.isRead && (
+                                  <p className="alertCheck">✔</p>
+                                )}
+                              </div>
+                            ))
+                          )}
+                        </div>
                       )}
                     </div>
                   ) : (
@@ -313,42 +329,6 @@ const Header = () => {
             </div>
           )}
         </div>
-
-        {isAlertOpen && (
-          <div
-            style={{
-              position: "absolute",
-              top: "-5px",
-              right: "20px",
-              background: "#fff",
-              borderRadius: "5px",
-              padding: "10px",
-              width: "200px",
-              zIndex: 9999,
-              boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-            }}
-          >
-            {notifications.length === 0 ? (
-              <p style={{ fontSize: "14px" }}>알림이 없습니다</p>
-            ) : (
-              notifications.map((noti) => (
-                <p
-                  key={noti.id}
-                  style={{
-                    fontSize: "14px",
-                    margin: "4px 0",
-                    color: readNotifications.includes(noti.id)
-                      ? "gray"
-                      : "black",
-                  }}
-                  onClick={() => handleNotificationClick(noti.id)}
-                >
-                  {noti.message}
-                </p>
-              ))
-            )}
-          </div>
-        )}
       </HeaderStyled>
     </>
   );

@@ -56,21 +56,30 @@ const Main = () => {
     } catch (error) {
       console.error("Error fetching ownership status:", error);
     }
-
-    try {
-      const res = await axios.get("http://localhost:5000/auth/getRole", {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const role = res.data;
-      setUserRole(role);
-    } catch (error) {
-      console.error("유저 정보 요청 실패:", error);
-    }
   };
+
+  // 유저, 관리자 구분
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/auth/getRole", {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const role = res.data;
+        setUserRole(role);
+      } catch (error) {
+        console.error("유저 정보 요청 실패:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, [token]);
 
   return (
     <MainStyled className={clsx("main-wrap")}>
