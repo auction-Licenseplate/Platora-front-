@@ -149,7 +149,6 @@ const Toggle = ({
                       onClick={() => router.push("/login")}
                     >
                       Tier {index + 1}
-                      {/* {index + 1} 등급 */}
                     </h3>
                   ))}
                 </div>
@@ -160,7 +159,7 @@ const Toggle = ({
                 <h3 onClick={() => router.push("/join")}>회원가입</h3>
               </div>
             </>
-          ) : (
+          ) : userRole === null ? null : (
             <>
               <div className="tier-container">
                 <h3 onClick={toggleTierList} className="tier-title">
@@ -183,42 +182,54 @@ const Toggle = ({
                   ))}
                 </div>
               </div>
-
+              {userRole === "" ? (
+                <>
+                  <div className="toggleTexts">
+                    <h3
+                      onClick={() =>
+                        router.push({
+                          pathname: "/myPage",
+                          query: { menu: "myInfo" },
+                        })
+                      }
+                    >
+                      내 계정
+                    </h3>
+                    <h3
+                      onClick={() =>
+                        router.push({
+                          pathname: "/myPage",
+                          query: { menu: "myPosts" },
+                        })
+                      }
+                    >
+                      내 작성글 보기
+                    </h3>
+                    <h3
+                      onClick={() =>
+                        router.push({
+                          pathname: "/myPage",
+                          query: { menu: "myFavorites" },
+                        })
+                      }
+                    >
+                      관심상품 보기
+                    </h3>
+                    <h3 onClick={handleWriteClick}>글 작성하기</h3>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3
+                    onClick={() =>
+                      window.open("http://localhost:4000", "_blank")
+                    }
+                  >
+                    관리자 페이지로 이동
+                  </h3>
+                </>
+              )}
               <div className="toggleTexts">
-                <h3
-                  onClick={() =>
-                    router.push({
-                      pathname: "/myPage",
-                      query: { menu: "myInfo" },
-                    })
-                  }
-                >
-                  내 계정
-                </h3>
-
-                <h3
-                  onClick={() =>
-                    router.push({
-                      pathname: "/myPage",
-                      query: { menu: "myPosts" },
-                    })
-                  }
-                >
-                  내 작성글 보기
-                </h3>
-
-                <h3
-                  onClick={() =>
-                    router.push({
-                      pathname: "/myPage",
-                      query: { menu: "myFavorites" },
-                    })
-                  }
-                >
-                  관심상품 보기
-                </h3>
-
-                <h3 onClick={handleWriteClick}>글 작성하기</h3>
                 <h3 onClick={handleLogout}>로그아웃</h3>
               </div>
             </>

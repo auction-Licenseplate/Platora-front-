@@ -172,15 +172,16 @@ const Header = () => {
     router.push("/");
   };
 
+  // 유저, 관리자 구분
   useEffect(() => {
     if (!token) return;
 
     const fetchUserInfo = async () => {
       try {
         const res = await axios.get("http://localhost:5000/auth/getRole", {
+          withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
-            withCredentials: true,
           },
         });
 
@@ -247,37 +248,46 @@ const Header = () => {
                       alt="user icon"
                       layout="responsive"
                       onClick={() => {
-                        router.push({
-                          pathname: "/myPage",
-                          query: { menu: "myInfo" },
-                        });
+                        {
+                          userRole === "admin"
+                            ? window.open("http://localhost:4000", "_blank")
+                            : router.push({
+                                pathname: "/myPage",
+                                query: { menu: "myInfo" },
+                              });
+                        }
                       }}
                     />
                   </div>
-                  <div
-                    className="userIcon alertIcon"
-                    style={{ position: "relative" }}
-                  >
-                    <Image
-                      src={isDarkMode ? alertIconWhite : alertIconBlack}
-                      alt="alert icon"
-                      layout="responsive"
-                      onClick={toggleAlert}
-                    />
-                    {hasNewNotification && (
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "-5px",
-                          right: "0px",
-                          width: "10px",
-                          height: "10px",
-                          borderRadius: "50%",
-                          background: "red",
-                        }}
+
+                  {userRole === "" ? (
+                    <div
+                      className="userIcon alertIcon"
+                      style={{ position: "relative" }}
+                    >
+                      <Image
+                        src={isDarkMode ? alertIconWhite : alertIconBlack}
+                        alt="alert icon"
+                        layout="responsive"
+                        onClick={toggleAlert}
                       />
-                    )}
-                  </div>
+                      {hasNewNotification && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-5px",
+                            right: "0px",
+                            width: "10px",
+                            height: "10px",
+                            borderRadius: "50%",
+                            background: "red",
+                          }}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
 
                   <div className="userIcon">
                     <Image

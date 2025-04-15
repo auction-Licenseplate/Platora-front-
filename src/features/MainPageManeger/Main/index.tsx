@@ -18,6 +18,9 @@ const Main = () => {
 
   const type = router.query.type ? Number(router.query.type) : undefined;
 
+  // 유저, 관리자 구분
+  const [userRole, setUserRole] = useState<string | null>(null);
+
   // 글 작성 버튼 클릭 시
   const handleClick = async () => {
     if (!token) {
@@ -53,6 +56,20 @@ const Main = () => {
     } catch (error) {
       console.error("Error fetching ownership status:", error);
     }
+
+    try {
+      const res = await axios.get("http://localhost:5000/auth/getRole", {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const role = res.data;
+      setUserRole(role);
+    } catch (error) {
+      console.error("유저 정보 요청 실패:", error);
+    }
   };
 
   return (
@@ -69,11 +86,15 @@ const Main = () => {
             <SoonProduct />
 
             {/* 글 작성하기 */}
-            <div className="wrtieBtnContainer">
-              <Button className="writeBtn" onClick={handleClick}>
-                <p className="mainFont">Post Auction</p>
-              </Button>
-            </div>
+            {userRole === "" ? (
+              <div className="wrtieBtnContainer">
+                <Button className="writeBtn" onClick={handleClick}>
+                  <p className="mainFont">Post Auction</p>
+                </Button>
+              </div>
+            ) : (
+              <></>
+            )}
 
             {/* 전체 경매 */}
             <AllProduct />
