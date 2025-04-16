@@ -8,7 +8,7 @@ import { myInfo } from "@/util/useMyInfo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import MyInfor from "./MyInfor/index";
-
+import api from "@/util/intercept";
 // 컴포넌트
 import MyPoint from "./MyPoint";
 import ChangePass from "./ChangePass";

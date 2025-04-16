@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Modal } from "antd";
 import axios from "axios";
+import api from "@/util/intercept";
 
 const Toggle = ({
   isToggleOpen,
@@ -76,13 +77,10 @@ const Toggle = ({
     }
 
     try {
-      const response = await axios.get(
-        "http://localhost:5000/admins/getStatus",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
+      const response = await api.get("http://localhost:5000/admins/getStatus", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
 
       const ownershipStatus = response.data;
 

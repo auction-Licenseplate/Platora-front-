@@ -8,7 +8,7 @@ import { RootState } from "@/store/store";
 import axios from "axios";
 import Tier from "../Tier";
 import { useEffect, useState } from "react";
-
+import api from "@/util/intercept";
 import AllProduct from "../../../components/Main/AllProduct/[type]";
 import SoonProduct from "@/components/Main/SoonProduct/[type]";
 
@@ -29,13 +29,10 @@ const Main = () => {
     }
 
     try {
-      const response = await axios.get(
-        "http://localhost:5000/admins/getStatus",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
+      const response = await api.get("http://localhost:5000/admins/getStatus", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
 
       const ownershipStatus = response.data;
 

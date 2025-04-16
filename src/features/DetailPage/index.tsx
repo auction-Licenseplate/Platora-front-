@@ -222,8 +222,9 @@ const DetailPage = ({ id }: detailprops) => {
             <div>
               <Image
                 src={`http://localhost:5000/uploads//${img}`}
-                width={400}
-                height={400}
+                width={0}
+                height={0}
+                className="detail-mainimg"
                 layout="responsive"
                 alt=""
               />
@@ -233,13 +234,15 @@ const DetailPage = ({ id }: detailprops) => {
                 src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
                 width={150}
                 height={150}
+                className="detail-clickimg"
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
-                width={150}
-                height={150}
+                width={0}
+                height={0}
+                className="detail-clickimg"
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
@@ -247,6 +250,7 @@ const DetailPage = ({ id }: detailprops) => {
                 src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
                 width={150}
                 height={150}
+                className="detail-clickimg"
                 alt=""
                 onClick={() => setImg(arr[0].carimg3)}
               />
@@ -272,14 +276,21 @@ const DetailPage = ({ id }: detailprops) => {
               </div>
               <div className="detail-textdiv">
                 <span className="detail-texttitle">입찰 횟수</span>
-                <span>
-                  {arr[0].count}
+                <span
+                  style={{ display: "flex", gap: "10px", alignItems: "center" }}
+                >
+                  <span>{list.length - 1}회</span>
                   <span
                     onClick={() => {
                       setListopen(true);
                     }}
+                    style={{
+                      fontSize: "12px",
+                      color: "gray",
+                      cursor: "pointer",
+                    }}
                   >
-                    기록 보기
+                    [기록 보기]
                   </span>
                 </span>
               </div>
@@ -394,18 +405,21 @@ const DetailPage = ({ id }: detailprops) => {
                 src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
                 width={400}
                 height={400}
+                className="detail-detailinfoImg"
                 alt=""
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
                 width={400}
                 height={400}
+                className="detail-detailinfoImg"
                 alt=""
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
                 width={400}
                 height={400}
+                className="detail-detailinfoImg"
                 alt=""
               />
             </div>

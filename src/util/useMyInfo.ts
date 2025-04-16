@@ -5,7 +5,7 @@ import modal from "antd/es/modal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
-
+import api from "./intercept";
 // ✅ 타입 정의
 export interface UserInfo {
   name?: string;
@@ -127,7 +127,7 @@ export const myInfo = (info: string) => {
       });
       return;
     }
-    axios
+    api
       .post("http://localhost:5000/pay/refund-point", refundDetails, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` },
@@ -145,11 +145,11 @@ export const myInfo = (info: string) => {
         });
       })
       .catch(() => {
-        modal.error({
-          centered: true,
-          title: "포인트 반환에 실패했습니다.",
-          content: "문제가 발생했습니다. 다시 시도해주세요.",
-        });
+        // modal.error({
+        //   centered: true,
+        //   title: "포인트 반환에 실패했습니다.",
+        //   content: "문제가 발생했습니다. 다시 시도해주세요.",
+        // });
       });
   };
 
@@ -190,7 +190,7 @@ export const myInfo = (info: string) => {
       const orderId = `order-${Date.now()}`;
       const orderName = "포인트 충전";
 
-      const res = await axios.get("http://localhost:5000/pay/toss-client-key");
+      const res = await api.get("http://localhost:5000/pay/toss-client-key");
       const tossClientKey = res.data.tossClientKey;
       const toss = await loadTossPayments(tossClientKey); // 토스 sdk
 
@@ -251,7 +251,7 @@ export const myInfo = (info: string) => {
 
   // ⑵ 비밀번호 변경 요청 ( 성공 시 reload )
   const pwvalue = () => {
-    axios
+    api
       .post(
         "http://localhost:5000/auth/pwfind/updatepw",
         { password },
@@ -281,60 +281,14 @@ export const myInfo = (info: string) => {
 
   // - 포인트 내역 요청 후 useState에 저장 (테이블 내역 출력을 위해)
   const payTableInfo = async () => {
-    const res = await axios.get("http://localhost:5000/pay/payInfo", {
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (res.data.payPoint.length > 0 || res.data.bidsData.length > 0) {
-      const payData = res.data.payPoint.map((item: any, index: number) => {
-        const rawDate = new Date(item.create_at);
-        const date = rawDate.toLocaleString("ko-KR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
-        if (item.refund_amount !== null && item.refund_amount !== undefined) {
-          return {
-            item: "포인트 환불",
-            state: `- ${(item.refund_amount ?? 0).toLocaleString()} 포인트`,
-            date,
-            rawDate,
-            key: Date.now() + index,
-          };
-        } else if (
-          item.point_minus !== null &&
-          item.point_minus !== undefined
-        ) {
-          return {
-            item: "차량 점수 확인",
-            state: `- ${(item.point_minus ?? 0).toLocaleString()} 포인트`,
-            date,
-            rawDate,
-            key: Date.now() + index,
-          };
-        } else {
-          return {
-            item: "포인트 충전",
-            state: `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
-            date,
-            rawDate,
-            key: Date.now() + index,
-          };
-        }
+    try {
+      const res = await api.get("http://localhost:5000/pay/payInfo", {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      const bidData = res.data.refundPoint
-        .filter((item: any) => {
-          return (
-            (item.refund_bid_price && item.refund_bid_price !== 0) ||
-            (item.bid_price && item.bid_price !== 0)
-          );
-        })
-        .map((item: any, index: number) => {
+      if (res.data.payPoint.length > 0 || res.data.bidsData.length > 0) {
+        const payData = res.data.payPoint.map((item: any, index: number) => {
           const rawDate = new Date(item.create_at);
           const date = rawDate.toLocaleString("ko-KR", {
             year: "numeric",
@@ -344,23 +298,26 @@ export const myInfo = (info: string) => {
             minute: "2-digit",
           });
 
-          if (
-            item.refund_bid_price !== null &&
-            item.refund_bid_price !== undefined
-          ) {
+          if (item.refund_amount != null) {
             return {
-              item: "입찰 포인트 환불",
-              state: `+ ${(
-                item.refund_bid_price ?? 0
-              ).toLocaleString()} 포인트`,
+              item: "포인트 환불",
+              state: `- ${item.refund_amount.toLocaleString()} 포인트`,
+              date,
+              rawDate,
+              key: Date.now() + index,
+            };
+          } else if (item.point_minus != null) {
+            return {
+              item: "차량 점수 확인",
+              state: `- ${item.point_minus.toLocaleString()} 포인트`,
               date,
               rawDate,
               key: Date.now() + index,
             };
           } else {
             return {
-              item: "입찰 참여",
-              state: `- ${(item.bid_price ?? 0).toLocaleString()} 포인트`,
+              item: "포인트 충전",
+              state: `+ ${(item.amount ?? 0).toLocaleString()} 포인트`,
               date,
               rawDate,
               key: Date.now() + index,
@@ -368,24 +325,61 @@ export const myInfo = (info: string) => {
           }
         });
 
-      const mergedData = [...payData, ...bidData].sort(
-        (a, b) => b.rawDate.getTime() - a.rawDate.getTime()
-      );
+        const bidData = res.data.refundPoint
+          .filter((item: any) => {
+            return (
+              (item.refund_bid_price && item.refund_bid_price !== 0) ||
+              (item.bid_price && item.bid_price !== 0)
+            );
+          })
+          .map((item: any, index: number) => {
+            const rawDate = new Date(item.create_at);
+            const date = rawDate.toLocaleString("ko-KR", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            });
 
-      setRefundTableData(mergedData);
+            if (item.refund_bid_price != null) {
+              return {
+                item: "입찰 포인트 환불",
+                state: `+ ${item.refund_bid_price.toLocaleString()} 포인트`,
+                date,
+                rawDate,
+                key: Date.now() + index,
+              };
+            } else {
+              return {
+                item: "입찰 참여",
+                state: `- ${(item.bid_price ?? 0).toLocaleString()} 포인트`,
+                date,
+                rawDate,
+                key: Date.now() + index,
+              };
+            }
+          });
+
+        const mergedData = [...payData, ...bidData].sort(
+          (a, b) => b.rawDate.getTime() - a.rawDate.getTime()
+        );
+
+        setRefundTableData(mergedData);
+      }
+    } catch (error) {
+      console.error("payTableInfo 요청 중 에러 발생:", error);
+      // 인터셉터에서 이미 Modal 처리되므로 여기선 추가 조치 불필요
     }
   };
 
   // - 차량 등록 정보 요청 후 useState에 저장 (테이블 내역 출력을 위해)
   const fetchVehicleData = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/vehicles/vehicleData",
-        {
-          withCredentials: true,
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await api.get("http://localhost:5000/vehicles/vehicleData", {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const vehicleData = res.data.map((item: any, index: number) => {
         const date = new Date(item.create_at).toLocaleString("ko-KR", {
@@ -440,7 +434,7 @@ export const myInfo = (info: string) => {
     if (file) formData.append("file", file);
 
     try {
-      const res = await axios.post(
+      const res = await api.post(
         "http://localhost:5000/users/certificate",
         formData,
         {

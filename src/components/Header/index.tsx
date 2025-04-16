@@ -8,7 +8,7 @@ import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
 import { setTheme, toggleTheme } from "@/store/themeSlice";
 import Toggle from "./Toggle";
-
+import api from "@/util/intercept";
 // 로고 이미지
 import logoBlack from "@/assets/images/platoraLogo(black).png";
 import logoWhite from "@/assets/images/platoraLogo(white).png";
@@ -51,7 +51,7 @@ const Header = () => {
     // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
     const fetchalertData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/alert/getAlert", {
+        const res = await api.get("http://localhost:5000/alert/getAlert", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
@@ -92,7 +92,7 @@ const Header = () => {
   const readAlert = async (id: number) => {
     try {
       // patch: 일부 데이터 변경
-      await axios.patch(
+      await api.patch(
         `http://localhost:5000/alert/${id}`,
         { isRead: true },
         {
@@ -179,11 +179,9 @@ const Header = () => {
 
   // 유저, 관리자 구분
   useEffect(() => {
-    if (!token) return;
-
     const fetchUserInfo = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/auth/getRole", {
+        const res = await api.get("http://localhost:5000/auth/getRole", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,

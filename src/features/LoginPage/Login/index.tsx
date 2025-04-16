@@ -13,12 +13,6 @@ const Login = () => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
-  useEffect(() => {
-    if (token) {
-      router.push("/");
-    }
-  }, []);
-
   return (
     <LoginStyled className={clsx("login-wrap")}>
       <div className="loginForm-container">
