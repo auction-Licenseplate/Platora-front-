@@ -164,8 +164,10 @@ export const DetailStyled = styled.div`
       }
 
       .detail-pricetotal {
-        margin-left: 0;
-        text-align: center;
+        font-size: 12px;
+        margin-left: 120px;
+        margin-top: -10px;
+        color: #777;
       }
 
       .detail-numbtn {
@@ -174,8 +176,9 @@ export const DetailStyled = styled.div`
       }
 
       .detail-heart {
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
       }
       .detail-pricetotal {
         font-size: 10px;

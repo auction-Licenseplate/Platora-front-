@@ -331,29 +331,31 @@ const DetailPage = ({ id }: detailprops) => {
                 </div>
               </div>
               <div className="detail-textdiv">
-                <span className="detail-pricespan">
-                  <span className="detail-texttitle">
-                    {getRemainingTime(arr[0].endtime) === "경매 종료"
-                      ? "최종 입찰가"
-                      : "예상 입찰가"}
-                  </span>
-                  <span className="detail-thicktext">
-                    {(price + price * 0.1).toLocaleString()}
-                  </span>
-                  <div>
-                    (물품 가격: {price.toLocaleString()} + 경매 수수료
-                    {(price * 0.1).toLocaleString()})
-                  </div>
+                <span className="detail-texttitle">예상 입찰가</span>
+                <span className="detail-thicktext">
+                  {(price + price * 0.1).toLocaleString()}
                 </span>
               </div>
               <div>
-                {getRemainingTime(arr[0].endtime) === "경매 종료" ? (
-                  <Button disabled={true}>종료되었습니다</Button>
-                ) : (
-                  <Button onClick={updatePrice}>입찰하기</Button>
-                )}
+                <div className="detail-pricetotal">
+                  ({price.toLocaleString()}원 + 경매 수수료{" "}
+                  {(price * 0.1).toLocaleString()}원)
+                </div>
 
-                <Image onClick={likePost} src={heartimg} alt="" />
+                <div className="detail-btndiv">
+                  {getRemainingTime(arr[0].endtime) === "경매 종료" ? (
+                    <Button disabled={true}>종료되었습니다</Button>
+                  ) : (
+                    <Button onClick={updatePrice}>입찰하기</Button>
+                  )}
+
+                  <Image
+                    className="detail-heart"
+                    onClick={likePost}
+                    src={heartimg}
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
