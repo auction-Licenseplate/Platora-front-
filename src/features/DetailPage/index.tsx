@@ -68,7 +68,6 @@ const DetailPage = ({ id }: detailprops) => {
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
-        console.log(res.data);
         const lastData = {
           lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
           lastUser: res.data.lastBid.bidUser_Id, // 최근 결제 아이디
@@ -215,29 +214,29 @@ const DetailPage = ({ id }: detailprops) => {
             <div>
               <Image
                 src={`http://localhost:5000/uploads//${img}`}
-                width={360}
-                height={360}
+                width={370}
+                height={300}
                 alt=""
               />
             </div>
             <div className="detial-nowrap">
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
-                width={120}
+                width={121}
                 height={120}
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
-                width={120}
+                width={121}
                 height={120}
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
-                width={120}
+                width={121}
                 height={120}
                 alt=""
                 onClick={() => setImg(arr[0].carimg3)}
@@ -286,7 +285,7 @@ const DetailPage = ({ id }: detailprops) => {
                   {arr[0].name}
                 </span>
               </div>
-              <div>{arr[0].carinfo}</div>
+
               <hr></hr>
               <br></br>
               <div className="detail-textdiv">
@@ -372,6 +371,31 @@ const DetailPage = ({ id }: detailprops) => {
             list={list}
             listopen={listopen}
           />
+        </div>
+        <div className="detail-detailboxwrap">
+          <div className="detail-detailBox">
+            <div className="detail-carinfo">{arr[0].carinfo}</div>
+            <div className="detial-detailImg">
+              <Image
+                src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
+                width={400}
+                height={400}
+                alt=""
+              />
+              <Image
+                src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
+                width={400}
+                height={400}
+                alt=""
+              />
+              <Image
+                src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
+                width={400}
+                height={400}
+                alt=""
+              />
+            </div>
+          </div>
         </div>
       </div>
     </DetailStyled>

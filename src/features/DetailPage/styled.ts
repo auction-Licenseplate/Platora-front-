@@ -3,7 +3,12 @@ import styled from "styled-components";
 export const DetailStyled = styled.div`
   &.detailstyled {
     width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
+    background-color: white;
 
     .detail-wrap {
       width: 100%;
@@ -15,6 +20,7 @@ export const DetailStyled = styled.div`
       font-size: 2vw;
       font-weight: 500;
       margin-left: 20px;
+      color: black;
     }
 
     .detail-container {
@@ -25,7 +31,9 @@ export const DetailStyled = styled.div`
       margin: 0 auto;
       flex-direction: row;
     }
-
+    .detail-imgcontainer {
+      margin-top: 20px;
+    }
     .detail-imgcontainer,
     .detail-textcontainer {
       width: 50%;
@@ -49,6 +57,7 @@ export const DetailStyled = styled.div`
       align-items: baseline;
       gap: 10%;
       text-align: center;
+      color: black;
     }
 
     .detail-bigprice {
@@ -86,6 +95,8 @@ export const DetailStyled = styled.div`
     }
     .detial-nowrap {
       white-space: nowrap; /* 줄바꿈 방지 */
+      display: flex;
+      gap: 3px;
     }
     .detail-pricetotal {
       font-size: 12px;
@@ -118,7 +129,30 @@ export const DetailStyled = styled.div`
       display: flex;
       align-items: center;
     }
-
+    .detail-detailboxwrap {
+      display: flex;
+      justify-content: center;
+    }
+    .detail-detailBox {
+      background-color: #fafafa;
+      width: 80%;
+      border: 1px solid lightgray;
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .detial-detailImg {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .detail-carinfo {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
     // 미디어 쿼리 - 모바일
     @media (max-width: 1000px) {
       .detail-container {

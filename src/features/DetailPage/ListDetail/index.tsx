@@ -8,9 +8,9 @@ interface listProps {
 
 const ListDetail = ({ list, setListopen, listopen }: listProps) => {
   const dataSource = list
-    ? list.map((x: any, i: number) => ({
+    ? list.slice(1).map((x: any, i: number) => ({
         key: String(i + 1),
-        index: i + 1,
+        index: i + 2,
         name: x.bidUser_name,
         price: x.au_final_price,
       }))
