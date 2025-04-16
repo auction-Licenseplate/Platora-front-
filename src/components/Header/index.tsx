@@ -92,9 +92,11 @@ const Header = () => {
   const readAlert = async (id: number) => {
     try {
       // patch: 일부 데이터 변경
+
       await api.patch(
-        `http://localhost:5000/alert/${id}`,
-        { isRead: true },
+        `http://localhost:5000/notification/${id}`,
+        { check: true },
+
         {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
@@ -196,6 +198,42 @@ const Header = () => {
     };
 
     fetchUserInfo();
+
+    // 알림 데이터
+    const fetchalertData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:5000/notification/getAlert",
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const alertData = res.data;
+
+        // 안 읽거나 읽어도 3일 안 지난 것만 남김
+        const now = new Date();
+
+        const filtered = alertData.filter((noti) => {
+          if (!noti.isRead) return true;
+
+          const createdAt = new Date(noti.createdAt);
+
+          const diff =
+            (now.getTime() - createdAt.getTime()) / (1000 * 3600 * 24);
+          return diff < 3;
+        });
+
+        setAlertData(filtered);
+      } catch (error) {
+        console.error("알림 불러오기 실패:", error);
+      }
+    };
+
+    fetchalertData();
   }, [token]);
 
   // 해당 페이지에서 스타일 변경

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { setUserToken } from "@/store/userSlice";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import axios from "axios";
+import "antd/dist/antd.css";
 
 import LoadingSpinner from "@/components/Loading";
 import { useRouter } from "next/router";
