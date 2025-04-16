@@ -6,6 +6,7 @@ export const MyAccountStyled = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-top: 30px !important;
 
     .main-container {
       display: flex;

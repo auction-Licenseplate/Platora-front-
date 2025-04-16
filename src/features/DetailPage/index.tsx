@@ -106,7 +106,9 @@ const DetailPage = ({ id }: detailprops) => {
         setUserId(res.data.currentUserId); // 로그인 한 사람의 유저 아이디
       });
   }, [id, token, router]);
+
   useEffect(() => {}, [listopen]);
+
   useEffect(() => {
     if (arr.length === 0) return;
 
@@ -150,6 +152,7 @@ const DetailPage = ({ id }: detailprops) => {
 
     return `${days}일 ${hours}시간 ${minutes}분 남음`;
   };
+
   // 입찰가 갱신 요청
   const updatePrice = () => {
     if (userId === arr[0].userId)
@@ -185,6 +188,7 @@ const DetailPage = ({ id }: detailprops) => {
         console.log(res.data);
       });
   };
+
   // 좋아요 상태 업데이트
   const likePost = () => {
     axios
@@ -261,7 +265,7 @@ const DetailPage = ({ id }: detailprops) => {
               <div className="detail-textdiv">
                 <span className="detail-texttitle">입찰 횟수</span>
                 <span>
-                  {arr[0].count}18
+                  {arr[0].count}
                   <span
                     onClick={() => {
                       setListopen(true);
@@ -294,7 +298,9 @@ const DetailPage = ({ id }: detailprops) => {
                 <div className="detail-currentprice">
                   <span
                     onClick={() => {
-                      priceChange("-");
+                      getRemainingTime(arr[0].endtime) === "경매 종료"
+                        ? undefined
+                        : priceChange("-");
                     }}
                   >
                     <Image className="detail-numbtn" src={minus} alt="" />
@@ -303,6 +309,11 @@ const DetailPage = ({ id }: detailprops) => {
                   <Input
                     type="Number"
                     style={{ width: 100 }}
+                    disabled={
+                      getRemainingTime(arr[0].endtime) === "경매 종료"
+                        ? true
+                        : false
+                    }
                     value={price}
                     onChange={(e) => {
                       setPrice(Number(e.target.value));
@@ -310,7 +321,9 @@ const DetailPage = ({ id }: detailprops) => {
                   />
                   <span
                     onClick={() => {
-                      priceChange("+");
+                      getRemainingTime(arr[0].endtime) === "경매 종료"
+                        ? undefined
+                        : priceChange("+");
                     }}
                   >
                     <Image className="detail-numbtn" src={plus} alt="" />
@@ -318,24 +331,29 @@ const DetailPage = ({ id }: detailprops) => {
                 </div>
               </div>
               <div className="detail-textdiv">
-                <span className="detail-texttitle">예상 입찰가</span>
-                <span className="detail-thicktext">
-                  {(price + price * 0.1).toLocaleString()}
+                <span className="detail-pricespan">
+                  <span className="detail-texttitle">
+                    {getRemainingTime(arr[0].endtime) === "경매 종료"
+                      ? "최종 입찰가"
+                      : "예상 입찰가"}
+                  </span>
+                  <span className="detail-thicktext">
+                    {(price + price * 0.1).toLocaleString()}
+                  </span>
+                  <div>
+                    (물품 가격: {price.toLocaleString()} + 경매 수수료
+                    {(price * 0.1).toLocaleString()})
+                  </div>
                 </span>
               </div>
-              <div className="detail-pricetotal">
-                ({price.toLocaleString()}원 + 경매 수수료{" "}
-                {(price * 0.1).toLocaleString()}원)
-              </div>
+              <div>
+                {getRemainingTime(arr[0].endtime) === "경매 종료" ? (
+                  <Button disabled={true}>종료되었습니다</Button>
+                ) : (
+                  <Button onClick={updatePrice}>입찰하기</Button>
+                )}
 
-              <div className="detail-btndiv">
-                <Button onClick={updatePrice}>입찰하기</Button>
-                <Image
-                  className="detail-heart"
-                  onClick={likePost}
-                  src={heartimg}
-                  alt=""
-                />
+                <Image onClick={likePost} src={heartimg} alt="" />
               </div>
             </div>
           </div>

@@ -6,9 +6,15 @@ export const TierStyled = styled.div`
 
     .grade-tab-wrapper {
       display: flex;
-      gap: 15px;
-      margin: 30px 0;
+      gap: 20px;
+      margin-top: 130px;
       justify-content: center;
+
+      @media (max-width: 768px) {
+        opacity: 0;
+        margin-top: 50px;
+        overflow: hidden;
+      }
     }
 
     .grade-tab {
@@ -16,7 +22,6 @@ export const TierStyled = styled.div`
       font-size: 16px;
       cursor: pointer;
       padding-bottom: 5px;
-      color: #888;
       transition: color 0.3s;
 
       &::after {
@@ -26,7 +31,6 @@ export const TierStyled = styled.div`
         left: 0;
         height: 2px;
         width: 0%;
-        background-color: #333;
         transition: width 0.3s ease;
       }
 
@@ -35,12 +39,10 @@ export const TierStyled = styled.div`
       }
 
       &.selected {
-        color: #000;
-        font-weight: 600;
+        font-weight: bold;
 
         &::after {
           width: 100%;
-          background-color: #000;
         }
       }
     }

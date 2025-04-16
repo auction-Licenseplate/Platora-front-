@@ -124,7 +124,7 @@ export const HeaderStyled = styled.div`
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease-in-out;
-        margin: 15px 0 0 15px;
+        margin: 15px 0 0 10px;
       }
 
       .tier-list.open {
@@ -276,6 +276,49 @@ export const HeaderStyled = styled.div`
     input:checked + .slider:before {
       content: "🌙";
       transform: translateX(24px);
+    }
+
+    /* 알림 */
+    .alertIcon {
+      width: 27px;
+      position: relative;
+    }
+
+    .alertCircle {
+      position: absolute;
+      top: -5px;
+      right: 0px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: red;
+    }
+
+    .alertOpen {
+      position: absolute;
+      top: 30px;
+      right: -5px;
+      background: #ffffff;
+      border-radius: 5px;
+      padding: 10px;
+      width: 300px;
+      z-index: 9999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+      .alertText {
+        font-size: 14px;
+        margin: 4px 0;
+      }
+    }
+
+    .alertMessage {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .alertCheck {
+        margin-right: 5px;
+      }
     }
 
     @media screen and (max-width: 768px) {

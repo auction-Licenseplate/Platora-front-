@@ -8,15 +8,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
 import { request } from "http";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import seeimg from "@/assets/images/pwsee.png";
 import notsee from "@/assets/images/notsee.png";
+import seeImgBlack from "@/assets/images/seeImgBlack.png";
+import notseeBlack from "@/assets/images/notseeImgBlack.png";
 const LoginForm = () => {
   const [see, setSee] = useState("password");
   const router = useRouter();
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.user.userToken);
+
+  // 다크, 라이트 모드
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
 
   const seepw = () => {
     if (see === "password") {
@@ -71,7 +81,15 @@ const LoginForm = () => {
             />
             <div className="loginForm-seePw" onClick={seepw}>
               <Image
-                src={see === "password" ? seeimg : notsee}
+                src={
+                  see === "password"
+                    ? isDarkMode
+                      ? seeimg
+                      : seeImgBlack
+                    : isDarkMode
+                    ? notsee
+                    : notseeBlack
+                }
                 alt="pwsee"
                 width={20}
               />
@@ -102,7 +120,9 @@ const LoginForm = () => {
               회원가입
             </span>
           </div>
-          <Button htmlType="submit">로그인</Button>
+          <Button className="loginBtn" htmlType="submit">
+            로그인
+          </Button>
         </form>
       </div>
     </LoginFormStyled>

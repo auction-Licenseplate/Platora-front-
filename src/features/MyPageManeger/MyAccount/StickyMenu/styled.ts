@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StickyMenuStyled = styled.div`
   width: 240px;
+  margin-top: 30px !important;
 
   .myPageSticky {
     width: 100%;
@@ -10,7 +11,7 @@ export const StickyMenuStyled = styled.div`
     align-items: flex-start;
     justify-content: space-between;
     gap: 15px;
-    height: 400px;
+    height: 450px;
   }
 
   .menus {

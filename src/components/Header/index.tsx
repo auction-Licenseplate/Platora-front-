@@ -15,10 +15,11 @@ import logoWhite from "@/assets/images/platoraLogo(white).png";
 
 import userIconBlack from "@/assets/images/userIcon(black).png";
 import userIconWhite from "@/assets/images/userIcon(white).png";
-import favoriteIconBlack from "@/assets/images/favoriteIcon(black).png";
-import favoriteIconWhite from "@/assets/images/favoriteIcon(white).png";
+import alertIconBlack from "@/assets/images/alertIcon(black).png";
+import alertIconWhite from "@/assets/images/alertIcon(white).png";
 import logoutIconBlack from "@/assets/images/logoutIcon(black).png";
 import logoutIconWhite from "@/assets/images/logoutIcon(white).png";
+
 import axios from "axios";
 
 const Header = () => {
@@ -31,6 +32,90 @@ const Header = () => {
 
   // 타입 별 게시글 토글
   const [isTierOpen, setIsTierOpen] = useState(false);
+
+  // 알람 상태
+  const [alertData, setAlertData] = useState<
+    { id: number; message: string; createdAt: string; isRead: boolean }[]
+  >([]);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [newAlert, setNewAlert] = useState(false);
+
+  // 유저, 관리자 구분
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  // 알람 열기/닫기
+  const toggleAlert = () => setIsAlertOpen((prev) => !prev);
+
+  // 알림 데이터
+  useEffect(() => {
+    // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
+    const fetchalertData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/alert/getAlert", {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const alertData = res.data;
+
+        // 안 읽거나 읽어도 3일 안 지난 것만 남김
+        const now = new Date();
+
+        const filtered = alertData.filter((noti) => {
+          if (!noti.isRead) return true;
+
+          const createdAt = new Date(noti.createdAt);
+
+          const diff =
+            (now.getTime() - createdAt.getTime()) / (1000 * 3600 * 24);
+          return diff < 3;
+        });
+
+        setAlertData(filtered);
+      } catch (error) {
+        console.error("알림 불러오기 실패:", error);
+      }
+    };
+
+    fetchalertData();
+  }, []);
+
+  // 안 읽은 알림 여부 감지
+  useEffect(() => {
+    const hasUnread = alertData.some((noti) => !noti.isRead);
+    setNewAlert(hasUnread);
+  }, [alertData]);
+
+  // 알림 클릭 처리
+  const readAlert = async (id: number) => {
+    try {
+      // patch: 일부 데이터 변경
+      await axios.patch(
+        `http://localhost:5000/alert/${id}`,
+        { isRead: true },
+        {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setAlertData((prev) =>
+        prev.map((noti) => (noti.id === id ? { ...noti, isRead: true } : noti))
+      );
+    } catch (err) {
+      console.error("알림 상태 변경 실패:", err);
+    }
+  };
+
+  // 알람 정렬 -> 읽은 게 위로
+  const sortedalertData = [...alertData].sort((a, b) => {
+    if (a.isRead === b.isRead) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+    return a.isRead ? 1 : -1;
+  });
 
   // 다크, 라이트 모드
   const theme = useSelector((state: RootState) => state.theme.mode);
@@ -92,6 +177,29 @@ const Header = () => {
     router.push("/");
   };
 
+  // 유저, 관리자 구분
+  useEffect(() => {
+    if (!token) return;
+
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/auth/getRole", {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const role = res.data;
+        setUserRole(role);
+      } catch (error) {
+        console.error("유저 정보 요청 실패:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, [token]);
+
   // 해당 페이지에서 스타일 변경
   const isOnlyLogo = /^\/(login|join|find\/(id|pw))/.test(router.asPath);
 
@@ -104,6 +212,7 @@ const Header = () => {
           isToggleOpen={isToggleOpen}
           handleToggleClick={handleToggleClick}
           token={token}
+          userRole={userRole}
           toggleTierList={toggleTierList}
           isTierOpen={isTierOpen}
           handleClick={handleClick}
@@ -111,13 +220,11 @@ const Header = () => {
         />
 
         <div className="main-container">
-          {!isOnlyLogo && (
-            <div className="toggleBtn" onClick={handleToggleClick}>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          )}
+          <div className="toggleBtn" onClick={handleToggleClick}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
 
           <div
             className={clsx(token ? "marginLogoImg" : "logoImg", {
@@ -144,26 +251,60 @@ const Header = () => {
                       alt="user icon"
                       layout="responsive"
                       onClick={() => {
-                        router.push({
-                          pathname: "/myPage",
-                          query: { menu: "myInfo" },
-                        });
+                        {
+                          userRole === "admin"
+                            ? window.open("http://localhost:4000", "_blank")
+                            : router.push({
+                                pathname: "/myPage",
+                                query: { menu: "myInfo" },
+                              });
+                        }
                       }}
                     />
                   </div>
-                  <div className="userIcon">
-                    <Image
-                      src={isDarkMode ? favoriteIconWhite : favoriteIconBlack}
-                      alt="favorite icon"
-                      layout="responsive"
-                      onClick={() => {
-                        router.push({
-                          pathname: "/myPage",
-                          query: { menu: "myFavorites" },
-                        });
-                      }}
-                    />
-                  </div>
+
+                  {userRole === "" ? (
+                    <div className="userIcon alertIcon">
+                      <Image
+                        src={isDarkMode ? alertIconWhite : alertIconBlack}
+                        alt="alert icon"
+                        layout="responsive"
+                        onClick={toggleAlert}
+                      />
+                      {newAlert && <span className="alertCircle" />}
+
+                      {isAlertOpen && (
+                        <div className="alertOpen">
+                          {alertData.length === 0 ? (
+                            <p className="alertText">알림이 없습니다</p>
+                          ) : (
+                            sortedalertData.map((noti) => (
+                              <div
+                                key={noti.id}
+                                className="alertMessage"
+                                onClick={() => readAlert(noti.id)}
+                              >
+                                <p
+                                  className="alertText"
+                                  style={{
+                                    color: noti.isRead ? "gray" : "black",
+                                  }}
+                                >
+                                  {noti.message}
+                                </p>
+                                {!noti.isRead && (
+                                  <p className="alertCheck">✔</p>
+                                )}
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+
                   <div className="userIcon">
                     <Image
                       src={isDarkMode ? logoutIconWhite : logoutIconBlack}

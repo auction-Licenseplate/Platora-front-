@@ -16,7 +16,7 @@ export const AllProductStyled = styled.div`
     }
 
     .noAuctionImg {
-      margin-top: 10px;
+      margin-bottom: 30px;
       width: 60%;
       height: 400px;
     }
@@ -196,8 +196,9 @@ export const AllProductStyled = styled.div`
       }
 
       .noAuctionImg {
-        width: 100%;
-        min-height: 250px;
+        width: 80%;
+        min-height: 200px;
+        max-height: 200px;
       }
     }
   }

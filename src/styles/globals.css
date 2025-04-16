@@ -14,7 +14,7 @@
   --myPageSticky-color: rgb(80, 80, 80);
   --active-color: white;
   --title-color: rgb(146, 146, 146);
-  --post-color: rgb(206, 206, 206);
+  --post-color: rgb(255, 255, 255);
   --btn-color: rgb(188, 188, 210);
   --before-color: rgb(220, 220, 220);
   --after-color: rgb(179, 179, 179);
@@ -39,7 +39,7 @@
   --myPageSticky-color: rgb(173, 173, 173);
   --active-color: rgb(56, 56, 56);
   --title-color: rgb(100, 100, 100);
-  --post-color: rgb(114, 114, 114);
+  --post-color: rgb(220, 220, 220);
   --before-color: rgb(60, 60, 60);
   --after-color: rgb(112, 112, 112);
   --btn-color: rgb(163, 172, 60);
@@ -99,7 +99,7 @@
   }
 }
 
-Button {
+/* Button {
   background-color: var(--btn-color) !important;
   color: var(--btn-text-color) !important;
 }
@@ -108,7 +108,7 @@ button:hover,
 button:focus {
   background-color: var(--btn-hover) !important;
   color: var(--btn-text-color) !important;
-}
+} */
 
 /* 로딩 */
 .loadingColor .ant-spin-dot-item {
@@ -271,6 +271,23 @@ input::placeholder {
   box-shadow: 2px 2px 10px var(--box-shadow);
 }
 
+/* 등급 별 게시글 */
+.grade-tab {
+  color: gray;
+}
+
+.grade-tab::after {
+  background-color: gray;
+}
+
+.grade-tab.selected {
+  color: var(--foreground);
+}
+
+.grade-tab.selected::after {
+  background-color: var(--foreground);
+}
+
 /* 글 작성하기 */
 .writeBtn {
   background-color: rgba(255, 255, 255, 0) !important;
@@ -292,11 +309,11 @@ input::placeholder {
 /* 내 게시글 */
 .postsInfo {
   background-color: var(--post-color);
-  color: var(--background);
+  /* color: var(--background); */
 }
 
 .postText {
-  color: var(--background);
+  /* color: var(--background); */
 }
 
 .postLine {

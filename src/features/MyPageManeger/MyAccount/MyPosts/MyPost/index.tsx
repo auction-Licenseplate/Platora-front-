@@ -6,7 +6,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
-import { Tooltip } from "antd";
+import { Modal, Tooltip } from "antd";
+
+// 이미지
+import fullheart from "@/assets/images/fullheart.png";
+import heart from "@/assets/images/heart.png";
 
 interface postType {
   type: string;
@@ -26,10 +30,25 @@ const MyPost = ({
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  // 게시글별 좋아요 상태
+  const [likedMap, setLikedMap] = useState<{ [key: string]: boolean }>({});
+
+  useEffect(() => {
+    if (type === "favorite") {
+      const initLiked: { [key: string]: boolean } = {};
+      favoritePosts.forEach((post) => {
+        const key = post.auctionId || post.auctionID || post.vehicleTitle;
+        initLiked[key] = true; // 좋아요 상태
+      });
+      setLikedMap(initLiked);
+    }
+  }, [type, favoritePosts]);
+
+  // 남은 시간 계산
   const renderPost = (
     post: any,
     key: number | string,
-    isPending: boolean = false
+    isPending: boolean = false //승인 전
   ) => {
     const carImages = post.carImage?.split(",") || [];
     const firstImage = carImages[0]?.trim();
@@ -51,6 +70,66 @@ const MyPost = ({
       }
     }
 
+    // 삭제 요청 -> auctionId 가 없어서 vehicleTitle (번호판)으로 보냄
+    const handleDeletePost = async (postId: string) => {
+      try {
+        const response = await axios.delete(
+          `http://localhost:5000/boards/deletePosts/${postId}`,
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        Modal.error({
+          centered: true,
+          title: "게시글이 삭제되었습니다.",
+          onOk: () => router.reload(),
+        });
+      } catch (error) {
+        Modal.error({ centered: true, title: "삭제에 실패했습니다." });
+      }
+    };
+
+    // 좋아요 토글 함수
+    const toggleLikePost = async (post: any) => {
+      const key = post.auctionId || post.auctionID;
+
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/boards/likepost",
+          {
+            id: post.auctionID || post.auctionId,
+            userId: post.userId,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setLikedMap((prev) => ({
+          ...prev,
+          [key]: res.data.status,
+        }));
+
+        if (type === "favorite" && res.data.status === false) {
+          Modal.info({
+            centered: true,
+            title: "즐겨찾기에서 제거되었습니다.",
+            onOk: () => router.reload(),
+          });
+        }
+      } catch (error) {
+        Modal.error({ centered: true, title: "좋아요 처리에 실패했습니다." });
+      }
+    };
+
+    const keyId = post.auctionId || post.auctionID;
+
     return (
       <div key={key} className="postsInfo">
         <div className="circle"></div>
@@ -68,10 +147,14 @@ const MyPost = ({
         <div className="postLine"></div>
 
         <div
-          className="postTexts"
-          onClick={() => {
-            router.push(`/detail/${post.auctionId || post.auctionID}`);
-          }}
+          className={`postTexts ${post.endTime ? "cursorPointer" : ""}`}
+          onClick={
+            post.endTime
+              ? () => {
+                  router.push(`/detail/${post.auctionId || post.auctionID}`);
+                }
+              : undefined
+          }
         >
           <div className="badgeTitle">
             <span>{post.vehicleTitle}</span>
@@ -93,18 +176,47 @@ const MyPost = ({
                 height={17}
               />
             </Tooltip>
+
+            {type === "favorite" && (
+              <Image
+                className="favoriteImg"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLikePost(post);
+                }}
+                src={likedMap[keyId] ? fullheart : heart}
+                alt="like icon"
+              />
+            )}
           </div>
           <div className="postContents">
-            <div className="postText">
-              {`현재가: ${post.finalPrice.toLocaleString()}원${
-                isPending ? " (예상 금액)" : ""
-              }`}
+            <div className="postTexts">
+              <div className="postText">
+                {timeLeft === "종료됨" && post.endTime
+                  ? `최종가: ${post.finalPrice.toLocaleString()}원`
+                  : `현재가: ${post.finalPrice.toLocaleString()}원${
+                      isPending ? " (예상 금액)" : ""
+                    }`}
+              </div>
+
+              <div className="postText">
+                {post.endTime ? `남은 시간: ${timeLeft}` : "입찰 대기 중"}
+              </div>
+              <div className="postText">판매자: {post.userName}</div>
             </div>
 
-            <div className="postText">
-              {post.endTime ? `남은 시간: ${timeLeft}` : "입찰 대기 중"}
-            </div>
-            <div className="postText">판매자: {post.userName}</div>
+            {/* 승인 전 게시글은 삭제 요청 가능 */}
+            {isPending && (
+              <button
+                className="deleteBtn"
+                onClick={(e) => {
+                  e.stopPropagation(); // 부모 div 클릭 이벤트 방지
+                  handleDeletePost(post.vehicleTitle);
+                }}
+              >
+                삭제 요청
+              </button>
+            )}
           </div>
         </div>
 
@@ -123,9 +235,27 @@ const MyPost = ({
 
       {/* 승인 후 */}
       {type === "posts" &&
-        goingPosts.map((post, idx) =>
-          renderPost({ ...post }, `going-${idx}`, false)
-        )}
+        goingPosts
+          .slice() // 원본 배열을 건드리지 않기 위해 복사
+          .sort((a, b) => {
+            const now = new Date().getTime();
+            const aEnd = new Date(a.endTime).getTime();
+            const bEnd = new Date(b.endTime).getTime();
+
+            const aDiff = aEnd - now;
+            const bDiff = bEnd - now;
+
+            const aIsEnded = aDiff <= 0;
+            const bIsEnded = bDiff <= 0;
+
+            // 종료된 게시글은 뒤로 보내기
+            if (aIsEnded && !bIsEnded) return 1;
+            if (!aIsEnded && bIsEnded) return -1;
+
+            // 둘 다 종료됐거나 둘 다 진행 중이면 종료 시간이 빠른 순
+            return aEnd - bEnd;
+          })
+          .map((post, idx) => renderPost({ ...post }, `going-${idx}`, false))}
 
       {/* 즐겨찾기 */}
       {type === "favorite" &&

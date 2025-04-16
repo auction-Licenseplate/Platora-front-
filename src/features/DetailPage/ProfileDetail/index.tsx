@@ -22,8 +22,6 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
         userId,
       })
       .then((res) => {
-        console.log(res.data);
-
         const posts = res.data.map((item: any) => {
           return {
             auctionID: item.au_id,
