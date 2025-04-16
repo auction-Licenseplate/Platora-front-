@@ -12,7 +12,7 @@ export const AllProductStyled = styled.div`
     align-items: center;
 
     .allAcution {
-      margin: 30px 0;
+      margin-bottom: 30px;
     }
 
     .noAuctionImg {

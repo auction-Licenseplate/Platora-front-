@@ -62,6 +62,7 @@ export const MyInfoStyled = styled.div`
 
           p {
             width: 150px;
+            font-size: 15px;
           }
 
           .input {

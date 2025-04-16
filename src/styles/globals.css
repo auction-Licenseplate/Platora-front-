@@ -353,6 +353,10 @@ h6 {
   font-weight: inherit !important;
 }
 
+p {
+  margin-bottom: 0 !important;
+}
+
 /* 모달창 */
 .Modal {
   max-height: 70vh;

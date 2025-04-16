@@ -46,45 +46,6 @@ const Header = () => {
   // 알람 열기/닫기
   const toggleAlert = () => setIsAlertOpen((prev) => !prev);
 
-  // 알림 데이터
-  useEffect(() => {
-    // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
-    const fetchalertData = async () => {
-      try {
-        const res = await api.get(
-          "http://localhost:5000/notification/getAlert",
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const alertData = res.data;
-
-        // 안 읽거나 읽어도 3일 안 지난 것만 남김
-        const now = new Date();
-
-        const filtered = alertData.filter((noti) => {
-          if (!noti.isRead) return true;
-
-          const createdAt = new Date(noti.createdAt);
-
-          const diff =
-            (now.getTime() - createdAt.getTime()) / (1000 * 3600 * 24);
-          return diff < 3;
-        });
-
-        setAlertData(filtered);
-      } catch (error) {
-        console.error("알림 불러오기 실패:", error);
-      }
-    };
-
-    fetchalertData();
-  }, []);
-
   // 안 읽은 알림 여부 감지
   useEffect(() => {
     const hasUnread = alertData.some((noti) => !noti.isRead);
@@ -184,6 +145,8 @@ const Header = () => {
 
   // 유저, 관리자 구분
   useEffect(() => {
+    if (!token) return;
+
     const fetchUserInfo = async () => {
       try {
         const res = await api.get("http://localhost:5000/auth/getRole", {
@@ -193,14 +156,11 @@ const Header = () => {
           },
         });
 
-        const role = res.data;
-        setUserRole(role);
+        setUserRole(res.data);
       } catch (error) {
         console.error("유저 정보 요청 실패:", error);
       }
     };
-
-    fetchUserInfo();
 
     // 알림 데이터
     const fetchalertData = async () => {
@@ -215,12 +175,10 @@ const Header = () => {
           }
         );
 
-        const alertData = res.data;
-
         // 안 읽거나 읽어도 3일 안 지난 것만 남김
         const now = new Date();
 
-        const filtered = alertData.filter((noti) => {
+        const filtered = res.data.filter((noti) => {
           if (!noti.isRead) return true;
 
           const createdAt = new Date(noti.createdAt);
@@ -236,6 +194,7 @@ const Header = () => {
       }
     };
 
+    fetchUserInfo();
     fetchalertData();
   }, [token]);
 

@@ -11,6 +11,8 @@ import { Modal, Tooltip } from "antd";
 // 이미지
 import fullheart from "@/assets/images/fullheart.png";
 import heart from "@/assets/images/heart.png";
+import noPostBlack from "@/assets/images/noPostBlack.png";
+import noPostWhite from "@/assets/images/noPostWhite.png";
 
 interface postType {
   type: string;
@@ -32,6 +34,15 @@ const MyPost = ({
 
   // 게시글별 좋아요 상태
   const [likedMap, setLikedMap] = useState<{ [key: string]: boolean }>({});
+
+  // 다크, 라이트 모드
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(theme === "dark");
+
+  // 모드에 따라 이미지 변경
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
 
   useEffect(() => {
     if (type === "favorite") {
@@ -227,6 +238,18 @@ const MyPost = ({
 
   return (
     <MyPostStyled className={clsx("main-wrap-myPost")} isWide={isWide}>
+      {favoritePosts.length === 0 &&
+        pendingPosts.length === 0 &&
+        goingPosts.length === 0 && (
+          <div className="empty-wrap">
+            <Image
+              className="emptyImg"
+              src={isDarkMode ? noPostWhite : noPostBlack}
+              alt="noPost"
+            />
+          </div>
+        )}
+
       {/* 승인 전 */}
       {type === "posts" &&
         pendingPosts.map((post, idx) =>
@@ -236,7 +259,7 @@ const MyPost = ({
       {/* 승인 후 */}
       {type === "posts" &&
         goingPosts
-          .slice() // 원본 배열을 건드리지 않기 위해 복사
+          .slice()
           .sort((a, b) => {
             const now = new Date().getTime();
             const aEnd = new Date(a.endTime).getTime();
@@ -248,16 +271,13 @@ const MyPost = ({
             const aIsEnded = aDiff <= 0;
             const bIsEnded = bDiff <= 0;
 
-            // 종료된 게시글은 뒤로 보내기
             if (aIsEnded && !bIsEnded) return 1;
             if (!aIsEnded && bIsEnded) return -1;
 
-            // 둘 다 종료됐거나 둘 다 진행 중이면 종료 시간이 빠른 순
             return aEnd - bEnd;
           })
           .map((post, idx) => renderPost({ ...post }, `going-${idx}`, false))}
 
-      {/* 즐겨찾기 */}
       {type === "favorite" &&
         favoritePosts.map((post, idx) =>
           renderPost({ ...post }, `favorite-${idx}`, false)
