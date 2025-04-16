@@ -278,7 +278,7 @@ export const HeaderStyled = styled.div`
       transform: translateX(24px);
     }
 
-    /* 알림 */
+    /* 알림창 */
     .alertIcon {
       width: 27px;
       position: relative;
