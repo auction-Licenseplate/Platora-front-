@@ -4,6 +4,7 @@ export const DetailStyled = styled.div`
   &.detailstyled {
     width: 100%;
     margin: 0 auto;
+
     .detail-wrap {
       width: 100%;
       max-width: 1280px;
@@ -15,46 +16,45 @@ export const DetailStyled = styled.div`
       font-weight: 500;
       margin-left: 20px;
     }
+
     .detail-container {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto;
+      flex-direction: row;
     }
-    .detail-imgcontainer {
+
+    .detail-imgcontainer,
+    .detail-textcontainer {
       width: 50%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
+
     .detail-textcontainer {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
       align-items: flex-start;
-      justify-content: center;
     }
+
     .detail-price {
       width: 50%;
-      font-size: 1.5vw;
+      font-size: 1.3vw;
       font-weight: 500;
       padding-left: 30px;
+      margin-bottom: 20px;
       display: flex;
       align-items: baseline;
       gap: 10%;
       text-align: center;
     }
+
     .detail-bigprice {
       font-size: 2.3vw;
     }
-    .detail-text {
-      margin-right: 50px;
-    }
-    .detail-righttext {
-      margin-left: 20px;
-    }
+
     .detail-textdiv {
       width: 50%;
       margin-bottom: 10px;
@@ -63,22 +63,126 @@ export const DetailStyled = styled.div`
       gap: 5%;
       text-align: start;
     }
+
     .detail-texttitle {
       width: 40%;
       color: #777;
+      font-size: 1vw;
     }
+
     .detail-minibox {
-      width: 100%;
+      width: 90%;
       border: 1px solid #fafafa;
       background-color: #fafafa;
       padding: 20px;
       border-radius: 10px;
     }
+
     .detail-thicktext {
+      width: 50%;
       font-weight: 600;
+      font-size: 1vw;
+      white-space: nowrap; /* 줄바꿈 방지 */
     }
-    .detail-pricespan {
-      width: 100%;
+    .detial-nowrap {
+      white-space: nowrap; /* 줄바꿈 방지 */
+    }
+    .detail-pricetotal {
+      font-size: 12px;
+      margin-left: 120px;
+      margin-top: -10px;
+      color: #777;
+    }
+
+    .detail-btndiv {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .detail-heart {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .detail-numbtn {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .detail-currentprice {
+      display: flex;
+      align-items: center;
+    }
+
+    // 미디어 쿼리 - 모바일
+    @media (max-width: 1000px) {
+      .detail-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .detail-thicktext {
+        font-size: 12px;
+      }
+      .detail-imgcontainer,
+      .detail-textcontainer,
+      .detail-price,
+      .detail-textdiv {
+        width: 90%;
+      }
+      .detail-textcontainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .detail-title {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .detail-bigprice {
+        font-size: 20px;
+      }
+
+      .detail-price {
+        font-size: 16px;
+        justify-content: space-between;
+        padding-left: 0;
+      }
+
+      .detail-texttitle {
+        font-size: 12px;
+      }
+
+      .detail-minibox {
+        padding: 15px;
+      }
+
+      .detail-pricetotal {
+        margin-left: 0;
+        text-align: center;
+      }
+
+      .detail-numbtn {
+        width: 16px;
+        height: 16px;
+      }
+
+      .detail-heart {
+        width: 32px;
+        height: 32px;
+      }
+      .detail-pricetotal {
+        font-size: 10px;
+      }
+    }
+    .detail-span {
+      width: 50%;
     }
   }
 `;

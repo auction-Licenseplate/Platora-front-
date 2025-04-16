@@ -12,6 +12,8 @@ import heart from "@/assets/images/heart.png";
 import Profile from "./ProfileDetail";
 import ListDetail from "./ListDetail";
 import clsx from "clsx";
+import plus from "@/assets/images/plus.png";
+import minus from "@/assets/images/minus.png";
 interface detailprops {
   id: string | undefined;
 }
@@ -209,30 +211,30 @@ const DetailPage = ({ id }: detailprops) => {
             <div>
               <Image
                 src={`http://localhost:5000/uploads//${img}`}
-                width={300}
-                height={300}
+                width={360}
+                height={360}
                 alt=""
               />
             </div>
-            <div>
+            <div className="detial-nowrap">
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
-                width={100}
-                height={100}
+                width={120}
+                height={120}
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
-                width={100}
-                height={100}
+                width={120}
+                height={120}
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
-                width={100}
-                height={100}
+                width={120}
+                height={120}
                 alt=""
                 onClick={() => setImg(arr[0].carimg3)}
               />
@@ -248,7 +250,7 @@ const DetailPage = ({ id }: detailprops) => {
             <div className="detail-minibox">
               <div className="detail-textdiv">
                 <span className="detail-texttitle">경매번호</span>
-                <span>{arr[0].itemnumber}</span>
+                <span className="detail-span">{arr[0].itemnumber}</span>
               </div>
               <div className="detail-textdiv">
                 <span className="detail-texttitle">남은 시간</span>
@@ -280,20 +282,22 @@ const DetailPage = ({ id }: detailprops) => {
                   {arr[0].name}
                 </span>
               </div>
+              <div>{arr[0].carinfo}</div>
               <hr></hr>
+              <br></br>
               <div className="detail-textdiv">
                 <span className="detail-texttitle">입찰 단위</span>
                 <span>{arr[0].priceunit}</span>
               </div>
               <div className="detail-textdiv">
                 <span className="detail-texttitle">희망 입찰가</span>
-                <div>
+                <div className="detail-currentprice">
                   <span
                     onClick={() => {
                       priceChange("-");
                     }}
                   >
-                    -
+                    <Image className="detail-numbtn" src={minus} alt="" />
                   </span>
 
                   <Input
@@ -309,25 +313,29 @@ const DetailPage = ({ id }: detailprops) => {
                       priceChange("+");
                     }}
                   >
-                    +
+                    <Image className="detail-numbtn" src={plus} alt="" />
                   </span>
                 </div>
               </div>
               <div className="detail-textdiv">
-                <span className="detail-pricespan">
-                  <span className="detail-texttitle">예상 입찰가</span>
-                  <span className="detail-thicktext">
-                    {(price + price * 0.1).toLocaleString()}
-                  </span>
-                  <div>
-                    (물품 가격: {price.toLocaleString()} + 경매 수수료
-                    {(price * 0.1).toLocaleString()})
-                  </div>
+                <span className="detail-texttitle">예상 입찰가</span>
+                <span className="detail-thicktext">
+                  {(price + price * 0.1).toLocaleString()}
                 </span>
               </div>
-              <div>
+              <div className="detail-pricetotal">
+                ({price.toLocaleString()}원 + 경매 수수료{" "}
+                {(price * 0.1).toLocaleString()}원)
+              </div>
+
+              <div className="detail-btndiv">
                 <Button onClick={updatePrice}>입찰하기</Button>
-                <Image onClick={likePost} src={heartimg} alt="" />
+                <Image
+                  className="detail-heart"
+                  onClick={likePost}
+                  src={heartimg}
+                  alt=""
+                />
               </div>
             </div>
           </div>
