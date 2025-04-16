@@ -28,6 +28,7 @@ export const StickyMenuStyled = styled.div`
     text-align: left;
     position: relative;
     display: inline-block;
+    font-weight: bold !important;
 
     &::after {
       content: "";
@@ -39,17 +40,13 @@ export const StickyMenuStyled = styled.div`
       transition: width 0.3s ease;
     }
 
-    &:hover {
-      font-weight: bold;
-    }
-
     &:hover::after {
       width: 100%;
     }
   }
 
   .cursor.active {
-    font-weight: bold;
+    font-weight: bold !important;
   }
 
   .cursor.active::after {

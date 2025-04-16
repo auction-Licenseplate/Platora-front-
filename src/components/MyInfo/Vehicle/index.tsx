@@ -58,7 +58,7 @@ const Vehicle = ({
               </div>
             }
             placement="bottom"
-            classNames={{ root: "custom-tooltip" }}
+            overlayClassName="custom-tooltip"
           >
             <Image className="infoIcon" src={infoIcon} alt="info icon" />
           </Tooltip>

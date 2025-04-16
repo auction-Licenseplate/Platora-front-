@@ -6,11 +6,6 @@ import Image from "next/image";
 import { Carousel } from "antd";
 import "swiper/css";
 
-// 이미지
-import carImg1 from "@/assets/images/carImage1.jpg";
-import carImg2 from "@/assets/images/carImage2.png";
-import carImg3 from "@/assets/images/carImage3.jpeg";
-
 interface ContentItem {
   id: number;
   image: string;

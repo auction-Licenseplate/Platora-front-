@@ -91,6 +91,8 @@ export const HeaderStyled = styled.div`
       flex-direction: column;
       gap: 20px;
       padding: 20px 10px 10px 15px;
+      font-size: 16px;
+      font-weight: bold;
 
       .toggleInfo {
         display: flex;
@@ -128,7 +130,7 @@ export const HeaderStyled = styled.div`
       }
 
       .tier-list.open {
-        max-height: 350px;
+        max-height: 400px;
       }
 
       .tier-item {

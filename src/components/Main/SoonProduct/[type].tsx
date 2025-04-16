@@ -36,36 +36,41 @@ const SoonProduct = ({ type }: SoonProps) => {
           "http://localhost:5000/boards/getAllProduct"
         );
 
-        const data = response.data;
-
         const now = new Date().getTime();
 
         // 경매 데이터를 정렬하고 가까운 시간순으로 10개만 가져옴
-        const formattedData = data
+        const formattedData = response.data
           .filter((item: any) => item.status === "before")
-          .map((item: any, index: number) => {
-            const startTimeMs = new Date(item.startTime).getTime();
-            const timeDiff = startTimeMs - now;
-
-            let timeLeft = "종료됨";
-            if (timeDiff > 0) {
-              const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-              const hours = Math.floor(
-                (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-              );
-              const minutes = Math.floor(
-                (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
-              );
-
-              timeLeft = `${
-                days > 0 ? `${days}일 ` : ""
-              }${hours}시간 ${minutes}분`;
-            }
+          .map((item: any) => {
+            const startTimeMs = item.startTime
+              ? new Date(item.startTime).getTime()
+              : 0;
+            const endTimeMs = item.endTime
+              ? new Date(item.endTime).getTime()
+              : 0;
 
             const imageUrls =
               item.imageUrl && typeof item.imageUrl === "string"
                 ? item.imageUrl.split(",")
                 : [];
+
+            // 남은 시간 계산
+            const timeLeft = endTimeMs - now;
+            let timeLeftString = "";
+
+            if (timeLeft > 0) {
+              const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+              const hours = Math.floor(
+                (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+              );
+              const minutes = Math.floor(
+                (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
+              );
+
+              timeLeftString = `${days}일 ${hours}시간 ${minutes}분`;
+            } else {
+              timeLeftString = "종료됨";
+            }
 
             return {
               id: item.auctionID,
@@ -74,16 +79,14 @@ const SoonProduct = ({ type }: SoonProps) => {
               price: item.finalPrice,
               endTime: item.endTime,
               seller: item.userName,
-              timeLeft,
+              timeLeft: "", // 남은 시간 표시
               imageUrls,
+              startTime: item.startTime,
               startTimeMs,
               status: item.status,
               minPrice: item.minPrice,
             };
-          })
-          .filter((item: any) => item.timeLeft !== "종료됨")
-          .sort((a: any, b: any) => a.startTimeMs - b.startTimeMs)
-          .slice(0, 10);
+          });
 
         setProducts(formattedData);
       } catch (error) {
@@ -96,16 +99,40 @@ const SoonProduct = ({ type }: SoonProps) => {
 
   let filteredProducts: Product[] = [];
 
-  if (typeof type === "number") {
-    filteredProducts = products.filter((product) => product.gradeName === type);
+  if (type === undefined) {
+    // 곧 시작하는 경매 (타입이 없을 때)
+    const now = new Date().getTime();
+    filteredProducts = [...products]
+      .filter((item) => {
+        // startTime이 정의되어 있는 경우만 비교하도록 처리
+        return item.startTime && new Date(item.startTime).getTime() > now;
+      })
+      .sort(
+        (a, b) =>
+          new Date(a.startTime || 0).getTime() -
+          new Date(b.startTime || 0).getTime()
+      )
+      .slice(0, 10);
+  } else if (type === 0) {
+    // 곧 종료하는 경매 (type === 0일 때)
+    const now = new Date().getTime();
+    filteredProducts = [...products]
+      .filter((item) => new Date(item.endTime).getTime() > now) // 아직 안 끝난 애들
+      .sort(
+        (a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime()
+      )
+      .slice(0, 10);
   } else {
-    filteredProducts = products;
+    // gradeName 필터 (type이 0이 아닐 때)
+    filteredProducts = products.filter((product) => product.gradeName === type);
   }
 
   return (
     <SoonProductStyled>
       {filteredProducts.length > 0 && products.length > 0 ? (
-        <h1 className="mainFont">Upcoming Auctions</h1>
+        <h1 className="mainFont">
+          {type === 0 ? "Ending Soon Auctions" : "Upcoming Auctions"}
+        </h1>
       ) : (
         <></>
       )}
