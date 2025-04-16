@@ -51,12 +51,15 @@ const Header = () => {
     // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
     const fetchalertData = async () => {
       try {
-        const res = await api.get("http://localhost:5000/alert/getAlert", {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await api.get(
+          "http://localhost:5000/notification/getAlert",
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const alertData = res.data;
 

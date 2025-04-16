@@ -122,11 +122,10 @@ export const HeaderStyled = styled.div`
       .tier-list {
         display: flex;
         flex-direction: column;
-        gap: 10px;
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease-in-out;
-        margin: 15px 0 0 10px;
+        margin: 15px 0 0 5px;
       }
 
       .tier-list.open {

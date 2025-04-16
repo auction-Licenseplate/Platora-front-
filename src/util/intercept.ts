@@ -14,7 +14,6 @@ api.interceptors.response.use(
         title: "로그인",
         content: "로그인 후 다시 시도해주세요.",
         onOk: () => {
-          // useRouter() 대신 window.location 사용
           window.location.href = "/login";
         },
       });

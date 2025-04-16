@@ -28,6 +28,7 @@ interface SoonProps {
 
 const SoonProduct = ({ type }: SoonProps) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchAuctions = async () => {
@@ -55,7 +56,7 @@ const SoonProduct = ({ type }: SoonProps) => {
                 : [];
 
             // 남은 시간 계산
-            const timeLeft = endTimeMs - now;
+            const timeLeft = startTimeMs - now;
             let timeLeftString = "";
 
             if (timeLeft > 0) {
@@ -67,7 +68,9 @@ const SoonProduct = ({ type }: SoonProps) => {
                 (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
               );
 
-              timeLeftString = `${days}일 ${hours}시간 ${minutes}분`;
+              if (days > 0 || hours > 0 || minutes > 0) {
+                timeLeftString = `${days}일 ${hours}시간 ${minutes}분`;
+              }
             } else {
               timeLeftString = "종료됨";
             }
@@ -79,7 +82,7 @@ const SoonProduct = ({ type }: SoonProps) => {
               price: item.finalPrice,
               endTime: item.endTime,
               seller: item.userName,
-              timeLeft: "", // 남은 시간 표시
+              timeLeft: timeLeftString,
               imageUrls,
               startTime: item.startTime,
               startTimeMs,
@@ -97,47 +100,36 @@ const SoonProduct = ({ type }: SoonProps) => {
     fetchAuctions();
   }, []);
 
-  let filteredProducts: Product[] = [];
-
-  if (type === undefined) {
-    // 곧 시작하는 경매 (타입이 없을 때)
-    const now = new Date().getTime();
-    filteredProducts = [...products]
-      .filter((item) => {
-        // startTime이 정의되어 있는 경우만 비교하도록 처리
-        return item.startTime && new Date(item.startTime).getTime() > now;
-      })
-      .sort(
-        (a, b) =>
-          new Date(a.startTime || 0).getTime() -
-          new Date(b.startTime || 0).getTime()
-      )
-      .slice(0, 10);
-  } else if (type === 0) {
-    // 곧 종료하는 경매 (type === 0일 때)
-    const now = new Date().getTime();
-    filteredProducts = [...products]
-      .filter((item) => new Date(item.endTime).getTime() > now) // 아직 안 끝난 애들
-      .sort(
-        (a, b) => new Date(a.endTime).getTime() - new Date(b.endTime).getTime()
-      )
-      .slice(0, 10);
-  } else {
-    // gradeName 필터 (type이 0이 아닐 때)
-    filteredProducts = products.filter((product) => product.gradeName === type);
-  }
+  useEffect(() => {
+    if (type === 0) {
+      const now = new Date().getTime();
+      setFilteredProducts(
+        [...products]
+          .filter((item) => new Date(item.endTime).getTime() > now)
+          .sort(
+            (a, b) =>
+              new Date(a.endTime).getTime() - new Date(b.endTime).getTime()
+          )
+          .slice(0, 10)
+      );
+    } else if (type !== undefined && type !== null) {
+      setFilteredProducts(
+        products.filter((product) => product.gradeName === type)
+      );
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [products, type]);
 
   return (
     <SoonProductStyled>
-      {filteredProducts.length > 0 && products.length > 0 ? (
+      {(products.length > 0 || filteredProducts.length > 0) && (
         <h1 className="mainFont">
           {type === 0 ? "Ending Soon Auctions" : "Upcoming Auctions"}
         </h1>
-      ) : (
-        <></>
       )}
 
-      {!type && products.length > 0 ? (
+      {(type === undefined || type === null) && products.length > 0 ? (
         <>
           <div className="swiper-button-prev">←</div>
           <div className="swiper-button-next">→</div>
@@ -167,7 +159,7 @@ const SoonProduct = ({ type }: SoonProps) => {
         <></>
       )}
 
-      {type && filteredProducts.length > 0 && (
+      {type !== undefined && filteredProducts.length > 0 && (
         <>
           <div className="swiper-button-prev">←</div>
           <div className="swiper-button-next">→</div>
