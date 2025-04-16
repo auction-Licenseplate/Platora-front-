@@ -14,6 +14,7 @@ import ListDetail from "./ListDetail";
 import clsx from "clsx";
 import plus from "@/assets/images/plus.png";
 import minus from "@/assets/images/minus.png";
+import { start } from "repl";
 interface detailprops {
   id: string | undefined;
 }
@@ -46,6 +47,7 @@ const DetailPage = ({ id }: detailprops) => {
   const [list, setList] = useState<any[]>([]);
   const [listopen, setListopen] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
+  const [isAuctionStarted, setIsAuctionStarted] = useState(false);
   const router = useRouter();
   const token = Cookie.get("accessToken");
 
@@ -76,6 +78,11 @@ const DetailPage = ({ id }: detailprops) => {
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
 
+        const startTime = new Date(raw.au_start_time);
+        const now = new Date();
+
+        setIsAuctionStarted(now >= startTime);
+
         const data = [
           {
             id: raw.au_id,
@@ -83,6 +90,7 @@ const DetailPage = ({ id }: detailprops) => {
             carnumber: raw.vehicle_plate_num,
             itemnumber: raw.au_auction_num,
             endtime: raw.au_end_time,
+            startTime: raw.au_start_time,
             price: raw.au_final_price,
             name: raw.bidUser_name,
             count: raw.bid_bid_count,
@@ -214,30 +222,31 @@ const DetailPage = ({ id }: detailprops) => {
             <div>
               <Image
                 src={`http://localhost:5000/uploads//${img}`}
-                width={370}
-                height={300}
+                width={400}
+                height={400}
+                layout="responsive"
                 alt=""
               />
             </div>
             <div className="detial-nowrap">
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg1}`}
-                width={121}
-                height={120}
+                width={150}
+                height={150}
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg2}`}
-                width={121}
-                height={120}
+                width={150}
+                height={150}
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
                 src={`http://localhost:5000/uploads//${arr[0].carimg3}`}
-                width={121}
-                height={120}
+                width={150}
+                height={150}
                 alt=""
                 onClick={() => setImg(arr[0].carimg3)}
               />
@@ -337,7 +346,7 @@ const DetailPage = ({ id }: detailprops) => {
               </div>
               <div>
                 <div className="detail-pricetotal">
-                  ({price.toLocaleString()}원 + 경매 수수료{" "}
+                  ({price.toLocaleString()}원 + 경매 수수료
                   {(price * 0.1).toLocaleString()}원)
                 </div>
 
@@ -345,7 +354,9 @@ const DetailPage = ({ id }: detailprops) => {
                   {getRemainingTime(arr[0].endtime) === "경매 종료" ? (
                     <Button disabled={true}>종료되었습니다</Button>
                   ) : (
-                    <Button onClick={updatePrice}>입찰하기</Button>
+                    <Button onClick={updatePrice} disabled={!isAuctionStarted}>
+                      입찰하기
+                    </Button>
                   )}
 
                   <Image
@@ -355,6 +366,9 @@ const DetailPage = ({ id }: detailprops) => {
                     alt=""
                   />
                 </div>
+                {!isAuctionStarted && (
+                  <p>경매 시작 전입니다. 입찰은 시작 시간 이후에 가능합니다.</p>
+                )}
               </div>
             </div>
           </div>
