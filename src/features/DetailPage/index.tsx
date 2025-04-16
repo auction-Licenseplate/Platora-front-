@@ -67,6 +67,7 @@ const DetailPage = ({ id }: detailprops) => {
         }
       )
       .then((res) => {
+        console.log(res.data);
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
@@ -107,7 +108,7 @@ const DetailPage = ({ id }: detailprops) => {
         res.data.isFavorite === true
           ? setHeartimg(fullheart)
           : setHeartimg(heart);
-        setUserpoint(res.data.lastBid.currentUserPoint);
+        setUserpoint(res.data.currentUserPoint);
         setPreUser(lastData);
         setList(res.data.data);
         setUserId(res.data.currentUserId); // 로그인 한 사람의 유저 아이디
@@ -162,14 +163,21 @@ const DetailPage = ({ id }: detailprops) => {
 
   // 입찰가 갱신 요청
   const updatePrice = () => {
-    if (userId === arr[0].userId)
-      if (price <= preUser.lastPrice) {
-        Modal.warning({
-          centered: true,
-          title: "현재가 보다 낮은 금액으로 입찰 할 수 없습니다.",
-        });
-        return;
-      }
+    if (userId === arr[0].userId) {
+      Modal.warning({
+        centered: true,
+        title: "본인의 물품은 입찰 불가합니다",
+      });
+      return;
+    }
+    console.log(price, userpoint);
+    if (price <= preUser.lastPrice) {
+      Modal.warning({
+        centered: true,
+        title: "현재가 보다 낮은 금액으로 입찰 할 수 없습니다.",
+      });
+      return;
+    }
     if (price > userpoint) {
       Modal.warning({
         centered: true,
