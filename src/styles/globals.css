@@ -263,6 +263,18 @@ input::placeholder {
   color: rgb(157, 157, 157);
 }
 
+.closeIcon {
+  font-size: 22px !important;
+}
+
+.ant-notification-notice-close {
+  top: 7px !important;
+}
+
+.ant-notification-notice {
+  cursor: pointer;
+}
+
 /* soonProduct */
 .swiper-button-prev,
 .swiper-button-next {

@@ -49,7 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
     const end = () => {
       const elapsed = Date.now() - startTime;
-      const remaining = 500 - elapsed;
+      const remaining = 100 - elapsed;
 
       if (remaining > 0) {
         timeout = setTimeout(() => {

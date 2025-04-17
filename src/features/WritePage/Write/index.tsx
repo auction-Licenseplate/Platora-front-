@@ -60,29 +60,20 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
             content: (
               <>
                 <p>마이페이지에서 공인 인증서를 등록해주세요.</p>
-                <Breadcrumb
-                  style={{ marginTop: 16 }}
-                  items={[
-                    {
-                      title: (
-                        <a href="/" target="_blank">
-                          <HomeOutlined />
-                        </a>
-                      ),
-                    },
-                    {
-                      title: (
-                        <a href="/myPage?menu=myInfo" target="_blank">
-                          <UserOutlined />
-                          <span style={{ marginLeft: 4 }}>내 계정</span>
-                        </a>
-                      ),
-                    },
-                    {
-                      title: "VEHICLE 등록하기",
-                    },
-                  ]}
-                />
+                <Breadcrumb style={{ marginTop: 16 }}>
+                  <Breadcrumb.Item>
+                    <a href="/" target="_blank">
+                      <HomeOutlined />
+                    </a>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>
+                    <a href="/myPage?menu=myInfo" target="_blank">
+                      <UserOutlined />
+                      <span style={{ marginLeft: 4 }}>내 계정</span>
+                    </a>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>VEHICLE 등록하기</Breadcrumb.Item>
+                </Breadcrumb>
               </>
             ),
             onOk: () => {
@@ -106,29 +97,20 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
               <>
                 <p>공인 인증서 승인 후 작성이 가능합니다.</p>
                 <p>내역을 확인하여 주세요.</p>
-                <Breadcrumb
-                  style={{ marginTop: 16 }}
-                  items={[
-                    {
-                      title: (
-                        <a href="/" target="_blank">
-                          <HomeOutlined />
-                        </a>
-                      ),
-                    },
-                    {
-                      title: (
-                        <a href="/myPage?menu=myInfo" target="_blank">
-                          <UserOutlined />
-                          <span style={{ marginLeft: 4 }}>내 계정</span>
-                        </a>
-                      ),
-                    },
-                    {
-                      title: "VEHICLE 등록하기",
-                    },
-                  ]}
-                />
+                <Breadcrumb style={{ marginTop: 16 }}>
+                  <Breadcrumb.Item>
+                    <a href="/" target="_blank">
+                      <HomeOutlined />
+                    </a>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>
+                    <a href="/myPage?menu=myInfo" target="_blank">
+                      <UserOutlined />
+                      <span style={{ marginLeft: 4 }}>내 계정</span>
+                    </a>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>VEHICLE 등록하기</Breadcrumb.Item>
+                </Breadcrumb>
               </>
             ),
             onOk: () => {
@@ -277,29 +259,20 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
                         해당 번호판은 아직 승인되지 않았거나 등록되지 않은
                         번호판입니다. <br /> 내역을 확인하여 주세요.
                       </p>
-                      <Breadcrumb
-                        style={{ marginTop: 16 }}
-                        items={[
-                          {
-                            title: (
-                              <a href="/" target="_blank">
-                                <HomeOutlined />
-                              </a>
-                            ),
-                          },
-                          {
-                            title: (
-                              <a href="/myPage?menu=myInfo" target="_blank">
-                                <UserOutlined />
-                                <span style={{ marginLeft: 4 }}>내 계정</span>
-                              </a>
-                            ),
-                          },
-                          {
-                            title: "VEHICLE 내역보기",
-                          },
-                        ]}
-                      />
+                      <Breadcrumb style={{ marginTop: 16 }}>
+                        <Breadcrumb.Item>
+                          <a href="/" target="_blank">
+                            <HomeOutlined />
+                          </a>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>
+                          <a href="/myPage?menu=myInfo" target="_blank">
+                            <UserOutlined />
+                            <span style={{ marginLeft: 4 }}>내 계정</span>
+                          </a>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>VEHICLE 등록하기</Breadcrumb.Item>
+                      </Breadcrumb>
                     </>
                   ),
                 });

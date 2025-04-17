@@ -43,6 +43,7 @@ const Header = () => {
       check: boolean;
       vehicleTitle: string;
       vehicleId: number;
+      created_at: string;
     }[]
   >([]);
   const [newAlert, setNewAlert] = useState(false);
@@ -165,34 +166,62 @@ const Header = () => {
     check: boolean;
     vehicleTitle: string;
     vehicleId: number;
+    created_at: string;
   }) => {
     // 중복 방지 -> 삭제 시 한 번 더 호출해서
     const notificationKey = String(noti.id);
 
-    const type = noti.message === "refund" ? "warning" : "info";
+    const type =
+      noti.message === "refund"
+        ? "warning"
+        : noti.message === "bid"
+        ? "info"
+        : "success";
+
+    const parsedDate = new Date(noti.created_at);
+
+    const hour = parsedDate.getHours().toString().padStart(2, "0");
+    const minute = parsedDate.getMinutes().toString().padStart(2, "0");
+
+    const formatted = `${parsedDate.getFullYear()}년 ${
+      parsedDate.getMonth() + 1
+    }월 ${parsedDate.getDate()}일 ${hour}시 ${minute}분`;
 
     notification[type]({
       key: notificationKey,
-      message: type === "warning" ? "포인트 반환" : "입찰 성공",
+      message:
+        type === "warning"
+          ? "포인트 반환"
+          : type === "info"
+          ? "입찰 완료"
+          : "입찰 성공",
+      duration: 5,
       description: (
         <div>
           <div>
             {noti.message === "refund"
-              ? `[포인트 환불] "${noti.vehicleTitle}" 해당 입찰 건이 더 높은 금액에 입찰되어 자동으로 포인트가 반환되었습니다.`
-              : `[입찰 성공] "${noti.vehicleTitle}" 해당 차량 입찰에 성공했습니다.`}
+              ? `[${noti.vehicleTitle}] 해당 입찰 건이 더 높은 금액에 입찰되어 자동으로 포인트가 반환되었습니다.`
+              : noti.message === "bid"
+              ? `[${noti.vehicleTitle}] 해당 차량에 입찰이 완료되었습니다.`
+              : `[${noti.vehicleTitle}] 차량의 최종 입찰자로 선정되었습니다.`}
           </div>
-          <div className="modalFoot">
-            클릭 시 해당 입찰 게시글로 이동합니다.
-          </div>
+          <div className="modalFoot">{`${formatted}`}</div>
         </div>
       ),
       onClick: () => {
         readAlert(noti.id), notification.close(notificationKey);
-        router.push(`/detail/${noti.vehicleId}`);
       },
-      onClose: () => {
-        readAlert(noti.id), notification.close(notificationKey);
-      },
+      closeIcon: (
+        <span
+          onClick={() => {
+            readAlert(noti.id);
+            notification.close(notificationKey);
+          }}
+          className="closeIcon"
+        >
+          &times;
+        </span>
+      ),
     });
   };
 
@@ -292,6 +321,26 @@ const Header = () => {
                       }}
                     />
                   </div>
+
+                  {userRole !== "admin" ? (
+                    <div className="userIcon alertIcon">
+                      <Image
+                        src={isDarkMode ? alertIconWhite : alertIconBlack}
+                        alt="alert icon"
+                        layout="responsive"
+                        onClick={() => {
+                          alertData.forEach((noti) => {
+                            if (!noti.check) {
+                              showNotification(noti);
+                            }
+                          });
+                        }}
+                      />
+                      {newAlert && <span className="alertCircle" />}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
 
                   <div className="userIcon">
                     <Image

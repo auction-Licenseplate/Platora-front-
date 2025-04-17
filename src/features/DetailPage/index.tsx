@@ -174,7 +174,6 @@ const DetailPage = ({ id }: detailprops) => {
       });
       return;
     }
-    console.log(price, userpoint);
     if (price <= preUser.lastPrice) {
       Modal.warning({
         centered: true,
@@ -194,6 +193,12 @@ const DetailPage = ({ id }: detailprops) => {
         },
       });
       return;
+    } else {
+      Modal.success({
+        centered: true,
+        title: "입찰 성공하였습니다.",
+        onOk: () => window.location.reload(),
+      });
     }
     axios
       .post("http://localhost:5000/boards/priceupdate", {
