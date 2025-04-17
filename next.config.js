@@ -13,7 +13,7 @@ module.exports = {
     "rc-field-form",
     "rc-image",
     "rc-input",
-    "rc-input-number", // 오타 수정
+    "rc-input-number",
     "rc-mentions",
     "rc-menu",
     "rc-motion",
@@ -45,4 +45,6 @@ module.exports = {
   images: {
     domains: ["localhost"],
   },
+
+  pageExtensions: ["tsx", "ts", "jsx", "js"], // 페이지 확장자 추가
 };
