@@ -1,12 +1,9 @@
-// import type { NextConfig } from "next";
-
 module.exports = {
   reactStrictMode: true,
   transpilePackages: [
     "antd",
     "@ant-design",
     "@rc-component",
-    "antd",
     "rc-cascader",
     "rc-checkbox",
     "rc-collapse",
@@ -16,7 +13,7 @@ module.exports = {
     "rc-field-form",
     "rc-image",
     "rc-input",
-    "rc-input-number",
+    "rc-input-number", // 오타 수정
     "rc-mentions",
     "rc-menu",
     "rc-motion",
