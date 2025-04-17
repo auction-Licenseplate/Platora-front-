@@ -1,4 +1,5 @@
 const path = require("path");
+
 module.exports = {
   reactStrictMode: true,
   transpilePackages: [
@@ -14,7 +15,7 @@ module.exports = {
     "rc-field-form",
     "rc-image",
     "rc-input",
-    "rc-input-number",
+    "rc-input-number", // 오타 수정
     "rc-mentions",
     "rc-menu",
     "rc-motion",
@@ -47,8 +48,8 @@ module.exports = {
     domains: ["localhost"],
   },
 
-  pageExtensions: ["tsx", "ts", "jsx", "js"],
-  webpack: (config, { isServer }) => {
+  // src/pages 디렉토리로 경로 설정
+  webpack(config) {
     config.resolve.modules.push(path.resolve("./src"));
     return config;
   },
