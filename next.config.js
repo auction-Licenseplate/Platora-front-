@@ -1,3 +1,4 @@
+const path = require("path");
 module.exports = {
   reactStrictMode: true,
   transpilePackages: [
@@ -46,9 +47,8 @@ module.exports = {
     domains: ["localhost"],
   },
 
-  pageExtensions: ["tsx", "ts", "jsx", "js"], // 페이지 확장자 추가
+  pageExtensions: ["tsx", "ts", "jsx", "js"],
   webpack: (config, { isServer }) => {
-    // src 폴더 내에서 페이지를 찾을 수 있도록 설정
     config.resolve.modules.push(path.resolve("./src"));
     return config;
   },
