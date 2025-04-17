@@ -155,6 +155,7 @@ body {
   -webkit-user-drag: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -264,6 +265,13 @@ input::placeholder {
   background-color: var(--after-color);
 }
 
+/* 알림 */
+.modalFoot {
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgb(157, 157, 157);
+}
+
 /* soonProduct */
 .swiper-button-prev,
 .swiper-button-next {
@@ -360,6 +368,10 @@ h5,
 h6 {
   color: unset !important;
   font-weight: inherit !important;
+}
+
+p {
+  margin-bottom: 0 !important;
 }
 
 /* 모달창 */

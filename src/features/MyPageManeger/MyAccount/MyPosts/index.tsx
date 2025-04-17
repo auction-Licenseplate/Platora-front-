@@ -22,14 +22,14 @@ const MyPosts = ({ type }: Props) => {
   // 즐겨찾기
   const [favoritePosts, setFavoritePosts] = useState([]);
 
-  // 게시글 요청 -> 해당 유저의 모든 정보 -> title, car_img, car_info, plate_num, write_status
+  // 게시글 요청 -> 해당 유저의 모든 정보
   useEffect(() => {
     if (token === "" || !token) return;
 
     const fetchPosts = async () => {
       try {
         if (type === "posts") {
-          // 승인 전 vehicles 테이블 -> title, car_img, car_info, grades 테이블의 grade_name
+          // 승인 전 vehicles 테이블
           const waiting = await axios.get(
             "http://localhost:5000/boards/getMyPosts",
             {
@@ -41,7 +41,7 @@ const MyPosts = ({ type }: Props) => {
 
           setPendingPosts(waiting.data);
 
-          // 승인 후 boards 테이블 -> 경매 번호(auctions 테이블), 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
+          // 승인 후 boards 테이블
           const going = await axios.get(
             "http://localhost:5000/boards/getPosts",
             {
@@ -53,7 +53,7 @@ const MyPosts = ({ type }: Props) => {
 
           setGoingPosts(going.data);
         } else if (type === "favorite") {
-          // 해당 유저의 관심 상품 -> 판매자명(users.id), 제목(vehicles.id), 등급(grades.id), final_price, end_time, status
+          // 해당 유저의 관심 상품
           const favorite = await axios.get(
             "http://localhost:5000/boards/getMyFavorites",
             {

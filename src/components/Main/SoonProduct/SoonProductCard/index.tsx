@@ -20,13 +20,12 @@ interface Product {
 interface Props {
   product: Product;
   id: number;
+  type?: number;
 }
 
-const SoonProductCard = ({ product, id }: Props) => {
+const SoonProductCard = ({ product, id, type }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
-
-  const price = <span></span>;
 
   return (
     <div className="soon-card">
@@ -67,7 +66,9 @@ const SoonProductCard = ({ product, id }: Props) => {
           <span className="price">{product.price.toLocaleString()}</span> 원
           (현재가)
         </span>
-        <p className="time-left">시작까지 {product.timeLeft}</p>
+        <p className="time-left">
+          {type === 0 ? "종료까지 " : "시작까지 "} {product.timeLeft}
+        </p>
         <p className="seller"> 판매자 : {product.seller}</p>
       </div>
     </div>

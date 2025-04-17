@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
-export const MyPostStyled = styled.div<{ isWide?: boolean }>`
+export const MyPostStyled = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isWide",
+})<{ isWide?: boolean }>`
   &.main-wrap-myPost {
     width: 100%;
 
@@ -159,6 +161,18 @@ export const MyPostStyled = styled.div<{ isWide?: boolean }>`
 
     .nextIcon {
       right: 8px;
+    }
+
+    .empty-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .emptyImg {
+      width: 400px;
+      height: 400px;
+      opacity: 0.5;
     }
 
     /* isWide가 true일 때(모달 안일 때) */

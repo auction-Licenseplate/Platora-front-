@@ -37,7 +37,7 @@ interface DetailData {
 const DetailPage = ({ id }: detailprops) => {
   const [price, setPrice] = useState<number>(0);
   const [arr, setArr] = useState<DetailData[]>([]);
-  const [remainTime, setRemainTime] = useState<string>("");
+  const [remainTime, setRemainTime] = useState<string | undefined>("");
   const [img, setImg] = useState<string>("");
   const [heartimg, setHeartimg] = useState<any>("");
   const [sellerOpen, setSellerOpen] = useState(false);
@@ -67,7 +67,6 @@ const DetailPage = ({ id }: detailprops) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
@@ -144,7 +143,7 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
 
-  const getRemainingTime = (endTime: string): string => {
+  const getRemainingTime = (endTime: string) => {
     const end = new Date(endTime).getTime();
     const now = new Date().getTime();
     const diff = end - now;
@@ -158,7 +157,12 @@ const DetailPage = ({ id }: detailprops) => {
     const hours = Math.floor((diffMinutes % (60 * 24)) / 60);
     const minutes = diffMinutes % 60;
 
-    return `${days}일 ${hours}시간 ${minutes}분 남음`;
+    const parts: string[] = [];
+    if (days > 0) parts.push(`${days}일`);
+    if (hours > 0) parts.push(`${hours}시간`);
+    if (minutes > 0) parts.push(`${minutes}분`);
+
+    return parts.length > 0 ? `${parts.join(" ")} 남음` : "경매 종료";
   };
 
   // 입찰가 갱신 요청
@@ -199,9 +203,7 @@ const DetailPage = ({ id }: detailprops) => {
         prePrice: preUser.lastPrice,
         preUserId: preUser.lastUser,
       })
-      .then((res) => {
-        console.log(res.data);
-      });
+      .then((res) => {});
   };
 
   // 좋아요 상태 업데이트
@@ -212,7 +214,6 @@ const DetailPage = ({ id }: detailprops) => {
         userId: arr[0].userId,
       })
       .then((res) => {
-        console.log(res.data);
         res.data.status === true ? setHeartimg(fullheart) : setHeartimg(heart);
       });
   };

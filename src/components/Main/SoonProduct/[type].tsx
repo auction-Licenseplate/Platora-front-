@@ -20,6 +20,8 @@ interface Product {
   status: string;
   minPrice?: number;
   startTime?: string;
+  startTimeMs?: number;
+  endTimeMs?: number;
 }
 
 interface SoonProps {
@@ -37,43 +39,15 @@ const SoonProduct = ({ type }: SoonProps) => {
           "http://localhost:5000/boards/getAllProduct"
         );
 
-        const now = new Date().getTime();
+        const now = Date.now();
 
-        // 경매 데이터를 정렬하고 가까운 시간순으로 10개만 가져옴
         const formattedData = response.data
-          .filter((item: any) => item.status === "before")
+          .filter((item: any) => item.startTime && item.endTime)
           .map((item: any) => {
-            const startTimeMs = item.startTime
-              ? new Date(item.startTime).getTime()
-              : 0;
-            const endTimeMs = item.endTime
-              ? new Date(item.endTime).getTime()
-              : 0;
-
+            const startTimeMs = new Date(item.startTime).getTime();
+            const endTimeMs = new Date(item.endTime).getTime();
             const imageUrls =
-              item.imageUrl && typeof item.imageUrl === "string"
-                ? item.imageUrl.split(",")
-                : [];
-
-            // 남은 시간 계산
-            const timeLeft = startTimeMs - now;
-            let timeLeftString = "";
-
-            if (timeLeft > 0) {
-              const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-              const hours = Math.floor(
-                (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-              );
-              const minutes = Math.floor(
-                (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
-              );
-
-              if (days > 0 || hours > 0 || minutes > 0) {
-                timeLeftString = `${days}일 ${hours}시간 ${minutes}분`;
-              }
-            } else {
-              timeLeftString = "종료됨";
-            }
+              typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
 
             return {
               id: item.auctionID,
@@ -82,12 +56,12 @@ const SoonProduct = ({ type }: SoonProps) => {
               price: item.finalPrice,
               endTime: item.endTime,
               seller: item.userName,
-              timeLeft: timeLeftString,
               imageUrls,
               startTime: item.startTime,
-              startTimeMs,
               status: item.status,
               minPrice: item.minPrice,
+              startTimeMs,
+              endTimeMs,
             };
           });
 
@@ -101,38 +75,68 @@ const SoonProduct = ({ type }: SoonProps) => {
   }, []);
 
   useEffect(() => {
+    const now = Date.now();
+    let filtered: Product[] = [];
+
     if (type === 0) {
-      const now = new Date().getTime();
-      setFilteredProducts(
-        [...products]
-          .filter((item) => new Date(item.endTime).getTime() > now)
-          .sort(
-            (a, b) =>
-              new Date(a.endTime).getTime() - new Date(b.endTime).getTime()
-          )
-          .slice(0, 10)
-      );
-    } else if (type !== undefined && type !== null) {
-      setFilteredProducts(
-        products.filter((product) => product.gradeName === type)
-      );
+      // 곧 종료될 경매 (시작 시간 지났고 종료되지 않은 것)
+      filtered = products
+        .filter((p) => {
+          const notEnded = p.endTimeMs && p.endTimeMs > now;
+          return notEnded;
+        })
+        .sort((a, b) => a.endTimeMs! - b.endTimeMs!);
+    } else if (type === undefined || type === null) {
+      // 곧 시작될 경매 (시작 안 한 것)
+      filtered = products
+        .filter((p) => p.startTimeMs && p.startTimeMs > now)
+        .sort((a, b) => a.startTimeMs! - b.startTimeMs!);
     } else {
-      setFilteredProducts(products);
+      // 등급 필터
+      filtered = products.filter((p) => p.gradeName === type);
     }
+
+    // 남은 시간 텍스트 계산
+    const timeLeft = filtered.map((p) => {
+      const diff =
+        type === 0 ? (p.endTimeMs ?? 0) - now : (p.startTimeMs ?? 0) - now;
+
+      let timeLeft = "";
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        const parts: string[] = [];
+
+        if (days > 0) parts.push(`${days}일`);
+        if (hours > 0) parts.push(`${hours}시간`);
+        if (minutes > 0) parts.push(`${minutes}분`);
+
+        timeLeft = parts.join(" ") || "곧 종료";
+      } else {
+        timeLeft = "종료됨";
+      }
+
+      return { ...p, timeLeft };
+    });
+
+    setFilteredProducts(timeLeft);
   }, [products, type]);
 
   return (
     <SoonProductStyled>
-      {(products.length > 0 || filteredProducts.length > 0) && (
-        <h1 className="mainFont">
-          {type === 0 ? "Ending Soon Auctions" : "Upcoming Auctions"}
-        </h1>
-      )}
-
-      {(type === undefined || type === null) && products.length > 0 ? (
+      {filteredProducts.length > 0 && (
         <>
+          <h1 className="mainFont">
+            {type === 0 ? "Ending Soon Auctions" : "Upcoming Auctions"}
+          </h1>
+
           <div className="swiper-button-prev">←</div>
           <div className="swiper-button-next">→</div>
+
           <Swiper
             spaceBetween={10}
             slidesPerView={5}
@@ -148,46 +152,18 @@ const SoonProduct = ({ type }: SoonProps) => {
               1200: { slidesPerView: 5 },
             }}
           >
-            {products.map((product, index) => (
-              <SwiperSlide key={index}>
-                <SoonProductCard id={product.id} product={product} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </>
-      ) : (
-        <></>
-      )}
-
-      {type !== undefined && filteredProducts.length > 0 && (
-        <>
-          <div className="swiper-button-prev">←</div>
-          <div className="swiper-button-next">→</div>
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={5}
-            modules={[Navigation]}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            }}
-            breakpoints={{
-              0: { slidesPerView: 1 },
-              600: { slidesPerView: 2 },
-              900: { slidesPerView: 3 },
-              1200: { slidesPerView: 5 },
-            }}
-          >
-            {filteredProducts.map((product, index) => (
-              <SwiperSlide key={index}>
-                <SoonProductCard id={product.id} product={product} />
+            {filteredProducts.map((product) => (
+              <SwiperSlide key={product.id}>
+                <SoonProductCard
+                  id={product.id}
+                  product={product}
+                  type={type}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </>
       )}
-
-      {type && filteredProducts.length === 0 && <></>}
     </SoonProductStyled>
   );
 };

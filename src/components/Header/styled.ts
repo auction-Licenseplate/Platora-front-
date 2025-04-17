@@ -302,7 +302,9 @@ export const HeaderStyled = styled.div`
       background: #ffffff;
       border-radius: 5px;
       padding: 10px;
-      width: 300px;
+      max-width: 450px;
+      width: 450px;
+      height: 100px;
       z-index: 9999;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 

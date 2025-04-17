@@ -1,14 +1,15 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { notification } from "antd";
 import { useRouter } from "next/router";
 import { HeaderStyled, Overlay } from "./styled";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
-import { setTheme, toggleTheme } from "@/store/themeSlice";
 import Toggle from "./Toggle";
 import api from "@/util/intercept";
+
 // 로고 이미지
 import logoBlack from "@/assets/images/platoraLogo(black).png";
 import logoWhite from "@/assets/images/platoraLogo(white).png";
@@ -35,20 +36,55 @@ const Header = () => {
 
   // 알람 상태
   const [alertData, setAlertData] = useState<
-    { id: number; message: string; createdAt: string; isRead: boolean }[]
+    {
+      id: number;
+      message: string;
+      createdAt: string;
+      check: boolean;
+      vehicleTitle: string;
+      vehicleId: number;
+    }[]
   >([]);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [newAlert, setNewAlert] = useState(false);
 
   // 유저, 관리자 구분
   const [userRole, setUserRole] = useState<string | null>(null);
 
-  // 알람 열기/닫기
-  const toggleAlert = () => setIsAlertOpen((prev) => !prev);
-
-  // 알림 데이터
+  // 알람 상태 변경
   useEffect(() => {
-    // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
+    const hasUnread = alertData.some((noti) => !noti.check);
+    setNewAlert(hasUnread);
+  }, [alertData]);
+
+  // 다크, 라이트 모드
+  const theme = useSelector((state: RootState) => state.theme.mode);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(theme === "dark");
+  }, [theme]);
+
+  // 유저, 관리자 구분 & 알람 데이터
+  useEffect(() => {
+    if (!token) return;
+
+    // 유저, 관리자 구분
+    const fetchUserInfo = async () => {
+      try {
+        const res = await api.get("http://localhost:5000/auth/getRole", {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUserRole(res.data);
+      } catch (error) {
+        console.error("유저 정보 요청 실패:", error);
+      }
+    };
+
+    // 알림 데이터
     const fetchalertData = async () => {
       try {
         const res = await axios.get(
@@ -61,41 +97,50 @@ const Header = () => {
           }
         );
 
-        const alertData = res.data;
-
-        // 안 읽거나 읽어도 3일 안 지난 것만 남김
-        const now = new Date();
-
-        const filtered = alertData.filter((noti) => {
-          if (!noti.isRead) return true;
-
-          const createdAt = new Date(noti.createdAt);
-
-          const diff =
-            (now.getTime() - createdAt.getTime()) / (1000 * 3600 * 24);
-          return diff < 3;
-        });
-
-        setAlertData(filtered);
+        setAlertData(res.data);
       } catch (error) {
         console.error("알림 불러오기 실패:", error);
       }
     };
 
+    fetchUserInfo();
     fetchalertData();
-  }, []);
+  }, [token]);
 
-  // 안 읽은 알림 여부 감지
+  // 알림을 한 번에 띄우기 (혹은 알림이 있을 때마다)
   useEffect(() => {
-    const hasUnread = alertData.some((noti) => !noti.isRead);
-    setNewAlert(hasUnread);
+    alertData.forEach((noti) => {
+      if (!noti.check) {
+        showNotification(noti); // 안 읽은 알림을 띄우기
+      }
+    });
   }, [alertData]);
+
+  // 토글 변경 시에
+  useEffect(() => {
+    let isMounted = true;
+
+    const handleRouteChange = () => {
+      // 페이지가 변경될 때마다 토글 닫기
+      if (isMounted) {
+        setIsToggleOpen(false);
+      }
+    };
+
+    // 라이팅 시 생성
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      isMounted = false;
+      // 라우팅 종료 시 제거
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router.events]);
 
   // 알림 클릭 처리
   const readAlert = async (id: number) => {
     try {
       // patch: 일부 데이터 변경
-
       await axios.patch(
         `http://localhost:5000/notification/${id}`,
         { check: true },
@@ -107,46 +152,49 @@ const Header = () => {
       );
 
       setAlertData((prev) =>
-        prev.map((noti) => (noti.id === id ? { ...noti, isRead: true } : noti))
+        prev.map((noti) => (noti.id === id ? { ...noti, check: true } : noti))
       );
     } catch (err) {
       console.error("알림 상태 변경 실패:", err);
     }
   };
 
-  // 알람 정렬 -> 읽은 게 위로
-  const sortedalertData = [...alertData].sort((a, b) => {
-    if (a.isRead === b.isRead) {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    }
-    return a.isRead ? 1 : -1;
-  });
+  const showNotification = (noti: {
+    id: number;
+    message: string;
+    check: boolean;
+    vehicleTitle: string;
+    vehicleId: number;
+  }) => {
+    // 중복 방지 -> 삭제 시 한 번 더 호출해서
+    const notificationKey = String(noti.id);
 
-  // 다크, 라이트 모드
-  const theme = useSelector((state: RootState) => state.theme.mode);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+    const type = noti.message === "refund" ? "warning" : "info";
 
-  useEffect(() => {
-    setIsDarkMode(theme === "dark");
-  }, [theme]);
-
-  // 토글 변경 시에
-  useEffect(() => {
-    let isMounted = true;
-
-    const handleRouteChange = () => {
-      if (isMounted) {
-        setIsToggleOpen(false); // 페이지가 변경될 때마다 토글 닫기
-      }
-    };
-
-    router.events.on("routeChangeStart", handleRouteChange);
-
-    return () => {
-      isMounted = false;
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [router.events]);
+    notification[type]({
+      key: notificationKey,
+      message: type === "warning" ? "포인트 반환" : "입찰 성공",
+      description: (
+        <div>
+          <div>
+            {noti.message === "refund"
+              ? `[포인트 환불] "${noti.vehicleTitle}" 해당 입찰 건이 더 높은 금액에 입찰되어 자동으로 포인트가 반환되었습니다.`
+              : `[입찰 성공] "${noti.vehicleTitle}" 해당 차량 입찰에 성공했습니다.`}
+          </div>
+          <div className="modalFoot">
+            클릭 시 해당 입찰 게시글로 이동합니다.
+          </div>
+        </div>
+      ),
+      onClick: () => {
+        readAlert(noti.id), notification.close(notificationKey);
+        router.push(`/detail/${noti.vehicleId}`);
+      },
+      onClose: () => {
+        readAlert(noti.id), notification.close(notificationKey);
+      },
+    });
+  };
 
   // 토글 클릭 시
   const handleToggleClick = () => {
@@ -301,48 +349,6 @@ const Header = () => {
                       }}
                     />
                   </div>
-
-                  {userRole === "" ? (
-                    <div className="userIcon alertIcon">
-                      <Image
-                        src={isDarkMode ? alertIconWhite : alertIconBlack}
-                        alt="alert icon"
-                        layout="responsive"
-                        onClick={toggleAlert}
-                      />
-                      {newAlert && <span className="alertCircle" />}
-
-                      {isAlertOpen && (
-                        <div className="alertOpen">
-                          {alertData.length === 0 ? (
-                            <p className="alertText">알림이 없습니다</p>
-                          ) : (
-                            sortedalertData.map((noti) => (
-                              <div
-                                key={noti.id}
-                                className="alertMessage"
-                                onClick={() => readAlert(noti.id)}
-                              >
-                                <p
-                                  className="alertText"
-                                  style={{
-                                    color: noti.isRead ? "gray" : "black",
-                                  }}
-                                >
-                                  {noti.message}
-                                </p>
-                                {!noti.isRead && (
-                                  <p className="alertCheck">✔</p>
-                                )}
-                              </div>
-                            ))
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
 
                   <div className="userIcon">
                     <Image

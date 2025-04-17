@@ -13,6 +13,7 @@ import "antd/dist/antd.css";
 
 import LoadingSpinner from "@/components/Loading";
 import { useRouter } from "next/router";
+import ScrollTopButton from "@/components/TopBtn";
 
 // 토큰을 가져오는 컴포넌트
 const TokenLoader = () => {
@@ -81,6 +82,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Header />
         {loading ? <LoadingSpinner /> : <Component {...pageProps} />}
         <Footer />
+        <ScrollTopButton />
       </Provider>
     </>
   );
