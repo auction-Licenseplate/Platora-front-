@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "scripts": {
-      "start": "HOST=0.0.0.0 next start"
-    },
+    "start": "HOST=0.0.0.0 next start",
     "lint": "next lint"
   },
   "dependencies": {
