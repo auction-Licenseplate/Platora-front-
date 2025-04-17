@@ -19,7 +19,6 @@ export const LoginStyled = styled.div`
     width: 520px;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,6 +62,8 @@ export const LoginStyled = styled.div`
     width: 100%;
     border: none !important;
     font-weight: bold;
+    background-color: rgb(220, 221, 221);
+    box-shadow: none !important;
     height: 44px;
     transition: background-color 0.3s ease !important;
   }

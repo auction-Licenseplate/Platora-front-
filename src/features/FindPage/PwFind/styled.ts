@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const PwFindStyled = styled.div<{ display: string }>`
   width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,9 +16,9 @@ export const PwFindStyled = styled.div<{ display: string }>`
 
   .loginForm-container {
     width: 520px;
-    padding: 40px;
+    padding: 80px;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,7 +30,7 @@ export const PwFindStyled = styled.div<{ display: string }>`
     width: 520px;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
     display: ${(props) => props.display || "flex"};
     flex-direction: column;
     align-items: center;

@@ -51,7 +51,7 @@ const Header = () => {
     // alert 테이블에 있는 데이터 모든 가져오기 (+게시글 제목(번호판))
     const fetchalertData = async () => {
       try {
-        const res = await api.get(
+        const res = await axios.get(
           "http://localhost:5000/notification/getAlert",
           {
             withCredentials: true,
@@ -96,7 +96,7 @@ const Header = () => {
     try {
       // patch: 일부 데이터 변경
 
-      await api.patch(
+      await axios.patch(
         `http://localhost:5000/notification/${id}`,
         { check: true },
 
@@ -186,7 +186,7 @@ const Header = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const res = await api.get("http://localhost:5000/auth/getRole", {
+        const res = await axios.get("http://localhost:5000/auth/getRole", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,

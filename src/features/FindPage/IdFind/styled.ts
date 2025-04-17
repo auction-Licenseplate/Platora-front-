@@ -17,7 +17,6 @@ export const IdFindStyled = styled.div`
     width: 520px;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,9 +52,10 @@ export const IdFindStyled = styled.div`
   }
 
   .loginForm-findidDiv {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
-    margin: 10px 0 20px;
+    margin: 4px 10px;
+    color: red;
   }
 
   button {
@@ -70,7 +70,7 @@ export const IdFindStyled = styled.div`
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin: 16px 0;
+    margin: 12px 0;
     font-size: 14px;
     width: 100%;
 

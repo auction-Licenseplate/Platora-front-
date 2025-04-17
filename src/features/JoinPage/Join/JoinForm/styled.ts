@@ -35,6 +35,9 @@ export const JoinFormStyled = styled.div`
       width: 100%;
       max-width: 1280px;
     }
+    .joinbtn {
+      margin-top: 10px;
+    }
     .joinForm-container {
       width: 100%;
       display: flex;

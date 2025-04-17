@@ -26,6 +26,7 @@
   --btn-text-color: black;
   --loading: white;
   --box-shadow: rgba(0, 0, 0, 0.8);
+  --join-btn: rgb(146, 146, 146);
 }
 
 .light-mode {
@@ -50,6 +51,7 @@
   --btn-hover: #ffffff;
   --loading: blue;
   --box-shadow: rgba(0, 0, 0, 0.2);
+  --join-btn: rgba(0, 0, 0, 0.2);
 }
 
 /* 폰트 */
@@ -171,7 +173,14 @@ body {
     margin-top: 30px;
   }
 }
-
+/* 회원가입 폼 */
+.join-check,
+.join-check:hover,
+.joinbtn {
+  background-color: var(--join-btn) !important;
+  color: var(--font-color) !important;
+  border-color: var(--join-btn) !important;
+}
 /* 로그인 폼 */
 .divider hr {
   background-color: var(--divider-color);
