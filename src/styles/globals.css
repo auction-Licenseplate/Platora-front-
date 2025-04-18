@@ -4,6 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 
 :root {
+  --antd-wave-shadow-color: transparent !important;
   --background: #1e1e1e;
   --infoBackground: rgb(34, 34, 34);
   --foreground: white;

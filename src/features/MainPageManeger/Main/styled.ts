@@ -4,6 +4,10 @@ export const MainStyled = styled.div`
   &.main-wrap {
     max-width: 100%;
 
+    .paddingAd {
+      padding: 0 30px;
+    }
+
     .mainBoxContainer {
       max-width: 100%;
       padding: 30px;

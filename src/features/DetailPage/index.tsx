@@ -228,7 +228,7 @@ const DetailPage = ({ id }: detailprops) => {
   ) : (
     <DetailStyled className={clsx("detailstyled")}>
       <div className="detail-wrap">
-        <div className="detail-title">{arr[0].carnumber}</div>
+        <div className="detail-title nomalFont">{arr[0].carnumber}</div>
         <hr />
         <br></br>
         <div className="detail-container">
@@ -315,6 +315,7 @@ const DetailPage = ({ id }: detailprops) => {
                     setSelectedUserId(arr[0].userId);
                     setSellerOpen(true);
                   }}
+                  className="detail-seller"
                 >
                   {arr[0].name}
                 </span>

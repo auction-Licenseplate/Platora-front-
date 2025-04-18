@@ -77,6 +77,9 @@ export const DetailStyled = styled.div`
       align-items: baseline;
       gap: 5%;
       text-align: start;
+      .detail-seller {
+        cursor: pointer;
+      }
     }
 
     .detail-texttitle {
@@ -147,6 +150,7 @@ export const DetailStyled = styled.div`
       width: 80%;
       border: 1px solid lightgray;
       margin-top: 50px;
+      padding: 0 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;

@@ -325,8 +325,18 @@ export const HeaderStyled = styled.div`
         height: 20px;
       }
 
-      .signUp {
+      .userIcon {
         display: none;
+      }
+
+      .alertIcon {
+        display: block;
+        width: 27px;
+        margin-top: -15px;
+      }
+
+      .alertCircle {
+        margin-top: 5px;
       }
 
       .marginLogoImg {

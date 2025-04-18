@@ -83,6 +83,13 @@ export const MyInfoStyled = styled.div`
             width: 100%;
             display: flex;
             gap: 30px;
+            align-items: center;
+
+            .ant-btn:hover,
+            .ant-btn:active,
+            .ant-btn:focus {
+              color: rgb(131, 131, 131) !important;
+            }
           }
 
           .upLoad Button {
@@ -200,7 +207,7 @@ export const MyInfoStyled = styled.div`
       }
 
       .ant-upload-list {
-        margin: -17px 0 10px 0 !important;
+        margin: -7px 0 10px 0 !important;
       }
     }
   }

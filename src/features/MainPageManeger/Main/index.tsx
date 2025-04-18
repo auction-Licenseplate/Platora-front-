@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import api from "@/util/intercept";
 import AllProduct from "../../../components/Main/AllProduct/[type]";
 import SoonProduct from "@/components/Main/SoonProduct/[type]";
+import Advertising from "@/components/Advertising";
 
 const Main = () => {
   const router = useRouter();
@@ -80,6 +81,13 @@ const Main = () => {
 
   return (
     <MainStyled className={clsx("main-wrap")}>
+      {!token ? (
+        <div className="paddingAd">
+          <Advertising />
+        </div>
+      ) : (
+        <></>
+      )}
       {type ? (
         <Tier type={type} />
       ) : (
