@@ -44,7 +44,7 @@ const AllProduct = ({ type }: TeirProps) => {
     const fetchAuctions = async () => {
       try {
         const response = await axios.post(
-          "http://15.164.52.122:5000/boards/getAllProduct"
+          "http://15.164.52.122/api/boards/getAllProduct"
         );
 
         const data = response.data;

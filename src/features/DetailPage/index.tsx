@@ -57,7 +57,7 @@ const DetailPage = ({ id }: detailprops) => {
     }
     axios
       .post(
-        "http://15.164.52.122:5000/boards/detail",
+        "http://15.164.52.122/api/boards/detail",
         { id }, // 요청 바디
         {
           headers: {
@@ -201,7 +201,7 @@ const DetailPage = ({ id }: detailprops) => {
       });
     }
     axios
-      .post("http://15.164.52.122:5000/boards/priceupdate", {
+      .post("http://15.164.52.122/api/boards/priceupdate", {
         id: arr[0].id,
         userId: userId,
         price,
@@ -214,7 +214,7 @@ const DetailPage = ({ id }: detailprops) => {
   // 좋아요 상태 업데이트
   const likePost = () => {
     axios
-      .post("http://15.164.52.122:5000/boards/likepost", {
+      .post("http://15.164.52.122/api/boards/likepost", {
         id: arr[0].id,
         userId: arr[0].userId,
       })
@@ -235,7 +235,7 @@ const DetailPage = ({ id }: detailprops) => {
           <div className="detail-imgcontainer">
             <div>
               <Image
-                src={`http://15.164.52.122:5000/uploads//${img}`}
+                src={`http://15.164.52.122/api/uploads//${img}`}
                 width={0}
                 height={0}
                 className="detail-mainimg"
@@ -245,7 +245,7 @@ const DetailPage = ({ id }: detailprops) => {
             </div>
             <div className="detial-nowrap">
               <Image
-                src={`http://15.164.52.122:5000/uploads//${arr[0].carimg1}`}
+                src={`http://15.164.52.122/api/uploads//${arr[0].carimg1}`}
                 width={150}
                 height={150}
                 className="detail-clickimg"
@@ -253,7 +253,7 @@ const DetailPage = ({ id }: detailprops) => {
                 onClick={() => setImg(arr[0].carimg1)}
               />
               <Image
-                src={`http://15.164.52.122:5000/uploads//${arr[0].carimg2}`}
+                src={`http://15.164.52.122/api/uploads//${arr[0].carimg2}`}
                 width={0}
                 height={0}
                 className="detail-clickimg"
@@ -261,7 +261,7 @@ const DetailPage = ({ id }: detailprops) => {
                 onClick={() => setImg(arr[0].carimg2)}
               />
               <Image
-                src={`http://15.164.52.122:5000/uploads//${arr[0].carimg3}`}
+                src={`http://15.164.52.122/api/uploads//${arr[0].carimg3}`}
                 width={150}
                 height={150}
                 className="detail-clickimg"
@@ -417,21 +417,21 @@ const DetailPage = ({ id }: detailprops) => {
             <div className="detail-carinfo">{arr[0].carinfo}</div>
             <div className="detial-detailImg">
               <Image
-                src={`http://15.164.52.122:5000/uploads//${arr[0].carimg1}`}
+                src={`http://15.164.52.122/api/uploads//${arr[0].carimg1}`}
                 width={400}
                 height={400}
                 className="detail-detailinfoImg"
                 alt=""
               />
               <Image
-                src={`http://15.164.52.122:5000/uploads//${arr[0].carimg2}`}
+                src={`http://15.164.52.122/api/uploads//${arr[0].carimg2}`}
                 width={400}
                 height={400}
                 className="detail-detailinfoImg"
                 alt=""
               />
               <Image
-                src={`http://15.164.52.122:5000/uploads//${arr[0].carimg3}`}
+                src={`http://15.164.52.122/api/uploads//${arr[0].carimg3}`}
                 width={400}
                 height={400}
                 className="detail-detailinfoImg"

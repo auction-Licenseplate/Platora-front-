@@ -48,7 +48,7 @@ const LoginForm = () => {
       };
 
       axios
-        .post("http://15.164.52.122:5000/auth/login", data, {
+        .post("http://15.164.52.122/api/auth/login", data, {
           withCredentials: true,
         }) // 서버 URL
         .then((res) => {

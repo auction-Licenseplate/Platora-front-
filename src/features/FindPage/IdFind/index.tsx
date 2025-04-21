@@ -19,7 +19,7 @@ const IdFind = () => {
         return;
       }
       axios
-        .post("http://15.164.52.122:5000/auth/findID", values)
+        .post("http://15.164.52.122/api/auth/findID", values)
         .then((res) => {
           if (res.data.message === "저장된 아이디 없음") {
             return setUserId("가입되지 않은 아이디입니다.");

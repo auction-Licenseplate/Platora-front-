@@ -44,7 +44,7 @@ const StickyMenu = ({ menu }: MenuProps) => {
       cancelText: "취소",
       onOk: async () => {
         try {
-          await axios.delete("http://15.164.52.122:5000/users/withdraw", {
+          await axios.delete("http://15.164.52.122/api/users/withdraw", {
             headers: {
               Authorization: `Bearer ${token}`,
             },

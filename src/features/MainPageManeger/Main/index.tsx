@@ -31,7 +31,7 @@ const Main = () => {
 
     try {
       const response = await api.get(
-        "http://15.164.52.122:5000/admins/getStatus",
+        "http://15.164.52.122/api/admins/getStatus",
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -65,7 +65,7 @@ const Main = () => {
 
     const fetchUserInfo = async () => {
       try {
-        const res = await axios.get("http://15.164.52.122:5000/auth/getRole", {
+        const res = await axios.get("http://15.164.52.122/api/auth/getRole", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,

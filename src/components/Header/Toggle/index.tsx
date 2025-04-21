@@ -78,7 +78,7 @@ const Toggle = ({
 
     try {
       const response = await api.get(
-        "http://15.164.52.122:5000/admins/getStatus",
+        "http://15.164.52.122/api/admins/getStatus",
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
