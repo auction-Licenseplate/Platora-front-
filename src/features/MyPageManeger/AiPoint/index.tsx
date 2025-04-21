@@ -34,7 +34,7 @@ const AiPoint = ({
     let isMounted = true; //마운트 여부 체크
 
     axios
-      .get("http://localhost:5000/users/user-info", {
+      .get("http://15.164.52.122/users/user-info", {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -126,7 +126,7 @@ Output must be in the following strict JSON format and nothing else:
     } else {
       setIsScoreReady(false); // 실행 전에 비활성화
       axios
-        .post("http://localhost:5000/openai/aichat", { message: prompt }) // 객체로 전송
+        .post("http://15.164.52.122/openai/aichat", { message: prompt }) // 객체로 전송
         .then((res) => {
           let cleanData = res.data.replace(/```json|```/g, "").trim();
 
@@ -140,7 +140,7 @@ Output must be in the following strict JSON format and nothing else:
           // 포인트 차감 요청
           axios
             .post(
-              "http://localhost:5000/pay/pointminus",
+              "http://15.164.52.122/pay/pointminus",
               {},
               {
                 headers: { Authorization: `Bearer ${token}` },

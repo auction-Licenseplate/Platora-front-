@@ -31,7 +31,7 @@ const SoonProductCard = ({ product, id, type }: Props) => {
     <div className="soon-card">
       <div className="soon-image">
         <Image
-          src={`http://localhost:5000/uploads/${product.imageUrls[0]}`}
+          src={`http://15.164.52.122/uploads/${product.imageUrls[0]}`}
           alt={product.title}
           preview={token ? true : false}
           className={`soonImg ${token ? "clear" : ""}`}

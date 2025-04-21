@@ -85,7 +85,7 @@ const MyPost = ({
     const handleDeletePost = async (postId: string) => {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/boards/deletePosts/${postId}`,
+          `http://15.164.52.122/boards/deletePosts/${postId}`,
           {
             withCredentials: true,
             headers: {
@@ -109,7 +109,7 @@ const MyPost = ({
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/boards/likepost",
+          "http://15.164.52.122/boards/likepost",
           {
             id: post.auctionID || post.auctionId,
             userId: post.userId,
@@ -147,7 +147,7 @@ const MyPost = ({
 
         <div className="postImg">
           <Image
-            src={`http://localhost:5000/uploads/${firstImage}`}
+            src={`http://15.164.52.122/uploads/${firstImage}`}
             alt="car image"
             fill
             unoptimized

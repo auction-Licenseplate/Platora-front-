@@ -45,7 +45,7 @@ const ProductCard = ({ product, id }: Props) => {
   };
 
   // 토큰 유무에 따라 썸네일 달라짐
-  const originalUrl = `http://localhost:5000/uploads/${product.imageUrls[currentImageIndex]}`;
+  const originalUrl = `http://15.164.52.122/uploads/${product.imageUrls[currentImageIndex]}`;
 
   return (
     <div className="product-card">
