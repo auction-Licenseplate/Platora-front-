@@ -56,7 +56,7 @@ const LoginForm = () => {
           router.push("/");
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          alert(error.response);
         });
     },
   });
