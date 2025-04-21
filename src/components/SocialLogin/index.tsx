@@ -30,7 +30,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
     try {
       axios
         .post(
-          `http://15.164.52.122/api/auth/login/${type}`,
+          `http://15.164.52.122/auth/login/${type}`,
           { code },
           { withCredentials: true }
         )

@@ -98,7 +98,7 @@ const JoinForm = () => {
       const data = type === "email" ? { email } : { phone };
 
       const response = await axios.post(
-        `http://15.164.52.122/api/auth/check/${type}`,
+        `http://15.164.52.122/auth/check/${type}`,
         data
       );
       if (response.data.exists) {
@@ -162,12 +162,12 @@ const JoinForm = () => {
         phone: values.phone,
       };
       axios
-        .post("http://15.164.52.122/api/auth/signup", data)
+        .post("http://15.164.52.122/auth/signup", data)
         .then((response) => {
           console.log("회원가입 성공:", response.data);
           const userId = response.data.email;
 
-          return axios.post("http://15.164.52.122/api/users/userCheck", {
+          return axios.post("http://15.164.52.122/users/userCheck", {
             user_id: userId,
             term: "이용약관",
           });

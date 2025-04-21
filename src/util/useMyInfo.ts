@@ -128,7 +128,7 @@ export const myInfo = (info: string) => {
       return;
     }
     api
-      .post("http://15.164.52.122/api/pay/refund-point", refundDetails, {
+      .post("http://15.164.52.122/pay/refund-point", refundDetails, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -190,7 +190,7 @@ export const myInfo = (info: string) => {
       const orderId = `order-${Date.now()}`;
       const orderName = "포인트 충전";
 
-      const res = await api.get("http://15.164.52.122/api/pay/toss-client-key");
+      const res = await api.get("http://15.164.52.122/pay/toss-client-key");
       const tossClientKey = res.data.tossClientKey;
       const toss = await loadTossPayments(tossClientKey); // 토스 sdk
 
@@ -253,7 +253,7 @@ export const myInfo = (info: string) => {
   const pwvalue = () => {
     api
       .post(
-        "http://15.164.52.122/api/auth/pwfind/updatepw",
+        "http://15.164.52.122/auth/pwfind/updatepw",
         { password },
         {
           withCredentials: true,
@@ -282,7 +282,7 @@ export const myInfo = (info: string) => {
   // - 포인트 내역 요청 후 useState에 저장 (테이블 내역 출력을 위해)
   const payTableInfo = async () => {
     try {
-      const res = await api.get("http://15.164.52.122/api/pay/payInfo", {
+      const res = await api.get("http://15.164.52.122/pay/payInfo", {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -376,13 +376,10 @@ export const myInfo = (info: string) => {
   // - 차량 등록 정보 요청 후 useState에 저장 (테이블 내역 출력을 위해)
   const fetchVehicleData = async () => {
     try {
-      const res = await api.get(
-        "http://15.164.52.122/api/vehicles/vehicleData",
-        {
-          withCredentials: true,
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await api.get("http://15.164.52.122/vehicles/vehicleData", {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const vehicleData = res.data.map((item: any, index: number) => {
         const date = new Date(item.create_at).toLocaleString("ko-KR", {
@@ -438,7 +435,7 @@ export const myInfo = (info: string) => {
 
     try {
       const res = await api.post(
-        "http://15.164.52.122/api/users/certificate",
+        "http://15.164.52.122/users/certificate",
         formData,
         {
           withCredentials: true,

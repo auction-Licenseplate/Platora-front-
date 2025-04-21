@@ -24,7 +24,7 @@ const PwFind = () => {
         phone: values.phone,
       };
       axios
-        .post("http://15.164.52.122/api/auth/findpw", data)
+        .post("http://15.164.52.122/auth/findpw", data)
         .then((res) => {
           if (res.data.message === "저장된 비밀번호 없음") {
             alert("가입되지 않은 아이디입니다.");
@@ -68,7 +68,7 @@ const PwFind = () => {
         userID: user,
       };
       axios
-        .post("http://15.164.52.122/api/auth/pwfind/updatepw", data)
+        .post("http://15.164.52.122/auth/pwfind/updatepw", data)
         .then((res) => {
           if (res.data.message === "사용자 없음") {
             alert("비밀번호 업데이트 실패");

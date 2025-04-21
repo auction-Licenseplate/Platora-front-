@@ -77,13 +77,10 @@ const Toggle = ({
     }
 
     try {
-      const response = await api.get(
-        "http://15.164.52.122/api/admins/getStatus",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        }
-      );
+      const response = await api.get("http://15.164.52.122/admins/getStatus", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
 
       const ownershipStatus = response.data;
 
