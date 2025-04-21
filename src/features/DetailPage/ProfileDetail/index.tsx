@@ -18,7 +18,7 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
 
     // userId에 대한 게시글 가져오기
     axios
-      .post("http://15.164.52.122/boards/userPosts", {
+      .post("http://15.164.52.122:5000/boards/userPosts", {
         userId,
       })
       .then((res) => {

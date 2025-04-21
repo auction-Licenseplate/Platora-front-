@@ -26,7 +26,7 @@ const PlusInfo = ({ userid }: userData) => {
         phone: values.phone,
       };
       axios
-        .post("http://15.164.52.122/auth/social/plusinfo", data) // 서버 URL
+        .post("http://15.164.52.122:5000/auth/social/plusinfo", data) // 서버 URL
         .then((res) => {
           router.push("/").then(() => {
             window.location.reload();
@@ -57,7 +57,7 @@ const PlusInfo = ({ userid }: userData) => {
     const type = "phone";
     try {
       const response = await axios.post(
-        `http://15.164.52.122/auth/phoneCheck`,
+        `http://15.164.52.122:5000/auth/phoneCheck`,
         { phone: formik.values.phone }
       );
 

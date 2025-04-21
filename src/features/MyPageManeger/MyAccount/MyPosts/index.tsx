@@ -31,7 +31,7 @@ const MyPosts = ({ type }: Props) => {
         if (type === "posts") {
           // 승인 전 vehicles 테이블
           const waiting = await axios.get(
-            "http://15.164.52.122/boards/getMyPosts",
+            "http://15.164.52.122:5000/boards/getMyPosts",
             {
               withCredentials: true,
               headers: { Authorization: `Bearer ${token}` },
@@ -43,7 +43,7 @@ const MyPosts = ({ type }: Props) => {
 
           // 승인 후 boards 테이블
           const going = await axios.get(
-            "http://15.164.52.122/boards/getPosts",
+            "http://15.164.52.122:5000/boards/getPosts",
             {
               withCredentials: true,
               headers: { Authorization: `Bearer ${token}` },
@@ -55,7 +55,7 @@ const MyPosts = ({ type }: Props) => {
         } else if (type === "favorite") {
           // 해당 유저의 관심 상품
           const favorite = await axios.get(
-            "http://15.164.52.122/boards/getMyFavorites",
+            "http://15.164.52.122:5000/boards/getMyFavorites",
             {
               withCredentials: true,
               headers: { Authorization: `Bearer ${token}` },

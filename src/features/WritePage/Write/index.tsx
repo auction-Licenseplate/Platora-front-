@@ -40,7 +40,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
     const fetchStatus = async () => {
       try {
         const response = await axios.get(
-          `http://15.164.52.122/admins/getStatus`,
+          `http://15.164.52.122:5000/admins/getStatus`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
@@ -162,7 +162,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
   const sendVehicleData = async (formData: FormData) => {
     try {
       const response = await axios.post(
-        "http://15.164.52.122/vehicles/addWrite",
+        "http://15.164.52.122:5000/vehicles/addWrite",
         formData,
         {
           withCredentials: true,
@@ -226,7 +226,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
 
             try {
               const existing = await axios.get(
-                `http://15.164.52.122/vehicles/checkApprovedPlate?plate=${values.title}`,
+                `http://15.164.52.122:5000/vehicles/checkApprovedPlate?plate=${values.title}`,
                 {
                   headers: { Authorization: `Bearer ${token}` },
                   withCredentials: true,

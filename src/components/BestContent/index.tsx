@@ -19,11 +19,11 @@ const BestContent = () => {
     const fetchContents = async () => {
       try {
         const response = await axios.get(
-          "http://15.164.52.122/admins/contents?limit=3"
+          "http://15.164.52.122:5000/admins/contents?limit=3"
         );
         const formatted = response.data.map((item: any, idx: number) => ({
           id: idx,
-          image: `http://15.164.52.122/uploads/${item.banner_img}`,
+          image: `http://15.164.52.122:5000/uploads/${item.banner_img}`,
           title: `배너 이미지 ${idx + 1}`,
         }));
         setContents(formatted);

@@ -80,7 +80,7 @@ const MyInfo = ({ info }: Props) => {
 
     if (info === "myInfo" || info === "point") {
       axios
-        .get("http://15.164.52.122/users/user-info", {
+        .get("http://15.164.52.122:5000/users/user-info", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ const MyInfo = ({ info }: Props) => {
         });
     } else if (info === "changePass") {
       axios
-        .get("http://15.164.52.122/users/passCheck", {
+        .get("http://15.164.52.122:5000/users/passCheck", {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
         })

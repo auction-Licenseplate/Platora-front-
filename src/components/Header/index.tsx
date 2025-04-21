@@ -72,7 +72,7 @@ const Header = () => {
     // 유저, 관리자 구분
     const fetchUserInfo = async () => {
       try {
-        const res = await api.get("http://15.164.52.122/auth/getRole", {
+        const res = await api.get("http://15.164.52.122:5000/auth/getRole", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const Header = () => {
     const fetchalertData = async () => {
       try {
         const res = await axios.get(
-          "http://15.164.52.122/notification/getAlert",
+          "http://15.164.52.122:5000/notification/getAlert",
           {
             withCredentials: true,
             headers: {
@@ -143,7 +143,7 @@ const Header = () => {
     try {
       // patch: 일부 데이터 변경
       await axios.patch(
-        `http://15.164.52.122/notification/${id}`,
+        `http://15.164.52.122:5000/notification/${id}`,
         { check: true },
 
         {

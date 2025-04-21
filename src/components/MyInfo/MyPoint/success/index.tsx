@@ -26,7 +26,7 @@ const PaymentSuccess = ({ info }: Props) => {
   const handlePaymentSuccess = async (amount: number, method: string) => {
     try {
       await axios.post(
-        "http://15.164.52.122/pay/save",
+        "http://15.164.52.122:5000/pay/save",
         {
           payment_method: method,
           amount,
