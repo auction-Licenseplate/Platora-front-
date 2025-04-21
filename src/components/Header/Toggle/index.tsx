@@ -219,7 +219,7 @@ const Toggle = ({
                 </div>
               ) : (
                 <h3
-                  onClick={() => window.open("http://localhost:4000", "_blank")}
+                  onClick={() => window.open("http://52.62.79.236", "_blank")}
                 >
                   관리자 페이지로 이동
                 </h3>
