@@ -57,8 +57,8 @@ const LoginForm = () => {
         .then((res) => {
           console.log("123");
           console.log(res, "123");
-          // dispatch(setUserToken(res.data.token));
-          // router.push("/");
+          dispatch(setUserToken(res.data.token));
+          router.push("/");
         })
         .catch((error) => {
           console.log("1233454");
