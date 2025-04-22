@@ -55,11 +55,13 @@ const LoginForm = () => {
           },
         }) // 서버 URL
         .then((res) => {
-          console.log(res);
+          console.log("123");
+          console.log(res, "123");
           // dispatch(setUserToken(res.data.token));
           // router.push("/");
         })
         .catch((error) => {
+          console.log("1233454");
           console.log(error);
           alert(error.response.data.message);
         });
@@ -75,6 +77,7 @@ const LoginForm = () => {
               id="email"
               onChange={formik.handleChange}
               placeholder="abc123@xxx.com"
+              required
             />
           </div>
           <div className="loginForm-idDiv">
@@ -83,6 +86,7 @@ const LoginForm = () => {
               placeholder="비밀번호를 입력해주세요"
               type={see}
               onChange={formik.handleChange}
+              required
             />
             <div className="loginForm-seePw" onClick={seepw}>
               <Image
