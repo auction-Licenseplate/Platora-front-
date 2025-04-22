@@ -55,8 +55,9 @@ const LoginForm = () => {
           },
         }) // 서버 URL
         .then((res) => {
-          dispatch(setUserToken(res.data.token));
-          router.push("/");
+          console.log(res);
+          // dispatch(setUserToken(res.data.token));
+          // router.push("/");
         })
         .catch((error) => {
           console.log(error);
