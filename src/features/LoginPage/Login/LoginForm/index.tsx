@@ -48,7 +48,7 @@ const LoginForm = () => {
       };
 
       axios
-        .post("http://3.36.200.187/auth/login", data, {
+        .post("http://15.164.52.122/auth/login", data, {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json", // 반드시 명시
