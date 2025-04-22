@@ -1,5 +1,6 @@
 import Image from "next/image";
 import GoogleLoginImg from "@/assets/images/googlLogin.jpeg";
+import { Modal } from "antd";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL;
@@ -7,7 +8,10 @@ const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?response_t
 
 const GoogleLogin = () => {
   const handleGoogleLogin = () => {
-    window.location.href = GOOGLE_AUTH_URL; // 구글 로그인 화면으로 이동
+    Modal.warning({
+      centered: true,
+      title: "준비중입니다.",
+    });
   };
 
   return (
