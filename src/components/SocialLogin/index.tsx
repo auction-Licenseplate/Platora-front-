@@ -5,6 +5,7 @@ import PlusInfo from "@/features/PlusInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
+import { Modal } from "antd";
 interface SocialCallbackProps {
   type: string;
 }
@@ -28,6 +29,12 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
 
   const login = (code: string) => {
     try {
+      if (type === "google") {
+        Modal.warning({
+          centered: true,
+          title: "준비중입니다",
+        });
+      }
       axios
         .post(
           `http://15.164.52.122/auth/login/${type}`,
