@@ -79,7 +79,7 @@ const MyInfo = ({ info }: Props) => {
     if (token === "" || !token) return;
 
     if (info === "myInfo" || info === "point") {
-      axios
+      api
         .get("http://15.164.52.122/users/user-info", {
           withCredentials: true,
           headers: {
@@ -94,7 +94,7 @@ const MyInfo = ({ info }: Props) => {
           console.error("features -> myInfo(내 정보) 오류 : ", e);
         });
     } else if (info === "changePass") {
-      axios
+      api
         .get("http://15.164.52.122/users/passCheck", {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },
