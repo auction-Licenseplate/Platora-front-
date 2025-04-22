@@ -5,11 +5,19 @@ import PlusInfo from "@/features/PlusInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
+import { Modal } from "antd";
 interface SocialCallbackProps {
   type: string;
 }
 
 const SocialCallback = ({ type }: SocialCallbackProps) => {
+  type === "google" ? (
+    Modal.error({
+      title: "준비중입니다",
+    })
+  ) : (
+    <></>
+  );
   const router = useRouter();
   const [isSuccess, setIsSuccess] = useState(true);
   const [user, setUser] = useState("");
