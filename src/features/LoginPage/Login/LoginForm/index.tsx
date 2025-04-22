@@ -14,6 +14,7 @@ import seeimg from "@/assets/images/pwsee.png";
 import notsee from "@/assets/images/notsee.png";
 import seeImgBlack from "@/assets/images/seeImgBlack.png";
 import notseeBlack from "@/assets/images/notseeImgBlack.png";
+import api from "@/util/intercept";
 const LoginForm = () => {
   const [see, setSee] = useState("password");
   const router = useRouter();
@@ -47,7 +48,7 @@ const LoginForm = () => {
         password: values.password,
       };
 
-      axios
+      api
         .post("http://15.164.52.122/auth/login", data, {
           withCredentials: true,
           headers: {
