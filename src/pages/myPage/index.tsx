@@ -9,7 +9,8 @@ import { Modal } from "antd";
 const MyPage = () => {
   const router = useRouter();
   const token = Cookie.get("accessToken");
-  console.log(token, "111111111");
+  console.log(token, "111111111123");
+
   const isModalShown = useRef(false);
 
   useEffect(() => {
