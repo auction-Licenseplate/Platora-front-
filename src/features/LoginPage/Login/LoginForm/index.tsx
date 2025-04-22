@@ -50,6 +50,9 @@ const LoginForm = () => {
       axios
         .post("http://15.164.52.122/auth/login", data, {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json", // 반드시 명시
+          },
         }) // 서버 URL
         .then((res) => {
           dispatch(setUserToken(res.data.token));
@@ -57,7 +60,7 @@ const LoginForm = () => {
         })
         .catch((error) => {
           console.log(error);
-          alert(error.data.message);
+          alert(error.response.data.message);
         });
     },
   });
