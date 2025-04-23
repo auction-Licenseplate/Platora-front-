@@ -5,6 +5,7 @@
 
 :root {
   --antd-wave-shadow-color: transparent !important;
+  --antd-arrow-background-color: #ffffff !important;
   --background: #1e1e1e;
   --infoBackground: rgb(34, 34, 34);
   --foreground: white;
@@ -463,8 +464,8 @@ p {
   padding: 10px !important;
 }
 
-.ant-tooltip-arrow::before {
-  background-color: #ffffff !important;
+.ant-tooltip-arrow-content {
+  --antd-arrow-background-color: var(--antd-arrow-background-color) !important;
 }
 
 .pTag {
