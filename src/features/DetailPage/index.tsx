@@ -75,7 +75,7 @@ const DetailPage = ({ id }: detailprops) => {
           lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
           lastUser: res.data.lastBid.bidUser_Id, // 최근 결제 아이디
         };
-
+        console.log(lastData, "============");
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
 
@@ -105,6 +105,8 @@ const DetailPage = ({ id }: detailprops) => {
         setArr(data);
         setImg(data[0].carimg1);
         setPrice(data[0].price);
+
+        console.log(res.data.isFavorite);
         res.data.isFavorite === true
           ? setHeartimg(fullheart)
           : setHeartimg(heart);
@@ -213,6 +215,7 @@ const DetailPage = ({ id }: detailprops) => {
 
   // 좋아요 상태 업데이트
   const likePost = () => {
+    console.log(arr[0].id, arr[0].userId);
     axios
       .post("http://15.164.52.122/boards/likepost", {
         id: arr[0].id,
@@ -220,6 +223,7 @@ const DetailPage = ({ id }: detailprops) => {
       })
       .then((res) => {
         res.data.status === true ? setHeartimg(fullheart) : setHeartimg(heart);
+        console.log(res.data);
       });
   };
 
