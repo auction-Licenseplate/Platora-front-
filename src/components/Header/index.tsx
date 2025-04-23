@@ -265,8 +265,6 @@ const Header = () => {
   // 해당 페이지에서 스타일 변경
   const isOnlyLogo = /^\/(login|join|find\/(id|pw))/.test(router.asPath);
 
-  console.log("저장: ", userRole);
-
   return (
     <>
       {isToggleOpen && <Overlay onClick={handleToggleClick} />}

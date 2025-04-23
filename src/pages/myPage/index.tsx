@@ -13,11 +13,15 @@ const MyPage = () => {
   const [token, setToken] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    console.log("mypage window:", window);
     if (typeof window !== "undefined") {
       const t = Cookie.get("accessToken");
       setToken(t);
+      console.log("mypage token", t);
     }
   }, []);
+
+  console.log("mypage 토큰 : ", token);
 
   useEffect(() => {
     if (!token && !isModalShown.current) {
