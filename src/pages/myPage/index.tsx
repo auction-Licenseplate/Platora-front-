@@ -24,7 +24,7 @@ const MyPage = () => {
   console.log("mypage 토큰 : ", token);
 
   useEffect(() => {
-    if (!token && !isModalShown.current) {
+    if (token === undefined) {
       isModalShown.current = true;
       Modal.warning({
         centered: true,
