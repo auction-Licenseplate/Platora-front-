@@ -42,8 +42,13 @@ const SoonProduct = ({ type }: SoonProps) => {
         const formattedData = response.data
           .filter((item: any) => item.startTime && item.endTime)
           .map((item: any) => {
-            const startTimeMs = new Date(item.startTime + "+09:00").getTime();
-            const endTimeMs = new Date(item.endTime + "+09:00").getTime();
+            const toKSTISOString = (time: string) =>
+              time.replace(" ", "T") + "+09:00";
+
+            const startTimeMs = new Date(
+              toKSTISOString(item.startTime)
+            ).getTime();
+            const endTimeMs = new Date(toKSTISOString(item.endTime)).getTime();
 
             console.log("시작", startTimeMs);
             console.log("끝 ", endTimeMs);
