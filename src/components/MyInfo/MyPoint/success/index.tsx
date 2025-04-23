@@ -59,7 +59,7 @@ const PaymentSuccess = ({ info }: Props) => {
       setAmount(parsedAmount);
       handlePaymentSuccess(parsedAmount, method);
     }
-  }, []);
+  }, [token]);
 
   return (
     <PaymentSuccessStyled className="main-wrap-success">
