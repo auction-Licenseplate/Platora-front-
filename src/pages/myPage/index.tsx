@@ -1,16 +1,24 @@
 import MyPageContainer from "@/features/MyPageManeger/MyPage";
 import { RootState } from "@/store/store";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Cookie from "js-cookie";
 import { Modal } from "antd";
 
 const MyPage = () => {
   const router = useRouter();
-  const token = Cookie.get("accessToken");
-  console.log(token, "111111111123");
+  //   const token = Cookie.get("accessToken");
+  //   console.log(token, "111111111123");
+  // console.log(document.cookie)
+  const [token, setToken] = useState<any>(null);
 
+  useEffect(() => {
+    const t = Cookie.get("accessToken");
+    console.log(t, "쿠키 값");
+    console.log(document.cookie);
+    setToken(t);
+  }, []);
   const isModalShown = useRef(false);
 
   useEffect(() => {
