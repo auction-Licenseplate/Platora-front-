@@ -30,12 +30,24 @@ export const JoinFormStyled = styled.div`
     }
     .joinform-divcontainer {
       width: 30%;
+
+      @media (max-width: 950px) {
+        & {
+          width: 40%;
+        }
+      }
+      @media (max-width: 768px) {
+        & {
+          width: 80%;
+        }
+      }
     }
     .joinform-formcontainer {
       width: 100%;
       max-width: 1280px;
     }
     .joinbtn {
+      width: 100%;
       margin-top: 10px;
     }
     .joinForm-container {
@@ -47,14 +59,16 @@ export const JoinFormStyled = styled.div`
     }
 
     .joinForm-btnDiv {
+      width: 100%;
       display: flex;
       justify-content: center;
     }
     .join-check {
+      width: 100%;
       background-color: #777;
       border: #777;
-      margin-top: -2px;
-      margin-bottom: 10px;
+      margin: -2px auto 15px auto;
+      display: block;
     }
     .joinform-input {
       border: none !important;

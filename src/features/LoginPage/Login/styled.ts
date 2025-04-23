@@ -58,6 +58,7 @@ export const LoginStyled = styled.div`
     box-shadow: none !important;
     outline: none !important;
   }
+
   button {
     width: 100%;
     border: none !important;
@@ -109,5 +110,6 @@ export const LoginStyled = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    cursor: pointer;
   }
 `;

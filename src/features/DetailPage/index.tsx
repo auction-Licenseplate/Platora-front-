@@ -15,6 +15,7 @@ import clsx from "clsx";
 import plus from "@/assets/images/plus.png";
 import minus from "@/assets/images/minus.png";
 import { start } from "repl";
+import React from "react";
 interface detailprops {
   id: string | undefined;
 }
@@ -272,10 +273,18 @@ const DetailPage = ({ id }: detailprops) => {
           </div>
           <div className="detail-textcontainer">
             <div className="detail-price">
-              <span>현재가</span>
-              <span className="detail-bigprice">
-                {arr[0].price.toLocaleString()}원
-              </span>
+              <div className="detail-bidPriceBox">
+                <span className="detail-priceText">현재가</span>
+                <span className="detail-bigprice">
+                  {arr[0].price.toLocaleString()}원
+                </span>
+              </div>
+              <Image
+                className="detail-heart"
+                onClick={likePost}
+                src={heartimg}
+                alt=""
+              />
             </div>
             <div className="detail-minibox">
               <div className="detail-textdiv">
@@ -367,34 +376,34 @@ const DetailPage = ({ id }: detailprops) => {
               <div className="detail-textdiv">
                 <span className="detail-texttitle">예상 입찰가</span>
                 <span className="detail-thicktext">
-                  {(price + price * 0.1).toLocaleString()}
+                  {price.toLocaleString()}
                 </span>
               </div>
               <div>
                 <div className="detail-pricetotal">
-                  ({price.toLocaleString()}원 + 경매 수수료
+                  ({(price - price * 0.1).toLocaleString()}원 + 경매 수수료
                   {(price * 0.1).toLocaleString()}원)
                 </div>
 
-                <div className="detail-btndiv">
-                  {getRemainingTime(arr[0].endtime) === "경매 종료" ? (
-                    <Button disabled={true}>종료되었습니다</Button>
-                  ) : (
-                    <Button onClick={updatePrice} disabled={!isAuctionStarted}>
-                      입찰하기
-                    </Button>
+                <div className="detail-priceBex">
+                  <div className="detail-btndiv">
+                    {getRemainingTime(arr[0].endtime) === "경매 종료" ? (
+                      <Button disabled={true}>종료되었습니다</Button>
+                    ) : (
+                      <Button
+                        onClick={updatePrice}
+                        disabled={!isAuctionStarted}
+                      >
+                        입찰하기
+                      </Button>
+                    )}
+                  </div>
+                  {!isAuctionStarted && (
+                    <p className="auctionAlert">
+                      ※ 경매 시작 전입니다. 입찰은 시작 시간 이후에 가능합니다.
+                    </p>
                   )}
-
-                  <Image
-                    className="detail-heart"
-                    onClick={likePost}
-                    src={heartimg}
-                    alt=""
-                  />
                 </div>
-                {!isAuctionStarted && (
-                  <p>경매 시작 전입니다. 입찰은 시작 시간 이후에 가능합니다.</p>
-                )}
               </div>
             </div>
           </div>
@@ -414,7 +423,19 @@ const DetailPage = ({ id }: detailprops) => {
         </div>
         <div className="detail-detailboxwrap">
           <div className="detail-detailBox">
-            <div className="detail-carinfo">{arr[0].carinfo}</div>
+            <div className="detail-carinfo">
+              {arr[0].carinfo
+                ?.replace(/(차량 상태\s*:)/g, "\n$1")
+                ?.replace(/(기타 정보\s*:)/g, "\n$1")
+                .split("\n")
+                .map((line, idx) => (
+                  // React.Fragment : 여러 JSX를 감싸기 위함 -> 줄바꿈이 필요
+                  <React.Fragment key={idx}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                ))}
+            </div>
             <div className="detial-detailImg">
               <Image
                 src={`http://15.164.52.122/uploads//${arr[0].carimg1}`}

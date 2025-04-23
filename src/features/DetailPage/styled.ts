@@ -11,7 +11,8 @@ export const DetailStyled = styled.div`
     .detail-wrap {
       width: 100%;
       max-width: 1280px;
-      margin: 0px auto;
+      margin: 0 auto;
+      padding: 0 10px 10px 10px;
     }
 
     .detail-title {
@@ -22,6 +23,11 @@ export const DetailStyled = styled.div`
       color: black;
     }
 
+    .auctionAlert {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
     .detail-container {
       width: 100%;
       display: flex;
@@ -30,12 +36,14 @@ export const DetailStyled = styled.div`
       margin: 0 auto;
       flex-direction: row;
     }
+
     .detail-imgcontainer {
+      width: 50%;
       margin-top: 20px;
     }
+
     .detail-imgcontainer,
     .detail-textcontainer {
-      width: 50%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -43,11 +51,26 @@ export const DetailStyled = styled.div`
     }
 
     .detail-textcontainer {
+      width: 45%;
+      margin-left: 20px;
       align-items: flex-start;
     }
 
+    .detail-priceBox {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .detail-bidPriceBox {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
     .detail-price {
-      width: 50%;
+      width: 100%;
       font-size: 1.3vw;
       font-weight: 500;
       padding-left: 30px;
@@ -111,22 +134,29 @@ export const DetailStyled = styled.div`
     }
     .detail-pricetotal {
       font-size: 12px;
-      margin-left: 120px;
       margin-top: -10px;
       color: #777;
     }
 
     .detail-btndiv {
+      width: 100%;
       display: flex;
       gap: 15px;
       align-items: center;
       justify-content: center;
-      margin-top: 15px;
+      margin-top: 20px;
+
+      Button {
+        width: 50% !important;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px rgb(204, 204, 204) !important;
+      }
     }
 
     .detail-heart {
-      width: 40px;
-      height: 40px;
+      width: 25px;
+      height: 25px;
+      margin-left: 55px;
       cursor: pointer;
     }
 
@@ -141,6 +171,7 @@ export const DetailStyled = styled.div`
       align-items: center;
     }
     .detail-detailboxwrap {
+      width: 100%;
       display: flex;
       justify-content: center;
       padding-bottom: 50px;
@@ -181,28 +212,76 @@ export const DetailStyled = styled.div`
       }
       .detail-imgcontainer,
       .detail-textcontainer,
-      .detail-price,
+      .detail-detailBox,
       .detail-textdiv {
+        width: 100%;
+      }
+
+      .detail-price {
         width: 90%;
       }
+
       .detail-textcontainer {
         display: flex;
         align-items: center;
         justify-content: center;
       }
+
       .detail-title {
-        font-size: 24px;
+        font-size: 30px;
         text-align: center;
       }
 
-      .detail-bigprice {
+      .detail-priceText {
         font-size: 20px;
+        margin-top: 10px;
+
+        @media (max-width: 600px) {
+          & {
+            font-size: 15px;
+          }
+        }
+
+        @media (max-width: 450px) {
+          & {
+            font-size: 10px;
+          }
+        }
+
+        @media (max-width: 380px) {
+          & {
+            font-size: 7px;
+          }
+        }
+      }
+
+      .detail-bigprice {
+        font-size: 40px;
+
+        @media (max-width: 600px) {
+          & {
+            font-size: 30px;
+          }
+        }
+
+        @media (max-width: 450px) {
+          & {
+            font-size: 25px;
+          }
+        }
+
+        @media (max-width: 380px) {
+          & {
+            font-size: 20px;
+          }
+        }
       }
 
       .detail-price {
-        font-size: 16px;
         justify-content: space-between;
+        align-items: center;
         padding-left: 0;
+        margin-top: 30px;
       }
 
       .detail-texttitle {
@@ -210,7 +289,8 @@ export const DetailStyled = styled.div`
       }
 
       .detail-minibox {
-        padding: 15px;
+        width: 100%;
+        padding: 10px;
       }
 
       .detail-pricetotal {
@@ -226,12 +306,13 @@ export const DetailStyled = styled.div`
       }
 
       .detail-heart {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         cursor: pointer;
       }
       .detail-pricetotal {
-        font-size: 10px;
+        font-size: 12px;
+        margin: 0 auto;
       }
     }
     .detail-span {
