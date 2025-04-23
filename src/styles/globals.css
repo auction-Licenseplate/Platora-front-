@@ -16,12 +16,10 @@
   --active-color: white;
   --title-color: rgb(146, 146, 146);
   --post-color: rgb(255, 255, 255);
-  --btn-color: rgb(188, 188, 210);
   --before-color: rgb(220, 220, 220);
   --after-color: rgb(179, 179, 179);
   --swiper-btn: #ffffff;
   --swiper-btn-dis: #828282;
-  --btn-color: rgba(255, 255, 255, 0.982);
   --btn-hover: #ffffff;
   --font-color: rgb(255, 255, 255);
   --btn-text-color: black;
@@ -41,18 +39,16 @@
   --myPageSticky-color: rgb(173, 173, 173);
   --active-color: rgb(56, 56, 56);
   --title-color: rgb(100, 100, 100);
-  --post-color: rgb(220, 220, 220);
+  --post-color: rgb(237, 237, 237);
   --before-color: rgb(60, 60, 60);
   --after-color: rgb(112, 112, 112);
-  --btn-color: rgb(163, 172, 60);
   --swiper-btn: #000000;
   --swiper-btn-dis: #b7b7b7;
-  --btn-color: rgb(242, 243, 235);
   --font-color: rgb(0, 0, 0);
   --btn-hover: #ffffff;
   --loading: blue;
   --box-shadow: rgba(0, 0, 0, 0.2);
-  --join-btn: rgba(0, 0, 0, 0.2);
+  --join-btn: rgb(220, 221, 221);
 }
 
 /* 폰트 */
@@ -101,17 +97,6 @@
     font-size: 30px;
   }
 }
-
-/* Button {
-  background-color: var(--btn-color) !important;
-  color: var(--btn-text-color) !important;
-}
-
-button:hover,
-button:focus {
-  background-color: var(--btn-hover) !important;
-  color: var(--btn-text-color) !important;
-} */
 
 /* 로딩 */
 .loadingColor .ant-spin-dot-item {
@@ -178,10 +163,12 @@ body {
 /* 회원가입 폼 */
 .join-check,
 .join-check:hover,
-.joinbtn {
+.joinbtn,
+.ant-btn,
+.ant-btn:hover {
   background-color: var(--join-btn) !important;
-  color: var(--font-color) !important;
   border-color: var(--join-btn) !important;
+  color: black !important;
 }
 /* 로그인 폼 */
 .divider hr {

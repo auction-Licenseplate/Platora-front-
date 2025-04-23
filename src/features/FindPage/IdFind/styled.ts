@@ -15,7 +15,7 @@ export const IdFindStyled = styled.div`
 
   .loginForm-container {
     width: 520px;
-    padding: 40px;
+    padding: 80px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
