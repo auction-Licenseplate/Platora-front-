@@ -144,13 +144,16 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    const isoTime = endTime.replace(" ", "T") + "Z";
+    // "2025-04-23 20:45:31" → "2025-04-23T20:45:31Z" (Z가 없을 경우만)
+    const isoTime =
+      endTime.includes("Z") || endTime.includes("+")
+        ? endTime
+        : endTime.replace(" ", "T") + "Z";
+
     const end = new Date(isoTime).getTime();
-
-    // now를 UTC 기준으로 계산
     const now = new Date().getTime();
-
     const diff = end - now;
+
     console.log("endTime UTC:", isoTime);
     console.log("end:", end, "now:", now, "diff:", diff);
 
