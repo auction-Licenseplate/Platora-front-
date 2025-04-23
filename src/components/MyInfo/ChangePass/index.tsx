@@ -52,7 +52,7 @@ const ChangePass = ({
           </Tooltip>
         </div>
 
-        <div className="inputs">
+        <div className="inputs passInputs">
           <Image
             className="inputTextIcon"
             src={userPassIcon}

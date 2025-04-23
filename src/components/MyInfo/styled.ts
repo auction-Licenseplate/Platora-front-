@@ -54,6 +54,7 @@ export const MyInfoStyled = styled.div`
           justify-content: start;
           gap: 10px;
           position: relative;
+          margin-bottom: 15px;
 
           .inputTextIcon {
             width: 23px;
@@ -160,24 +161,69 @@ export const MyInfoStyled = styled.div`
         .alert {
           position: absolute;
           top: 35px;
-          left: 160px;
-          font-size: small;
+          left: 180px;
           color: rgb(185, 1, 1);
+          white-space: nowrap;
         }
 
         .alertCheck {
           position: absolute;
-          top: 45px;
-          left: 160px;
-          font-size: small;
+          top: 35px;
+          left: 180px;
           color: rgb(185, 1, 1);
+          white-space: nowrap;
         }
       }
     }
 
+    @media (max-width: 1090px) {
+      .alert,
+      .alertCheck {
+        left: 170px;
+        font-size: 12px !important;
+      }
+    }
+
+    @media (max-width: 1030px) {
+      .alert,
+      .alertCheck {
+        left: 160px !important;
+        font-size: 11px !important;
+      }
+
+      .passInputs {
+        margin-bottom: 50px !important;
+      }
+    }
+
+    @media (max-width: 950px) {
+      .alert,
+      .alertCheck {
+        white-space: wrap !important;
+      }
+    }
+
     @media (max-width: 768px) {
-      .inputContainer {
-        width: 100% !important;
+      .alert,
+      .alertCheck {
+        left: 170px !important;
+        white-space: nowrap !important;
+      }
+
+      .passInputs {
+        margin-bottom: 0px !important;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .alert,
+      .alertCheck {
+        left: 170px !important;
+        white-space: wrap !important;
+      }
+
+      .passInputs {
+        margin-bottom: 50px !important;
       }
     }
 
@@ -200,6 +246,13 @@ export const MyInfoStyled = styled.div`
         }
       }
 
+      .alert,
+      .alertCheck {
+        top: 100px !important;
+        left: 0px !important;
+        white-space: nowrap !important;
+      }
+
       .ant-upload-wrapper {
         display: flex !important;
         flex-direction: column !important;
@@ -208,6 +261,13 @@ export const MyInfoStyled = styled.div`
 
       .ant-upload-list {
         margin: -7px 0 10px 0 !important;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .alert,
+      .alertCheck {
+        white-space: wrap !important;
       }
     }
   }
