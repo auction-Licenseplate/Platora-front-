@@ -213,6 +213,7 @@ const DetailPage = ({ id }: detailprops) => {
 
   // 좋아요 상태 업데이트
   const likePost = () => {
+    console.log(arr[0].id, arr[0].userId);
     axios
       .post("http://15.164.52.122/boards/likepost", {
         id: arr[0].id,
@@ -220,6 +221,7 @@ const DetailPage = ({ id }: detailprops) => {
       })
       .then((res) => {
         res.data.status === true ? setHeartimg(fullheart) : setHeartimg(heart);
+        console.log(res.data);
       });
   };
 
