@@ -78,9 +78,9 @@ const DetailPage = ({ id }: detailprops) => {
 
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
-        const startTime =
-          new Date(raw.au_start_time).getTime() - 9 * 60 * 60 * 1000; // UTC → KST
-        const now = new Date().getTime();
+
+        const startTime = new Date(raw.au_start_time);
+        const now = new Date();
 
         setIsAuctionStarted(now >= startTime);
 
