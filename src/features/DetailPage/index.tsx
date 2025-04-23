@@ -144,21 +144,9 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    const isoTime = endTime.replace(" ", "T");
-    const endUTC = new Date(isoTime).getTime();
-    const end = endUTC * 60 * 60 * 1000;
+    const end = new Date(endTime).getTime();
     const now = new Date().getTime();
     const diff = end - now;
-
-    console.log("endTime:", isoTime);
-    console.log(
-      "end (KST 기준):",
-      new Date(end),
-      "now:",
-      new Date(now),
-      "diff:",
-      diff
-    );
 
     if (diff <= 0) {
       return "경매 종료";
