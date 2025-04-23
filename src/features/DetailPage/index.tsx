@@ -143,9 +143,10 @@ const DetailPage = ({ id }: detailprops) => {
       }
     }
   };
-
   const getRemainingTime = (endTime: string) => {
-    const end = new Date(endTime).getTime();
+    const end = new Date(
+      endTime.endsWith("Z") ? endTime : endTime + "Z"
+    ).getTime();
     const now = new Date().getTime();
     const diff = end - now;
 
