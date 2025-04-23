@@ -39,8 +39,6 @@ const SoonProduct = ({ type }: SoonProps) => {
           "http://15.164.52.122/boards/getAllProduct"
         );
 
-        const now = Date.now();
-
         const formattedData = response.data
           .filter((item: any) => item.startTime && item.endTime)
           .map((item: any) => {
@@ -75,7 +73,8 @@ const SoonProduct = ({ type }: SoonProps) => {
   }, []);
 
   useEffect(() => {
-    const now = Date.now();
+    const now =
+      new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000;
     let filtered: Product[] = [];
 
     if (type === 0) {
