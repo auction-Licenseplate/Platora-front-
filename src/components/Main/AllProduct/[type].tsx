@@ -52,7 +52,10 @@ const AllProduct = ({ type }: TeirProps) => {
         const now = new Date().getTime();
 
         const formattedData = data.map((item: any, index: number) => {
-          const endTimeMs = new Date(item.endTime + "+09:00").getTime();
+          const toKSTISOString = (time: string) =>
+            time.replace(" ", "T") + "+09:00";
+
+          const endTimeMs = new Date(toKSTISOString(item.endTime)).getTime();
 
           const timeDiff = endTimeMs - now;
 
