@@ -105,7 +105,7 @@ const Main = () => {
             <SoonProduct type={0} />
 
             {/* 글 작성하기 */}
-            {userRole === "" ? (
+            {userRole === "user" ? (
               <div className="wrtieBtnContainer">
                 <Button className="writeBtn" onClick={handleClick}>
                   <p className="mainFont">Post Auction</p>
