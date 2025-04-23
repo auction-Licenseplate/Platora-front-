@@ -79,7 +79,9 @@ const SoonProduct = ({ type }: SoonProps) => {
   }, []);
 
   useEffect(() => {
-    const now = new Date().getTime();
+    // 현재 시간 (KST 기준으로 9시간을 더해줌)
+    const now = new Date().getTime() + 9 * 60 * 60 * 1000; // UTC + 9시간
+
     let filtered: Product[] = [];
 
     if (type === 0) {
