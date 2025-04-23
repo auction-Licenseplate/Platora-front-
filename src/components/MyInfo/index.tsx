@@ -22,6 +22,7 @@ interface Props {
 const MyInfo = ({ info }: Props) => {
   const router = useRouter();
   const token = useSelector((state: RootState) => state.user.userToken);
+  console.log(token, "dsadasdsadasdasdas");
 
   // 다크, 라이트 모드
   const theme = useSelector((state: RootState) => state.theme.mode);
