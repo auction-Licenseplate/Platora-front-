@@ -56,6 +56,7 @@ const WriteContainer = ({ label, name, setFieldValue, image }: any) => {
         ) {
           modalShown.current = true; // 모달 표시했음을 기록
           Modal.warning({
+            centered: true,
             title: "공인 인증서 필요",
             content: (
               <>
