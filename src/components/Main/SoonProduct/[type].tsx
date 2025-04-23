@@ -76,8 +76,7 @@ const SoonProduct = ({ type }: SoonProps) => {
   }, []);
 
   useEffect(() => {
-    const now =
-      new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000;
+    const now = new Date().getTime();
     let filtered: Product[] = [];
 
     if (type === 0) {
