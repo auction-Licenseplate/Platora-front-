@@ -81,7 +81,7 @@ const DetailPage = ({ id }: detailprops) => {
         const startTime =
           new Date(raw.au_start_time).getTime() - 9 * 60 * 60 * 1000; // UTC → KST
         const now = new Date().getTime();
-        console.log(startTime, now, "==============");
+
         setIsAuctionStarted(now >= startTime);
 
         const data = [
@@ -144,10 +144,9 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    // "2025-04-23 20:45:31" → "2025-04-23T20:45:31"
     const isoTime = endTime.replace(" ", "T");
     const endUTC = new Date(isoTime).getTime();
-    const end = endUTC - 9 * 60 * 60 * 1000; // 9시간(32400000ms) 빼기
+    const end = endUTC * 60 * 60 * 1000;
     const now = new Date().getTime();
     const diff = end - now;
 
