@@ -13,12 +13,10 @@ const MyPage = () => {
   const [token, setToken] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    console.log("mypage window:", window);
-    if (typeof window !== "undefined") {
-      const t = Cookie.get("accessToken");
-      setToken(t);
-      console.log("mypage token", t);
-    }
+    const t = Cookie.get("accessToken");
+    setToken(t);
+    console.log("mypage token", t);
+
     if (!token && !isModalShown.current) {
       isModalShown.current = true;
       Modal.warning({
