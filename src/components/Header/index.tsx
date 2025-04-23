@@ -80,7 +80,6 @@ const Header = () => {
           },
         });
 
-        console.log("유저, 관리자 구분 : ", res.data);
         setUserRole(res.data);
       } catch (error) {
         console.error("유저 정보 요청 실패:", error);
@@ -266,6 +265,8 @@ const Header = () => {
   // 해당 페이지에서 스타일 변경
   const isOnlyLogo = /^\/(login|join|find\/(id|pw))/.test(router.asPath);
 
+  console.log("저장: ", userRole);
+
   return (
     <>
       {isToggleOpen && <Overlay onClick={handleToggleClick} />}
@@ -326,7 +327,7 @@ const Header = () => {
                     />
                   </div>
 
-                  {userRole !== "admin" ? (
+                  {userRole === "user" ? (
                     <div className="userIcon alertIcon">
                       <Image
                         src={isDarkMode ? alertIconWhite : alertIconBlack}
