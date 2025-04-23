@@ -80,6 +80,7 @@ const Header = () => {
           },
         });
 
+        console.log("유저, 관리자 구분 : ", res.data);
         setUserRole(res.data);
       } catch (error) {
         console.error("유저 정보 요청 실패:", error);
