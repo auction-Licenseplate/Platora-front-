@@ -52,14 +52,17 @@ const PaymentSuccess = ({ info }: Props) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const amountStr = query.get("amount");
-    const method = "카드";
-
-    if (amountStr && method) {
+    if (amountStr) {
       const parsedAmount = parseInt(amountStr);
       setAmount(parsedAmount);
-      handlePaymentSuccess(parsedAmount, method);
     }
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    if (token && amount !== null) {
+      handlePaymentSuccess(amount, "카드");
+    }
+  }, [token, amount]);
 
   return (
     <PaymentSuccessStyled className="main-wrap-success">
