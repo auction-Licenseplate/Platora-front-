@@ -149,7 +149,7 @@ const DetailPage = ({ id }: detailprops) => {
     const end = new Date(isoTime).getTime();
     const now = new Date().getTime();
     const diff = end - now;
-
+    console.log(endTime);
     if (diff <= 0) {
       return "경매 종료";
     }
@@ -163,7 +163,6 @@ const DetailPage = ({ id }: detailprops) => {
     if (days > 0) parts.push(`${days}일`);
     if (hours > 0) parts.push(`${hours}시간`);
     if (minutes > 0) parts.push(`${minutes}분`);
-
     return parts.length > 0 ? `${parts.join(" ")} 남음` : "경매 종료";
   };
 
