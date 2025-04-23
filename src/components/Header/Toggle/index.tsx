@@ -180,7 +180,7 @@ const Toggle = ({
                   ))}
                 </div>
               </div>
-              {userRole === "" ? (
+              {userRole === "user" ? (
                 <div className="toggleTexts">
                   <h3
                     onClick={() =>
