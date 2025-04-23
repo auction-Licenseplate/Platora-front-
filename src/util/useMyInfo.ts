@@ -198,8 +198,8 @@ export const myInfo = (info: string) => {
         amount,
         orderId,
         orderName,
-        successUrl: `http://localhost:3000/payment/success?&amount=${amount}`,
-        failUrl: `http://localhost:3000/payment/fail`,
+        successUrl: `http://13.125.95.215/payment/success?&amount=${amount}`,
+        failUrl: `http://13.125.95.215/payment/fail`,
       });
     } catch (err) {
       console.error("결제 요청 중 오류:", err);
