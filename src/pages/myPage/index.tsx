@@ -11,7 +11,7 @@ const MyPage = () => {
   const router = useRouter();
   const isModalShown = useRef(false);
   const [token, setToken] = useState<string | undefined>(undefined);
-  console.log(token, "123123123123213213");
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const t = Cookie.get("accessToken");
@@ -19,19 +19,19 @@ const MyPage = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (!token && !isModalShown.current) {
-  //     isModalShown.current = true;
-  //     Modal.warning({
-  //       centered: true,
-  //       title: "로그인 ",
-  //       content: "로그인 후 다시 시도해주세요.",
-  //       onOk: () => {
-  //         router.push("/login");
-  //       },
-  //     });
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (!token && !isModalShown.current) {
+      isModalShown.current = true;
+      Modal.warning({
+        centered: true,
+        title: "로그인 ",
+        content: "로그인 후 다시 시도해주세요.",
+        onOk: () => {
+          router.push("/login");
+        },
+      });
+    }
+  }, [token]);
 
   return <MyPageContainer />;
 };
