@@ -72,7 +72,7 @@ const Header = () => {
     // 유저, 관리자 구분
     const fetchUserInfo = async () => {
       try {
-        const res = await api.get("http://15.164.52.122/auth/getRole", {
+        const res = await axios.get("http://15.164.52.122/auth/getRole", {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,

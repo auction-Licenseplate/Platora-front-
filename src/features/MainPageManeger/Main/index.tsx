@@ -30,10 +30,13 @@ const Main = () => {
     }
 
     try {
-      const response = await api.get("http://15.164.52.122/admins/getStatus", {
-        headers: { Authorization: `Bearer ${token}` },
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "http://15.164.52.122/admins/getStatus",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
 
       const ownershipStatus = response.data;
 
