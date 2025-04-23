@@ -49,11 +49,11 @@ const AllProduct = ({ type }: TeirProps) => {
 
         const data = response.data;
 
+        // 현재 시간을 KST로 변환 (9시간 더함)
         const now = new Date().getTime();
 
         const formattedData = data.map((item: any, index: number) => {
-          const endTimeMs =
-            new Date(item.endTime).getTime() + 9 * 60 * 60 * 1000;
+          const endTimeMs = new Date(item.endTime).getTime();
 
           const timeDiff = endTimeMs - now;
 

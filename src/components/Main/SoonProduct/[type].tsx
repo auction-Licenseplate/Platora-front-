@@ -43,12 +43,9 @@ const SoonProduct = ({ type }: SoonProps) => {
           .filter((item: any) => item.startTime && item.endTime)
           .map((item: any) => {
             const startTimeMs =
-              new Date(item.startTime).getTime() + 9 * 60 * 60 * 1000;
+              new Date(item.startTime).getTime() - 9 * 60 * 60 * 1000;
             const endTimeMs =
-              new Date(item.endTime).getTime() + 9 * 60 * 60 * 1000;
-
-            console.log("시작", startTimeMs);
-            console.log("끝 ", endTimeMs);
+              new Date(item.endTime).getTime() - 9 * 60 * 60 * 1000;
 
             const imageUrls =
               typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
@@ -79,8 +76,7 @@ const SoonProduct = ({ type }: SoonProps) => {
   }, []);
 
   useEffect(() => {
-    // 현재 시간 (KST 기준으로 9시간을 더해줌)
-    const now = new Date().getTime() + 9 * 60 * 60 * 1000; // UTC + 9시간
+    const now = new Date().getTime();
 
     let filtered: Product[] = [];
 
