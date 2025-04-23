@@ -28,7 +28,6 @@ const Main = () => {
       router.push("/login");
       return;
     }
-    console.log(token, "/MainPageManegement");
     try {
       const response = await axios.get(
         "http://15.164.52.122/admins/getStatus",
