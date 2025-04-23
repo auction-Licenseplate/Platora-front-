@@ -275,6 +275,17 @@
 
 <br/>
 
+<h2> ⛑ 관리자 페이지 </h2>
+<h4>&nbsp&nbsp&nbsp&nbsp-&nbsp현재 진행 중인 경매 입찰 현황, 시간대별 입찰가 추이 확인 가능</h4>
+<h4>&nbsp&nbsp&nbsp&nbsp-&nbsp승인 여부, 유저 관리 및 배너 관리</h4>
+<div align="center">
+ 
+  ![Image](https://github.com/user-attachments/assets/b0fac652-ae52-4bef-b8e4-f9ee8e9255ac)
+  
+</div>
+
+<br/>
+
 <h2> 📮 이메일 </h2>
 <h4>&nbsp&nbsp&nbsp&nbsp-&nbsp공인인증서(차량 등록) 승인 / 거절(이미지 부족, 정보 부족, 관계자 판단) 이메일 전송</h4>
 <h4>&nbsp&nbsp&nbsp&nbsp-&nbsp입찰 게시글 승인 / 거절(이미지 부족, 정보 부족, 관계자 판단) 이메일 전송</h4>
