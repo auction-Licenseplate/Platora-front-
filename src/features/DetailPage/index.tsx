@@ -144,9 +144,9 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    const end = new Date(
-      endTime.endsWith("Z") ? endTime : endTime + "Z"
-    ).getTime();
+    // "2025-04-15 15:05:31" -> "2025-04-15T15:05:31Z"
+    const isoTime = endTime.replace(" ", "T") + "Z";
+    const end = new Date(isoTime).getTime();
     const now = new Date().getTime();
     const diff = end - now;
 
