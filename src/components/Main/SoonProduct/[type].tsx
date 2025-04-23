@@ -48,8 +48,6 @@ const SoonProduct = ({ type }: SoonProps) => {
             const imageUrls =
               typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
 
-            console.log(endTimeMs);
-
             return {
               id: item.auctionID,
               title: item.vehicleTitle,
