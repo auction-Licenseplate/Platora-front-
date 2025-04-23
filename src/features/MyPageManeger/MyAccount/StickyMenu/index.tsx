@@ -51,7 +51,13 @@ const StickyMenu = ({ menu }: MenuProps) => {
             withCredentials: true,
           });
 
-          router.push("/").then(() => window.location.reload());
+          router.push("/").then((res) => {
+            document.cookie =
+              "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie =
+              "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.reload();
+          });
         } catch (error) {
           console.error("회원 탈퇴 실패:", error);
           Modal.error({

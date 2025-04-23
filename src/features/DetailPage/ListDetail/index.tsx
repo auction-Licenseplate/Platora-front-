@@ -7,6 +7,7 @@ interface listProps {
 }
 
 const ListDetail = ({ list, setListopen, listopen }: listProps) => {
+  console.log(list);
   const dataSource = list
     ? list.slice(1).map((x: any, i: number) => ({
         key: String(i + 1),
