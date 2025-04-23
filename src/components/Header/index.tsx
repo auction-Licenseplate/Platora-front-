@@ -246,6 +246,7 @@ const Header = () => {
 
   // 로그아웃
   const handleLogout = async () => {
+    console.log("logout console");
     const token = document.cookie;
     const accessToken = token
       .split("; ")
