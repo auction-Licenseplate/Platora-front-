@@ -75,7 +75,7 @@ const DetailPage = ({ id }: detailprops) => {
           lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
           lastUser: res.data.lastBid.bidUser_Id, // 최근 결제 아이디
         };
-
+        console.log(lastData, "============");
         const raw = res.data.data[0];
         const imgs = raw.vehicle_car_img.split(",");
 
