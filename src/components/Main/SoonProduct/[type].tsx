@@ -42,16 +42,13 @@ const SoonProduct = ({ type }: SoonProps) => {
         const formattedData = response.data
           .filter((item: any) => item.startTime && item.endTime)
           .map((item: any) => {
-            const toKSTISOString = (time: string) =>
-              time.replace(" ", "T") + "+09:00";
+            const startTimeMs =
+              new Date(item.startTime).getTime() + 9 * 60 * 60 * 1000;
+            const endTimeMs =
+              new Date(item.endTime).getTime() + 9 * 60 * 60 * 1000;
 
-            const startTimeMs = new Date(
-              toKSTISOString(item.startTime)
-            ).getTime();
-            const endTimeMs = new Date(toKSTISOString(item.endTime)).getTime();
-
-            console.log("시작", item.startTime);
-            console.log("끝 ", item.endTime);
+            console.log("시작", startTimeMs);
+            console.log("끝 ", endTimeMs);
 
             const imageUrls =
               typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
