@@ -120,7 +120,6 @@ export const myInfo = (info: string) => {
         },
       })
       .then((response) => {
-        console.log("포인트 반환 처리됨", response.data);
         setRefundModalOpen(false); // 모달 닫기
         modal.success({
           title: "포인트 반환이 완료되었습니다.",
@@ -297,7 +296,6 @@ export const myInfo = (info: string) => {
       //   }
       // );
       // console.log("파일 업로드 성공:", response.data);
-      console.log("파일 업로드");
     } catch (error) {
       console.error("파일 업로드 실패:", error);
     }
