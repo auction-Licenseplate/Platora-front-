@@ -144,12 +144,16 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    // "2025-04-15 15:05:31" -> "2025-04-15T15:05:31Z"
     const isoTime = endTime.replace(" ", "T") + "Z";
     const end = new Date(isoTime).getTime();
+
+    // now를 UTC 기준으로 계산
     const now = new Date().getTime();
+
     const diff = end - now;
-    console.log(endTime);
+    console.log("endTime UTC:", isoTime);
+    console.log("end:", end, "now:", now, "diff:", diff);
+
     if (diff <= 0) {
       return "경매 종료";
     }
@@ -163,6 +167,7 @@ const DetailPage = ({ id }: detailprops) => {
     if (days > 0) parts.push(`${days}일`);
     if (hours > 0) parts.push(`${hours}시간`);
     if (minutes > 0) parts.push(`${minutes}분`);
+
     return parts.length > 0 ? `${parts.join(" ")} 남음` : "경매 종료";
   };
 
