@@ -11,7 +11,7 @@ const MyPage = () => {
   const router = useRouter();
   const isModalShown = useRef(false);
   const [token, setToken] = useState<string | undefined>(undefined);
-
+  console.log(token, "123123123123213213");
   useEffect(() => {
     if (typeof window !== "undefined") {
       const t = Cookie.get("accessToken");
