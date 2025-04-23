@@ -100,6 +100,8 @@ const Header = () => {
           }
         );
 
+        console.log("알림 : ", res.data);
+
         setAlertData(res.data);
       } catch (error) {
         console.error("알림 불러오기 실패:", error);
