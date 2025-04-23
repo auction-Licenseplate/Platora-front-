@@ -43,6 +43,7 @@ const Header = () => {
       check: boolean;
       vehicleTitle: string;
       vehicleId: number;
+      auctionId: number;
       created_at: string;
     }[]
   >([]);
@@ -167,6 +168,7 @@ const Header = () => {
     check: boolean;
     vehicleTitle: string;
     vehicleId: number;
+    auctionId: number;
     created_at: string;
   }) => {
     // 중복 방지 -> 삭제 시 한 번 더 호출해서
@@ -206,12 +208,15 @@ const Header = () => {
               ? `[${noti.vehicleTitle}] 해당 차량에 입찰이 완료되었습니다.`
               : `[${noti.vehicleTitle}] 차량의 최종 입찰자로 선정되었습니다.`}
           </div>
-          <div className="modalFoot">{`${formatted}`}</div>
+          <div className="modalFoot">
+            <p>클릭 시 해당 입찰 페이지로 이동합니다.</p>
+            <p>{formatted}</p>
+          </div>
         </div>
       ),
       onClick: () => {
         readAlert(noti.id), notification.close(notificationKey);
-        router.push(`/detail/${noti.vehicleId}`);
+        router.push(`/detail/${noti.auctionId}`);
       },
       closeIcon: (
         <span
