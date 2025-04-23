@@ -5,19 +5,23 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Cookie from "js-cookie";
 import { Modal } from "antd";
+import dynamic from "next/dynamic";
 
 const MyPage = () => {
   const router = useRouter();
-  const token = Cookie.get("accessToken");
-  console.log(token, "111111111123");
-  console.log(document.cookie);
-
   const isModalShown = useRef(false);
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const t = Cookie.get("accessToken");
+      setToken(t);
+    }
+  }, []);
 
   useEffect(() => {
     if (!token && !isModalShown.current) {
       isModalShown.current = true;
-
       // Modal.warning({
       //   centered: true,
       //   title: "로그인 ",
@@ -32,4 +36,4 @@ const MyPage = () => {
   return <MyPageContainer />;
 };
 
-export default MyPage;
+export default dynamic(() => Promise.resolve(MyPage), { ssr: false });

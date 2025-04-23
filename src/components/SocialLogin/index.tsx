@@ -45,8 +45,8 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
             setIsSuccess(false); // 로그인 실패 상태
           } else {
             setIsSuccess(true); // 로그인 성공 상태
-            dispatch(setUserToken(res.data.token.acessToken));
-            Cookie.set("accessToken", res.data.token.acessToken, {
+            dispatch(setUserToken(res.data.token.accessToken));
+            Cookie.set("accessToken", res.data.token.accessToken, {
               path: "/", // 모든 페이지에서 접근 가능
               expires: 1, // 1일
             });
@@ -54,7 +54,6 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
               path: "/", // 모든 페이지에서 접근 가능
               expires: 7, // 1일
             });
-
             router.push("/");
           }
         });
