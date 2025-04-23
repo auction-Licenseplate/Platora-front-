@@ -144,18 +144,22 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    // "2025-04-23 20:45:31" → "2025-04-23T20:45:31Z" (Z가 없을 경우만)
-    const isoTime =
-      endTime.includes("Z") || endTime.includes("+")
-        ? endTime
-        : endTime.replace(" ", "T") + "Z";
-
-    const end = new Date(isoTime).getTime();
+    // "2025-04-23 20:45:31" → "2025-04-23T20:45:31"
+    const isoTime = endTime.replace(" ", "T");
+    const endUTC = new Date(isoTime).getTime();
+    const end = endUTC - 9 * 60 * 60 * 1000; // 9시간(32400000ms) 빼기
     const now = new Date().getTime();
     const diff = end - now;
 
-    console.log("endTime UTC:", isoTime);
-    console.log("end:", end, "now:", now, "diff:", diff);
+    console.log("endTime:", isoTime);
+    console.log(
+      "end (KST 기준):",
+      new Date(end),
+      "now:",
+      new Date(now),
+      "diff:",
+      diff
+    );
 
     if (diff <= 0) {
       return "경매 종료";
