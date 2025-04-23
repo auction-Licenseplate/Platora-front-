@@ -45,6 +45,9 @@ const SoonProduct = ({ type }: SoonProps) => {
             const startTimeMs = new Date(item.startTime + "+09:00").getTime();
             const endTimeMs = new Date(item.endTime + "+09:00").getTime();
 
+            console.log("시작", startTimeMs);
+            console.log("끝 ", endTimeMs);
+
             const imageUrls =
               typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
 
