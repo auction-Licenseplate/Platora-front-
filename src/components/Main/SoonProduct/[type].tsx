@@ -50,8 +50,8 @@ const SoonProduct = ({ type }: SoonProps) => {
             ).getTime();
             const endTimeMs = new Date(toKSTISOString(item.endTime)).getTime();
 
-            console.log("시작", startTimeMs);
-            console.log("끝 ", endTimeMs);
+            console.log("시작", item.startTime);
+            console.log("끝 ", item.endTime);
 
             const imageUrls =
               typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
