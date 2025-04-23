@@ -5,6 +5,7 @@ import PlusInfo from "@/features/PlusInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
+import Cookie from "js-cookie";
 interface SocialCallbackProps {
   type: string;
 }
@@ -44,7 +45,16 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
             setIsSuccess(false); // 로그인 실패 상태
           } else {
             setIsSuccess(true); // 로그인 성공 상태
-            dispatch(setUserToken(res.data.token));
+            dispatch(setUserToken(res.data.token.acessToken));
+            Cookie.set("accessToken", res.data.token.acessToken, {
+              path: "/", // 모든 페이지에서 접근 가능
+              expires: 1, // 1일
+            });
+            Cookie.set("refreshToken", res.data.token.refreshToken, {
+              path: "/", // 모든 페이지에서 접근 가능
+              expires: 7, // 1일
+            });
+
             router.push("/");
           }
         });

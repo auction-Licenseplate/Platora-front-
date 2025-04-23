@@ -9,6 +9,7 @@ import { setUserToken } from "@/store/userSlice";
 import { RootState } from "@/store/store";
 import { request } from "http";
 import { useEffect, useState } from "react";
+import Cookie from "js-cookie";
 import Image from "next/image";
 import seeimg from "@/assets/images/pwsee.png";
 import notsee from "@/assets/images/notsee.png";
@@ -58,6 +59,10 @@ const LoginForm = () => {
           console.log("123");
           console.log(res, "123");
           dispatch(setUserToken(res.data.token));
+          Cookie.set("accessToken", res.data.token, {
+            path: "/", // 모든 페이지에서 접근 가능
+            expires: 1, // 1일
+          });
           router.push("/");
         })
         .catch((error) => {
