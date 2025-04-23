@@ -42,10 +42,13 @@ const SoonProduct = ({ type }: SoonProps) => {
         const formattedData = response.data
           .filter((item: any) => item.startTime && item.endTime)
           .map((item: any) => {
-            const startTimeMs = new Date(item.startTime).getTime();
-            const endTimeMs = new Date(item.endTime).getTime();
+            const startTimeMs = new Date(item.startTime + "+09:00").getTime();
+            const endTimeMs = new Date(item.endTime + "+09:00").getTime();
+
             const imageUrls =
               typeof item.imageUrl === "string" ? item.imageUrl.split(",") : [];
+
+            console.log(endTimeMs);
 
             return {
               id: item.auctionID,
