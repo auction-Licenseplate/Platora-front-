@@ -52,7 +52,8 @@ const AllProduct = ({ type }: TeirProps) => {
         const now = new Date().getTime();
 
         const formattedData = data.map((item: any, index: number) => {
-          const endTimeMs = new Date(item.endTime).getTime();
+          const endTimeMs = new Date(item.endTime + "+09:00").getTime();
+
           const timeDiff = endTimeMs - now;
 
           let timeLeft = "종료됨";
