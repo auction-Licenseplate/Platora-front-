@@ -144,11 +144,15 @@ const DetailPage = ({ id }: detailprops) => {
     }
   };
   const getRemainingTime = (endTime: string) => {
-    // "2025-04-15 15:05:31" -> "2025-04-15T15:05:31Z"
     const isoTime = endTime.replace(" ", "T") + "Z";
     const end = new Date(isoTime).getTime();
+
+    // now를 UTC 기준으로 계산
     const now = new Date().getTime();
+
     const diff = end - now;
+    console.log("endTime UTC:", isoTime);
+    console.log("end:", end, "now:", now, "diff:", diff);
 
     if (diff <= 0) {
       return "경매 종료";
