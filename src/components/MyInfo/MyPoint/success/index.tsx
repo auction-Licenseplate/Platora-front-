@@ -23,6 +23,8 @@ const PaymentSuccess = ({ info }: Props) => {
 
   const token = useSelector((state: RootState) => state.user.userToken);
 
+  console.log("결제 토큰 : ", token);
+
   const handlePaymentSuccess = async (amount: number, method: string) => {
     try {
       await axios.post(
