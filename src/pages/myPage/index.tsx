@@ -14,10 +14,10 @@ const MyPage = () => {
 
   useEffect(() => {
     const t = Cookie.get("accessToken");
-    setToken(t);
     console.log("mypage token", t);
+    setToken(t);
 
-    if (!token && !isModalShown.current) {
+    if (!t && !isModalShown.current) {
       isModalShown.current = true;
       Modal.warning({
         centered: true,
