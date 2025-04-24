@@ -60,6 +60,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
     } catch (error) {
       console.error("로그인 실패:", error);
       setIsSuccess(false); // 로그인 실패 상태
+      router.push("/");
     }
   };
 
