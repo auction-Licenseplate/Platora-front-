@@ -176,7 +176,7 @@
 
  <table>
   <tr>
-   <td>반응형</td>
+   <th>반응형</th>
   </tr>
   <tr>
    <td> <img src="https://github.com/user-attachments/assets/95efb54f-4dd1-412a-99e5-45cdc271d976"/> </td>
