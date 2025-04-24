@@ -101,8 +101,6 @@ const Main = () => {
             {/* 곧 시작 경매 */}
             <SoonProduct />
 
-            <SoonProduct type={0} />
-
             {/* 글 작성하기 */}
             {userRole === "user" ? (
               <div className="wrtieBtnContainer">

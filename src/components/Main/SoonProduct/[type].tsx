@@ -78,15 +78,7 @@ const SoonProduct = ({ type }: SoonProps) => {
 
     let filtered: Product[] = [];
 
-    if (type === 0) {
-      // 곧 종료될 경매 (시작 시간 지났고 종료되지 않은 것)
-      filtered = products
-        .filter((p) => {
-          const notEnded = p.endTimeMs && p.endTimeMs > now;
-          return notEnded;
-        })
-        .sort((a, b) => a.endTimeMs! - b.endTimeMs!);
-    } else if (type === undefined || type === null) {
+    if (type === undefined || type === null) {
       // 곧 시작될 경매 (시작 안 한 것)
       filtered = products
         .filter((p) => p.startTimeMs && p.startTimeMs > now)
@@ -98,8 +90,7 @@ const SoonProduct = ({ type }: SoonProps) => {
 
     // 남은 시간 텍스트 계산
     const timeLeft = filtered.map((p) => {
-      const diff =
-        type === 0 ? (p.endTimeMs ?? 0) - now : (p.startTimeMs ?? 0) - now;
+      const diff = (p.startTimeMs ?? 0) - now;
 
       let timeLeft = "";
       if (diff > 0) {
@@ -130,9 +121,7 @@ const SoonProduct = ({ type }: SoonProps) => {
     <SoonProductStyled>
       {filteredProducts.length > 0 && (
         <>
-          <h1 className="mainFont">
-            {type === 0 ? "Ending Soon Auctions" : "Upcoming Auctions"}
-          </h1>
+          <h1 className="mainFont">Upcoming Auctions</h1>
 
           <div className="swiper-button-prev">←</div>
           <div className="swiper-button-next">→</div>

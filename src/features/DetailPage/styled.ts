@@ -156,7 +156,7 @@ export const DetailStyled = styled.div`
     .detail-heart {
       width: 25px;
       height: 25px;
-      margin: 10px 0 0 55px;
+      margin: 15px 0 0 70px;
       cursor: pointer;
     }
 
