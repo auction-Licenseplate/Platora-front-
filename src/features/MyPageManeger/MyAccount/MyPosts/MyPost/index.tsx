@@ -50,7 +50,7 @@ const MyPost = ({
       const initLiked: { [key: string]: boolean } = {};
       favoritePosts.forEach((post) => {
         const key = post.auctionId || post.auctionID || post.vehicleTitle;
-        initLiked[key] = true; // 좋아요 상태
+        initLiked[key] = true; // 좋아요한 상태
       });
 
       console.log("like : ", favoritePosts);
@@ -117,6 +117,7 @@ const MyPost = ({
           {
             id: post.auctionID || post.auctionId,
             userId: post.userId,
+            status: true,
           },
           {
             withCredentials: true,
