@@ -179,7 +179,8 @@ body {
 .join-div label {
   color: var(--labeltext);
 }
-.plusinfo-container input {
+.plusinfo-container input,
+.joinform-input {
   color: var(--font-color) !important;
 }
 .loginForm-textDiv,

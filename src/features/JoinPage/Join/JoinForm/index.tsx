@@ -154,7 +154,6 @@ const JoinForm = () => {
       phone: "",
     },
     onSubmit: (values) => {
-      console.log(values);
       const data = {
         email: values.email,
         password: values.password,
@@ -164,7 +163,6 @@ const JoinForm = () => {
       axios
         .post("http://15.164.52.122/auth/signup", data)
         .then((response) => {
-          console.log("회원가입 성공:", response.data);
           const userId = response.data.email;
 
           return axios.post("http://15.164.52.122/users/userCheck", {
