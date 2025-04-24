@@ -53,8 +53,6 @@ const MyPost = ({
         initLiked[key] = true; // 좋아요한 상태
       });
 
-      console.log(favoritePosts);
-
       setLikedMap(initLiked);
     }
   }, [type, favoritePosts]);
@@ -111,10 +109,6 @@ const MyPost = ({
     const toggleLikePost = async (post: any) => {
       const key = post.auctionId || post.auctionID;
 
-      console.log("like status: ", likedMap[key]);
-
-      console.log("userId", post.userId);
-
       try {
         const res = await axios.post(
           "http://15.164.52.122/boards/likepost",
@@ -129,8 +123,6 @@ const MyPost = ({
             },
           }
         );
-
-        console.log("즐겨찾기 삭제 : ", res.data);
 
         setLikedMap((prev) => ({
           ...prev,

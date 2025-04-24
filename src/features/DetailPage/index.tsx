@@ -105,9 +105,6 @@ const DetailPage = ({ id }: detailprops) => {
         setImg(data[0].carimg1);
         setPrice(data[0].price);
 
-        console.log("좋아요", res.data.isFavorite);
-        console.log("기록보기", res.data.data);
-
         res.data.isFavorite === true
           ? setHeartimg(fullheart)
           : setHeartimg(heart);
@@ -223,7 +220,6 @@ const DetailPage = ({ id }: detailprops) => {
       })
       .then((res) => {
         res.data.status === true ? setHeartimg(fullheart) : setHeartimg(heart);
-        console.log(res.data);
       });
   };
 

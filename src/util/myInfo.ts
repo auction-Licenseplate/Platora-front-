@@ -279,7 +279,6 @@ export const myInfo = (info: string) => {
     setTableModalOpen(true);
   };
 
-  // 파일 저장 -> users 테이블에 certificate 부분 파일 저장! multer 로 저장한다고 해놨어!
   const handleFileUpload = async (file: any) => {
     const formData = new FormData();
     formData.append("file", file);

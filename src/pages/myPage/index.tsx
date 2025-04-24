@@ -14,7 +14,6 @@ const MyPage = () => {
 
   useEffect(() => {
     const t = Cookie.get("accessToken");
-    console.log("mypage token", t);
     setToken(t);
 
     if (!t && !isModalShown.current) {
@@ -29,8 +28,6 @@ const MyPage = () => {
       });
     }
   }, []);
-
-  console.log("mypage 토큰 : ", token);
 
   return <MyPageContainer />;
 };
