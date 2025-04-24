@@ -9,12 +9,15 @@ interface listProps {
 const ListDetail = ({ list, setListopen, listopen }: listProps) => {
   console.log(list);
   const dataSource = list
-    ? list.slice(1).map((x: any, i: number) => ({
-        key: String(i + 1),
-        index: i + 2,
-        name: x.bidUser_name,
-        price: x.bid_bid_price,
-      }))
+    ? list
+        .slice(1)
+        .filter((x: any) => x.bid.bid_price !== null)
+        .map((x: any, i: number) => ({
+          key: String(i + 1),
+          index: i + 2,
+          name: x.registerUser_name,
+          price: x.bid_bid_price,
+        }))
     : [];
 
   const columns = [

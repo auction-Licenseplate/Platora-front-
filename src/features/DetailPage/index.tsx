@@ -95,7 +95,7 @@ const DetailPage = ({ id }: detailprops) => {
             endtime: raw.au_end_time,
             startTime: raw.au_start_time,
             price: raw.au_final_price,
-            name: raw.bidUser_name,
+            name: raw.registerUser_name,
             count: raw.bid_bid_count,
             carimg1: imgs[0] || "",
             carimg2: imgs[1] || "",
