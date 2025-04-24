@@ -71,8 +71,6 @@ const DetailPage = ({ id }: detailprops) => {
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
-        console.log(res.data, "=================dsadsadasd");
-
         const lastData = {
           lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
           lastUser: res.data.lastBid.bidUser_Id, // 최근 결제 아이디
@@ -218,11 +216,10 @@ const DetailPage = ({ id }: detailprops) => {
 
   // 좋아요 상태 업데이트
   const likePost = () => {
-    console.log(arr[0].id, arr[0].userId);
     axios
       .post("http://15.164.52.122/boards/likepost", {
         id: arr[0].id,
-        userId: arr[0].userId,
+        userId: userId,
       })
       .then((res) => {
         res.data.status === true ? setHeartimg(fullheart) : setHeartimg(heart);
