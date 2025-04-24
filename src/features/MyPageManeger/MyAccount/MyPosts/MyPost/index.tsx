@@ -51,6 +51,8 @@ const MyPost = ({
         const key = post.auctionId || post.auctionID || post.vehicleTitle;
         initLiked[key] = true; // 좋아요 상태
       });
+
+      console.log("like : ", initLiked);
       setLikedMap(initLiked);
     }
   }, [type, favoritePosts]);
