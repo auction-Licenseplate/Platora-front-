@@ -40,6 +40,9 @@ export const JoinFormStyled = styled.div`
         & {
           width: 80%;
         }
+        .join-errormessage {
+          font-size: 8px;
+        }
       }
     }
     .joinform-formcontainer {

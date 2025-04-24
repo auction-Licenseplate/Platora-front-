@@ -27,40 +27,38 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
     }
   }, [router.isReady, router.query]);
 
-  const login = (code: string) => {
+  const login = async (code: string) => {
     try {
-      axios
-        .post(
-          `http://15.164.52.122/auth/login/${type}`,
-          { code },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (typeof res.data.user === "number") {
-            if (type === "naver") {
-              router.push("/");
-            }
-            console.log("로그인 실패, user가 없습니다.");
-            setUser(res.data.user);
-            setIsSuccess(false); // 로그인 실패 상태
-          } else {
-            setIsSuccess(true); // 로그인 성공 상태
-            dispatch(setUserToken(res.data.token.accessToken));
-            Cookie.set("accessToken", res.data.token.accessToken, {
-              path: "/", // 모든 페이지에서 접근 가능
-              expires: 1, // 1일
-            });
-            Cookie.set("refreshToken", res.data.token.refreshToken, {
-              path: "/", // 모든 페이지에서 접근 가능
-              expires: 7, // 1일
-            });
-            router.push("/");
-          }
+      const res = await axios.post(
+        `http://15.164.52.122/auth/login/${type}`,
+        { code },
+        { withCredentials: true }
+      );
+
+      if (typeof res.data.user === "number") {
+        if (type === "naver") {
+          router.push("/");
+        }
+        console.log("로그인 실패, user가 없습니다.");
+        setUser(res.data.user);
+        setIsSuccess(false); // 로그인 실패 상태
+      } else {
+        setIsSuccess(true); // 로그인 성공 상태
+        dispatch(setUserToken(res.data.token.accessToken));
+        Cookie.set("accessToken", res.data.token.accessToken, {
+          path: "/",
+          expires: 1,
         });
+        Cookie.set("refreshToken", res.data.token.refreshToken, {
+          path: "/",
+          expires: 7,
+        });
+        router.push("/");
+      }
     } catch (error) {
       console.error("로그인 실패:", error);
-      setIsSuccess(false); // 로그인 실패 상태
-      router.push("/");
+      setIsSuccess(false);
+      router.push("/"); // 여기까지 오게 됨
     }
   };
 
