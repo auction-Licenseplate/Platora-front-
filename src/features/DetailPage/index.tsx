@@ -71,6 +71,7 @@ const DetailPage = ({ id }: detailprops) => {
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
+        console.log(res.data, "=================dsadsadasd");
 
         const lastData = {
           lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
