@@ -114,7 +114,7 @@ const DetailPage = ({ id }: detailprops) => {
           : setHeartimg(heart);
         setUserpoint(res.data.currentUserPoint);
         setPreUser(lastData);
-        setList(res.data.data);
+        setList(res.data.data.filter((i: any) => i.bid_bid_price !== null));
         setUserId(res.data.currentUserId); // 로그인 한 사람의 유저 아이디
       });
   }, [id, token, router]);
