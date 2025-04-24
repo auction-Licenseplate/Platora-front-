@@ -108,7 +108,12 @@ const PlusInfo = ({ userid }: userData) => {
             />
             <Button onClick={handleDuplicateCheck}>전화번호 중복 확인</Button>
           </div>
-          <Button htmlType="submit" disabled={isPhoneDuplicate}>
+          <Button
+            htmlType="submit"
+            disabled={
+              isPhoneDuplicate || !formik.values.phone || !formik.values.name
+            }
+          >
             회원가입
           </Button>
         </form>
