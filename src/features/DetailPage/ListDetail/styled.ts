@@ -5,5 +5,9 @@ export const ListDetailStyled = styled.div`
     max-height: 400px;
     overflow-y: auto;
     padding: 1rem;
+
+    .tableModal {
+      margin-top: 30px;
+    }
   }
 `;

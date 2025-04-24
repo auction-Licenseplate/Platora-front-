@@ -50,7 +50,7 @@ const ListDetail = ({ list, setListopen, listopen }: listProps) => {
       destroyOnClose
       className="listdetail-modal"
     >
-      <Table dataSource={dataSource} columns={columns} />
+      <Table className="tableModal" dataSource={dataSource} columns={columns} />
     </Modal>
   );
 };
