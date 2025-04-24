@@ -113,6 +113,8 @@ const MyPost = ({
 
       console.log("like status: ", likedMap[key]);
 
+      console.log("userId", post.userId);
+
       try {
         const res = await axios.post(
           "http://15.164.52.122/boards/likepost",
