@@ -13,7 +13,7 @@ const ListDetail = ({ list, setListopen, listopen }: listProps) => {
         key: String(i + 1),
         index: i + 2,
         name: x.bidUser_name,
-        price: x.bid_price,
+        price: x.bid_bid_price,
       }))
     : [];
 

@@ -94,7 +94,7 @@ const DetailPage = ({ id }: detailprops) => {
             itemnumber: raw.au_auction_num,
             endtime: raw.au_end_time,
             startTime: raw.au_start_time,
-            price: raw.bid_price,
+            price: raw.au_final_price,
             name: raw.bidUser_name,
             count: raw.bid_bid_count,
             carimg1: imgs[0] || "",
@@ -108,7 +108,9 @@ const DetailPage = ({ id }: detailprops) => {
         setImg(data[0].carimg1);
         setPrice(data[0].price);
 
-        console.log(res.data.isFavorite);
+        console.log("좋아요", res.data.isFavorite);
+        console.log("기록보기", res.data.data);
+
         res.data.isFavorite === true
           ? setHeartimg(fullheart)
           : setHeartimg(heart);
