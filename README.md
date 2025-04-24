@@ -44,9 +44,9 @@
    <th> 이수정 </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/a0a7ff32-00b2-48f7-b825-41d2c29e74cf" width="300" height="300"></td>
-    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="300"></td>
-    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="300"></td>
+    <td><img src="https://github.com/user-attachments/assets/a0a7ff32-00b2-48f7-b825-41d2c29e74cf" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="250"></td>
   </tr>
   <tr>
     <td>
@@ -56,7 +56,7 @@
     </td>
     <td>
      <div align="center">
-      <a href="https://github.com/jeong0300">@jeong0300</a>
+      <a href="https://github.com/heum23">@jheum23</a>
      </div>
     </td>
     <td>
@@ -170,7 +170,7 @@
   </tr>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/a3b1bac9-52aa-45d7-b7ae-c417ff38e6ad"/></td>
-    <td><img src="https://github.com/user-attachments/assets/c0a4a952-aa06-47bc-b3c4-58716317ecf3"/></td>
+    <td><img src="https://github.com/user-attachments/assets/e9e63c3f-3088-45c6-a389-336036d2f6b4"/></td>
   </tr>
  </table>
 </div>
@@ -226,7 +226,7 @@
 <h4>&nbsp&nbsp&nbsp&nbsp-&nbsp관심 상품 추가 가능</h4>
 <div align="center">
  
-  ![Image](https://github.com/user-attachments/assets/2f0e8652-9302-4e62-b0a1-17df2c7b16bf)
+  ![Image](https://github.com/user-attachments/assets/2df10502-2067-4a0c-9e15-a294399565cc)
   
 </div>
 
@@ -237,7 +237,7 @@
 <h4>&nbsp&nbsp&nbsp&nbsp-&nbsp판매자 클릭 시 해당 판매자의 판매 기록 확인 가능</h4>
 <div align="center">
  
-  ![Image](https://github.com/user-attachments/assets/7124680d-2383-41e7-bb5c-4cc05f8d9707)
+  ![Image](https://github.com/user-attachments/assets/e34efcd5-2a9b-4b18-bfbe-dc4ad456640e)
   
 </div>
 
