@@ -33,6 +33,7 @@ export const PlusInfoStyled = styled.div`
     }
 
     .plusinfo-container input {
+      color: white;
       width: 100%;
       border: none !important;
       border-bottom: 1px solid #555 !important;
