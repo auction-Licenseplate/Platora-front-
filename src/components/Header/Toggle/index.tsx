@@ -157,7 +157,7 @@ const Toggle = ({
                 <h3 onClick={() => router.push("/join")}>회원가입</h3>
               </div>
             </>
-          ) : userRole === null ? null : (
+          ) : (
             <>
               <div className="tier-container">
                 <h3 onClick={toggleTierList} className="tier-title">
