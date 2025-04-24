@@ -1,5 +1,5 @@
 import { LoginFormStyled } from "./styled";
-import { Input, Button } from "antd";
+import { Input, Button, Modal } from "antd";
 import { useFormik } from "formik";
 import axios from "axios";
 import { Router, useRouter } from "next/router";
@@ -56,8 +56,6 @@ const LoginForm = () => {
           },
         }) // 서버 URL
         .then((res) => {
-          console.log("123");
-          console.log(res, "123");
           dispatch(setUserToken(res.data.token));
           Cookie.set("accessToken", res.data.token, {
             path: "/", // 모든 페이지에서 접근 가능
@@ -66,9 +64,9 @@ const LoginForm = () => {
           router.push("/");
         })
         .catch((error) => {
-          console.log("1233454");
-          console.log(error);
-          alert(error.response.data.message);
+          Modal.error({
+            content: `${error.response.data.message}`,
+          });
         });
     },
   });
