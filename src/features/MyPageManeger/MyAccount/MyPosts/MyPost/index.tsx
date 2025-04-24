@@ -111,13 +111,15 @@ const MyPost = ({
     const toggleLikePost = async (post: any) => {
       const key = post.auctionId || post.auctionID;
 
+      console.log("like status: ", likedMap[key]);
+
       try {
         const res = await axios.post(
           "http://15.164.52.122/boards/likepost",
           {
             id: post.auctionID || post.auctionId,
             userId: post.userId,
-            status: likedMap[key],
+            status: !likedMap[key],
           },
           {
             withCredentials: true,
