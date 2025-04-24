@@ -84,7 +84,7 @@ const MyPost = ({
     // 삭제 요청 -> auctionId 가 없어서 vehicleTitle (번호판)으로 보냄
     const handleDeletePost = async (postId: string) => {
       try {
-        const response = await axios.delete(
+        await axios.delete(
           `http://15.164.52.122/boards/deletePosts/${postId}`,
           {
             withCredentials: true,
@@ -121,6 +121,8 @@ const MyPost = ({
             },
           }
         );
+
+        console.log("즐겨찾기 삭제 : ", res.data);
 
         setLikedMap((prev) => ({
           ...prev,
