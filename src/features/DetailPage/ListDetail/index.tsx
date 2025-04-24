@@ -15,7 +15,7 @@ const ListDetail = ({ list, setListopen, listopen }: listProps) => {
         .map((x: any, i: number) => ({
           key: String(i + 1),
           index: i + 2,
-          name: x.registerUser_name,
+          name: x.bidUser_name,
           price: x.bid_bid_price,
         }))
     : [];
