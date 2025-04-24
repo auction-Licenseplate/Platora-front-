@@ -301,7 +301,7 @@ const DetailPage = ({ id }: detailprops) => {
                 <span
                   style={{ display: "flex", gap: "10px", alignItems: "center" }}
                 >
-                  <span>{list.length - 1}회</span>
+                  <span>{list.length}회</span>
                   <span
                     onClick={() => {
                       setListopen(true);
