@@ -41,7 +41,7 @@ const TopBtn = () => {
   };
 
   return (
-    <Affix offsetBottom={20} style={{ right: 20, position: "fixed" }}>
+    <Affix offsetBottom={20}>
       <TopBtnStyled
         shape="circle"
         icon={<UpOutlined />}

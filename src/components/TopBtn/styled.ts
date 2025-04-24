@@ -24,5 +24,7 @@ export const TopBtnStyled = styled(Button)`
   &.visible {
     opacity: 1;
     transform: translateX(0);
+    right: 20;
+    position: fixed;
   }
 `;
