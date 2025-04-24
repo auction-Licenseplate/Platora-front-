@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MyPageStyled = styled.div`
-  &.main-wrap {
+  &.myPageBack {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,7 +49,7 @@ export const MyPageStyled = styled.div`
 
       .mainContent {
         width: 100% !important;
-        padding: 20px !important;
+        padding: 0px !important;
       }
     }
 
