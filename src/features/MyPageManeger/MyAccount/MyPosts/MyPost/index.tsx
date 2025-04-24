@@ -120,8 +120,7 @@ const MyPost = ({
           "http://15.164.52.122/boards/likepost",
           {
             id: post.auctionID || post.auctionId,
-            userId: post.userId,
-            status: likedMap[key],
+            userId: post.currentUserId,
           },
           {
             withCredentials: true,
