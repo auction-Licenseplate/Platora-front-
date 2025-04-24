@@ -76,7 +76,7 @@ export const DetailStyled = styled.div`
       padding-left: 30px;
       margin-bottom: 20px;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 10%;
       text-align: center;
       color: black;
@@ -156,7 +156,7 @@ export const DetailStyled = styled.div`
     .detail-heart {
       width: 25px;
       height: 25px;
-      margin: 15px 0 0 70px;
+      margin-left: 150px;
       cursor: pointer;
     }
 
@@ -250,7 +250,7 @@ export const DetailStyled = styled.div`
 
         @media (max-width: 380px) {
           & {
-            font-size: 7px;
+            font-size: 8px;
           }
         }
       }
