@@ -117,7 +117,7 @@ const MyPost = ({
           {
             id: post.auctionID || post.auctionId,
             userId: post.userId,
-            status: !likedMap[key],
+            status: likedMap[key],
           },
           {
             withCredentials: true,
