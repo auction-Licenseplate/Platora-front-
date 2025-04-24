@@ -340,6 +340,8 @@ export const HeaderStyled = styled.div`
       }
 
       .marginLogoImg {
+        width: 170px;
+        height: 40px;
         margin: 0 auto;
       }
     }
