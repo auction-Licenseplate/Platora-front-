@@ -180,7 +180,7 @@ body {
   color: var(--labeltext);
 }
 .plusinfo-container input {
-  color: var(--font-color);
+  color: var(--font-color) !important;
 }
 .loginForm-textDiv,
 .loginForm-idDiv,
