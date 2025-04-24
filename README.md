@@ -44,9 +44,9 @@
    <th> 이수정 </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/a0a7ff32-00b2-48f7-b825-41d2c29e74cf" width="300" height="300"></td>
-    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="300"></td>
-    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="300"></td>
+    <td><img src="https://github.com/user-attachments/assets/a0a7ff32-00b2-48f7-b825-41d2c29e74cf" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/1b2416a2-14b2-4309-a478-afd02949ae8f" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="250"></td>
   </tr>
   <tr>
     <td>
@@ -56,7 +56,7 @@
     </td>
     <td>
      <div align="center">
-      <a href="https://github.com/jeong0300">@jeong0300</a>
+      <a href="https://github.com/heum23">@heum23</a>
      </div>
     </td>
     <td>
@@ -76,9 +76,8 @@
 <div align="center">
  <h2>프론트엔드</h2>
   
-   ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+  ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
    ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-   ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
    ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
   <h2>백엔드</h2>
@@ -92,6 +91,7 @@
    ![Toss API](https://img.shields.io/badge/Toss%20API-0064FF?style=for-the-badge&logo=toss&logoColor=white)
    ![Kakao API](https://img.shields.io/badge/Kakao%20API-FFCD00?style=for-the-badge&logo=kakao&logoColor=black)
    ![Naver API](https://img.shields.io/badge/Naver%20API-03C75A?style=for-the-badge&logo=naver&logoColor=white)
+   ![Google API](https://img.shields.io/badge/google%20API-4285F4?style=for-the-badge&logo=google&logoColor=white)
    ![Jaeminai API](https://img.shields.io/badge/Jaeminai%20API-7952B3?style=for-the-badge&logo=jaeminai&logoColor=white)
 
   <h2>개발 도구</h2>
@@ -109,10 +109,14 @@
    ![Recharts](https://img.shields.io/badge/Recharts-FF6B6B?style=for-the-badge&logo=chartdotjs&logoColor=white)
    ![Nodemailer](https://img.shields.io/badge/Nodemailer-009688?style=for-the-badge&logo=nodemailer&logoColor=white)
    ![Crypto (Node)](https://img.shields.io/badge/Crypto-4B0082?style=for-the-badge&logo=crypto&logoColor=white)
+     ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+   ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 
   <h2>배포</h2>
   
    ![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
+   ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+
 
 </div>
 
@@ -170,7 +174,16 @@
   </tr>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/a3b1bac9-52aa-45d7-b7ae-c417ff38e6ad"/></td>
-    <td><img src="https://github.com/user-attachments/assets/c0a4a952-aa06-47bc-b3c4-58716317ecf3"/></td>
+    <td><img src="https://github.com/user-attachments/assets/e9e63c3f-3088-45c6-a389-336036d2f6b4"/></td>
+  </tr>
+ </table>
+
+ <table>
+  <tr>
+   <th>반응형</th>
+  </tr>
+  <tr>
+   <td> <img src="https://github.com/user-attachments/assets/95efb54f-4dd1-412a-99e5-45cdc271d976"/> </td>
   </tr>
  </table>
 </div>
@@ -226,7 +239,7 @@
 <h4>&nbsp&nbsp&nbsp&nbsp-&nbsp관심 상품 추가 가능</h4>
 <div align="center">
  
-  ![Image](https://github.com/user-attachments/assets/2f0e8652-9302-4e62-b0a1-17df2c7b16bf)
+  ![Image](https://github.com/user-attachments/assets/2df10502-2067-4a0c-9e15-a294399565cc)
   
 </div>
 
@@ -237,7 +250,7 @@
 <h4>&nbsp&nbsp&nbsp&nbsp-&nbsp판매자 클릭 시 해당 판매자의 판매 기록 확인 가능</h4>
 <div align="center">
  
-  ![Image](https://github.com/user-attachments/assets/7124680d-2383-41e7-bb5c-4cc05f8d9707)
+  ![Image](https://github.com/user-attachments/assets/e34efcd5-2a9b-4b18-bfbe-dc4ad456640e)
   
 </div>
 
