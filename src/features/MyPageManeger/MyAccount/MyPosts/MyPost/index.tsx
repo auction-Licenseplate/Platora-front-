@@ -53,7 +53,7 @@ const MyPost = ({
         initLiked[key] = true; // 좋아요한 상태
       });
 
-      console.log("like : ", favoritePosts);
+      console.log(favoritePosts);
 
       setLikedMap(initLiked);
     }
@@ -117,7 +117,7 @@ const MyPost = ({
           {
             id: post.auctionID || post.auctionId,
             userId: post.userId,
-            status: true,
+            status: !likedMap[key],
           },
           {
             withCredentials: true,
