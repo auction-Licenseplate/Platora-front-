@@ -29,9 +29,8 @@ const TopBtn = () => {
     setDisabled(true);
 
     scroll.scrollToTop({
-      duration: 300,
-      top: 0,
-      smooth: true,
+      duration: 0,
+      smooth: "smooth",
     });
 
     // 일정 시간 후 다시 클릭 가능
