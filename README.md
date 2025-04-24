@@ -173,6 +173,15 @@
     <td><img src="https://github.com/user-attachments/assets/e9e63c3f-3088-45c6-a389-336036d2f6b4"/></td>
   </tr>
  </table>
+
+ <table>
+  <tr>
+   <td>반응형</td>
+  </tr>
+  <tr>
+   <td> <img src="https://github.com/user-attachments/assets/95efb54f-4dd1-412a-99e5-45cdc271d976"/> </td>
+  </tr>
+ </table>
 </div>
 
 <br/>
