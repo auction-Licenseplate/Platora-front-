@@ -318,7 +318,7 @@ const Header = () => {
                       onClick={() => {
                         {
                           userRole === "admin"
-                            ? window.open(`http://52.62.79.236`, "_blank")
+                            ? window.open(`http://52.62.79.236/login`, "_blank")
                             : router.push({
                                 pathname: "/myPage",
                                 query: { menu: "myInfo" },
