@@ -29,7 +29,7 @@ const TopBtn = () => {
     setDisabled(true);
 
     scroll.scrollToTop({
-      duration: 600,
+      duration: 300,
       smooth: true,
     });
 
