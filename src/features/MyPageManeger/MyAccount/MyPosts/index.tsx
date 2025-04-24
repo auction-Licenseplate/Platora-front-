@@ -61,6 +61,8 @@ const MyPosts = ({ type }: Props) => {
               headers: { Authorization: `Bearer ${token}` },
             }
           );
+
+          console.log("좋아요 정보들 : ", favorite.data);
           setFavoritePosts(favorite.data);
         }
       } catch (e) {

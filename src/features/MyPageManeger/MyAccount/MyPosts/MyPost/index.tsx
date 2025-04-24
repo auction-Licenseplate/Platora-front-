@@ -13,6 +13,7 @@ import fullheart from "@/assets/images/fullheart.png";
 import heart from "@/assets/images/heart.png";
 import noPostBlack from "@/assets/images/noPostBlack.png";
 import noPostWhite from "@/assets/images/noPostWhite.png";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 interface postType {
   type: string;
@@ -52,7 +53,8 @@ const MyPost = ({
         initLiked[key] = true; // 좋아요 상태
       });
 
-      console.log("like : ", initLiked);
+      console.log("like : ", favoritePosts);
+
       setLikedMap(initLiked);
     }
   }, [type, favoritePosts]);
