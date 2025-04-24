@@ -26,7 +26,7 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
           return {
             auctionID: item.au_id,
             vehicleTitle: item.vehicle_plate_num,
-            finalPrice: item.au_final_price,
+            finalPrice: item.bid_price,
             endTime: item.au_end_time,
             userName: name,
             carImage: item.vehicle_car_img,
@@ -34,6 +34,8 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
             minPrice: item.grade_min_price,
           };
         });
+
+        console.log("post : ", posts);
 
         setApprovedPosts(posts);
       })
