@@ -99,7 +99,6 @@ const Header = () => {
           }
         );
 
-
         setAlertData(res.data);
       } catch (error) {
         console.error("알림 불러오기 실패:", error);
@@ -319,7 +318,7 @@ const Header = () => {
                       onClick={() => {
                         {
                           userRole === "admin"
-                            ? window.open("http://52.62.79.236", "_blank")
+                            ? window.open(`http://52.62.79.236`, "_blank")
                             : router.push({
                                 pathname: "/myPage",
                                 query: { menu: "myInfo" },
