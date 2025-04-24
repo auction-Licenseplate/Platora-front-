@@ -11,7 +11,7 @@ const ListDetail = ({ list, setListopen, listopen }: listProps) => {
   const dataSource = list
     ? list
         .slice(1)
-        .filter((x: any) => x.bid.bid_price !== null)
+        .filter((x: any) => x.bid_bid_price !== null)
         .map((x: any, i: number) => ({
           key: String(i + 1),
           index: i + 2,
