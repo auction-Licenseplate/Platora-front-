@@ -71,6 +71,8 @@ const DetailPage = ({ id }: detailprops) => {
         if (!res.data.data || res.data.data.length === 0) {
           return;
         }
+
+        console.log("경매 : ", res.data);
         const lastData = {
           lastPrice: res.data.lastBid.bid_price, //최근 결제 가격
           lastUser: res.data.lastBid.bidUser_Id, // 최근 결제 아이디
@@ -92,7 +94,7 @@ const DetailPage = ({ id }: detailprops) => {
             itemnumber: raw.au_auction_num,
             endtime: raw.au_end_time,
             startTime: raw.au_start_time,
-            price: raw.au_final_price,
+            price: raw.bid_price,
             name: raw.bidUser_name,
             count: raw.bid_bid_count,
             carimg1: imgs[0] || "",
