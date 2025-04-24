@@ -29,7 +29,7 @@ const TopBtn = () => {
     setDisabled(true);
 
     scroll.scrollToTop({
-      // duration: 300,
+      duration: 300,
       top: 0,
       smooth: true,
     });
@@ -40,17 +40,35 @@ const TopBtn = () => {
     }, 800);
   };
 
+  // return (
+  //   <Affix offsetBottom={20} style={{ right: 20, position: "fixed" }}>
+  //     <TopBtnStyled
+  //       shape="circle"
+  //       icon={<UpOutlined />}
+  //       onClick={handleScrollToTop}
+  //       aria-label="Scroll to top"
+  //       className={isVisible ? "visible" : ""}
+  //       disabled={disabled}
+  //     />
+  //   </Affix>
+  // );
+
   return (
-    <Affix offsetBottom={20} style={{ right: 20, position: "fixed" }}>
+    isVisible && (
       <TopBtnStyled
         shape="circle"
         icon={<UpOutlined />}
         onClick={handleScrollToTop}
         aria-label="Scroll to top"
-        className={isVisible ? "visible" : ""}
         disabled={disabled}
+        style={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          zIndex: 1000,
+        }}
       />
-    </Affix>
+    )
   );
 };
 
