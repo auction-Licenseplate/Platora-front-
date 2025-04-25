@@ -256,23 +256,23 @@ export const DetailStyled = styled.div`
       }
 
       .detail-bigprice {
-        font-size: 40px;
+        font-size: 38px;
 
         @media (max-width: 600px) {
           & {
-            font-size: 30px;
+            font-size: 28px;
           }
         }
 
         @media (max-width: 450px) {
           & {
-            font-size: 25px;
+            font-size: 16px;
           }
         }
 
         @media (max-width: 380px) {
           & {
-            font-size: 20px;
+            font-size: 12px;
           }
         }
       }
