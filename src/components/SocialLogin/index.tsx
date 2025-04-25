@@ -44,6 +44,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
             path: "/",
             expires: 7,
           });
+          window.location.reload();
           router.push("/");
         }
         setUser(res.data.user);
