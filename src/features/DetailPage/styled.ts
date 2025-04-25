@@ -257,23 +257,18 @@ export const DetailStyled = styled.div`
 
       .detail-bigprice {
         font-size: 38px;
+        white-space: nowrap;
 
         @media (max-width: 600px) {
-          & {
-            font-size: 28px;+
-          }
+          font-size: 28px;
         }
 
         @media (max-width: 450px) {
-          & {
-            font-size: 16px;
-          }
+          font-size: 16px;
         }
 
         @media (max-width: 380px) {
-          & {
-            font-size: 12px;
-          }
+          font-size: 12px;
         }
       }
 
