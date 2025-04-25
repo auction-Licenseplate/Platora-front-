@@ -23,7 +23,6 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
     if (typeof code === "string") {
       login(code);
     } else {
-      console.log("잘못된 요청입니다.");
     }
   }, [router.isReady, router.query]);
 
@@ -39,7 +38,6 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
         if (type === "naver") {
           router.push("/");
         }
-        console.log("로그인 실패, user가 없습니다.");
         setUser(res.data.user);
         setIsSuccess(false); // 로그인 실패 상태
       } else {

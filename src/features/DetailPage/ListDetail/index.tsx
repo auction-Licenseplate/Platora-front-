@@ -7,10 +7,8 @@ interface listProps {
 }
 
 const ListDetail = ({ list, setListopen, listopen }: listProps) => {
-  console.log(list);
   const dataSource = list
     ? list
-        .slice(1)
         .filter((x: any) => x.bid_bid_price !== null)
         .map((x: any, i: number) => ({
           key: String(i + 1),

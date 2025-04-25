@@ -93,7 +93,7 @@ const PlusInfo = ({ userid }: userData) => {
               type="text"
               name="name"
               onChange={formik.handleChange}
-              placeholder="abc123@xxx.com"
+              placeholder="이름을 입력해주세요"
             />
           </div>
           <div className="plusinfo-idDiv">

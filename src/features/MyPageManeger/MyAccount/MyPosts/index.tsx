@@ -62,12 +62,9 @@ const MyPosts = ({ type }: Props) => {
             }
           );
 
-          console.log("좋아요 정보들 : ", favorite.data);
           setFavoritePosts(favorite.data);
         }
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     };
 
     fetchPosts();

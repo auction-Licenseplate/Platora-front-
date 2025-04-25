@@ -260,7 +260,7 @@ export const DetailStyled = styled.div`
 
         @media (max-width: 600px) {
           & {
-            font-size: 28px;
+            font-size: 28px;+
           }
         }
 

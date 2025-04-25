@@ -72,7 +72,6 @@ const Header = () => {
 
     // 유저, 관리자 구분
     const fetchUserInfo = async () => {
-      console.log(token, "Header");
       try {
         const res = await axios.get("http://15.164.52.122/auth/getRole", {
           withCredentials: true,
@@ -99,8 +98,6 @@ const Header = () => {
             },
           }
         );
-
-        console.log("알림 : ", res.data);
 
         setAlertData(res.data);
       } catch (error) {
@@ -254,7 +251,6 @@ const Header = () => {
 
   // 로그아웃
   const handleLogout = async () => {
-    console.log("logout console");
     const token = document.cookie;
     const accessToken = token
       .split("; ")
@@ -322,7 +318,7 @@ const Header = () => {
                       onClick={() => {
                         {
                           userRole === "admin"
-                            ? window.open("http://52.62.79.236", "_blank")
+                            ? window.open(`http://52.62.79.236/login`, "_blank")
                             : router.push({
                                 pathname: "/myPage",
                                 query: { menu: "myInfo" },

@@ -39,6 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     let startTime = 0;
     let timeout: NodeJS.Timeout | null = null;
 
