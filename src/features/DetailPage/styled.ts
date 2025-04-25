@@ -235,6 +235,7 @@ export const DetailStyled = styled.div`
       .detail-priceText {
         font-size: 20px;
         margin-top: 10px;
+        white-space: nowrap;
 
         @media (max-width: 600px) {
           & {
