@@ -36,7 +36,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
 
       if (typeof res.data.user === "number") {
         if (type === "naver") {
-          router.push("/");
+          router.push("/login");
         }
         setUser(res.data.user);
         setIsSuccess(false); // 로그인 실패 상태
@@ -51,7 +51,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
           path: "/",
           expires: 7,
         });
-        router.push("/");
+        router.push("/login");
       }
     } catch (error) {
       console.error("로그인 실패:", error);
