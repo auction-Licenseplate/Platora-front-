@@ -36,7 +36,15 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
 
       if (typeof res.data.user === "number") {
         if (type === "naver") {
-          router.push("/login");
+          Cookie.set("accessToken", res.data.token.accessToken, {
+            path: "/",
+            expires: 1,
+          });
+          Cookie.set("refreshToken", res.data.token.refreshToken, {
+            path: "/",
+            expires: 7,
+          });
+          router.push("/");
         }
         setUser(res.data.user);
         setIsSuccess(false); // 로그인 실패 상태
@@ -51,7 +59,7 @@ const SocialCallback = ({ type }: SocialCallbackProps) => {
           path: "/",
           expires: 7,
         });
-        router.push("/login");
+        router.push("/");
       }
     } catch (error) {
       console.error("로그인 실패:", error);

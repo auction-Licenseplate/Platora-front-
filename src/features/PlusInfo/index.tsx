@@ -28,7 +28,7 @@ const PlusInfo = ({ userid }: userData) => {
       axios
         .post("http://15.164.52.122/auth/social/plusinfo", data) // 서버 URL
         .then((res) => {
-          router.push("/").then(() => {
+          router.push("/login").then(() => {
             window.location.reload();
           });
         })
