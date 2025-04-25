@@ -51,7 +51,7 @@
   <tr>
     <td>
      <div align="center">
-      <a href="https://github.com/yujeen02">@yujeen02</a>
+      <a href="https://github.com/yzoraa">@yzoraa</a>
      </div>
     </td>
     <td>
