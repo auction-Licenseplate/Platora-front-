@@ -35,6 +35,7 @@ const SoonProductCard = ({ product, id, type }: Props) => {
           alt={product.title}
           preview={token ? true : false}
           className={`soonImg ${token ? "clear" : ""}`}
+          onContextMenu={(e) => e.preventDefault()}
         />
       </div>
       <div
