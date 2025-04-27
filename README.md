@@ -44,7 +44,7 @@
    <th> 이수정 </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/a0a7ff32-00b2-48f7-b825-41d2c29e74cf" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/1567ca36-21bd-42e1-a3cf-01b9c71ffb64" width="300" height="250"></td>
     <td><img src="https://github.com/user-attachments/assets/1b2416a2-14b2-4309-a478-afd02949ae8f" width="300" height="250"></td>
     <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="250"></td>
   </tr>
@@ -76,7 +76,7 @@
 <div align="center">
  <h2>프론트엔드</h2>
   
-  ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+   ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
    ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
    ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
