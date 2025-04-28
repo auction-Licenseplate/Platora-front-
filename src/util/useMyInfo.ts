@@ -145,11 +145,11 @@ export const myInfo = (info: string) => {
         });
       })
       .catch(() => {
-        // modal.error({
-        //   centered: true,
-        //   title: "포인트 반환에 실패했습니다.",
-        //   content: "문제가 발생했습니다. 다시 시도해주세요.",
-        // });
+        modal.error({
+          centered: true,
+          title: "포인트 반환에 실패했습니다.",
+          content: "문제가 발생했습니다. 다시 시도해주세요.",
+        });
       });
   };
 
