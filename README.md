@@ -4,7 +4,8 @@
 
 #  📌 배포 주소
 
-<a href ="http://13.125.95.215/" self="_blank"> PLATOAT 바로가기 </a>
+[PLATOAT 바로가기](http://13.125.95.215/)
+
 <p> id: hong@hong.com / pw: Hong1234!! </p>
 
 <br/>
