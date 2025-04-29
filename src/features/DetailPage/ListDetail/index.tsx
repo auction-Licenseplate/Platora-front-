@@ -42,6 +42,7 @@ const ListDetail = ({ list, setListopen, listopen }: listProps) => {
       onCancel={() => {
         setListopen(false);
       }}
+      cancelText="닫기"
       footer={null}
       centered
       width={600}

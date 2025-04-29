@@ -1,7 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Song+Myung&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap");
 
 :root {
   --antd-wave-shadow-color: transparent !important;
@@ -21,7 +19,6 @@
   --after-color: rgb(179, 179, 179);
   --swiper-btn: #ffffff;
   --swiper-btn-dis: #828282;
-  --btn-hover: #ffffff;
   --font-color: rgb(255, 255, 255);
   --btn-text-color: black;
   --loading: white;
@@ -46,19 +43,12 @@
   --swiper-btn: #000000;
   --swiper-btn-dis: #b7b7b7;
   --font-color: rgb(0, 0, 0);
-  --btn-hover: #ffffff;
   --loading: blue;
   --box-shadow: rgba(0, 0, 0, 0.2);
   --join-btn: rgb(220, 221, 221);
 }
 
 /* 폰트 */
-.GlitchFont {
-  font-family: "Black Han Sans", sans-serif;
-  color: #262626;
-  position: relative;
-}
-
 .nomalFont {
   font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;

@@ -47,6 +47,7 @@ const SellerModal = ({ open, onClose, name, userId }: SellerModalProps) => {
       title="판매자 정보"
       open={open}
       onCancel={onClose}
+      cancelText="닫기"
       footer={null}
     >
       <p>

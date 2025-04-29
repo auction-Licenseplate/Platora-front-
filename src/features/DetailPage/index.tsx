@@ -241,6 +241,7 @@ const DetailPage = ({ id }: detailprops) => {
                 className="detail-mainimg"
                 layout="responsive"
                 alt=""
+                onContextMenu={(e) => e.preventDefault()}
               />
             </div>
             <div className="detial-nowrap">
@@ -251,6 +252,7 @@ const DetailPage = ({ id }: detailprops) => {
                 className="detail-clickimg"
                 alt=""
                 onClick={() => setImg(arr[0].carimg1)}
+                onContextMenu={(e) => e.preventDefault()}
               />
               <Image
                 src={`http://15.164.52.122/uploads//${arr[0].carimg2}`}
@@ -259,6 +261,7 @@ const DetailPage = ({ id }: detailprops) => {
                 className="detail-clickimg"
                 alt=""
                 onClick={() => setImg(arr[0].carimg2)}
+                onContextMenu={(e) => e.preventDefault()}
               />
               <Image
                 src={`http://15.164.52.122/uploads//${arr[0].carimg3}`}
@@ -267,6 +270,7 @@ const DetailPage = ({ id }: detailprops) => {
                 className="detail-clickimg"
                 alt=""
                 onClick={() => setImg(arr[0].carimg3)}
+                onContextMenu={(e) => e.preventDefault()}
               />
             </div>
           </div>

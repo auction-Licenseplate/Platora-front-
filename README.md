@@ -44,7 +44,7 @@
    <th> 이수정 </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/a0a7ff32-00b2-48f7-b825-41d2c29e74cf" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/1567ca36-21bd-42e1-a3cf-01b9c71ffb64" width="300" height="250"></td>
     <td><img src="https://github.com/user-attachments/assets/1b2416a2-14b2-4309-a478-afd02949ae8f" width="300" height="250"></td>
     <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="250"></td>
   </tr>
@@ -68,6 +68,8 @@
  </table>
 </div>
 
+# ⏰ 프로젝트 기간
+<p> 기간: 2025.03.31 ~ 2025.04.25 (약 4주) </p>
 
 <br/>
 
@@ -76,7 +78,7 @@
 <div align="center">
  <h2>프론트엔드</h2>
   
-  ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+   ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
    ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
    ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
@@ -126,7 +128,7 @@
 
 <div align="center">
 
- ![Image](https://github.com/user-attachments/assets/1798b0a3-c6a6-40a4-989d-a3af900f8931)
+ ![Image](https://github.com/user-attachments/assets/10071333-7382-4317-9839-f698edff6939)
  
 </div>
 

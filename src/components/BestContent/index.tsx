@@ -43,8 +43,9 @@ const BestContent = () => {
               <Image
                 src={content.image}
                 alt={content.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{ objectFit: "cover" }}
+                priority
               />
             </div>
           </div>

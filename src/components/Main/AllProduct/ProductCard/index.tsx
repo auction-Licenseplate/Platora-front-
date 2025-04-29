@@ -55,6 +55,7 @@ const ProductCard = ({ product, id }: Props) => {
           alt={product.title}
           preview={token ? true : false}
           className={`productImg ${token ? "clear" : ""}`}
+          onContextMenu={(e) => e.preventDefault()}
         />
 
         {token ? (

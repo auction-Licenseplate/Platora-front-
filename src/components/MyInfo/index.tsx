@@ -170,6 +170,8 @@ const MyInfo = ({ info }: Props) => {
         open={refundModalOpen}
         onOk={handleRefundModalOk}
         onCancel={() => setRefundModalOpen(false)}
+        okText="환불하기"
+        cancelText="닫기"
         okButtonProps={{
           disabled: !(
             refundDetails.account &&
@@ -231,6 +233,7 @@ const MyInfo = ({ info }: Props) => {
         title={modalType === "refund" ? "결제 내역 보기" : "차량 내역 보기"}
         open={tableModalOpen}
         onCancel={() => setTableModalOpen(false)}
+        cancelText="닫기"
         footer={null}
         centered
       >
@@ -250,6 +253,8 @@ const MyInfo = ({ info }: Props) => {
         title="포인트 충전"
         open={pointModalOpen}
         onCancel={() => setPointModalOpen(false)}
+        okText="충전하기"
+        cancelText="닫기"
         okButtonProps={{
           disabled: !pointDetails.point,
         }}

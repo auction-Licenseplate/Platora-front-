@@ -90,7 +90,7 @@ export const DetailStyled = styled.div`
       height: 30% !important;
     }
     .detail-bigprice {
-      font-size: 2.3vw;
+      font-size: 2vw;
     }
 
     .detail-textdiv {
@@ -233,7 +233,7 @@ export const DetailStyled = styled.div`
       }
 
       .detail-priceText {
-        font-size: 20px;
+        font-size: 18px;
         margin-top: 10px;
         white-space: nowrap;
 
@@ -257,7 +257,7 @@ export const DetailStyled = styled.div`
       }
 
       .detail-bigprice {
-        font-size: 38px;
+        font-size: 35px;
         white-space: nowrap;
 
         @media (max-width: 600px) {
