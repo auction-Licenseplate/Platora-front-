@@ -2,6 +2,13 @@
 
 <br/>
 
+#  📌 배포 주소
+
+<a href ="http://13.125.95.215/"> PLATOAT 바로가기 </a>
+<p> id: hong@hong.com / pw: Hong1234!! </p>
+
+<br/>
+
 ## 🔖 목차  
 > **프로젝트 개요**
 > 
@@ -70,6 +77,66 @@
 
 # ⏰ 프로젝트 기간
 <p> 기간: 2025.03.31 ~ 2025.04.25 (약 4주) </p>
+
+<br/>
+
+# 📄 프로젝트 소개
+
+#### "PLATORA"는 자동차 번호판의 등급 분석과 실시간 경매 참여를 지원하는 웹 기반 경매 플랫폼입니다.
+
+<br/>
+
+# 🚘 개발 동기
+
+####  자동차 번호판 거래는 기존에 정보가 부족하고 신뢰할 수 없는 경우가 많아
+####  누구나 안전하고 쉽게 참여할 수 있는 온라인 경매 플랫폼을 만들고자 개발하게 되었습니다.
+
+<br/>
+
+# 🗓 웹 개발팀 소개
+
+<div align="center">
+ <table>
+  <tr>
+   <th> 김예지 </th>
+   <th> 진순흠 </th>
+   <th> 이수정 </th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/1567ca36-21bd-42e1-a3cf-01b9c71ffb64" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/1b2416a2-14b2-4309-a478-afd02949ae8f" width="300" height="250"></td>
+    <td><img src="https://github.com/user-attachments/assets/d6640ccd-9d9b-4ed5-a929-c666752a992d" width="300" height="250"></td>
+  </tr>
+  <tr>
+    <td>
+     <div align="center">
+      <a href="https://github.com/yzoraa">@yzoraa</a>
+     </div>
+    </td>
+    <td>
+     <div align="center">
+      <a href="https://github.com/heum23">@heum23</a>
+     </div>
+    </td>
+    <td>
+     <div align="center">
+      <a href="https://github.com/jeong0300">@jeong0300</a>
+     </div>
+    </td>
+  </tr>
+ </table>
+</div>
+
+# ⏰ 프로젝트 기간
+<p> 기간: 2025.03.31 ~ 2025.04.25 (약 4주) </p>
+
+<br/>
+
+# ⏰ 배포 주소
+<p> 기간: 2025.03.31 ~ 2025.04.25 (약 4주) </p>
+
+
+http://13.125.95.215/
 
 <br/>
 
