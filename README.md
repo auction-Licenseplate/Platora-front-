@@ -202,11 +202,11 @@ http://13.125.95.215/
 
 <br/>
 
-## 📝 프로토타입
+# 📝 프로토타입
 
 <div align="center">
 
- ![Image](https://github.com/user-attachments/assets/5e4ef7da-6c01-46c6-97e8-0b6507639d25)
+ ![Image](https://github.com/user-attachments/assets/515edccd-2646-414d-8b60-6b01467af1ee)
  
 </div>
 
